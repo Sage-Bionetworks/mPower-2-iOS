@@ -21,6 +21,9 @@
 		F8D3E7ED2062F9DE00CD351C /* BridgeSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7BC2062F27600CD351C /* BridgeSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8D3E7F02062F9DE00CD351C /* BridgeApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7A72062F26D00CD351C /* BridgeApp.framework */; };
 		F8D3E7F12062F9DE00CD351C /* BridgeApp.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7A72062F26D00CD351C /* BridgeApp.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F8D3E7F72063039200CD351C /* BridgeInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E7F62063039200CD351C /* BridgeInfo.plist */; };
+		F8D3E8022063055500CD351C /* sage-mpower-2.pem in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E8002063055500CD351C /* sage-mpower-2.pem */; };
+		F8D3E8032063055500CD351C /* BridgeInfo-private.plist in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E8012063055500CD351C /* BridgeInfo-private.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -199,6 +202,9 @@
 		F8D3E7C32062F28500CD351C /* ResearchStack2.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ResearchStack2.xcodeproj; path = "../BridgeApp-Apple-SDK/SageResearch/ResearchStack2/ResearchStack2.xcodeproj"; sourceTree = "<group>"; };
 		F8D3E7D62062F28F00CD351C /* ResearchStack2UI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ResearchStack2UI.xcodeproj; path = "../BridgeApp-Apple-SDK/SageResearch/ResearchStack2UI/ResearchStack2UI.xcodeproj"; sourceTree = "<group>"; };
 		F8D3E7E32062F2D700CD351C /* mPower2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = mPower2.entitlements; sourceTree = "<group>"; };
+		F8D3E7F62063039200CD351C /* BridgeInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BridgeInfo.plist; sourceTree = "<group>"; };
+		F8D3E8002063055500CD351C /* sage-mpower-2.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "sage-mpower-2.pem"; path = "../../../iOSPrivateProjectInfo/mPower2/sage-mpower-2.pem"; sourceTree = "<group>"; };
+		F8D3E8012063055500CD351C /* BridgeInfo-private.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "BridgeInfo-private.plist"; path = "../../../iOSPrivateProjectInfo/mPower2/BridgeInfo-private.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -226,9 +232,9 @@
 		F8D3E76D2062F1B900CD351C = {
 			isa = PBXGroup;
 			children = (
-				F8D3E7992062F23A00CD351C /* Frameworks */,
 				F8D3E7782062F1B900CD351C /* mPower2 */,
 				F8D3E78D2062F1B900CD351C /* mPower2Tests */,
+				F8D3E7992062F23A00CD351C /* Frameworks */,
 				F8D3E7772062F1B900CD351C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -321,6 +327,9 @@
 		F8D3E7F52062F9ED00CD351C /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
+				F8D3E7F62063039200CD351C /* BridgeInfo.plist */,
+				F8D3E8012063055500CD351C /* BridgeInfo-private.plist */,
+				F8D3E8002063055500CD351C /* sage-mpower-2.pem */,
 				F8D3E7852062F1B900CD351C /* Info.plist */,
 				F8D3E7E32062F2D700CD351C /* mPower2.entitlements */,
 			);
@@ -558,6 +567,9 @@
 				F8D3E7842062F1B900CD351C /* LaunchScreen.storyboard in Resources */,
 				F8D3E7812062F1B900CD351C /* Assets.xcassets in Resources */,
 				F8D3E77F2062F1B900CD351C /* Main.storyboard in Resources */,
+				F8D3E8022063055500CD351C /* sage-mpower-2.pem in Resources */,
+				F8D3E7F72063039200CD351C /* BridgeInfo.plist in Resources */,
+				F8D3E8032063055500CD351C /* BridgeInfo-private.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
