@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>appGroupIdentifier</key>
+	<string>group.org.sagebionetworks.mPower2</string>
+	<key>studyIdentifier</key>
+	<string>sample-study</string>
+	<key>certificateName</key>
+	<string>sample-study</string>
+	<key>appUpdateURL</key>
+	<string>https://notsupported.null</string>
+</dict>
+</plist>
