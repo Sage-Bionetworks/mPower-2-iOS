@@ -1,6 +1,6 @@
 //
-//  ViewController.swift
-//  mPower2
+//  MotorControl.h
+//  MotorControl
 //
 //  Copyright © 2018 Sage Bionetworks. All rights reserved.
 //
@@ -31,20 +31,14 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import UIKit
+#import <UIKit/UIKit.h>
 
-class ViewController: UIViewController {
+//! Project version number for MotorControl.
+FOUNDATION_EXPORT double MotorControlVersionNumber;
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
+//! Project version string for MotorControl.
+FOUNDATION_EXPORT const unsigned char MotorControlVersionString[];
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+// In this header, you should import all the public headers of your framework using statements like #import <MotorControl/PublicHeader.h>
 
-
-}
 
