@@ -1,0 +1,854 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F8D3E77A2062F1B900CD351C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D3E7792062F1B900CD351C /* AppDelegate.swift */; };
+		F8D3E77C2062F1B900CD351C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D3E77B2062F1B900CD351C /* ViewController.swift */; };
+		F8D3E77F2062F1B900CD351C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E77D2062F1B900CD351C /* Main.storyboard */; };
+		F8D3E7812062F1B900CD351C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E7802062F1B900CD351C /* Assets.xcassets */; };
+		F8D3E7842062F1B900CD351C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E7822062F1B900CD351C /* LaunchScreen.storyboard */; };
+		F8D3E78F2062F1B900CD351C /* mPower2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D3E78E2062F1B900CD351C /* mPower2Tests.swift */; };
+		F8D3E7E42062F9DE00CD351C /* ResearchStack2UI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7DE2062F28F00CD351C /* ResearchStack2UI.framework */; };
+		F8D3E7E52062F9DE00CD351C /* ResearchStack2UI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7DE2062F28F00CD351C /* ResearchStack2UI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F8D3E7E82062F9DE00CD351C /* ResearchStack2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7CD2062F28500CD351C /* ResearchStack2.framework */; };
+		F8D3E7E92062F9DE00CD351C /* ResearchStack2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7CD2062F28500CD351C /* ResearchStack2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F8D3E7EC2062F9DE00CD351C /* BridgeSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7BC2062F27600CD351C /* BridgeSDK.framework */; };
+		F8D3E7ED2062F9DE00CD351C /* BridgeSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7BC2062F27600CD351C /* BridgeSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F8D3E7F02062F9DE00CD351C /* BridgeApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7A72062F26D00CD351C /* BridgeApp.framework */; };
+		F8D3E7F12062F9DE00CD351C /* BridgeApp.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7A72062F26D00CD351C /* BridgeApp.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F8D3E78B2062F1B900CD351C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F8D3E76E2062F1B900CD351C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F8D3E7752062F1B900CD351C;
+			remoteInfo = mPower2;
+		};
+		F8D3E7A62062F26D00CD351C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F8D3E79A2062F26D00CD351C /* BridgeApp.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F83B44A52032467D002825AE;
+			remoteInfo = "BridgeApp (iOS)";
+		};
+		F8D3E7A82062F26D00CD351C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F8D3E79A2062F26D00CD351C /* BridgeApp.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F83B44AE2032467D002825AE;
+			remoteInfo = BridgeAppTests;
+		};
+		F8D3E7AA2062F26D00CD351C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F8D3E79A2062F26D00CD351C /* BridgeApp.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F83B450220324A33002825AE;
+			remoteInfo = BridgeAppExample;
+		};
+		F8D3E7BB2062F27600CD351C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F8D3E7AC2062F27600CD351C /* BridgeSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 80855F5019BE258C006601C7;
+			remoteInfo = BridgeSDK;
+		};
+		F8D3E7BD2062F27600CD351C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F8D3E7AC2062F27600CD351C /* BridgeSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 80855F5B19BE258C006601C7;
+			remoteInfo = BridgeSDKTests;
+		};
+		F8D3E7BF2062F27600CD351C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F8D3E7AC2062F27600CD351C /* BridgeSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 807AE2871B603309002588BB;
+			remoteInfo = BridgeSDKIntegration;
+		};
+		F8D3E7C12062F27600CD351C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F8D3E7AC2062F27600CD351C /* BridgeSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 807AE29F1B60330C002588BB;
+			remoteInfo = BridgeSDKIntegrationTests;
+		};
+		F8D3E7CC2062F28500CD351C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F8D3E7C32062F28500CD351C /* ResearchStack2.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FF8B53141FCE678E006B6937;
+			remoteInfo = "ResearchStack2 (iOS)";
+		};
+		F8D3E7CE2062F28500CD351C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F8D3E7C32062F28500CD351C /* ResearchStack2.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FF8B531C1FCE678E006B6937;
+			remoteInfo = ResearchStack2Tests_iOS;
+		};
+		F8D3E7D02062F28500CD351C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F8D3E7C32062F28500CD351C /* ResearchStack2.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FF8B53301FCE67AA006B6937;
+			remoteInfo = "ResearchStack2 (watchOS)";
+		};
+		F8D3E7D22062F28500CD351C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F8D3E7C32062F28500CD351C /* ResearchStack2.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FF8B533D1FCE67C7006B6937;
+			remoteInfo = "ResearchStack2 (tvOS)";
+		};
+		F8D3E7D42062F28500CD351C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F8D3E7C32062F28500CD351C /* ResearchStack2.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FF8B53451FCE67C8006B6937;
+			remoteInfo = ResearchStack2Tests_tvOS;
+		};
+		F8D3E7DD2062F28F00CD351C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F8D3E7D62062F28F00CD351C /* ResearchStack2UI.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FFF2D9381FCF415E007258F8;
+			remoteInfo = "ResearchStack2UI (iOS)";
+		};
+		F8D3E7DF2062F28F00CD351C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F8D3E7D62062F28F00CD351C /* ResearchStack2UI.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FFF2D9401FCF415E007258F8;
+			remoteInfo = ResearchStack2UITests_iOS;
+		};
+		F8D3E7E12062F28F00CD351C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F8D3E7D62062F28F00CD351C /* ResearchStack2UI.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FFF2D9701FCF41BF007258F8;
+			remoteInfo = "ResearchStack2UI (watchOS)";
+		};
+		F8D3E7E62062F9DE00CD351C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F8D3E7D62062F28F00CD351C /* ResearchStack2UI.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = FFF2D9371FCF415E007258F8;
+			remoteInfo = "ResearchStack2UI (iOS)";
+		};
+		F8D3E7EA2062F9DE00CD351C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F8D3E7C32062F28500CD351C /* ResearchStack2.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = FF8B53131FCE678E006B6937;
+			remoteInfo = "ResearchStack2 (iOS)";
+		};
+		F8D3E7EE2062F9DE00CD351C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F8D3E7AC2062F27600CD351C /* BridgeSDK.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 80855F4F19BE258C006601C7;
+			remoteInfo = BridgeSDK;
+		};
+		F8D3E7F22062F9DE00CD351C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F8D3E79A2062F26D00CD351C /* BridgeApp.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = F83B44A42032467D002825AE;
+			remoteInfo = "BridgeApp (iOS)";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F8D3E7F42062F9DE00CD351C /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				F8D3E7E52062F9DE00CD351C /* ResearchStack2UI.framework in Embed Frameworks */,
+				F8D3E7F12062F9DE00CD351C /* BridgeApp.framework in Embed Frameworks */,
+				F8D3E7E92062F9DE00CD351C /* ResearchStack2.framework in Embed Frameworks */,
+				F8D3E7ED2062F9DE00CD351C /* BridgeSDK.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		F8D3E7762062F1B900CD351C /* mPower2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mPower2.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8D3E7792062F1B900CD351C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F8D3E77B2062F1B900CD351C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		F8D3E77E2062F1B900CD351C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F8D3E7802062F1B900CD351C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F8D3E7832062F1B900CD351C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F8D3E7852062F1B900CD351C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F8D3E78A2062F1B900CD351C /* mPower2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = mPower2Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8D3E78E2062F1B900CD351C /* mPower2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mPower2Tests.swift; sourceTree = "<group>"; };
+		F8D3E7902062F1B900CD351C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F8D3E79A2062F26D00CD351C /* BridgeApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BridgeApp.xcodeproj; path = "../BridgeApp-Apple-SDK/BridgeApp/BridgeApp.xcodeproj"; sourceTree = "<group>"; };
+		F8D3E7AC2062F27600CD351C /* BridgeSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BridgeSDK.xcodeproj; path = "../BridgeApp-Apple-SDK/Bridge-iOS-SDK/BridgeSDK.xcodeproj"; sourceTree = "<group>"; };
+		F8D3E7C32062F28500CD351C /* ResearchStack2.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ResearchStack2.xcodeproj; path = "../BridgeApp-Apple-SDK/SageResearch/ResearchStack2/ResearchStack2.xcodeproj"; sourceTree = "<group>"; };
+		F8D3E7D62062F28F00CD351C /* ResearchStack2UI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ResearchStack2UI.xcodeproj; path = "../BridgeApp-Apple-SDK/SageResearch/ResearchStack2UI/ResearchStack2UI.xcodeproj"; sourceTree = "<group>"; };
+		F8D3E7E32062F2D700CD351C /* mPower2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = mPower2.entitlements; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F8D3E7732062F1B900CD351C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F8D3E7E42062F9DE00CD351C /* ResearchStack2UI.framework in Frameworks */,
+				F8D3E7F02062F9DE00CD351C /* BridgeApp.framework in Frameworks */,
+				F8D3E7E82062F9DE00CD351C /* ResearchStack2.framework in Frameworks */,
+				F8D3E7EC2062F9DE00CD351C /* BridgeSDK.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F8D3E7872062F1B900CD351C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F8D3E76D2062F1B900CD351C = {
+			isa = PBXGroup;
+			children = (
+				F8D3E7992062F23A00CD351C /* Frameworks */,
+				F8D3E7782062F1B900CD351C /* mPower2 */,
+				F8D3E78D2062F1B900CD351C /* mPower2Tests */,
+				F8D3E7772062F1B900CD351C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F8D3E7772062F1B900CD351C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F8D3E7762062F1B900CD351C /* mPower2.app */,
+				F8D3E78A2062F1B900CD351C /* mPower2Tests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F8D3E7782062F1B900CD351C /* mPower2 */ = {
+			isa = PBXGroup;
+			children = (
+				F8D3E7792062F1B900CD351C /* AppDelegate.swift */,
+				F8D3E77B2062F1B900CD351C /* ViewController.swift */,
+				F8D3E77D2062F1B900CD351C /* Main.storyboard */,
+				F8D3E7822062F1B900CD351C /* LaunchScreen.storyboard */,
+				F8D3E7802062F1B900CD351C /* Assets.xcassets */,
+				F8D3E7F52062F9ED00CD351C /* Support Files */,
+			);
+			path = mPower2;
+			sourceTree = "<group>";
+		};
+		F8D3E78D2062F1B900CD351C /* mPower2Tests */ = {
+			isa = PBXGroup;
+			children = (
+				F8D3E78E2062F1B900CD351C /* mPower2Tests.swift */,
+				F8D3E7902062F1B900CD351C /* Info.plist */,
+			);
+			path = mPower2Tests;
+			sourceTree = "<group>";
+		};
+		F8D3E7992062F23A00CD351C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F8D3E7D62062F28F00CD351C /* ResearchStack2UI.xcodeproj */,
+				F8D3E7C32062F28500CD351C /* ResearchStack2.xcodeproj */,
+				F8D3E7AC2062F27600CD351C /* BridgeSDK.xcodeproj */,
+				F8D3E79A2062F26D00CD351C /* BridgeApp.xcodeproj */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F8D3E79B2062F26D00CD351C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F8D3E7A72062F26D00CD351C /* BridgeApp.framework */,
+				F8D3E7A92062F26D00CD351C /* BridgeAppTests.xctest */,
+				F8D3E7AB2062F26D00CD351C /* BridgeAppExample.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F8D3E7AD2062F27600CD351C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F8D3E7BC2062F27600CD351C /* BridgeSDK.framework */,
+				F8D3E7BE2062F27600CD351C /* BridgeSDKTests.xctest */,
+				F8D3E7C02062F27600CD351C /* BridgeSDKIntegration.app */,
+				F8D3E7C22062F27600CD351C /* BridgeSDKIntegrationTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F8D3E7C42062F28500CD351C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F8D3E7CD2062F28500CD351C /* ResearchStack2.framework */,
+				F8D3E7CF2062F28500CD351C /* ResearchStack2Tests_iOS.xctest */,
+				F8D3E7D12062F28500CD351C /* ResearchStack2.framework */,
+				F8D3E7D32062F28500CD351C /* ResearchStack2.framework */,
+				F8D3E7D52062F28500CD351C /* ResearchStack2Tests_tvOS.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F8D3E7D72062F28F00CD351C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F8D3E7DE2062F28F00CD351C /* ResearchStack2UI.framework */,
+				F8D3E7E02062F28F00CD351C /* ResearchStack2UITests_iOS.xctest */,
+				F8D3E7E22062F28F00CD351C /* ResearchStack2UI.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F8D3E7F52062F9ED00CD351C /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				F8D3E7852062F1B900CD351C /* Info.plist */,
+				F8D3E7E32062F2D700CD351C /* mPower2.entitlements */,
+			);
+			name = "Support Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F8D3E7752062F1B900CD351C /* mPower2 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F8D3E7932062F1B900CD351C /* Build configuration list for PBXNativeTarget "mPower2" */;
+			buildPhases = (
+				F8D3E7722062F1B900CD351C /* Sources */,
+				F8D3E7732062F1B900CD351C /* Frameworks */,
+				F8D3E7742062F1B900CD351C /* Resources */,
+				F8D3E7F42062F9DE00CD351C /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F8D3E7E72062F9DE00CD351C /* PBXTargetDependency */,
+				F8D3E7EB2062F9DE00CD351C /* PBXTargetDependency */,
+				F8D3E7EF2062F9DE00CD351C /* PBXTargetDependency */,
+				F8D3E7F32062F9DE00CD351C /* PBXTargetDependency */,
+			);
+			name = mPower2;
+			productName = mPower2;
+			productReference = F8D3E7762062F1B900CD351C /* mPower2.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F8D3E7892062F1B900CD351C /* mPower2Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F8D3E7962062F1B900CD351C /* Build configuration list for PBXNativeTarget "mPower2Tests" */;
+			buildPhases = (
+				F8D3E7862062F1B900CD351C /* Sources */,
+				F8D3E7872062F1B900CD351C /* Frameworks */,
+				F8D3E7882062F1B900CD351C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F8D3E78C2062F1B900CD351C /* PBXTargetDependency */,
+			);
+			name = mPower2Tests;
+			productName = mPower2Tests;
+			productReference = F8D3E78A2062F1B900CD351C /* mPower2Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F8D3E76E2062F1B900CD351C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0920;
+				LastUpgradeCheck = 0920;
+				ORGANIZATIONNAME = "Sage Bionetworks";
+				TargetAttributes = {
+					F8D3E7752062F1B900CD351C = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.DataProtection = {
+								enabled = 1;
+							};
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
+					};
+					F8D3E7892062F1B900CD351C = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = F8D3E7752062F1B900CD351C;
+					};
+				};
+			};
+			buildConfigurationList = F8D3E7712062F1B900CD351C /* Build configuration list for PBXProject "mPower2" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F8D3E76D2062F1B900CD351C;
+			productRefGroup = F8D3E7772062F1B900CD351C /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = F8D3E79B2062F26D00CD351C /* Products */;
+					ProjectRef = F8D3E79A2062F26D00CD351C /* BridgeApp.xcodeproj */;
+				},
+				{
+					ProductGroup = F8D3E7AD2062F27600CD351C /* Products */;
+					ProjectRef = F8D3E7AC2062F27600CD351C /* BridgeSDK.xcodeproj */;
+				},
+				{
+					ProductGroup = F8D3E7C42062F28500CD351C /* Products */;
+					ProjectRef = F8D3E7C32062F28500CD351C /* ResearchStack2.xcodeproj */;
+				},
+				{
+					ProductGroup = F8D3E7D72062F28F00CD351C /* Products */;
+					ProjectRef = F8D3E7D62062F28F00CD351C /* ResearchStack2UI.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				F8D3E7752062F1B900CD351C /* mPower2 */,
+				F8D3E7892062F1B900CD351C /* mPower2Tests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		F8D3E7A72062F26D00CD351C /* BridgeApp.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = BridgeApp.framework;
+			remoteRef = F8D3E7A62062F26D00CD351C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F8D3E7A92062F26D00CD351C /* BridgeAppTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = BridgeAppTests.xctest;
+			remoteRef = F8D3E7A82062F26D00CD351C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F8D3E7AB2062F26D00CD351C /* BridgeAppExample.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = BridgeAppExample.app;
+			remoteRef = F8D3E7AA2062F26D00CD351C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F8D3E7BC2062F27600CD351C /* BridgeSDK.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = BridgeSDK.framework;
+			remoteRef = F8D3E7BB2062F27600CD351C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F8D3E7BE2062F27600CD351C /* BridgeSDKTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = BridgeSDKTests.xctest;
+			remoteRef = F8D3E7BD2062F27600CD351C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F8D3E7C02062F27600CD351C /* BridgeSDKIntegration.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = BridgeSDKIntegration.app;
+			remoteRef = F8D3E7BF2062F27600CD351C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F8D3E7C22062F27600CD351C /* BridgeSDKIntegrationTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = BridgeSDKIntegrationTests.xctest;
+			remoteRef = F8D3E7C12062F27600CD351C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F8D3E7CD2062F28500CD351C /* ResearchStack2.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ResearchStack2.framework;
+			remoteRef = F8D3E7CC2062F28500CD351C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F8D3E7CF2062F28500CD351C /* ResearchStack2Tests_iOS.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ResearchStack2Tests_iOS.xctest;
+			remoteRef = F8D3E7CE2062F28500CD351C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F8D3E7D12062F28500CD351C /* ResearchStack2.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ResearchStack2.framework;
+			remoteRef = F8D3E7D02062F28500CD351C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F8D3E7D32062F28500CD351C /* ResearchStack2.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ResearchStack2.framework;
+			remoteRef = F8D3E7D22062F28500CD351C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F8D3E7D52062F28500CD351C /* ResearchStack2Tests_tvOS.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ResearchStack2Tests_tvOS.xctest;
+			remoteRef = F8D3E7D42062F28500CD351C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F8D3E7DE2062F28F00CD351C /* ResearchStack2UI.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ResearchStack2UI.framework;
+			remoteRef = F8D3E7DD2062F28F00CD351C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F8D3E7E02062F28F00CD351C /* ResearchStack2UITests_iOS.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ResearchStack2UITests_iOS.xctest;
+			remoteRef = F8D3E7DF2062F28F00CD351C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F8D3E7E22062F28F00CD351C /* ResearchStack2UI.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ResearchStack2UI.framework;
+			remoteRef = F8D3E7E12062F28F00CD351C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F8D3E7742062F1B900CD351C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F8D3E7842062F1B900CD351C /* LaunchScreen.storyboard in Resources */,
+				F8D3E7812062F1B900CD351C /* Assets.xcassets in Resources */,
+				F8D3E77F2062F1B900CD351C /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F8D3E7882062F1B900CD351C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F8D3E7722062F1B900CD351C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F8D3E77C2062F1B900CD351C /* ViewController.swift in Sources */,
+				F8D3E77A2062F1B900CD351C /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F8D3E7862062F1B900CD351C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F8D3E78F2062F1B900CD351C /* mPower2Tests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F8D3E78C2062F1B900CD351C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F8D3E7752062F1B900CD351C /* mPower2 */;
+			targetProxy = F8D3E78B2062F1B900CD351C /* PBXContainerItemProxy */;
+		};
+		F8D3E7E72062F9DE00CD351C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "ResearchStack2UI (iOS)";
+			targetProxy = F8D3E7E62062F9DE00CD351C /* PBXContainerItemProxy */;
+		};
+		F8D3E7EB2062F9DE00CD351C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "ResearchStack2 (iOS)";
+			targetProxy = F8D3E7EA2062F9DE00CD351C /* PBXContainerItemProxy */;
+		};
+		F8D3E7EF2062F9DE00CD351C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = BridgeSDK;
+			targetProxy = F8D3E7EE2062F9DE00CD351C /* PBXContainerItemProxy */;
+		};
+		F8D3E7F32062F9DE00CD351C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "BridgeApp (iOS)";
+			targetProxy = F8D3E7F22062F9DE00CD351C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		F8D3E77D2062F1B900CD351C /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F8D3E77E2062F1B900CD351C /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		F8D3E7822062F1B900CD351C /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F8D3E7832062F1B900CD351C /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F8D3E7912062F1B900CD351C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		F8D3E7922062F1B900CD351C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F8D3E7942062F1B900CD351C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = mPower2/mPower2.entitlements;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = KA9Z8R6M6K;
+				INFOPLIST_FILE = mPower2/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.mPower2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "ad4a2b97-1306-4288-9d0d-059a46f6bd01";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development org.sagebionetworks.mPower2";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F8D3E7952062F1B900CD351C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = mPower2/mPower2.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = KA9Z8R6M6K;
+				INFOPLIST_FILE = mPower2/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.mPower2;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "0f67c54c-de13-4284-ba80-e35dffd5bd84";
+				PROVISIONING_PROFILE_SPECIFIER = "match Distribution org.sagebionetworks.mPower2";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		F8D3E7972062F1B900CD351C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = KA9Z8R6M6K;
+				INFOPLIST_FILE = mPower2Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.mPower2Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/mPower2.app/mPower2";
+			};
+			name = Debug;
+		};
+		F8D3E7982062F1B900CD351C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = KA9Z8R6M6K;
+				INFOPLIST_FILE = mPower2Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.mPower2Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/mPower2.app/mPower2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F8D3E7712062F1B900CD351C /* Build configuration list for PBXProject "mPower2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F8D3E7912062F1B900CD351C /* Debug */,
+				F8D3E7922062F1B900CD351C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F8D3E7932062F1B900CD351C /* Build configuration list for PBXNativeTarget "mPower2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F8D3E7942062F1B900CD351C /* Debug */,
+				F8D3E7952062F1B900CD351C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F8D3E7962062F1B900CD351C /* Build configuration list for PBXNativeTarget "mPower2Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F8D3E7972062F1B900CD351C /* Debug */,
+				F8D3E7982062F1B900CD351C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F8D3E76E2062F1B900CD351C /* Project object */;
+}
