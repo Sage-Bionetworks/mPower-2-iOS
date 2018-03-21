@@ -32,8 +32,14 @@
 //
 
 import UIKit
+import MotorControl
+import ResearchStack2
+import ResearchStack2UI
 
-class ViewController: UIViewController {
+class ViewController: UITableViewController {
+    
+    // TODO: syoung 03/21/2018 Add task groups and task info objects here.
+    let taskGroups: [RSDTaskGroup] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +50,35 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    // MARK: Table data source
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return self.taskGroups.count
+    }
 
-
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.taskGroups[section].tasks.count
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return self.taskGroups[section].title
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let taskInfo = taskGroups[indexPath.section].tasks[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "BasicCell", for: indexPath)
+        cell.textLabel?.text = taskInfo.title ?? taskInfo.identifier
+        return cell
+    }
+    
+    // MARK: Table delegate
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let taskInfo = taskGroups[indexPath.section].tasks[indexPath.row]
+        guard let taskPath = taskGroups[indexPath.section].instantiateTaskPath(for: taskInfo) else { return }
+        let vc = RSDTaskViewController(taskPath: taskPath)
+        self.present(vc, animated: true, completion: nil)
+    }
 }
 
