@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F82AE7B62063160B00952D74 /* UIColor+mPowerTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82AE7B52063160B00952D74 /* UIColor+mPowerTheme.swift */; };
 		F8D3E77A2062F1B900CD351C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D3E7792062F1B900CD351C /* AppDelegate.swift */; };
 		F8D3E77C2062F1B900CD351C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D3E77B2062F1B900CD351C /* ViewController.swift */; };
 		F8D3E77F2062F1B900CD351C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E77D2062F1B900CD351C /* Main.storyboard */; };
@@ -214,6 +215,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F82AE7B52063160B00952D74 /* UIColor+mPowerTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+mPowerTheme.swift"; sourceTree = "<group>"; };
 		F8D3E7762062F1B900CD351C /* mPower2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mPower2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8D3E7792062F1B900CD351C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F8D3E77B2062F1B900CD351C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -278,6 +280,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F82AE79F206315B900952D74 /* Styleguide */ = {
+			isa = PBXGroup;
+			children = (
+				F82AE7B52063160B00952D74 /* UIColor+mPowerTheme.swift */,
+			);
+			name = Styleguide;
+			sourceTree = "<group>";
+		};
 		F8D3E76D2062F1B900CD351C = {
 			isa = PBXGroup;
 			children = (
@@ -309,6 +319,7 @@
 				F8D3E77D2062F1B900CD351C /* Main.storyboard */,
 				F8D3E7822062F1B900CD351C /* LaunchScreen.storyboard */,
 				F8D3E7802062F1B900CD351C /* Assets.xcassets */,
+				F82AE79F206315B900952D74 /* Styleguide */,
 				F8D3E7F52062F9ED00CD351C /* Support Files */,
 			);
 			path = mPower2;
@@ -734,6 +745,7 @@
 			files = (
 				F8D3E77C2062F1B900CD351C /* ViewController.swift in Sources */,
 				F8D3E77A2062F1B900CD351C /* AppDelegate.swift in Sources */,
+				F82AE7B62063160B00952D74 /* UIColor+mPowerTheme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
