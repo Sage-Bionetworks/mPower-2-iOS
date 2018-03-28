@@ -13,6 +13,7 @@
 		B5FA25FC206985E600A4FF3D /* ResearchStack2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7CD2062F28500CD351C /* ResearchStack2.framework */; };
 		B5FA25FD206985FE00A4FF3D /* ResearchStack2UI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7DE2062F28F00CD351C /* ResearchStack2UI.framework */; };
 		B5FA25FF2069867C00A4FF3D /* Walk_And_Balance.json in Resources */ = {isa = PBXBuildFile; fileRef = B5FA25FE2069867C00A4FF3D /* Walk_And_Balance.json */; };
+		F82AE7B62063160B00952D74 /* UIColor+mPowerTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82AE7B52063160B00952D74 /* UIColor+mPowerTheme.swift */; };
 		F8D3E77A2062F1B900CD351C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D3E7792062F1B900CD351C /* AppDelegate.swift */; };
 		F8D3E77C2062F1B900CD351C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D3E77B2062F1B900CD351C /* MainViewController.swift */; };
 		F8D3E77F2062F1B900CD351C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E77D2062F1B900CD351C /* Main.storyboard */; };
@@ -224,6 +225,7 @@
 		B5386FBE206AF30C005A0FAC /* MCTTaskInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTTaskInfo.swift; sourceTree = "<group>"; };
 		B5386FC0206B0211005A0FAC /* MCTFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTFactory.swift; sourceTree = "<group>"; };
 		B5FA25FE2069867C00A4FF3D /* Walk_And_Balance.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Walk_And_Balance.json; sourceTree = "<group>"; };
+		F82AE7B52063160B00952D74 /* UIColor+mPowerTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+mPowerTheme.swift"; sourceTree = "<group>"; };
 		F8D3E7762062F1B900CD351C /* mPower2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mPower2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8D3E7792062F1B900CD351C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F8D3E77B2062F1B900CD351C /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -299,6 +301,14 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		F82AE79F206315B900952D74 /* Styleguide */ = {
+			isa = PBXGroup;
+			children = (
+				F82AE7B52063160B00952D74 /* UIColor+mPowerTheme.swift */,
+			);
+			name = Styleguide;
+			sourceTree = "<group>";
+		};
 		F8D3E76D2062F1B900CD351C = {
 			isa = PBXGroup;
 			children = (
@@ -330,6 +340,7 @@
 				F8D3E77D2062F1B900CD351C /* Main.storyboard */,
 				F8D3E7822062F1B900CD351C /* LaunchScreen.storyboard */,
 				F8D3E7802062F1B900CD351C /* Assets.xcassets */,
+				F82AE79F206315B900952D74 /* Styleguide */,
 				F8D3E7F52062F9ED00CD351C /* Support Files */,
 			);
 			path = mPower2;
@@ -761,6 +772,7 @@
 			files = (
 				F8D3E77C2062F1B900CD351C /* MainViewController.swift in Sources */,
 				F8D3E77A2062F1B900CD351C /* AppDelegate.swift in Sources */,
+				F82AE7B62063160B00952D74 /* UIColor+mPowerTheme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
