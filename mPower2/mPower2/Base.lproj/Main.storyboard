@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Table View Controller-->
+        <!--Tasks-->
         <scene sceneID="GAe-dT-SJg">
             <objects>
-                <tableViewController id="XHc-2E-8eb" sceneMemberID="viewController">
+                <tableViewController id="XHc-2E-8eb" customClass="MainViewController" customModule="mPower2" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="KAD-dE-iC2">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -46,7 +46,7 @@
                             <outlet property="delegate" destination="XHc-2E-8eb" id="1kI-ra-bky"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="tYI-Mt-Wdz"/>
+                    <navigationItem key="navigationItem" title="Tasks" id="tYI-Mt-Wdz"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0mE-3n-3hT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
