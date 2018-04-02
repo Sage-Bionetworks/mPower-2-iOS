@@ -36,13 +36,18 @@ import MotorControl
 import ResearchStack2
 import ResearchStack2UI
 
-class ViewController: UITableViewController {
+class MainViewController: UITableViewController, RSDTaskViewControllerDelegate {
     
     // TODO: syoung 03/21/2018 Add task groups and task info objects here.
-    let taskGroups: [RSDTaskGroup] = []
+    let taskGroups: [RSDTaskGroup] = {
+        let taskInfos = MCTTaskIdentifier.all().map { MCTTaskInfo($0) }
+        let taskGroup = RSDTaskGroupObject(with: "tasks", tasks: taskInfos)
+        return [taskGroup]
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -75,10 +80,33 @@ class ViewController: UITableViewController {
     // MARK: Table delegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let taskInfo = taskGroups[indexPath.section].tasks[indexPath.row]
-        guard let taskPath = taskGroups[indexPath.section].instantiateTaskPath(for: taskInfo) else { return }
+        guard let taskInfo = taskGroups[indexPath.section].tasks[indexPath.row] as? MCTTaskInfo else { return }
+        let taskPath = RSDTaskPath(task: taskInfo.task)
         let vc = RSDTaskViewController(taskPath: taskPath)
+        vc.delegate = self
         self.present(vc, animated: true, completion: nil)
     }
+    
+    func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
+        // dismiss the view controller
+        (taskController as? UIViewController)?.dismiss(animated: true) {
+        }
+        
+        print("\n\n=== Completed: \(reason) error:\(String(describing: error))")
+        print(taskController.taskPath.result)
+    }
+    
+    func taskController(_ taskController: RSDTaskController, readyToSave taskPath: RSDTaskPath) {
+        
+    }
+    
+    func taskController(_ taskController: RSDTaskController, asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController? {
+        return nil
+    }
+    
+    func taskViewController(_ taskViewController: UIViewController, shouldShowTaskInfoFor step: Any) -> Bool {
+        return false
+    }
+    
 }
 
