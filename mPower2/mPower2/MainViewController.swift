@@ -38,23 +38,21 @@ import ResearchStack2UI
 
 class MainViewController: UITableViewController, RSDTaskViewControllerDelegate {
     
-    // TODO: syoung 03/21/2018 Add task groups and task info objects here.
     let taskGroups: [RSDTaskGroup] = {
-        let taskInfos = MCTTaskIdentifier.all().map { MCTTaskInfo($0) }
-        let taskGroup = RSDTaskGroupObject(with: "tasks", tasks: taskInfos)
-        return [taskGroup]
-    }()
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
         
-        // Do any additional setup after loading the view, typically from a nib.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+        let activeTaskGroup : RSDTaskGroup = {
+            let taskInfos = MCTTaskIdentifier.all().map { MCTTaskInfo($0) }
+            return RSDTaskGroupObject(with: "Measuring", tasks: taskInfos)
+        }()
+        let trackingTaskGroup : RSDTaskGroup = {
+            var taskInfo = RSDTaskInfoObject(with: "Triggers")
+            taskInfo.title = "Triggers"
+            taskInfo.resourceTransformer = RSDResourceTransformerObject(resourceName: "Triggers")
+            return RSDTaskGroupObject(with: "Tracking", tasks: [taskInfo])
+        }()
+        
+        return [trackingTaskGroup, activeTaskGroup]
+    }()
     
     // MARK: Table data source
     
@@ -80,8 +78,9 @@ class MainViewController: UITableViewController, RSDTaskViewControllerDelegate {
     // MARK: Table delegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let taskInfo = taskGroups[indexPath.section].tasks[indexPath.row] as? MCTTaskInfo else { return }
-        let taskPath = RSDTaskPath(task: taskInfo.task)
+        let taskGroup = taskGroups[indexPath.section]
+        let taskInfo = taskGroup.tasks[indexPath.row]
+        guard let taskPath = taskGroup.instantiateTaskPath(for: taskInfo) else { return }
         let vc = RSDTaskViewController(taskPath: taskPath)
         vc.delegate = self
         self.present(vc, animated: true, completion: nil)
