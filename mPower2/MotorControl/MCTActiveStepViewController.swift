@@ -1,5 +1,5 @@
 //
-//  MotorControl.h
+//  MCTActiveStepViewController.swift
 //  MotorControl
 //
 //  Copyright © 2018 Sage Bionetworks. All rights reserved.
@@ -31,14 +31,40 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-@import UIKit;
-@import ResearchStack2;
-@import ResearchStack2UI;
+import Foundation
 
-//! Project version number for MotorControl.
-FOUNDATION_EXPORT double MotorControlVersionNumber;
-
-//! Project version string for MotorControl.
-FOUNDATION_EXPORT const unsigned char MotorControlVersionString[];
-
-
+open class MCTActiveStepViewController : RSDActiveStepViewController {
+    
+    @IBOutlet weak var restartButton: RSDRoundedButton!
+    
+    /// Formatter for the countdown label.
+    /// Overriden to only display seconds.
+    override lazy open var countdownFormatter : DateComponentsFormatter = {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.second]
+        formatter.unitsStyle = .positional
+        formatter.zeroFormattingBehavior = [ .pad ]
+        return formatter
+    }()
+    
+    /// Override viewWillAppear to also set the unitLabel text.
+    override open func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // Attempted to split the DataComponentsFormatter into a number and a unit label, however
+        // DateComponentsFormatter doesn't actually translate into other languages.
+        self.unitLabel?.text = "SECONDS REMAINING" // TODO rkolmos 03/30/2018 localize
+        (self.step as? RSDActiveUIStepObject)?.nextStepIdentifier = nil
+    }
+    
+    @IBAction func restartButtonTapped(_ sender: Any) {
+        skipForward()
+    }
+    
+    /// Override skip forward to skip backward to the walk step.
+    override open func skipForward() {
+        // TODO: rkolmos 04/05/2018 refactor ResearchStack2 to support linking an RSDUIAction to navigation
+        guard let activeStep = self.step as? RSDActiveUIStepObject else { return }
+        activeStep.nextStepIdentifier = "walk"
+        super.skipForward()
+    }
+}

@@ -64,6 +64,25 @@ extension UIColor {
         return UIColor.butterscotch600
     }
 
+    // MARK: Countdown Dial
+    
+    @objc open class var rsd_dialInnerBackgroundLightStyle: UIColor {
+        return primaryTintColor
+    }
+    
+    @objc open class var rsd_dialInnerBakcground: UIColor {
+        return primaryTintColor
+    }
+    
+    // MARK: Rounded Button Text
+    
+    @objc open class var rsd_roundedButtonText: UIColor {
+        return UIColor.appTextDark
+    }
+    
+    @objc open class var rsd_roundedButtonTextLightStyle: UIColor {
+        return UIColor.appTextDark
+    }
     
     // MARK: Royal Purple
     

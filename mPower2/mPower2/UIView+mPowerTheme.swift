@@ -1,6 +1,6 @@
 //
-//  MotorControl.h
-//  MotorControl
+//  UIView+mPowerTheme.swift
+//  mPower2
 //
 //  Copyright © 2018 Sage Bionetworks. All rights reserved.
 //
@@ -31,14 +31,31 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-@import UIKit;
-@import ResearchStack2;
-@import ResearchStack2UI;
+import Foundation
+import UIKit
 
-//! Project version number for MotorControl.
-FOUNDATION_EXPORT double MotorControlVersionNumber;
-
-//! Project version string for MotorControl.
-FOUNDATION_EXPORT const unsigned char MotorControlVersionString[];
-
+extension UIView {
+    
+    /// Controls whether the ends of a progress bar are rounded.
+    /// Overrides = true
+    /// - seealso: `RSDStepProgressView`
+    @objc open class var rsd_progressViewRoundedEnds : Bool {
+        return true
+    }
+    
+    /// Controls whether the progess view label is uppercase.
+    /// Overrides = true
+    /// - seealso: `RSDStepProgressView`
+    @objc open class var rsd_progressViewStepLabelUppercase : Bool {
+        return true
+    }
+    
+    /// Controls whether the progess current step value is bolded.
+    /// Overrides = false
+    /// - seealso: `RSDStepProgressView`
+    @objc open class var rsd_progressViewCurrentStepBolded : Bool {
+        return false
+    }
+    
+}
 

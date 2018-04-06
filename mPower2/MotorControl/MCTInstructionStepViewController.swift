@@ -1,5 +1,5 @@
 //
-//  MotorControl.h
+//  MCTInstructionStepViewController.swift
 //  MotorControl
 //
 //  Copyright © 2018 Sage Bionetworks. All rights reserved.
@@ -31,14 +31,30 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-@import UIKit;
-@import ResearchStack2;
-@import ResearchStack2UI;
+import Foundation
 
-//! Project version number for MotorControl.
-FOUNDATION_EXPORT double MotorControlVersionNumber;
-
-//! Project version string for MotorControl.
-FOUNDATION_EXPORT const unsigned char MotorControlVersionString[];
-
-
+open class MCTInstructionStepViewController : RSDStepViewController {
+    
+    /// The constraint for the topMarginBackground image placement.
+    @IBOutlet weak var topMarginBackgroundConstraint: NSLayoutConstraint!
+    
+    /// The contraint for the topBackground image placement.
+    @IBOutlet weak var topBackgroundConstraint: NSLayoutConstraint!
+    
+    /// Override viewDidLoad() to choose the appropriate constraint between
+    /// topMarginBackground and topBackground. This was done because some images
+    /// need to be constrained to the top of the phone, but others need to be constrained
+    /// to the safe area to ensure things like people's heads don't get chopped off.
+    override open func viewDidLoad() {
+        super.viewDidLoad()
+        guard let placementType = (self.step as? RSDUIStepObject)?.imageTheme?.placementType else { return }
+        switch placementType {
+        case .topMarginBackground:
+            topBackgroundConstraint.isActive = false
+            topMarginBackgroundConstraint.isActive = true
+        default:
+            topMarginBackgroundConstraint.isActive = false
+            topBackgroundConstraint.isActive = true
+        } 
+    }
+}

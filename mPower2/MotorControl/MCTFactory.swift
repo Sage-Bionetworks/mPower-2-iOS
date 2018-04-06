@@ -33,6 +33,19 @@
 
 import Foundation
 
-open class MCTFactory : RSDFactory {
+extension RSDStepType {
     
+}
+
+open class MCTFactory : RSDFactory {
+        
+    /// Override the base factory to vend the MCTOverviewStepObject.
+    override open func decodeStep(from decoder: Decoder, with type: RSDStepType) throws -> RSDStep? {
+        switch type {
+        case .overview:
+            return try MCTOverviewStepObject(from: decoder)
+        default:
+            return try super.decodeStep(from: decoder, with: type)
+        }
+    }
 }
