@@ -31,6 +31,10 @@
 		F80CB9FD207D3AD800B4EE5D /* MotorControl.strings in Resources */ = {isa = PBXBuildFile; fileRef = F80CB9FC207D3AD800B4EE5D /* MotorControl.strings */; };
 		F8188FB62072F430009AC215 /* Triggers.json in Resources */ = {isa = PBXBuildFile; fileRef = F8188FB52072F430009AC215 /* Triggers.json */; };
 		F82AE7B62063160B00952D74 /* UIColor+mPowerTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82AE7B52063160B00952D74 /* UIColor+mPowerTheme.swift */; };
+		F884198F207EB4E400028A2B /* TappingSectionStep.json in Resources */ = {isa = PBXBuildFile; fileRef = F8841979207EB4E400028A2B /* TappingSectionStep.json */; };
+		F8841993207EB77000028A2B /* TremorSectionStep.json in Resources */ = {isa = PBXBuildFile; fileRef = F8841992207EB77000028A2B /* TremorSectionStep.json */; };
+		F88419B5207EC14400028A2B /* ResourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88419B4207EC14400028A2B /* ResourceTests.swift */; };
+		F88419CF207EC22B00028A2B /* NSLocale+UnitTest.m in Sources */ = {isa = PBXBuildFile; fileRef = F88419CE207EC22B00028A2B /* NSLocale+UnitTest.m */; };
 		F8D3E77A2062F1B900CD351C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D3E7792062F1B900CD351C /* AppDelegate.swift */; };
 		F8D3E77C2062F1B900CD351C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D3E77B2062F1B900CD351C /* MainViewController.swift */; };
 		F8D3E77F2062F1B900CD351C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E77D2062F1B900CD351C /* Main.storyboard */; };
@@ -260,6 +264,12 @@
 		F80CB9FC207D3AD800B4EE5D /* MotorControl.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = MotorControl.strings; sourceTree = "<group>"; };
 		F8188FB52072F430009AC215 /* Triggers.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Triggers.json; sourceTree = "<group>"; };
 		F82AE7B52063160B00952D74 /* UIColor+mPowerTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+mPowerTheme.swift"; sourceTree = "<group>"; };
+		F8841979207EB4E400028A2B /* TappingSectionStep.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TappingSectionStep.json; sourceTree = "<group>"; };
+		F8841992207EB77000028A2B /* TremorSectionStep.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TremorSectionStep.json; sourceTree = "<group>"; };
+		F88419B4207EC14400028A2B /* ResourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceTests.swift; sourceTree = "<group>"; };
+		F88419CC207EC22A00028A2B /* MotorControlTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MotorControlTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		F88419CD207EC22B00028A2B /* NSLocale+UnitTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSLocale+UnitTest.h"; path = "../../../../CardiorespiratoryFitness-iOS/CardiorespiratoryFitness/CardiorespiratoryFitnessTests/Mock Objects/NSLocale+UnitTest.h"; sourceTree = "<group>"; };
+		F88419CE207EC22B00028A2B /* NSLocale+UnitTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLocale+UnitTest.m"; sourceTree = "<group>"; };
 		F8D3E7762062F1B900CD351C /* mPower2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mPower2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8D3E7792062F1B900CD351C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F8D3E77B2062F1B900CD351C /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -352,7 +362,9 @@
 			children = (
 				B587ABE1206C57DB00542548 /* ActiveTaskSteps.storyboard */,
 				B5DC838C2076B5FD00DEE4A2 /* Finger_Tapping.json */,
+				F8841979207EB4E400028A2B /* TappingSectionStep.json */,
 				B5581EF420754A7D00F224C6 /* Tremor.json */,
+				F8841992207EB77000028A2B /* TremorSectionStep.json */,
 				B5FA25FE2069867C00A4FF3D /* Walk_And_Balance.json */,
 				B5386FA5206ABD11005A0FAC /* Images.xcassets */,
 				F80CB9FC207D3AD800B4EE5D /* MotorControl.strings */,
@@ -386,6 +398,16 @@
 				B587AC07206D696800542548 /* UIView+mPowerTheme.swift */,
 			);
 			name = Styleguide;
+			sourceTree = "<group>";
+		};
+		F88419CB207EC15800028A2B /* Mock Objects */ = {
+			isa = PBXGroup;
+			children = (
+				F88419CD207EC22B00028A2B /* NSLocale+UnitTest.h */,
+				F88419CE207EC22B00028A2B /* NSLocale+UnitTest.m */,
+				F88419CC207EC22A00028A2B /* MotorControlTests-Bridging-Header.h */,
+			);
+			path = "Mock Objects";
 			sourceTree = "<group>";
 		};
 		F8D3E76D2062F1B900CD351C = {
@@ -508,7 +530,7 @@
 				B5386FBE206AF30C005A0FAC /* MCTTaskInfo.swift */,
 				B56E4D68207D31F50009C489 /* ViewControllers */,
 				B56E4D67207D31D80009C489 /* StepObjects */,
-                F80CB9ED207D2D9D00B4EE5D /* Tapping */,
+				F80CB9ED207D2D9D00B4EE5D /* Tapping */,
 				B5FA25FB2069856700A4FF3D /* Resources */,
 			);
 			path = MotorControl;
@@ -517,9 +539,11 @@
 		F8D3E83B2063072200CD351C /* MotorControlTests */ = {
 			isa = PBXGroup;
 			children = (
+				F88419CB207EC15800028A2B /* Mock Objects */,
 				F8D3E83C2063072200CD351C /* MotorControlTests.swift */,
 				B56E4D0720781AB50009C489 /* NavigationTestObjects.swift */,
 				B56E4D0520781A640009C489 /* NavigationTests.swift */,
+				F88419B4207EC14400028A2B /* ResourceTests.swift */,
 				F8D3E83E2063072200CD351C /* Info.plist */,
 			);
 			path = MotorControlTests;
@@ -657,6 +681,7 @@
 					};
 					F8D3E8342063072200CD351C = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 0930;
 						ProvisioningStyle = Automatic;
 						TestTargetID = F8D3E7752062F1B900CD351C;
 					};
@@ -835,6 +860,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F8841993207EB77000028A2B /* TremorSectionStep.json in Resources */,
+				F884198F207EB4E400028A2B /* TappingSectionStep.json in Resources */,
 				B5581F0A20754A7D00F224C6 /* Tremor.json in Resources */,
 				F80CB9FD207D3AD800B4EE5D /* MotorControl.strings in Resources */,
 				B5FA25FF2069867C00A4FF3D /* Walk_And_Balance.json in Resources */,
@@ -896,6 +923,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F8D3E83D2063072200CD351C /* MotorControlTests.swift in Sources */,
+				F88419B5207EC14400028A2B /* ResourceTests.swift in Sources */,
+				F88419CF207EC22B00028A2B /* NSLocale+UnitTest.m in Sources */,
 				B56E4D0620781A640009C489 /* NavigationTests.swift in Sources */,
 				B56E4D0820781AB50009C489 /* NavigationTestObjects.swift in Sources */,
 			);
@@ -1201,12 +1230,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KA9Z8R6M6K;
 				INFOPLIST_FILE = MotorControlTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.MotorControlTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MotorControlTests/Mock Objects/MotorControlTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/mPower2.app/mPower2";
@@ -1217,12 +1249,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KA9Z8R6M6K;
 				INFOPLIST_FILE = MotorControlTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.MotorControlTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MotorControlTests/Mock Objects/MotorControlTests-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/mPower2.app/mPower2";
