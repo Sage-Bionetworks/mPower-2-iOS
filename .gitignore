@@ -73,3 +73,4 @@ vendor/
 
 # travis generated files
 travis*.log
+IDEWorkspaceChecks.plist
