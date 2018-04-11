@@ -2,8 +2,31 @@
 //  NavigationTests.swift
 //  MotorControlTests
 //
-//  Created by Robert Kolmos on 4/6/18.
-//  Copyright © 2018 Sage Bionetworks. All rights reserved.
+// Redistribution and use in source and binary forms, with or without modification,
+// are permitted provided that the following conditions are met:
+//
+// 1.  Redistributions of source code must retain the above copyright notice, this
+// list of conditions and the following disclaimer.
+//
+// 2.  Redistributions in binary form must reproduce the above copyright notice,
+// this list of conditions and the following disclaimer in the documentation and/or
+// other materials provided with the distribution.
+//
+// 3.  Neither the name of the copyright holder(s) nor the names of any contributors
+// may be used to endorse or promote products derived from this software without
+// specific prior written permission. No license is granted to the trademarks of
+// the copyright holders even if such marks are included in this software.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
+// FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+// DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+// SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+// CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+// OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
 @testable import MotorControl
@@ -20,12 +43,10 @@ class NavigationTests: XCTestCase {
         let firstSteps : [RSDStep] = TestStep.steps(from: ["overview", "instruction"])
         self.steps.append(contentsOf: firstSteps)
         let leftSectionSteps : [RSDStep] = TestStep.steps(from: ["leftInstruction", "leftActive"])
-        let leftSectionObject : RSDSectionStepObject = RSDSectionStepObject(identifier: "left", steps: leftSectionSteps)
-        let leftSection = MCTSkipableSectionStepObject(with: leftSectionObject)
+        let leftSection : RSDSectionStepObject = RSDSectionStepObject(identifier: "left", steps: leftSectionSteps)
         self.steps.append(leftSection)
         let rightSectionSteps : [RSDStep] = TestStep.steps(from: ["rightInstruction", "rightActive"])
-        let rightSectionObject : RSDSectionStepObject = RSDSectionStepObject(identifier: "right", steps: rightSectionSteps)
-        let rightSection = MCTSkipableSectionStepObject(with: rightSectionObject)
+        let rightSection : RSDSectionStepObject = RSDSectionStepObject(identifier: "right", steps: rightSectionSteps)
         self.steps.append(rightSection)
         let finalSteps : [RSDStep] = TestStep.steps(from: ["completion"])
         self.steps.append(contentsOf: finalSteps)
@@ -74,8 +95,10 @@ class NavigationTests: XCTestCase {
         self.steps = []
         let firstSteps : [RSDStep] = TestStep.steps(from: ["first"])
         self.steps.append(contentsOf: firstSteps)
-        self.steps.append(MCTInstructionStepObject(identifier: "instructionFirstRunOnly", type: .instruction, isFirstRunOnly: true))
-        self.steps.append(MCTInstructionStepObject(identifier: "instructionNotFirstRunOnly", type: .instruction, isFirstRunOnly: false))
+        let firstRunOnly = MCTInstructionStepObject(identifier: "instructionFirstRunOnly", type: .instruction)
+        firstRunOnly.isFirstRunOnly = true
+        self.steps.append(firstRunOnly)
+        self.steps.append(MCTInstructionStepObject(identifier: "instructionNotFirstRunOnly", type: .instruction))
         let finalSteps : [RSDStep] = TestStep.steps(from: ["completion"])
         self.steps.append(contentsOf: finalSteps)
         self.taskController = TestTaskController()
@@ -90,6 +113,10 @@ class NavigationTests: XCTestCase {
         super.setUp()
     }
     
+    private func _whichHand(step: RSDStep) -> String? {
+        return TestStepController(taskController: self.taskController, step: step).whichHand()?.rawValue
+    }
+    
     public func testSkippableSection_Left() {
         self.taskController.handSelection = ["left"]
         _insertHandSelectionResult(for: self.taskController)
@@ -99,11 +126,13 @@ class NavigationTests: XCTestCase {
         var stepTo = self.taskController.navigate_calledTo
         XCTAssertNotNil(stepTo)
         XCTAssertEqual(stepTo!.identifier, "leftInstruction")
+        XCTAssertEqual(_whichHand(step: stepTo!), "left")
         // Go forward into the leftActive step
         self.taskController.goForward()
         stepTo = self.taskController.navigate_calledTo
         XCTAssertNotNil(stepTo)
         XCTAssertEqual(stepTo!.identifier, "leftActive")
+        XCTAssertEqual(_whichHand(step: stepTo!), "left")
         // Go forward to the completion step
         self.taskController.goForward()
         stepTo = self.taskController.navigate_calledTo
@@ -120,11 +149,13 @@ class NavigationTests: XCTestCase {
         var stepTo = self.taskController.navigate_calledTo
         XCTAssertNotNil(stepTo)
         XCTAssertEqual(stepTo!.identifier, "rightInstruction")
+        XCTAssertEqual(_whichHand(step: stepTo!), "right")
         // Go forward into the rightActive step
         self.taskController.goForward()
         stepTo = self.taskController.navigate_calledTo
         XCTAssertNotNil(stepTo)
         XCTAssertEqual(stepTo!.identifier, "rightActive")
+        XCTAssertEqual(_whichHand(step: stepTo!), "right")
         // Go forward to the completion step
         self.taskController.goForward()
         stepTo = self.taskController.navigate_calledTo
@@ -141,21 +172,25 @@ class NavigationTests: XCTestCase {
         var stepTo = self.taskController.navigate_calledTo
         XCTAssertNotNil(stepTo)
         XCTAssertEqual(stepTo!.identifier, "leftInstruction")
+        XCTAssertEqual(_whichHand(step: stepTo!), "left")
         // Go forward into the leftActive step
         self.taskController.goForward()
         stepTo = self.taskController.navigate_calledTo
         XCTAssertNotNil(stepTo)
         XCTAssertEqual(stepTo!.identifier, "leftActive")
+        XCTAssertEqual(_whichHand(step: stepTo!), "left")
         // Go forward to the rightInstruction step
         self.taskController.goForward()
         stepTo = self.taskController.navigate_calledTo
         XCTAssertNotNil(stepTo)
         XCTAssertEqual(stepTo!.identifier, "rightInstruction")
+        XCTAssertEqual(_whichHand(step: stepTo!), "right")
         // Go forward into the rightActive step
         self.taskController.goForward()
         stepTo = self.taskController.navigate_calledTo
         XCTAssertNotNil(stepTo)
         XCTAssertEqual(stepTo!.identifier, "rightActive")
+        XCTAssertEqual(_whichHand(step: stepTo!), "right")
         // Go forward to the completion step
         self.taskController.goForward()
         stepTo = self.taskController.navigate_calledTo
@@ -172,21 +207,25 @@ class NavigationTests: XCTestCase {
         var stepTo = self.taskController.navigate_calledTo
         XCTAssertNotNil(stepTo)
         XCTAssertEqual(stepTo!.identifier, "rightInstruction")
+        XCTAssertEqual(_whichHand(step: stepTo!), "right")
         // Go forward into the rightActive step
         self.taskController.goForward()
         stepTo = self.taskController.navigate_calledTo
         XCTAssertNotNil(stepTo)
         XCTAssertEqual(stepTo!.identifier, "rightActive")
+        XCTAssertEqual(_whichHand(step: stepTo!), "right")
         // Go forward to the leftInstruction step
         self.taskController.goForward()
         stepTo = self.taskController.navigate_calledTo
         XCTAssertNotNil(stepTo)
         XCTAssertEqual(stepTo!.identifier, "leftInstruction")
+        XCTAssertEqual(_whichHand(step: stepTo!), "left")
         // Go forward into the leftActive step
         self.taskController.goForward()
         stepTo = self.taskController.navigate_calledTo
         XCTAssertNotNil(stepTo)
         XCTAssertEqual(stepTo!.identifier, "leftActive")
+        XCTAssertEqual(_whichHand(step: stepTo!), "left")
         // Go forward to the completion step
         self.taskController.goForward()
         stepTo = self.taskController.navigate_calledTo

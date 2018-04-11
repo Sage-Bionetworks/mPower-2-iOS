@@ -125,8 +125,16 @@ struct TestTask : RSDTask {
     }
 }
 
-class TestStepController: NSObject, RSDStepController {
+class TestStepController: NSObject, MCTHandStepController {
 
+    var imageView: UIImageView? {
+        return nil
+    }
+    
+    var isFirstAppearance: Bool {
+        return false
+    }
+    
     var taskController: RSDTaskController!
     var step: RSDStep!
     var hasStepBefore: Bool = true
@@ -157,6 +165,11 @@ class TestStepController: NSObject, RSDStepController {
     
     public func cancel() {
         cancel_called = true
+    }
+    
+    public init(taskController: RSDTaskController, step: RSDStep) {
+        self.taskController = taskController
+        self.step = step
     }
 }
 
