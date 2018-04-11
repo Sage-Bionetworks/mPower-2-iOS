@@ -33,8 +33,14 @@
 
 import Foundation
 
-open class MCTActiveStepViewController : RSDActiveStepViewController {
+open class MCTActiveStepViewController : RSDActiveStepViewController, MCTHandStepController {
     
+    /// Retuns the imageView, in this case the image from the navigationHeader.
+    public var imageView: UIImageView? {
+        return self.navigationHeader?.imageView
+    }
+    
+    /// The restart test button.
     @IBOutlet weak var restartButton: RSDRoundedButton!
     
     /// Formatter for the countdown label.
@@ -54,6 +60,7 @@ open class MCTActiveStepViewController : RSDActiveStepViewController {
         // DateComponentsFormatter doesn't actually translate into other languages.
         self.unitLabel?.text = "SECONDS REMAINING" // TODO rkolmos 03/30/2018 localize
         (self.step as? RSDActiveUIStepObject)?.nextStepIdentifier = nil
+        self.updateImage()
     }
     
     @IBAction func restartButtonTapped(_ sender: Any) {

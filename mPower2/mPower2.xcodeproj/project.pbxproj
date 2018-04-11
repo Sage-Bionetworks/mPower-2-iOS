@@ -7,15 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B508B31C2076ECA3001645CF /* MCTHandSelectionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B508B31B2076ECA3001645CF /* MCTHandSelectionStepObject.swift */; };
+		B508B39920772D76001645CF /* MCTSkippableSectionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B508B39820772D76001645CF /* MCTSkippableSectionStepObject.swift */; };
 		B5386FA6206ABD11005A0FAC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5386FA5206ABD11005A0FAC /* Images.xcassets */; };
 		B5386FBF206AF30C005A0FAC /* MCTTaskInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5386FBE206AF30C005A0FAC /* MCTTaskInfo.swift */; };
 		B5386FC1206B0211005A0FAC /* MCTFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5386FC0206B0211005A0FAC /* MCTFactory.swift */; };
+		B5581F0A20754A7D00F224C6 /* Tremor.json in Resources */ = {isa = PBXBuildFile; fileRef = B5581EF420754A7D00F224C6 /* Tremor.json */; };
+		B56E4D0620781A640009C489 /* NavigationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56E4D0520781A640009C489 /* NavigationTests.swift */; };
+		B56E4D0820781AB50009C489 /* NavigationTestObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56E4D0720781AB50009C489 /* NavigationTestObjects.swift */; };
+		B56E4D0A207BCA110009C489 /* MCTInstructionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56E4D09207BCA110009C489 /* MCTInstructionStepObject.swift */; };
 		B587ABE2206C57DB00542548 /* ActiveTaskSteps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B587ABE1206C57DB00542548 /* ActiveTaskSteps.storyboard */; };
 		B587AC08206D696800542548 /* UIView+mPowerTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B587AC07206D696800542548 /* UIView+mPowerTheme.swift */; };
 		B59FC273206EA445002BFDB9 /* MCTActiveStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59FC272206EA445002BFDB9 /* MCTActiveStepViewController.swift */; };
 		B59FC28C20728BC7002BFDB9 /* MCTOverviewStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59FC28B20728BC7002BFDB9 /* MCTOverviewStepViewController.swift */; };
 		B59FC2AA2073DD81002BFDB9 /* MCTOverviewStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59FC2A92073DD81002BFDB9 /* MCTOverviewStepObject.swift */; };
 		B5D822F7207449D400C03F3C /* MCTInstructionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D822F6207449D400C03F3C /* MCTInstructionStepViewController.swift */; };
+		B5DC83A22076B5FD00DEE4A2 /* Finger_Tapping.json in Resources */ = {isa = PBXBuildFile; fileRef = B5DC838C2076B5FD00DEE4A2 /* Finger_Tapping.json */; };
 		B5FA25FC206985E600A4FF3D /* ResearchStack2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7CD2062F28500CD351C /* ResearchStack2.framework */; };
 		B5FA25FD206985FE00A4FF3D /* ResearchStack2UI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7DE2062F28F00CD351C /* ResearchStack2UI.framework */; };
 		B5FA25FF2069867C00A4FF3D /* Walk_And_Balance.json in Resources */ = {isa = PBXBuildFile; fileRef = B5FA25FE2069867C00A4FF3D /* Walk_And_Balance.json */; };
@@ -228,15 +235,22 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B508B31B2076ECA3001645CF /* MCTHandSelectionStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTHandSelectionStepObject.swift; sourceTree = "<group>"; };
+		B508B39820772D76001645CF /* MCTSkippableSectionStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTSkippableSectionStepObject.swift; sourceTree = "<group>"; };
 		B5386FA5206ABD11005A0FAC /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B5386FBE206AF30C005A0FAC /* MCTTaskInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTTaskInfo.swift; sourceTree = "<group>"; };
 		B5386FC0206B0211005A0FAC /* MCTFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTFactory.swift; sourceTree = "<group>"; };
+		B5581EF420754A7D00F224C6 /* Tremor.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Tremor.json; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.javascript; };
+		B56E4D0520781A640009C489 /* NavigationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTests.swift; sourceTree = "<group>"; };
+		B56E4D0720781AB50009C489 /* NavigationTestObjects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationTestObjects.swift; sourceTree = "<group>"; };
+		B56E4D09207BCA110009C489 /* MCTInstructionStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTInstructionStepObject.swift; sourceTree = "<group>"; };
 		B587ABE1206C57DB00542548 /* ActiveTaskSteps.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ActiveTaskSteps.storyboard; sourceTree = "<group>"; };
 		B587AC07206D696800542548 /* UIView+mPowerTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+mPowerTheme.swift"; sourceTree = "<group>"; };
 		B59FC272206EA445002BFDB9 /* MCTActiveStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTActiveStepViewController.swift; sourceTree = "<group>"; };
 		B59FC28B20728BC7002BFDB9 /* MCTOverviewStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTOverviewStepViewController.swift; sourceTree = "<group>"; };
 		B59FC2A92073DD81002BFDB9 /* MCTOverviewStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTOverviewStepObject.swift; sourceTree = "<group>"; };
 		B5D822F6207449D400C03F3C /* MCTInstructionStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTInstructionStepViewController.swift; sourceTree = "<group>"; };
+		B5DC838C2076B5FD00DEE4A2 /* Finger_Tapping.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Finger_Tapping.json; sourceTree = "<group>"; };
 		B5FA25FE2069867C00A4FF3D /* Walk_And_Balance.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Walk_And_Balance.json; sourceTree = "<group>"; };
 		F8188FB52072F430009AC215 /* Triggers.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Triggers.json; sourceTree = "<group>"; };
 		F82AE7B52063160B00952D74 /* UIColor+mPowerTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+mPowerTheme.swift"; sourceTree = "<group>"; };
@@ -306,10 +320,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B56E4D67207D31D80009C489 /* StepObjects */ = {
+			isa = PBXGroup;
+			children = (
+				B508B31B2076ECA3001645CF /* MCTHandSelectionStepObject.swift */,
+				B56E4D09207BCA110009C489 /* MCTInstructionStepObject.swift */,
+				B59FC2A92073DD81002BFDB9 /* MCTOverviewStepObject.swift */,
+				B508B39820772D76001645CF /* MCTSkippableSectionStepObject.swift */,
+			);
+			path = StepObjects;
+			sourceTree = "<group>";
+		};
+		B56E4D68207D31F50009C489 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				B59FC272206EA445002BFDB9 /* MCTActiveStepViewController.swift */,
+				B5D822F6207449D400C03F3C /* MCTInstructionStepViewController.swift */,
+				B59FC28B20728BC7002BFDB9 /* MCTOverviewStepViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
 		B5FA25FB2069856700A4FF3D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
 				B587ABE1206C57DB00542548 /* ActiveTaskSteps.storyboard */,
+				B5DC838C2076B5FD00DEE4A2 /* Finger_Tapping.json */,
+				B5581EF420754A7D00F224C6 /* Tremor.json */,
 				B5FA25FE2069867C00A4FF3D /* Walk_And_Balance.json */,
 				B5386FA5206ABD11005A0FAC /* Images.xcassets */,
 			);
@@ -449,15 +486,13 @@
 		F8D3E82E2063072100CD351C /* MotorControl */ = {
 			isa = PBXGroup;
 			children = (
-				F8D3E82F2063072100CD351C /* MotorControl.h */,
-				B5386FBE206AF30C005A0FAC /* MCTTaskInfo.swift */,
-				B5386FC0206B0211005A0FAC /* MCTFactory.swift */,
-				B59FC2A92073DD81002BFDB9 /* MCTOverviewStepObject.swift */,
-				B59FC28B20728BC7002BFDB9 /* MCTOverviewStepViewController.swift */,
-				B5D822F6207449D400C03F3C /* MCTInstructionStepViewController.swift */,
-				B59FC272206EA445002BFDB9 /* MCTActiveStepViewController.swift */,
-				B5FA25FB2069856700A4FF3D /* Resources */,
 				F8D3E8302063072100CD351C /* Info.plist */,
+				F8D3E82F2063072100CD351C /* MotorControl.h */,
+				B5386FC0206B0211005A0FAC /* MCTFactory.swift */,
+				B5386FBE206AF30C005A0FAC /* MCTTaskInfo.swift */,
+				B56E4D68207D31F50009C489 /* ViewControllers */,
+				B56E4D67207D31D80009C489 /* StepObjects */,
+				B5FA25FB2069856700A4FF3D /* Resources */,
 			);
 			path = MotorControl;
 			sourceTree = "<group>";
@@ -466,6 +501,8 @@
 			isa = PBXGroup;
 			children = (
 				F8D3E83C2063072200CD351C /* MotorControlTests.swift */,
+				B56E4D0720781AB50009C489 /* NavigationTestObjects.swift */,
+				B56E4D0520781A640009C489 /* NavigationTests.swift */,
 				F8D3E83E2063072200CD351C /* Info.plist */,
 			);
 			path = MotorControlTests;
@@ -781,9 +818,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5581F0A20754A7D00F224C6 /* Tremor.json in Resources */,
 				B5FA25FF2069867C00A4FF3D /* Walk_And_Balance.json in Resources */,
 				B587ABE2206C57DB00542548 /* ActiveTaskSteps.storyboard in Resources */,
 				B5386FA6206ABD11005A0FAC /* Images.xcassets in Resources */,
+				B5DC83A22076B5FD00DEE4A2 /* Finger_Tapping.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -825,6 +864,9 @@
 				B5D822F7207449D400C03F3C /* MCTInstructionStepViewController.swift in Sources */,
 				B5386FBF206AF30C005A0FAC /* MCTTaskInfo.swift in Sources */,
 				B59FC2AA2073DD81002BFDB9 /* MCTOverviewStepObject.swift in Sources */,
+				B508B39920772D76001645CF /* MCTSkippableSectionStepObject.swift in Sources */,
+				B508B31C2076ECA3001645CF /* MCTHandSelectionStepObject.swift in Sources */,
+				B56E4D0A207BCA110009C489 /* MCTInstructionStepObject.swift in Sources */,
 				B5386FC1206B0211005A0FAC /* MCTFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -834,6 +876,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F8D3E83D2063072200CD351C /* MotorControlTests.swift in Sources */,
+				B56E4D0620781A640009C489 /* NavigationTests.swift in Sources */,
+				B56E4D0820781AB50009C489 /* NavigationTestObjects.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
