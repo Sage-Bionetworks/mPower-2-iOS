@@ -12,6 +12,7 @@
 		B5386FA6206ABD11005A0FAC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5386FA5206ABD11005A0FAC /* Images.xcassets */; };
 		B5386FBF206AF30C005A0FAC /* MCTTaskInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5386FBE206AF30C005A0FAC /* MCTTaskInfo.swift */; };
 		B5386FC1206B0211005A0FAC /* MCTFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5386FC0206B0211005A0FAC /* MCTFactory.swift */; };
+		B53FD159207EBCFC00FBCC85 /* MCTTapButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53FD158207EBCFC00FBCC85 /* MCTTapButton.swift */; };
 		B5581F0A20754A7D00F224C6 /* Tremor.json in Resources */ = {isa = PBXBuildFile; fileRef = B5581EF420754A7D00F224C6 /* Tremor.json */; };
 		B56E4D0620781A640009C489 /* NavigationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56E4D0520781A640009C489 /* NavigationTests.swift */; };
 		B56E4D0820781AB50009C489 /* NavigationTestObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56E4D0720781AB50009C489 /* NavigationTestObjects.swift */; };
@@ -247,6 +248,7 @@
 		B5386FA5206ABD11005A0FAC /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B5386FBE206AF30C005A0FAC /* MCTTaskInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTTaskInfo.swift; sourceTree = "<group>"; };
 		B5386FC0206B0211005A0FAC /* MCTFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTFactory.swift; sourceTree = "<group>"; };
+		B53FD158207EBCFC00FBCC85 /* MCTTapButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTTapButton.swift; sourceTree = "<group>"; };
 		B5581EF420754A7D00F224C6 /* Tremor.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Tremor.json; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.javascript; };
 		B56E4D0520781A640009C489 /* NavigationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTests.swift; sourceTree = "<group>"; };
 		B56E4D0720781AB50009C489 /* NavigationTestObjects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationTestObjects.swift; sourceTree = "<group>"; };
@@ -336,6 +338,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B53FD157207EBC8F00FBCC85 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B53FD158207EBCFC00FBCC85 /* MCTTapButton.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		B56E4D67207D31D80009C489 /* StepObjects */ = {
 			isa = PBXGroup;
 			children = (
@@ -353,6 +363,7 @@
 				B59FC272206EA445002BFDB9 /* MCTActiveStepViewController.swift */,
 				B5D822F6207449D400C03F3C /* MCTInstructionStepViewController.swift */,
 				B59FC28B20728BC7002BFDB9 /* MCTOverviewStepViewController.swift */,
+				F80CB9EB207D2D2300B4EE5D /* MCTTappingStepViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -372,13 +383,12 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		F80CB9ED207D2D9D00B4EE5D /* Tapping */ = {
+		F80CB9ED207D2D9D00B4EE5D /* ResultObjects */ = {
 			isa = PBXGroup;
 			children = (
-				F80CB9EB207D2D2300B4EE5D /* MCTTappingStepViewController.swift */,
 				F80CB9EE207D2DE400B4EE5D /* MCTTappingResultObject.swift */,
 			);
-			path = Tapping;
+			path = ResultObjects;
 			sourceTree = "<group>";
 		};
 		F8188F7B2072CF51009AC215 /* Resources */ = {
@@ -528,10 +538,11 @@
 				F8D3E82F2063072100CD351C /* MotorControl.h */,
 				B5386FC0206B0211005A0FAC /* MCTFactory.swift */,
 				B5386FBE206AF30C005A0FAC /* MCTTaskInfo.swift */,
-				B56E4D68207D31F50009C489 /* ViewControllers */,
-				B56E4D67207D31D80009C489 /* StepObjects */,
-				F80CB9ED207D2D9D00B4EE5D /* Tapping */,
 				B5FA25FB2069856700A4FF3D /* Resources */,
+				F80CB9ED207D2D9D00B4EE5D /* ResultObjects */,
+				B56E4D67207D31D80009C489 /* StepObjects */,
+				B56E4D68207D31F50009C489 /* ViewControllers */,
+				B53FD157207EBC8F00FBCC85 /* Views */,
 			);
 			path = MotorControl;
 			sourceTree = "<group>";
@@ -910,6 +921,7 @@
 				F80CB9EC207D2D2300B4EE5D /* MCTTappingStepViewController.swift in Sources */,
 				B5386FBF206AF30C005A0FAC /* MCTTaskInfo.swift in Sources */,
 				B59FC2AA2073DD81002BFDB9 /* MCTOverviewStepObject.swift in Sources */,
+				B53FD159207EBCFC00FBCC85 /* MCTTapButton.swift in Sources */,
 				B508B39920772D76001645CF /* MCTSkippableSectionStepObject.swift in Sources */,
 				B508B31C2076ECA3001645CF /* MCTHandSelectionStepObject.swift in Sources */,
 				B56E4D0A207BCA110009C489 /* MCTInstructionStepObject.swift in Sources */,

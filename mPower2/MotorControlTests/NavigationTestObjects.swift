@@ -126,14 +126,12 @@ struct TestTask : RSDTask {
 }
 
 class TestStepController: NSObject, MCTHandStepController {
-
-    var imageView: UIImageView? {
-        return nil
-    }
-    
-    var isFirstAppearance: Bool {
-        return false
-    }
+    var stepTitleLabel: UILabel?
+    var stepTextLabel: UILabel?
+    var stepDetailLabel: UILabel?
+    var uiStep: RSDUIStep?
+    var imageView: UIImageView?
+    var isFirstAppearance: Bool = false
     
     var taskController: RSDTaskController!
     var step: RSDStep!
