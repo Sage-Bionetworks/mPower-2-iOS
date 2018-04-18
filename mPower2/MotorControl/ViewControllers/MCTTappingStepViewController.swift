@@ -116,10 +116,32 @@ public class MCTTappingStepViewController: MCTActiveStepViewController {
         self.nextButton?.isHidden = true
     }
     
+    /// Override update unit label text to do nothing because the unit
+    /// label doesn't change after it is set.
+    override open func updateUnitLabelText() {
+        
+    }
+    
     /// Override view will appear to set the unit label text
     override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.unitLabel?.text = Localization.localizedString("TAP_COUNT_LABEL")
+        self.nextButton?.alpha = 0
+        self._setContinueButtonLabel()
+    }
+    
+    private func _setContinueButtonLabel() {
+        let handOrder = self.handOrder()!
+        let hand = self.whichHand()!
+        var buttonTitle: String? = nil
+        if hand != handOrder.last,
+           let otherHand = hand.otherHand {
+            buttonTitle = Localization.localizedStringWithFormatKey("TAPPING_CONTINUE_WITH_%@", otherHand.rawValue)
+        } else {
+            buttonTitle = Localization.localizedString("TAPPING_CONTINUE")
+        }
+        
+        self.nextButton?.setTitle(buttonTitle, for: UIControlState.normal)
     }
     
     /// Override view did appear to set up the button rects.

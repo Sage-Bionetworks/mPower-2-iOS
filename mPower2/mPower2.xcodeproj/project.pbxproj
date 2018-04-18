@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		B508B31C2076ECA3001645CF /* MCTHandSelectionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B508B31B2076ECA3001645CF /* MCTHandSelectionStepObject.swift */; };
 		B508B39920772D76001645CF /* MCTSkippableSectionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B508B39820772D76001645CF /* MCTSkippableSectionStepObject.swift */; };
+		B532ACED208150C00009EAD3 /* MCTCompletionGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B532ACEC208150C00009EAD3 /* MCTCompletionGradient.swift */; };
+		B532AD04208158860009EAD3 /* MCTCompletionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B532AD03208158860009EAD3 /* MCTCompletionStepViewController.swift */; };
+		B532AD0620817F620009EAD3 /* MCTTappingCompletionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B532AD0520817F610009EAD3 /* MCTTappingCompletionStepViewController.swift */; };
 		B5386FA6206ABD11005A0FAC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5386FA5206ABD11005A0FAC /* Images.xcassets */; };
 		B5386FBF206AF30C005A0FAC /* MCTTaskInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5386FBE206AF30C005A0FAC /* MCTTaskInfo.swift */; };
 		B5386FC1206B0211005A0FAC /* MCTFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5386FC0206B0211005A0FAC /* MCTFactory.swift */; };
@@ -61,6 +64,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		B5D56CC7208131770080AE38 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F8D3E7C32062F28500CD351C /* ResearchStack2.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F875575620807E2300235078;
+			remoteInfo = "ResearchStack2-UnitTest";
+		};
 		F8D3E78B2062F1B900CD351C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F8D3E76E2062F1B900CD351C /* Project object */;
@@ -144,13 +154,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = FF8B533D1FCE67C7006B6937;
 			remoteInfo = "ResearchStack2 (tvOS)";
-		};
-		F8D3E7D42062F28500CD351C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8D3E7C32062F28500CD351C /* ResearchStack2.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FF8B53451FCE67C8006B6937;
-			remoteInfo = ResearchStack2Tests_tvOS;
 		};
 		F8D3E7DD2062F28F00CD351C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -245,6 +248,9 @@
 /* Begin PBXFileReference section */
 		B508B31B2076ECA3001645CF /* MCTHandSelectionStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTHandSelectionStepObject.swift; sourceTree = "<group>"; };
 		B508B39820772D76001645CF /* MCTSkippableSectionStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTSkippableSectionStepObject.swift; sourceTree = "<group>"; };
+		B532ACEC208150C00009EAD3 /* MCTCompletionGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTCompletionGradient.swift; sourceTree = "<group>"; };
+		B532AD03208158860009EAD3 /* MCTCompletionStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTCompletionStepViewController.swift; sourceTree = "<group>"; };
+		B532AD0520817F610009EAD3 /* MCTTappingCompletionStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTTappingCompletionStepViewController.swift; sourceTree = "<group>"; };
 		B5386FA5206ABD11005A0FAC /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B5386FBE206AF30C005A0FAC /* MCTTaskInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTTaskInfo.swift; sourceTree = "<group>"; };
 		B5386FC0206B0211005A0FAC /* MCTFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTFactory.swift; sourceTree = "<group>"; };
@@ -341,6 +347,7 @@
 		B53FD157207EBC8F00FBCC85 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B532ACEC208150C00009EAD3 /* MCTCompletionGradient.swift */,
 				B53FD158207EBCFC00FBCC85 /* MCTTapButton.swift */,
 			);
 			path = Views;
@@ -361,8 +368,10 @@
 			isa = PBXGroup;
 			children = (
 				B59FC272206EA445002BFDB9 /* MCTActiveStepViewController.swift */,
+				B532AD03208158860009EAD3 /* MCTCompletionStepViewController.swift */,
 				B5D822F6207449D400C03F3C /* MCTInstructionStepViewController.swift */,
 				B59FC28B20728BC7002BFDB9 /* MCTOverviewStepViewController.swift */,
+				B532AD0520817F610009EAD3 /* MCTTappingCompletionStepViewController.swift */,
 				F80CB9EB207D2D2300B4EE5D /* MCTTappingStepViewController.swift */,
 			);
 			path = ViewControllers;
@@ -501,10 +510,10 @@
 			isa = PBXGroup;
 			children = (
 				F8D3E7CD2062F28500CD351C /* ResearchStack2.framework */,
-				F8D3E7CF2062F28500CD351C /* ResearchStack2Tests_iOS.xctest */,
 				F8D3E7D12062F28500CD351C /* ResearchStack2.framework */,
 				F8D3E7D32062F28500CD351C /* ResearchStack2.framework */,
-				F8D3E7D52062F28500CD351C /* ResearchStack2Tests_tvOS.xctest */,
+				F8D3E7CF2062F28500CD351C /* ResearchStack2Tests_iOS.xctest */,
+				B5D56CC8208131770080AE38 /* ResearchStack2_UnitTest.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -738,6 +747,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		B5D56CC8208131770080AE38 /* ResearchStack2_UnitTest.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ResearchStack2_UnitTest.framework;
+			remoteRef = B5D56CC7208131770080AE38 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		F8D3E7A72062F26D00CD351C /* BridgeApp.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -813,13 +829,6 @@
 			fileType = wrapper.framework;
 			path = ResearchStack2.framework;
 			remoteRef = F8D3E7D22062F28500CD351C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F8D3E7D52062F28500CD351C /* ResearchStack2Tests_tvOS.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = ResearchStack2Tests_tvOS.xctest;
-			remoteRef = F8D3E7D42062F28500CD351C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		F8D3E7DE2062F28F00CD351C /* ResearchStack2UI.framework */ = {
@@ -915,6 +924,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B532ACED208150C00009EAD3 /* MCTCompletionGradient.swift in Sources */,
+				B532AD04208158860009EAD3 /* MCTCompletionStepViewController.swift in Sources */,
 				B59FC28C20728BC7002BFDB9 /* MCTOverviewStepViewController.swift in Sources */,
 				B59FC273206EA445002BFDB9 /* MCTActiveStepViewController.swift in Sources */,
 				B5D822F7207449D400C03F3C /* MCTInstructionStepViewController.swift in Sources */,
@@ -923,6 +934,7 @@
 				B59FC2AA2073DD81002BFDB9 /* MCTOverviewStepObject.swift in Sources */,
 				B53FD159207EBCFC00FBCC85 /* MCTTapButton.swift in Sources */,
 				B508B39920772D76001645CF /* MCTSkippableSectionStepObject.swift in Sources */,
+				B532AD0620817F620009EAD3 /* MCTTappingCompletionStepViewController.swift in Sources */,
 				B508B31C2076ECA3001645CF /* MCTHandSelectionStepObject.swift in Sources */,
 				B56E4D0A207BCA110009C489 /* MCTInstructionStepObject.swift in Sources */,
 				B5386FC1206B0211005A0FAC /* MCTFactory.swift in Sources */,
