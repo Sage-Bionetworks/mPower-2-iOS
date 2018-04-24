@@ -52,6 +52,10 @@
 		F854599B208FA46800D37243 /* MotorControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E82D2063072100CD351C /* MotorControl.framework */; };
 		F854599C208FA46800D37243 /* MotorControl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E82D2063072100CD351C /* MotorControl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F85459A0208FA58800D37243 /* ResourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F854599F208FA58800D37243 /* ResourceTests.swift */; };
+		F85459B4208FA76200D37243 /* Triggers.json in Resources */ = {isa = PBXBuildFile; fileRef = F8188FB52072F430009AC215 /* Triggers.json */; };
+		F85459B5208FA76D00D37243 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E7802062F1B900CD351C /* Assets.xcassets */; };
+		F85459B6208FA77400D37243 /* UIColor+mPowerTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82AE7B52063160B00952D74 /* UIColor+mPowerTheme.swift */; };
+		F85459B7208FA77900D37243 /* UIView+mPowerTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B587AC07206D696800542548 /* UIView+mPowerTheme.swift */; };
 		F884198F207EB4E400028A2B /* TappingSectionStep.json in Resources */ = {isa = PBXBuildFile; fileRef = F8841979207EB4E400028A2B /* TappingSectionStep.json */; };
 		F8841993207EB77000028A2B /* TremorSectionStep.json in Resources */ = {isa = PBXBuildFile; fileRef = F8841992207EB77000028A2B /* TremorSectionStep.json */; };
 		F88419B5207EC14400028A2B /* ResourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88419B4207EC14400028A2B /* ResourceTests.swift */; };
@@ -1004,9 +1008,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F85459B4208FA76200D37243 /* Triggers.json in Resources */,
 				F8545981208FA2EE00D37243 /* LaunchScreen.storyboard in Resources */,
 				F854597E208FA2EE00D37243 /* Assets.xcassets in Resources */,
 				F854597C208FA2ED00D37243 /* Main.storyboard in Resources */,
+				F85459B5208FA76D00D37243 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1060,8 +1066,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F85459B7208FA77900D37243 /* UIView+mPowerTheme.swift in Sources */,
 				F8545979208FA2ED00D37243 /* ViewController.swift in Sources */,
 				F8545977208FA2ED00D37243 /* AppDelegate.swift in Sources */,
+				F85459B6208FA77400D37243 /* UIColor+mPowerTheme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

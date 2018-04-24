@@ -32,35 +32,11 @@
 //
 
 import XCTest
+@testable import mPower2TestApp
+import ResearchStack2
+import BridgeApp
 
-class ResourceTestCase: XCTestCase {
-    
-    func jsonForResource(_ resourceName: String) -> NSDictionary? {
-        
-        let resourcePath = Bundle(for: self.classForCoder).path(forResource: resourceName, ofType:"json") ??
-            Bundle.main.path(forResource: resourceName, ofType: "json")
-        
-        guard let path = resourcePath, let jsonData = try? Data(contentsOf: URL(fileURLWithPath: path)) else {
-            XCTAssert(false, "Resource not found: \(resourceName)")
-            return nil
-        }
-        
-        do {
-            guard let json = try JSONSerialization.jsonObject(with: jsonData, options: JSONSerialization.ReadingOptions(rawValue: 0)) as? NSDictionary else {
-                XCTAssert(false, "Resource not an NSDictionary: \(resourceName)")
-                return nil
-            }
-            return json
-        }
-        catch let err as NSError {
-            XCTAssert(false, "Failed to parse json. \(err)")
-        }
-        
-        return nil
-    }
-}
-
-class ResourceTests: ResourceTestCase {
+class ResourceTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
@@ -72,16 +48,15 @@ class ResourceTests: ResourceTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    func testTriggers() {
+
+        let resourceTransformer = RSDResourceTransformerObject(resourceName: "Triggers")
+        let factory = SBAFactory()
+        do {
+            let _ = try factory.decodeTask(with: resourceTransformer)
+        }
+        catch let err {
+            XCTFail("Failed to decode the task: \(err)")
         }
     }
-    
 }
