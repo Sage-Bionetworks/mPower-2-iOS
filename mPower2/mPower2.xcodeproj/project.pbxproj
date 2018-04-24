@@ -35,6 +35,7 @@
 		F80CB9FD207D3AD800B4EE5D /* MotorControl.strings in Resources */ = {isa = PBXBuildFile; fileRef = F80CB9FC207D3AD800B4EE5D /* MotorControl.strings */; };
 		F8188FB62072F430009AC215 /* Triggers.json in Resources */ = {isa = PBXBuildFile; fileRef = F8188FB52072F430009AC215 /* Triggers.json */; };
 		F82AE7B62063160B00952D74 /* UIColor+mPowerTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82AE7B52063160B00952D74 /* UIColor+mPowerTheme.swift */; };
+		F854590E208F986D00D37243 /* NSLocale+UnitTest.h in Headers */ = {isa = PBXBuildFile; fileRef = F854590D208F986D00D37243 /* NSLocale+UnitTest.h */; };
 		F884198F207EB4E400028A2B /* TappingSectionStep.json in Resources */ = {isa = PBXBuildFile; fileRef = F8841979207EB4E400028A2B /* TappingSectionStep.json */; };
 		F8841993207EB77000028A2B /* TremorSectionStep.json in Resources */ = {isa = PBXBuildFile; fileRef = F8841992207EB77000028A2B /* TremorSectionStep.json */; };
 		F88419B5207EC14400028A2B /* ResourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88419B4207EC14400028A2B /* ResourceTests.swift */; };
@@ -272,11 +273,11 @@
 		F80CB9FC207D3AD800B4EE5D /* MotorControl.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = MotorControl.strings; sourceTree = "<group>"; };
 		F8188FB52072F430009AC215 /* Triggers.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Triggers.json; sourceTree = "<group>"; };
 		F82AE7B52063160B00952D74 /* UIColor+mPowerTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+mPowerTheme.swift"; sourceTree = "<group>"; };
+		F854590D208F986D00D37243 /* NSLocale+UnitTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLocale+UnitTest.h"; sourceTree = "<group>"; };
 		F8841979207EB4E400028A2B /* TappingSectionStep.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TappingSectionStep.json; sourceTree = "<group>"; };
 		F8841992207EB77000028A2B /* TremorSectionStep.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TremorSectionStep.json; sourceTree = "<group>"; };
 		F88419B4207EC14400028A2B /* ResourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceTests.swift; sourceTree = "<group>"; };
 		F88419CC207EC22A00028A2B /* MotorControlTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MotorControlTests-Bridging-Header.h"; sourceTree = "<group>"; };
-		F88419CD207EC22B00028A2B /* NSLocale+UnitTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSLocale+UnitTest.h"; path = "../../../../CardiorespiratoryFitness-iOS/CardiorespiratoryFitness/CardiorespiratoryFitnessTests/Mock Objects/NSLocale+UnitTest.h"; sourceTree = "<group>"; };
 		F88419CE207EC22B00028A2B /* NSLocale+UnitTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLocale+UnitTest.m"; sourceTree = "<group>"; };
 		F8D3E7762062F1B900CD351C /* mPower2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mPower2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8D3E7792062F1B900CD351C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -422,9 +423,8 @@
 		F88419CB207EC15800028A2B /* Mock Objects */ = {
 			isa = PBXGroup;
 			children = (
-				F88419CD207EC22B00028A2B /* NSLocale+UnitTest.h */,
+				F854590D208F986D00D37243 /* NSLocale+UnitTest.h */,
 				F88419CE207EC22B00028A2B /* NSLocale+UnitTest.m */,
-				F88419CC207EC22A00028A2B /* MotorControlTests-Bridging-Header.h */,
 			);
 			path = "Mock Objects";
 			sourceTree = "<group>";
@@ -559,6 +559,7 @@
 		F8D3E83B2063072200CD351C /* MotorControlTests */ = {
 			isa = PBXGroup;
 			children = (
+				F88419CC207EC22A00028A2B /* MotorControlTests-Bridging-Header.h */,
 				F88419CB207EC15800028A2B /* Mock Objects */,
 				F8D3E83C2063072200CD351C /* MotorControlTests.swift */,
 				B56E4D0720781AB50009C489 /* NavigationTestObjects.swift */,
@@ -577,6 +578,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F8D3E83F2063072200CD351C /* MotorControl.h in Headers */,
+				F854590E208F986D00D37243 /* NSLocale+UnitTest.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1261,7 +1263,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.MotorControlTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "MotorControlTests/Mock Objects/MotorControlTests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "MotorControlTests/MotorControlTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1280,7 +1282,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.MotorControlTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "MotorControlTests/Mock Objects/MotorControlTests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "MotorControlTests/MotorControlTests-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/mPower2.app/mPower2";
