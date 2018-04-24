@@ -140,13 +140,6 @@
 			remoteGlobalIDString = F8D3E82C2063072100CD351C;
 			remoteInfo = MotorControl;
 		};
-		F8D3E78B2062F1B900CD351C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8D3E76E2062F1B900CD351C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F8D3E7752062F1B900CD351C;
-			remoteInfo = mPower2;
-		};
 		F8D3E7A62062F26D00CD351C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F8D3E79A2062F26D00CD351C /* BridgeApp.xcodeproj */;
@@ -279,13 +272,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = F8D3E82C2063072100CD351C;
 			remoteInfo = MotorControl;
-		};
-		F8D3E8392063072200CD351C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8D3E76E2062F1B900CD351C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F8D3E7752062F1B900CD351C;
-			remoteInfo = mPower2;
 		};
 		F8D3E8402063072200CD351C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -759,7 +745,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				F8D3E78C2062F1B900CD351C /* PBXTargetDependency */,
 				F8545989208FA3BA00D37243 /* PBXTargetDependency */,
 			);
 			name = mPower2Tests;
@@ -797,7 +782,6 @@
 			);
 			dependencies = (
 				F8D3E8382063072200CD351C /* PBXTargetDependency */,
-				F8D3E83A2063072200CD351C /* PBXTargetDependency */,
 				F8545987208FA38900D37243 /* PBXTargetDependency */,
 			);
 			name = MotorControlTests;
@@ -1164,11 +1148,6 @@
 			target = F8D3E82C2063072100CD351C /* MotorControl */;
 			targetProxy = F854599D208FA46800D37243 /* PBXContainerItemProxy */;
 		};
-		F8D3E78C2062F1B900CD351C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = F8D3E7752062F1B900CD351C /* mPower2 */;
-			targetProxy = F8D3E78B2062F1B900CD351C /* PBXContainerItemProxy */;
-		};
 		F8D3E7E72062F9DE00CD351C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "ResearchStack2UI (iOS)";
@@ -1193,11 +1172,6 @@
 			isa = PBXTargetDependency;
 			target = F8D3E82C2063072100CD351C /* MotorControl */;
 			targetProxy = F8D3E8372063072200CD351C /* PBXContainerItemProxy */;
-		};
-		F8D3E83A2063072200CD351C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = F8D3E7752062F1B900CD351C /* mPower2 */;
-			targetProxy = F8D3E8392063072200CD351C /* PBXContainerItemProxy */;
 		};
 		F8D3E8412063072200CD351C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
