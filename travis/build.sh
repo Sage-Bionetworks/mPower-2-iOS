@@ -13,7 +13,5 @@ elif [[ -z "$TRAVIS_TAG" && "$TRAVIS_BRANCH" =~ ^stable-.* ]]; then # non-tag co
     git clone https://github.com/Sage-Bionetworks/iOSPrivateProjectInfo.git ../iOSPrivateProjectInfo
     FASTLANE_EXPLICIT_OPEN_SIMULATOR=2 bundle exec fastlane test project:"mPower2/mPower2.xcodeproj" scheme:"mPower2"
     bundle exec fastlane beta scheme:"mPower2" export_method:"app-store" project:"mPower2/mPower2.xcodeproj"
-else
-    echo "Ignoring branch"
 fi
 exit $?
