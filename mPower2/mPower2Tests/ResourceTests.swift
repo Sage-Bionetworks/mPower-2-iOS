@@ -33,7 +33,7 @@
 
 import XCTest
 @testable import mPower2TestApp
-import ResearchStack2
+import Research
 import BridgeApp
 
 class ResourceTests: XCTestCase {

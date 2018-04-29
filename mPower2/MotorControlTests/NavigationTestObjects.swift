@@ -1,6 +1,6 @@
 //
 //  NavigationTests.swift
-//  ResearchStack2Tests
+//  MotorControlTests
 //
 //  Copyright © 2018 Sage Bionetworks. All rights reserved.
 //
@@ -33,7 +33,7 @@
 
 @testable import MotorControl
 import Foundation
-import ResearchStack2
+import Research
 
 struct TestStep : RSDStep, RSDNavigationRule {
     
