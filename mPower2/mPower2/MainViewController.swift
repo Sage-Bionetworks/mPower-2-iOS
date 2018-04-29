@@ -33,8 +33,8 @@
 
 import UIKit
 import MotorControl
-import ResearchStack2
-import ResearchStack2UI
+import Research
+import ResearchUI
 
 class MainViewController: UITableViewController, RSDTaskViewControllerDelegate {
     
