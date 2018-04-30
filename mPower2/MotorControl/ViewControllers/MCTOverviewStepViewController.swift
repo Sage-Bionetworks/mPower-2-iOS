@@ -33,6 +33,24 @@
 
 import Foundation
 
+internal protocol MCTInternalStepController : RSDStepController {
+}
+
+extension MCTInternalStepController {
+    
+    /// Adds a result for whether or not this run represents a "first run", A "first run"
+    /// occurs anytime the user has never run the task before, or hasn't run the task in
+    /// one month.
+    internal func setIsFirstRunResult(_ isFirstRun: Bool) {
+        var firstRunResult = RSDAnswerResultObject(identifier: MCTOverviewStepViewController.firstRunKey, answerType: .boolean)
+        firstRunResult.value = isFirstRun
+        self.taskController.taskPath.topLevelTaskPath.appendAsyncResult(with: firstRunResult)
+    }
+}
+
+extension MCTOverviewStepViewController : MCTInternalStepController {
+}
+
 open class MCTOverviewStepViewController : RSDOverviewStepViewController {
     
     /// The key to store whether or not this is a first run in the task result under.
@@ -91,7 +109,7 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
         let lastRun = defaults.object(forKey: timestampKey) as? Date
         let monthAgo = Calendar.current.date(byAdding: .month, value: -1, to: Date())!
         let isFirstRun = (lastRun == nil) || (lastRun! < monthAgo)
-        _setIsFirstRunResult(isFirstRun)
+        setIsFirstRunResult(isFirstRun)
         defaults.set(Date(), forKey: timestampKey)
         /// The image view that is used to show the animation.
         var animationView: UIImageView? {
@@ -123,14 +141,7 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
         self.scrollViewBackgroundHeightConstraint.constant = placementType == .topMarginBackground ? self.statusBarBackgroundView!.bounds.height : CGFloat(0)
     }
     
-    /// Adds a result for whether or not this run represents a "first run", A "first run"
-    /// occurs anytime the user has never run the task before, or hasn't run the task in
-    /// one month.
-    private func _setIsFirstRunResult(_ isFirstRun: Bool) {
-        var stepResult = RSDAnswerResultObject(identifier: MCTOverviewStepViewController.firstRunKey, answerType: .boolean)
-        stepResult.value = isFirstRun
-        self.taskController.taskPath.appendStepHistory(with: stepResult)
-    }
+
     
     /// Sets whether the components are hidden, and whether scrolling is enabled
     /// based on whether this view should be showing the full task info or the
