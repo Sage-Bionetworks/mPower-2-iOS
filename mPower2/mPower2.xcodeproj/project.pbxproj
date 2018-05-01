@@ -35,6 +35,7 @@
 		F80CB9FD207D3AD800B4EE5D /* MotorControl.strings in Resources */ = {isa = PBXBuildFile; fileRef = F80CB9FC207D3AD800B4EE5D /* MotorControl.strings */; };
 		F8188FB62072F430009AC215 /* Triggers.json in Resources */ = {isa = PBXBuildFile; fileRef = F8188FB52072F430009AC215 /* Triggers.json */; };
 		F82AE7B62063160B00952D74 /* UIColor+mPowerTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82AE7B52063160B00952D74 /* UIColor+mPowerTheme.swift */; };
+		F8460D752097CF0C0084E197 /* MCTCountdownStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8460D742097CF0C0084E197 /* MCTCountdownStepViewController.swift */; };
 		F854590E208F986D00D37243 /* NSLocale+UnitTest.h in Headers */ = {isa = PBXBuildFile; fileRef = F854590D208F986D00D37243 /* NSLocale+UnitTest.h */; };
 		F8545977208FA2ED00D37243 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8545976208FA2ED00D37243 /* AppDelegate.swift */; };
 		F8545979208FA2ED00D37243 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8545978208FA2ED00D37243 /* ViewController.swift */; };
@@ -342,6 +343,7 @@
 		F80CB9FC207D3AD800B4EE5D /* MotorControl.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = MotorControl.strings; sourceTree = "<group>"; };
 		F8188FB52072F430009AC215 /* Triggers.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Triggers.json; sourceTree = "<group>"; };
 		F82AE7B52063160B00952D74 /* UIColor+mPowerTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+mPowerTheme.swift"; sourceTree = "<group>"; };
+		F8460D742097CF0C0084E197 /* MCTCountdownStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTCountdownStepViewController.swift; sourceTree = "<group>"; };
 		F854590D208F986D00D37243 /* NSLocale+UnitTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLocale+UnitTest.h"; sourceTree = "<group>"; };
 		F8545974208FA2ED00D37243 /* mPower2TestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mPower2TestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8545976208FA2ED00D37243 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -458,6 +460,7 @@
 			children = (
 				B59FC272206EA445002BFDB9 /* MCTActiveStepViewController.swift */,
 				B532AD03208158860009EAD3 /* MCTCompletionStepViewController.swift */,
+				F8460D742097CF0C0084E197 /* MCTCountdownStepViewController.swift */,
 				B5D822F6207449D400C03F3C /* MCTInstructionStepViewController.swift */,
 				B59FC28B20728BC7002BFDB9 /* MCTOverviewStepViewController.swift */,
 				B532AD0520817F610009EAD3 /* MCTTappingCompletionStepViewController.swift */,
@@ -1095,6 +1098,7 @@
 				B56E4D0A207BCA110009C489 /* MCTInstructionStepObject.swift in Sources */,
 				B5386FC1206B0211005A0FAC /* MCTFactory.swift in Sources */,
 				F80CB9EF207D2DE400B4EE5D /* MCTTappingResultObject.swift in Sources */,
+				F8460D752097CF0C0084E197 /* MCTCountdownStepViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
