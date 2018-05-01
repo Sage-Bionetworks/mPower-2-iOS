@@ -111,11 +111,6 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
         let isFirstRun = (lastRun == nil) || (lastRun! < monthAgo)
         setIsFirstRunResult(isFirstRun)
         defaults.set(Date(), forKey: timestampKey)
-        /// The image view that is used to show the animation.
-        var animationView: UIImageView? {
-            return (self.navigationHeader as? RSDStepHeaderView)?.imageView
-        }
-        animationView?.stopAnimating()
         
         // It is critical for the view to be entirely layed out before the next code executes,
         // otherwise the scroll view offset may be computed incorrectly.
@@ -123,6 +118,7 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
         self.statusBarBackgroundView?.layoutIfNeeded()
         if isFirstRun {
             self._scrollToBottom()
+            self._stopAnimating()
         } else if let titleLabel = self.stepTitleLabel {
             // We add a 30 pixel margin to the bottom of the title label so it isn't squished
             // up against the bottom of the scroll view.
@@ -142,6 +138,13 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
     }
     
 
+    
+    /// Stops the animation view from animating.
+    private func _stopAnimating() {
+        /// The image view that is used to show the animation.
+        let animationView = (self.navigationHeader as? RSDStepHeaderView)?.imageView
+        animationView?.stopAnimating()
+    }
     
     /// Sets whether the components are hidden, and whether scrolling is enabled
     /// based on whether this view should be showing the full task info or the
@@ -212,6 +215,9 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
         }) { (_) in
             self.navigationFooter?.shouldShowShadow = true
         }
+        
+        self._setIsFirstRunResult(true)
+        self._stopAnimating()
     }
     
     // Makes the scroll view scroll all the way down.
