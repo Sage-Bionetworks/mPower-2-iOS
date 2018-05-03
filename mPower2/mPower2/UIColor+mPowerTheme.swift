@@ -42,6 +42,10 @@ extension UIColor {
         return UIColor.royal500
     }
 
+    @objc open class var veryLightPrimaryTintColor: UIColor {
+        return UIColor.royal400
+    }
+
     @objc open class var lightPrimaryTintColor: UIColor {
         return UIColor.royal400
     }
@@ -86,6 +90,14 @@ extension UIColor {
     
     // MARK: Royal Purple
     
+    //    Very Light Purple (unfilled progress circle):
+    //    Royal 200
+    //    #DBD9D9
+    //    219, 217, 217
+    class var royal200: UIColor {
+        return UIColor(red: 219.0 / 255.0, green: 217.0 / 255.0, blue: 217.0 / 255.0, alpha: 1)
+    }
+
     //    Light Purple (filled progress bar, etc.):
     //    Royal 400
     //    #907FBA
