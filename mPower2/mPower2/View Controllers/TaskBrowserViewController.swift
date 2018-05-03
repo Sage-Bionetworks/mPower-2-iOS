@@ -63,7 +63,7 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // temp
+        // TODO: jbruhin 5-1-18 assign taskGroups from presenting VC, which will get them from???
         taskGroups = {
             let activeTaskGroup : RSDTaskGroup = {
                 let taskInfos = MCTTaskIdentifier.all().map { MCTTaskInfo($0) }
