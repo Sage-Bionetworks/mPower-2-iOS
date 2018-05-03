@@ -14,6 +14,8 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
     
     private let kTabsHeight = 56.0
     
+    public var shouldShowTopShadow = true
+    
     var collectionView: UICollectionView!
     var tabButtonStackView: UIStackView!
     
@@ -36,6 +38,9 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
             let trackingTaskGroup : RSDTaskGroup = {
                 var taskInfo = RSDTaskInfoObject(with: "Triggers")
                 taskInfo.title = "Triggers"
+                if let image = try? RSDImageWrapper(imageName: "TriggerIcon-oval") {
+                    taskInfo.icon = image
+                }
                 taskInfo.resourceTransformer = RSDResourceTransformerObject(resourceName: "Triggers")
                 var taskGroup = RSDTaskGroupObject(with: "Tracking", tasks: [taskInfo])
                 taskGroup.title = "Tracking"
@@ -61,10 +66,17 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
         return 30.0
     }
     
+    func shouldShowTabs() -> Bool {
+        guard let taskGroups = taskGroups else {
+            return false
+        }
+        return taskGroups.count > 1
+    }
+    
     func setupView() {
         
         // Let's select the first task group by default.
-        selectedTaskGroup = taskGroups?.last
+        selectedTaskGroup = taskGroups?.first
         
         navigationController?.setNavigationBarHidden(true, animated: false)
         
@@ -79,8 +91,8 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
 
         // If we have more than one TaskGroup, we create tabs for each group. If we don't, we do not
         // create tabs and we set the height of the tabButtonStackView to 0, essentially hiding it
-        if let taskGroups = taskGroups,
-            taskGroups.count > 1 {
+        if shouldShowTabs(),
+            let taskGroups = taskGroups {
             
             taskGroups.forEach({
                 let tabView = TaskBrowserTabView(frame: .zero)
@@ -90,7 +102,6 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
                 }
                 tabButtonStackView.addArrangedSubview(tabView)
             })
-            
             tabButtonStackView.rsd_makeHeight(.equal, 50.0)
         }
         else {
@@ -107,9 +118,9 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.backgroundColor = UIColor.white
+
         view.addSubview(collectionView)
-        
-        collectionView.backgroundColor = UIColor.green
         
         // Pin below stackView and left, right and bottom to superview
         collectionView.rsd_alignBelow(view: tabButtonStackView, padding: 0.0)
@@ -119,6 +130,27 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
         collectionView.register(TaskCollectionViewCell.self, forCellWithReuseIdentifier: "TaskCollectionViewCell")
         
         collectionView.reloadData()
+        
+        if shouldShowTabs() {
+            // We also add a 1px tall rule underneath the tabBar
+            let rule = UIView()
+            rule.translatesAutoresizingMaskIntoConstraints = false
+            rule.backgroundColor = UIColor.lightGray
+            view.addSubview(rule)
+            rule.rsd_alignBelow(view: tabButtonStackView, padding: 0.0)
+            rule.rsd_alignToSuperview([.leading, .trailing], padding: 0.0)
+            rule.rsd_makeHeight(.equal, 1.0)
+        }
+        
+        // Finally, add a shadow if required
+        if shouldShowTopShadow {
+            let shadow = RSDShadowGradient()
+            shadow.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview(shadow)
+            shadow.rsd_makeHeight(.equal, 5.0)
+            shadow.rsd_alignToSuperview([.leading, .trailing], padding: 0.0)
+            shadow.rsd_alignToSuperview([.top], padding: -5.0)
+        }
     }
     
     // MARK: RSDTaskViewControllerDelegate
@@ -158,7 +190,7 @@ extension TaskBrowserViewController: UICollectionViewDelegate, UICollectionViewD
             task.imageVendor?.fetchImage(for: CGSize(width: 0.0, height: 0.0)) { (_, img) in
                 cell?.image = img
             }
-            cell?.title = task.title
+            cell?.title = task.title?.uppercased()
         }
         return cell ?? UICollectionViewCell()
     }
@@ -195,7 +227,7 @@ extension TaskBrowserViewController: UICollectionViewDelegate, UICollectionViewD
         let leftInset = (collectionView.frame.size.width - CGFloat(totalCellWidth + totalSpacingWidth)) / 2
         let rightInset = leftInset
 
-        return UIEdgeInsetsMake(0, leftInset, 0, rightInset)
+        return UIEdgeInsetsMake(30, leftInset, 0, rightInset)
     }
     
 //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -238,10 +270,8 @@ class TaskBrowserTabView: UIView {
         label.rsd_alignAllToSuperview(padding: 0.0)
         
         addSubview(rule)
-        rule.rsd_makeHeight(.equal, 5.0)
+        rule.rsd_makeHeight(.equal, 4.0)
         rule.rsd_alignToSuperview([.leading, .trailing, .bottom], padding: 0.0)
-        
-        backgroundColor = UIColor.magenta
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -277,8 +307,6 @@ class TaskCollectionViewCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        backgroundColor = UIColor.blue
         
         // We want to size and constrain the imageView based on the size of the image,
         // rather than choosing how to scale the image to fit the view. So we always

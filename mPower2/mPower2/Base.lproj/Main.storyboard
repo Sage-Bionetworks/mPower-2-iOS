@@ -230,6 +230,7 @@
                         <outlet property="actionBarTitleLabel" destination="16e-GU-lCY" id="qMO-Td-cJm"/>
                         <outlet property="actionBarView" destination="CJS-by-dpw" id="m6R-gy-OVk"/>
                         <outlet property="progressCircleView" destination="95F-HW-j3O" id="GXP-fg-3p3"/>
+                        <outlet property="tableView" destination="NuC-GB-bFl" id="X4q-gU-50B"/>
                         <outlet property="taskBrowserContainer" destination="pqV-SR-epJ" id="oZq-WO-xyu"/>
                     </connections>
                 </viewController>
