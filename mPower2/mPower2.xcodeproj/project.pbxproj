@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0334415420995328009B97A9 /* TrackingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0334415320995328009B97A9 /* TrackingViewController.swift */; };
+		0334415620995CCD009B97A9 /* TaskBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0334415520995CCD009B97A9 /* TaskBrowserViewController.swift */; };
+		0349535520981C89006A05B1 /* ProgressCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0349535420981C89006A05B1 /* ProgressCircleView.swift */; };
 		B508B31C2076ECA3001645CF /* MCTHandSelectionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B508B31B2076ECA3001645CF /* MCTHandSelectionStepObject.swift */; };
 		B508B39920772D76001645CF /* MCTSkippableSectionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B508B39820772D76001645CF /* MCTSkippableSectionStepObject.swift */; };
 		B532ACED208150C00009EAD3 /* MCTCompletionGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B532ACEC208150C00009EAD3 /* MCTCompletionGradient.swift */; };
@@ -74,8 +77,6 @@
 		F8D3E7F02062F9DE00CD351C /* BridgeApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7A72062F26D00CD351C /* BridgeApp.framework */; };
 		F8D3E7F12062F9DE00CD351C /* BridgeApp.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7A72062F26D00CD351C /* BridgeApp.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8D3E7F72063039200CD351C /* BridgeInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E7F62063039200CD351C /* BridgeInfo.plist */; };
-		F8D3E8022063055500CD351C /* sage-mpower-2.pem in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E8002063055500CD351C /* sage-mpower-2.pem */; };
-		F8D3E8032063055500CD351C /* BridgeInfo-private.plist in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E8012063055500CD351C /* BridgeInfo-private.plist */; };
 		F8D3E8362063072200CD351C /* MotorControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E82D2063072100CD351C /* MotorControl.framework */; };
 		F8D3E83D2063072200CD351C /* MotorControlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D3E83C2063072200CD351C /* MotorControlTests.swift */; };
 		F8D3E83F2063072200CD351C /* MotorControl.h in Headers */ = {isa = PBXBuildFile; fileRef = F8D3E82F2063072100CD351C /* MotorControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -316,6 +317,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0334415320995328009B97A9 /* TrackingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TrackingViewController.swift; path = "View Controllers/TrackingViewController.swift"; sourceTree = "<group>"; };
+		0334415520995CCD009B97A9 /* TaskBrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TaskBrowserViewController.swift; path = "View Controllers/TaskBrowserViewController.swift"; sourceTree = "<group>"; };
+		0349535420981C89006A05B1 /* ProgressCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProgressCircleView.swift; path = "Custom Views/ProgressCircleView.swift"; sourceTree = "<group>"; };
 		B508B31B2076ECA3001645CF /* MCTHandSelectionStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTHandSelectionStepObject.swift; sourceTree = "<group>"; };
 		B508B39820772D76001645CF /* MCTSkippableSectionStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTSkippableSectionStepObject.swift; sourceTree = "<group>"; };
 		B532ACEC208150C00009EAD3 /* MCTCompletionGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTCompletionGradient.swift; sourceTree = "<group>"; };
@@ -371,8 +375,6 @@
 		F8D3E7D62062F28F00CD351C /* ResearchUI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ResearchUI.xcodeproj; path = "../BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI.xcodeproj"; sourceTree = "<group>"; };
 		F8D3E7E32062F2D700CD351C /* mPower2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = mPower2.entitlements; sourceTree = "<group>"; };
 		F8D3E7F62063039200CD351C /* BridgeInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BridgeInfo.plist; sourceTree = "<group>"; };
-		F8D3E8002063055500CD351C /* sage-mpower-2.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "sage-mpower-2.pem"; path = "../../../iOSPrivateProjectInfo/mPower2/sage-mpower-2.pem"; sourceTree = "<group>"; };
-		F8D3E8012063055500CD351C /* BridgeInfo-private.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "BridgeInfo-private.plist"; path = "../../../iOSPrivateProjectInfo/mPower2/BridgeInfo-private.plist"; sourceTree = "<group>"; };
 		F8D3E82D2063072100CD351C /* MotorControl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MotorControl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8D3E82F2063072100CD351C /* MotorControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MotorControl.h; sourceTree = "<group>"; };
 		F8D3E8302063072100CD351C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -433,6 +435,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0334415220995311009B97A9 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				0334415320995328009B97A9 /* TrackingViewController.swift */,
+				0334415520995CCD009B97A9 /* TaskBrowserViewController.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		0349535320981C25006A05B1 /* Custom Views */ = {
+			isa = PBXGroup;
+			children = (
+				0349535420981C89006A05B1 /* ProgressCircleView.swift */,
+			);
+			name = "Custom Views";
+			sourceTree = "<group>";
+		};
 		B53FD157207EBC8F00FBCC85 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -558,6 +577,8 @@
 		F8D3E7782062F1B900CD351C /* mPower2 */ = {
 			isa = PBXGroup;
 			children = (
+				0334415220995311009B97A9 /* View Controllers */,
+				0349535320981C25006A05B1 /* Custom Views */,
 				F8D3E7792062F1B900CD351C /* AppDelegate.swift */,
 				F8D3E77B2062F1B900CD351C /* MainViewController.swift */,
 				F8D3E77D2062F1B900CD351C /* Main.storyboard */,
@@ -635,8 +656,6 @@
 			isa = PBXGroup;
 			children = (
 				F8D3E7F62063039200CD351C /* BridgeInfo.plist */,
-				F8D3E8012063055500CD351C /* BridgeInfo-private.plist */,
-				F8D3E8002063055500CD351C /* sage-mpower-2.pem */,
 				F8D3E7852062F1B900CD351C /* Info.plist */,
 				F8D3E7E32062F2D700CD351C /* mPower2.entitlements */,
 			);
@@ -1007,10 +1026,8 @@
 				F8D3E7842062F1B900CD351C /* LaunchScreen.storyboard in Resources */,
 				F8D3E7812062F1B900CD351C /* Assets.xcassets in Resources */,
 				F8D3E77F2062F1B900CD351C /* Main.storyboard in Resources */,
-				F8D3E8022063055500CD351C /* sage-mpower-2.pem in Resources */,
 				F8D3E7F72063039200CD351C /* BridgeInfo.plist in Resources */,
 				F8188FB62072F430009AC215 /* Triggers.json in Resources */,
-				F8D3E8032063055500CD351C /* BridgeInfo-private.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1062,8 +1079,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				B587AC08206D696800542548 /* UIView+mPowerTheme.swift in Sources */,
+				0349535520981C89006A05B1 /* ProgressCircleView.swift in Sources */,
 				F8D3E77C2062F1B900CD351C /* MainViewController.swift in Sources */,
+				0334415420995328009B97A9 /* TrackingViewController.swift in Sources */,
 				F8D3E77A2062F1B900CD351C /* AppDelegate.swift in Sources */,
+				0334415620995CCD009B97A9 /* TaskBrowserViewController.swift in Sources */,
 				F82AE7B62063160B00952D74 /* UIColor+mPowerTheme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

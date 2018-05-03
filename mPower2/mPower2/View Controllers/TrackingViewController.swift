@@ -7,29 +7,54 @@
 //
 
 import UIKit
+import MotorControl
+import Research
+import ResearchUI
 
-class TrackingViewController: UIViewController {
-
+class TrackingViewController: UIViewController, RSDTaskViewControllerDelegate {
+    
+    
+    @IBOutlet weak var actionBarView: UIView!
+    @IBOutlet weak var actionBarTitleLabel: UILabel!
+    @IBOutlet weak var actionBarDetailsLabel: UILabel!
+    @IBOutlet weak var progressCircleView: ActionBarProgressCircleView!
+    @IBOutlet weak var taskBrowserContainer: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        let browser = TaskBrowserViewController()
+        browser.view.translatesAutoresizingMaskIntoConstraints = false
+        addChildViewController(browser)
+        taskBrowserContainer.addSubview(browser.view)
+        browser.view.rsd_alignAllToSuperview(padding: 0.0)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    // MARK: Actions
+    @IBAction func actionBarTapped(_ sender: Any) {
+        
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // MARK: RSTTaskViewControllerDelegate
+    func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
+        // dismiss the view controller
+        (taskController as? UIViewController)?.dismiss(animated: true) {
+        }
+        
+        print("\n\n=== Completed: \(reason) error:\(String(describing: error))")
+        print(taskController.taskPath.result)
     }
-    */
+    
+    func taskController(_ taskController: RSDTaskController, readyToSave taskPath: RSDTaskPath) {
+        
+    }
+    
+    func taskController(_ taskController: RSDTaskController, asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController? {
+        return nil
+    }
+}
 
+class ActionBarProgressCircleView: ProgressCircleView {
+    
 }
