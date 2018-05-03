@@ -78,6 +78,8 @@
 		F8D3E7F02062F9DE00CD351C /* BridgeApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7A72062F26D00CD351C /* BridgeApp.framework */; };
 		F8D3E7F12062F9DE00CD351C /* BridgeApp.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7A72062F26D00CD351C /* BridgeApp.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8D3E7F72063039200CD351C /* BridgeInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E7F62063039200CD351C /* BridgeInfo.plist */; };
+		F8D3E8022063055500CD351C /* sage-mpower-2.pem in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E8002063055500CD351C /* sage-mpower-2.pem */; };
+		F8D3E8032063055500CD351C /* BridgeInfo-private.plist in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E8012063055500CD351C /* BridgeInfo-private.plist */; };
 		F8D3E8362063072200CD351C /* MotorControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E82D2063072100CD351C /* MotorControl.framework */; };
 		F8D3E83D2063072200CD351C /* MotorControlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D3E83C2063072200CD351C /* MotorControlTests.swift */; };
 		F8D3E83F2063072200CD351C /* MotorControl.h in Headers */ = {isa = PBXBuildFile; fileRef = F8D3E82F2063072100CD351C /* MotorControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -377,6 +379,8 @@
 		F8D3E7D62062F28F00CD351C /* ResearchUI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ResearchUI.xcodeproj; path = "../BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI.xcodeproj"; sourceTree = "<group>"; };
 		F8D3E7E32062F2D700CD351C /* mPower2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = mPower2.entitlements; sourceTree = "<group>"; };
 		F8D3E7F62063039200CD351C /* BridgeInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BridgeInfo.plist; sourceTree = "<group>"; };
+		F8D3E8002063055500CD351C /* sage-mpower-2.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "sage-mpower-2.pem"; path = "../../../iOSPrivateProjectInfo/mPower2/sage-mpower-2.pem"; sourceTree = "<group>"; };
+		F8D3E8012063055500CD351C /* BridgeInfo-private.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "BridgeInfo-private.plist"; path = "../../../iOSPrivateProjectInfo/mPower2/BridgeInfo-private.plist"; sourceTree = "<group>"; };
 		F8D3E82D2063072100CD351C /* MotorControl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MotorControl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8D3E82F2063072100CD351C /* MotorControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MotorControl.h; sourceTree = "<group>"; };
 		F8D3E8302063072100CD351C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -659,6 +663,8 @@
 			isa = PBXGroup;
 			children = (
 				F8D3E7F62063039200CD351C /* BridgeInfo.plist */,
+				F8D3E8012063055500CD351C /* BridgeInfo-private.plist */,
+				F8D3E8002063055500CD351C /* sage-mpower-2.pem */,
 				F8D3E7852062F1B900CD351C /* Info.plist */,
 				F8D3E7E32062F2D700CD351C /* mPower2.entitlements */,
 			);
@@ -1029,8 +1035,10 @@
 				F8D3E7842062F1B900CD351C /* LaunchScreen.storyboard in Resources */,
 				F8D3E7812062F1B900CD351C /* Assets.xcassets in Resources */,
 				F8D3E77F2062F1B900CD351C /* Main.storyboard in Resources */,
+				F8D3E8022063055500CD351C /* sage-mpower-2.pem in Resources */,
 				F8D3E7F72063039200CD351C /* BridgeInfo.plist in Resources */,
 				F8188FB62072F430009AC215 /* Triggers.json in Resources */,
+				F8D3E8032063055500CD351C /* BridgeInfo-private.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
