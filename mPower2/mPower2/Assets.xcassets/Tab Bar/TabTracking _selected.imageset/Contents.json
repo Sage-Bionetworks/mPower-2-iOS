@@ -2,15 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "TriggersIcon-oval.png",
+      "filename" : "TabTracking _selected.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "Tracking _selected@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
+      "filename" : "Tracking _selected@3x.png",
       "scale" : "3x"
     }
   ],
