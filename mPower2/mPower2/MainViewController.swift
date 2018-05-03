@@ -35,8 +35,23 @@ import UIKit
 import MotorControl
 import Research
 import ResearchUI
+import BridgeSDK
 
 class MainViewController: UITableViewController, RSDTaskViewControllerDelegate {
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated);
+        if !BridgeSDK.authManager.isAuthenticated() {
+            var taskInfo = RSDTaskInfoObject(with: "SignIn")
+            taskInfo.title = "SignIn"
+            taskInfo.resourceTransformer = RSDResourceTransformerObject(resourceName: "SignIn")
+            let taskGroup = RSDTaskGroupObject(with: "Registration", tasks: [taskInfo])
+            guard let taskPath = taskGroup.instantiateTaskPath(for: taskInfo) else { return }
+            let vc = RSDTaskViewController(taskPath: taskPath)
+            vc.delegate = self
+            self.present(vc, animated: false, completion: nil)
+        }
+    }
     
     let taskGroups: [RSDTaskGroup] = {
         
