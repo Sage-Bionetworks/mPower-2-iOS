@@ -62,31 +62,6 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // TODO: jbruhin 5-1-18 assign taskGroups from presenting VC, which will get them from???
-        taskGroups = {
-            let activeTaskGroup : RSDTaskGroup = {
-                let taskInfos = MCTTaskIdentifier.all().map { MCTTaskInfo($0) }
-                var taskGroup = RSDTaskGroupObject(with: "Measuring", tasks: taskInfos)
-                taskGroup.title = "Measuring"
-                return taskGroup
-            }()
-            let trackingTaskGroup : RSDTaskGroup = {
-                var taskInfo = RSDTaskInfoObject(with: "Triggers")
-                taskInfo.title = "Triggers"
-                if let image = try? RSDImageWrapper(imageName: "TriggerIcon-oval") {
-                    taskInfo.icon = image
-                }
-                taskInfo.resourceTransformer = RSDResourceTransformerObject(resourceName: "Triggers")
-                var taskGroup = RSDTaskGroupObject(with: "Tracking", tasks: [taskInfo])
-                taskGroup.title = "Tracking"
-                return taskGroup
-            }()
-            
-            return [trackingTaskGroup, activeTaskGroup]
-        }()
-
-        
         setupView()
     }
     

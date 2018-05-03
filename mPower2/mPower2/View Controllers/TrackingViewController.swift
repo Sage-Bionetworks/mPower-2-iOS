@@ -63,10 +63,38 @@ class TrackingViewController: UIViewController {
         tabBarItem = customTabBarItem
     }
     
+    func taskGroups() -> [RSDTaskGroup] {
+        // TODO: jbruhin 5-1-18 obtain task model from the proper source?? Model also needs more tasks
+        // and tasks may need more data, like icon images
+        let taskGroups: [RSDTaskGroup] = {
+            let activeTaskGroup : RSDTaskGroup = {
+                let taskInfos = MCTTaskIdentifier.all().map { MCTTaskInfo($0) }
+                var taskGroup = RSDTaskGroupObject(with: "Measuring", tasks: taskInfos)
+                taskGroup.title = "Measuring"
+                return taskGroup
+            }()
+            let trackingTaskGroup : RSDTaskGroup = {
+                var taskInfo = RSDTaskInfoObject(with: "Triggers")
+                taskInfo.title = "Triggers"
+                if let image = try? RSDImageWrapper(imageName: "TriggerIcon-oval") {
+                    taskInfo.icon = image
+                }
+                taskInfo.resourceTransformer = RSDResourceTransformerObject(resourceName: "Triggers")
+                var taskGroup = RSDTaskGroupObject(with: "Tracking", tasks: [taskInfo])
+                taskGroup.title = "Tracking"
+                return taskGroup
+            }()
+            
+            return [trackingTaskGroup, activeTaskGroup]
+        }()
+        return taskGroups
+    }
+    
     func setupView() {
         
         // Add our task browser view controller
         let browser = TaskBrowserViewController()
+        browser.taskGroups = taskGroups()
         browser.view.translatesAutoresizingMaskIntoConstraints = false
         addChildViewController(browser)
         taskBrowserContainer.addSubview(browser.view)
