@@ -39,7 +39,7 @@ class RegistrationIntroViewController: RSDTableStepViewController {
 
     override func shouldHideAction(for actionType: RSDUIActionType) -> Bool {
         #if !DEBUG
-        if actionType == .skip {
+        if actionType == .navigation(.skip) {
             return true
         }
         #endif
