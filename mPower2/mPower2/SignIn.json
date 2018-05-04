@@ -1,0 +1,113 @@
+{
+    "identifier":"SignIn",
+    "shouldHideActions":["skip", "cancel"],
+    "progressMarkers":[],
+    "steps":[
+             {
+                "identifier":"introduction",
+                "type":"instruction",
+                "title":"Welcome to mPower",
+                "text":"mPower is a study to track the symptoms of Parkinson’s Disease over time. Here you can learn about the study and decide if you want to join.",
+                 "image":{
+                     "imageName":"welcomeScreenImage",
+                     "placementType":"topBackground"
+                 },
+                 "colorTheme":{
+                     "colorStyle": {
+                         "header": "darkBackground",
+                         "body": "darkBackground",
+                         "footer": "darkBackground"
+                     }
+                 },
+                 "viewTheme":{
+                     "viewIdentifier":"RegistrationIntro",
+                     "storyboardIdentifier":"Registration"
+                 },
+                 "actions": {
+                      "skip": {
+                                 "buttonTitle" : "use external ID",
+                                 "skipToIdentifier": "enterExternalId"
+                              }
+                 }
+
+             },
+             {
+                "identifier":"enterPhoneNumber",
+                "type":"form",
+                "dataType":"string",
+                "textFieldOptions": { "keyboardType" : "phonePad" },
+                "uiHint":"textfield",
+                "title":"Enter your phone number",
+                "text":"To become part of mPower, enter your phone number to get started.",
+                "placeholder":"Enter your mobile number",
+                "image":{
+                    "imageName": "TapLeft1",
+                    "placementType":"iconAbove"
+                },
+                "colorTheme":{
+                    "usesLightStyle":true
+                },
+                "viewTheme":{
+                    "viewIdentifier":"PhoneRegistration",
+                    "storyboardIdentifier":"Registration"
+                },
+                "nextStepIdentifier": "waiting"
+             },
+             {
+                "identifier":"enterExternalId",
+                "type":"form",
+                "text":"To become part of mPower, enter your external ID and password to get started.",
+                "inputFields": [
+                    {
+                        "identifier":"externalId",
+                        "dataType":"string",
+                        "uiHint":"textfield",
+                        "prompt":"external ID"
+                    },
+                    {
+                        "identifier":"preConsent",
+                        "dataType":"boolean",
+                        "uiHint":"toggle",
+                        "prompt":"pre-consented"
+                    }
+                ],
+                "image":{
+                    "imageName": "TapLeft1",
+                    "placementType":"iconAbove"
+                },
+                "colorTheme":{
+                    "usesLightStyle":true
+                },
+                "viewTheme":{
+                    "viewIdentifier":"ExternalIDRegistration",
+                    "storyboardIdentifier":"Registration"
+                },
+                "nextStepIdentifier": "completion"
+             },
+             {
+                 "identifier":"waiting",
+                 "type":"registration",
+                 "title":"Great job!",
+                 "text":"You just completed registration.",
+                 "image":{
+                     "imageName":"Completion",
+                     "placementType":"topBackground"
+                 },
+                 "viewTheme":{
+                     "viewIdentifier":"RegistrationVerification",
+                     "storyboardIdentifier":"Registration"
+                 },
+                 "nextStepIdentifier": "exit"
+             },
+             {
+                 "identifier":"completion",
+                 "type":"completion",
+                 "title":"Great job!",
+                 "text":"You just completed registration.",
+                 "image":{
+                     "imageName":"Completion",
+                     "placementType":"topBackground"
+                 }
+             }
+        ]
+}
