@@ -38,34 +38,15 @@ import BridgeSDK
 
 class PhoneRegistrationViewController: RSDTableStepViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     var resultText: String? {
-        let resultStepIdentifier = "enterPhoneNumber"
-        let taskPath = self.taskController.taskPath!
-        let sResult = taskPath.result.stepHistory.first { $0.identifier == resultStepIdentifier}
-        guard let stepResult = sResult as? RSDCollectionResult
+        let taskResult = self.taskController.taskResult
+        let phoneResultIdentifier = "enterPhoneNumber"
+        guard let phoneNumber = taskResult?.findAnswerResult(with: phoneResultIdentifier)?.value as? String
             else {
                 return nil
         }
-        
-        let aResult = stepResult.inputResults.first { $0.identifier == resultStepIdentifier }
-        guard let result = aResult as? RSDAnswerResult,
-            let answer = result.value as? String
-            else {
-                return nil
-        }
-        
-        return answer
+
+        return phoneNumber
     }
     
     func signUpAndRequestSMSLink(completion: @escaping SBBNetworkManagerCompletionBlock) {

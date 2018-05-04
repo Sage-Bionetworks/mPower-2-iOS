@@ -37,23 +37,13 @@ import Research
 
 class RegistrationIntroViewController: RSDTableStepViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
+    override func shouldHideAction(for actionType: RSDUIActionType) -> Bool {
         #if !DEBUG
-        self.navigationFooter?.isSkipHidden = true
+        if actionType == .skip {
+            return true
+        }
         #endif
+        return super.shouldHideAction(for: actionType)
     }
 
 }

@@ -38,18 +38,27 @@ import ResearchUI
 import BridgeSDK
 
 class MainViewController: UITableViewController, RSDTaskViewControllerDelegate {
+    var isSigningIn: Bool = false
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated);
         if !BridgeSDK.authManager.isAuthenticated() {
-            var taskInfo = RSDTaskInfoObject(with: "SignIn")
-            taskInfo.title = "SignIn"
-            taskInfo.resourceTransformer = RSDResourceTransformerObject(resourceName: "SignIn")
-            let taskGroup = RSDTaskGroupObject(with: "Registration", tasks: [taskInfo])
-            guard let taskPath = taskGroup.instantiateTaskPath(for: taskInfo) else { return }
-            let vc = RSDTaskViewController(taskPath: taskPath)
-            vc.delegate = self
-            self.present(vc, animated: false, completion: nil)
+            // don't do this if we're already in the signup/signin flow
+            if !self.isSigningIn {
+                self.isSigningIn = true
+                do {
+                    let resourceTransformer = RSDResourceTransformerObject(resourceName: "SignIn")
+                    let task = try RSDFactory.shared.decodeTask(with: resourceTransformer)
+                    let taskPath = RSDTaskPath(task: task)
+                    let vc = RSDTaskViewController(taskPath: taskPath)
+                    vc.delegate = self
+                    self.present(vc, animated: false, completion: nil)
+                } catch let err {
+                    fatalError("Failed to decode the SignIn task. \(err)")
+                }
+            }
+        } else {
+            self.isSigningIn = false
         }
     }
     

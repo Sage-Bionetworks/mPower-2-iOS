@@ -39,35 +39,14 @@ import BridgeSDK
 class RegistrationWaitingViewController: RSDStepViewController {
     @IBOutlet weak var phoneLabel: UILabel!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         // TODO: emm 2018-04-25 get phone # from results via custom task controller and set the phoneLabel
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
     @IBAction func didTapChangeMobileButton(_ sender: Any) {
+        // TODO emm 2018-05-03 get this working
 //        guard let answerFormat = formItem.answerFormat as? SBATextResultCreator else { return }
 //
 //        let alertController = UIAlertController(title: formItem.text, message: "", preferredStyle: .alert)

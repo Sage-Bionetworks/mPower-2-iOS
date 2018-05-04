@@ -38,39 +38,14 @@ import BridgeSDK
 
 class ExternalIDRegistrationViewController: RSDTableStepViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    func credentials() -> (externalID: String?, preconsent: Bool?) {
-        let resultStepIdentifier = "enterExternalId"
-        let taskPath = self.taskController.taskPath!
-        let sResult = taskPath.result.stepHistory.first { $0.identifier == resultStepIdentifier}
-        guard let stepResult = sResult as? RSDCollectionResult
-            else {
-                return (nil, nil)
-        }
-        
+    func credentials() -> (externalId: String, preconsent: Bool)? {
+        let taskResult = self.taskController.taskResult
         let externalIdResultIdentifier = "externalId"
-        let resultForExternalId = stepResult.inputResults.first { $0.identifier == externalIdResultIdentifier }
-        guard let eResult = resultForExternalId as? RSDAnswerResult,
-            let externalId = eResult.value as? String
-            else {
-                return (nil, nil)
-        }
         let preConsentResultIdentifier = "preConsent"
-        let resultForPreConsent = stepResult.inputResults.first { $0.identifier == preConsentResultIdentifier }
-        guard let pResult = resultForPreConsent as? RSDAnswerResult,
-            let preconsent = pResult.value as? Bool
+        guard let externalId = taskResult?.findAnswerResult(with: externalIdResultIdentifier)?.value as? String,
+            let preconsent = taskResult?.findAnswerResult(with: preConsentResultIdentifier)?.value as? Bool
             else {
-                return (nil, nil)
+                return nil
         }
 
         return (externalId, preconsent)
@@ -78,16 +53,16 @@ class ExternalIDRegistrationViewController: RSDTableStepViewController {
 
     
     func signUpAndSignIn(completion: @escaping SBBNetworkManagerCompletionBlock) {
-        let (ex, pc) = self.credentials()
-        guard let externalId = ex, let preconsent = pc, externalId.isEmpty == false else {
-            return
-        }
+        guard let credentials = self.credentials(), !credentials.externalId.isEmpty else { return }
         
         let signUp: SBBSignUp = SBBSignUp()
         signUp.checkForConsent = true
-        signUp.externalId = externalId
-        signUp.password = externalId
-        if preconsent {
+        signUp.externalId = credentials.externalId
+        signUp.password = credentials.externalId
+        
+        // TODO emm 2018-05-03 if we move this code to BridgeApp, we should prolly use an RSDCohortRule
+        // or some such instead of hardcoding these dataGroup names.
+        if credentials.preconsent {
             signUp.dataGroups = ["test_user", "test_no_consent"]
         } else {
             signUp.dataGroups = ["test_user"]
@@ -100,7 +75,7 @@ class ExternalIDRegistrationViewController: RSDTableStepViewController {
             }
             
             // we're signed up so sign in
-            BridgeSDK.authManager.signIn(withExternalId: externalId, password: externalId, completion: { (task, result, error) in
+            BridgeSDK.authManager.signIn(withExternalId: signUp.externalId!, password: signUp.password!, completion: { (task, result, error) in
                 completion(task, result, error)
             })
         })
