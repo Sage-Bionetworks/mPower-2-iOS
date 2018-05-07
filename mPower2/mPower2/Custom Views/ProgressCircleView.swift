@@ -93,6 +93,13 @@ import UIKit
         layer.addSublayer(progressShape)
         updateProgress()
     }
+    
+    override func prepareForInterfaceBuilder() {
+        super.prepareForInterfaceBuilder()
+        commonInit()
+        displayDay(count: 14)
+        setNeedsDisplay()
+    }
 
     override func layoutSubviews() {
         super.layoutSubviews()

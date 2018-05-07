@@ -36,16 +36,18 @@ import MotorControl
 import Research
 import ResearchUI
 
+@IBDesignable
 class TrackingViewController: UIViewController {
     
+    private let kTaskBrowserSegueIdentifier = "TaskBrowserSegue"
     
     @IBOutlet weak var actionBarView: UIView!
     @IBOutlet weak var actionBarTitleLabel: UILabel!
     @IBOutlet weak var actionBarDetailsLabel: UILabel!
     @IBOutlet weak var progressCircleView: ProgressCircleView!
-    @IBOutlet weak var taskBrowserContainer: UIView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var taskBrowserBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var taskBrowserContainerView: UIView!
     
     public var shouldShowActionBar = true
     
@@ -53,14 +55,17 @@ class TrackingViewController: UIViewController {
         super.viewDidLoad()
         
         setupView()
-        updateActionBar()
-        updateProgressCircle()
         
         // TODO: jbruhin 5-1-18 find better way to handle this, including for the other 3 main VCs
         let customTabBarItem:UITabBarItem = UITabBarItem(title: "Tracking",
                                                          image: UIImage(named: "TabTracking _selected")?.withRenderingMode(UIImageRenderingMode.alwaysOriginal),
                                                          selectedImage: UIImage(named: "TabTracking _selected"))
         tabBarItem = customTabBarItem
+    }
+    
+    override func prepareForInterfaceBuilder() {
+        super.prepareForInterfaceBuilder()
+        setupView()
     }
     
     func taskGroups() -> [RSDTaskGroup] {
@@ -90,23 +95,29 @@ class TrackingViewController: UIViewController {
         return taskGroups
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == kTaskBrowserSegueIdentifier,
+            let taskBrowser = segue.destination as? TaskBrowserViewController {
+            taskBrowser.taskGroups = taskGroups()
+        }
+    }
+    
     func setupView() {
         
-        // Add our task browser view controller
-        let browser = TaskBrowserViewController()
-        browser.taskGroups = taskGroups()
-        browser.view.translatesAutoresizingMaskIntoConstraints = false
-        addChildViewController(browser)
-        taskBrowserContainer.addSubview(browser.view)
-        browser.view.rsd_alignAllToSuperview(padding: 0.0)
-        
-        // Configure actionBarView
+        // Initial setup
+        setupWelcomeText()
         actionBarView.layer.cornerRadius = 4.0
         actionBarView.layer.masksToBounds = true
         
-        // TODO: jbruhin 5-1-18 update 'welcome' text dynamically
+        // update variable items
+        updateActionBar()
+        updateProgressCircle()
     }
     
+    func setupWelcomeText() {
+        // TODO: jbruhin 5-1-18 update 'welcome' text dynamically based on time of day
+    }
+
     func updateActionBar() {
         // TODO: jbruhin 5-1-18 will be a data source for this at some point
         actionBarTitleLabel.text = "Study Burst"
@@ -114,12 +125,11 @@ class TrackingViewController: UIViewController {
         
         // TODO: jbruhin 5-1-18 will need to make the following dynamic based on...something
         actionBarView.isHidden = !shouldShowActionBar
-//        if shouldShowActionBar {
-//            // Add some top inset on the tableView
-//            let inset = actionBarView.frame.origin.y + actionBarView.frame.size.height
-//            tableView.contentInset = UIEdgeInsets(top: inset, left: 0.0, bottom: 0.0, right: 0.0)
-//        }
-        //
+        if shouldShowActionBar {
+            // Inset the top of the tableView to accommodate actionBar
+            let inset = actionBarView.frame.origin.y + actionBarView.frame.size.height
+            tableView.contentInset = UIEdgeInsets(top: inset, left: 0.0, bottom: 0.0, right: 0.0)
+        }
     }
     
     func updateProgressCircle() {

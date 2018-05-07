@@ -39,26 +39,25 @@ protocol TaskBrowserViewControllerDelegate {
     func taskBrowserViewControllerToggleVisibility()
 }
 
-@IBDesignable class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate, TaskBrowserTabViewDelegate {
+class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate, TaskBrowserTabViewDelegate {
     
-    // Used by our potential parent VC to show/hide our view
+    // Used by our potential parent VC to show/hide our collectionView
     class func tabsHeight() -> CGFloat {
         return 50.0
     }
     
     private let kCollectionCellIdentifier = "TaskCollectionViewCell"
-    private let kTopInset: CGFloat = 30.0
 
-    // TODO: jbruhin 5-1-18 need to optimize for all screen sizes
-    open var cellSize = CGSize(width: 80.0, height: 80.0)
-    open var minCellSpacing: CGFloat = 30.0
-    
     public var shouldShowTopShadow = true
     public var taskGroups: [RSDTaskGroup]?
 
-    private var collectionView: UICollectionView!
-    private var tabButtonStackView: UIStackView!
     private var selectedTaskGroup: RSDTaskGroup?
+    
+    @IBOutlet weak var tabButtonStackView: UIStackView!
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var ruleView: UIView!
+    @IBOutlet weak var shadowView: RSDShadowGradient!
+    @IBOutlet weak var tabsViewHeightConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,18 +73,12 @@ protocol TaskBrowserViewControllerDelegate {
     
     func setupView() {
         
+        // Remove existing managed subviews from tabBar stackView
+        tabButtonStackView.arrangedSubviews.forEach({ $0.removeFromSuperview() })
+        
         // Let's select the first task group by default.
         selectedTaskGroup = taskGroups?.first
         
-        tabButtonStackView = UIStackView(frame: .zero)
-        tabButtonStackView.translatesAutoresizingMaskIntoConstraints = false
-        tabButtonStackView.axis = .horizontal
-        tabButtonStackView.distribution = .fillEqually
-        view.addSubview(tabButtonStackView)
-        
-        // Pin left, right, top to superview
-        tabButtonStackView.rsd_alignToSuperview([.leading, .top, .trailing], padding: 0.0)
-
         // If we have more than one TaskGroup, we create tabs for each group. If we don't, we do not
         // create tabs and we set the height of the tabButtonStackView to 0, essentially hiding it
         if shouldShowTabs(),
@@ -102,53 +95,18 @@ protocol TaskBrowserViewControllerDelegate {
             })
             
             // set the tabView height
-            tabButtonStackView.rsd_makeHeight(.equal, TaskBrowserViewController.tabsHeight())
+            tabsViewHeightConstraint.constant = TaskBrowserViewController.tabsHeight()
         }
         else {
-            tabButtonStackView.rsd_makeHeight(.equal, 0.0)
+            tabsViewHeightConstraint.constant = 0.0
         }
-
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.itemSize = cellSize
-        layout.minimumInteritemSpacing = minCellSpacing
-
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.backgroundColor = UIColor.white
-
-        view.addSubview(collectionView)
         
-        // Pin below stackView and left, right and bottom to superview
-        collectionView.rsd_alignBelow(view: tabButtonStackView, padding: 0.0)
-        collectionView.rsd_alignToSuperview([.leading, .trailing, .bottom], padding: 0.0)
-        
-        // Register our cells for reuse
-        collectionView.register(TaskCollectionViewCell.self, forCellWithReuseIdentifier: kCollectionCellIdentifier)
-        
+        // Hide or show our shadow and rule views
+        shadowView.isHidden = !shouldShowTopShadow
+        ruleView.isHidden = !shouldShowTabs()
+
+        // Reload our data
         collectionView.reloadData()
-        
-        if shouldShowTabs() {
-            // We also add a 1px tall rule underneath the tabBar
-            let rule = UIView()
-            rule.translatesAutoresizingMaskIntoConstraints = false
-            rule.backgroundColor = UIColor.lightGray
-            view.addSubview(rule)
-            rule.rsd_alignBelow(view: tabButtonStackView, padding: 0.0)
-            rule.rsd_alignToSuperview([.leading, .trailing], padding: 0.0)
-            rule.rsd_makeHeight(.equal, 1.0)
-        }
-        
-        // Finally, add a shadow if required
-        if shouldShowTopShadow {
-            let shadow = RSDShadowGradient()
-            shadow.translatesAutoresizingMaskIntoConstraints = false
-            view.addSubview(shadow)
-            shadow.rsd_makeHeight(.equal, 5.0)
-            shadow.rsd_alignToSuperview([.leading, .trailing], padding: 0.0)
-            shadow.rsd_alignToSuperview([.top], padding: -5.0)
-        }
     }
     
     // MARK: RSDTaskViewControllerDelegate
@@ -211,10 +169,6 @@ extension TaskBrowserViewController: UICollectionViewDelegate, UICollectionViewD
         return cell ?? UICollectionViewCell()
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return cellSize
-    }
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         guard let selectedTaskGroup = selectedTaskGroup else {
@@ -231,16 +185,21 @@ extension TaskBrowserViewController: UICollectionViewDelegate, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         
-        guard let selectedTaskGroup = selectedTaskGroup else {
+        guard let selectedTaskGroup = selectedTaskGroup,
+            let layout = collectionViewLayout as? UICollectionViewFlowLayout else {
             return UIEdgeInsetsMake(0, 0, 0, 0)
         }
         
-        // TODO: jbruhin 5-3-18 optimize this for all screen sizes, use spacing rather than insets
-        let totalCellWidth = cellSize.width * CGFloat(selectedTaskGroup.tasks.count)
-        let totalSpacingWidth = minCellSpacing * (CGFloat(selectedTaskGroup.tasks.count) - 1)
+        // TODO: jbruhin 5-3-18 optimize this for all screen sizes, use spacing rather than insets.
+        // The design calls for centering the cells horizontally, which is different the default
+        // collectionView behavior.
+        
+        let minSpacing: CGFloat = 30.0
+        let totalCellWidth = layout.itemSize.width * CGFloat(selectedTaskGroup.tasks.count)
+        let totalSpacingWidth = minSpacing * (CGFloat(selectedTaskGroup.tasks.count) - 1)
         let inset = (collectionView.frame.size.width - CGFloat(totalCellWidth + totalSpacingWidth)) / 2
 
-        return UIEdgeInsetsMake(kTopInset, inset, 0, inset)
+        return UIEdgeInsetsMake(layout.sectionInset.top, inset, layout.sectionInset.bottom, inset)
     }
 }
 
@@ -264,13 +223,13 @@ protocol TaskBrowserTabViewDelegate {
         }
     }
     
-    private let rule: UIView = {
+    let rule: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = UIColor.royal500
         return view
     }()
-    private let label: UILabel = {
+    let label: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.boldSystemFont(ofSize: 16.0)
@@ -282,8 +241,21 @@ protocol TaskBrowserTabViewDelegate {
 
     public init(frame: CGRect, taskGroupIdentifier: String) {
         super.init(frame: frame)
-        
         self.taskGroupIdentifier = taskGroupIdentifier
+        commonInit()
+    }
+
+    override public init(frame: CGRect) {
+        super.init(frame: frame)
+        commonInit()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        commonInit()
+    }
+    
+    func commonInit() {
         
         // Add our label
         addSubview(label)
@@ -302,8 +274,10 @@ protocol TaskBrowserTabViewDelegate {
         button.rsd_alignAllToSuperview(padding: 0.0)
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+    override open func prepareForInterfaceBuilder() {
+        super.prepareForInterfaceBuilder()
+        commonInit()
+        setNeedsDisplay()
     }
     
     @objc func tabSelected() {
@@ -314,20 +288,10 @@ protocol TaskBrowserTabViewDelegate {
     }
 }
 
-@IBDesignable class TaskCollectionViewCell: UICollectionViewCell {
+class TaskCollectionViewCell: UICollectionViewCell {
     
-    private let kVerticalPadding: CGFloat = 5.0
-
-    private var imageView: UIImageView?
-    private let label: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.boldSystemFont(ofSize: 12.0)
-        label.numberOfLines = 0
-        label.textColor = UIColor.darkGray
-        label.textAlignment = .center
-        return label
-    }()
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var label: UILabel!
     
     public var title: String? {
         didSet {
@@ -336,30 +300,7 @@ protocol TaskBrowserTabViewDelegate {
     }
     public var image: UIImage? {
         didSet {
-            setNeedsLayout()
+            imageView.image = image
         }
     }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        // We want to size and constrain the imageView based on the size of the image,
-        // rather than choosing how to scale the image to fit the view. So we always
-        // remove all the subviews, recreate the imageView with the current image,
-        // re-add and layout the imageView and the label
-        
-        contentView.subviews.forEach({ $0.removeFromSuperview() })
-        
-        // Add our imageView. Pin to the top, center horizontally and fix its size
-        imageView = UIImageView(image: image)
-        imageView?.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(imageView!)
-        imageView?.rsd_alignToSuperview([.top], padding: 0.0)
-        imageView?.rsd_alignCenterHorizontal(padding: 0.0)
-        
-        // Add our label and position under imageView, pin left and right to superview
-        contentView.addSubview(label)
-        label.rsd_alignBelow(view: imageView!, padding: kVerticalPadding)
-        label.rsd_alignToSuperview([.leading, .trailing], padding: 0.0)
-    }
-}
+ }
