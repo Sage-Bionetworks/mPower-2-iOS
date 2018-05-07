@@ -39,7 +39,7 @@ protocol TaskBrowserViewControllerDelegate {
     func taskBrowserViewControllerToggleVisibility()
 }
 
-class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate, TaskBrowserTabViewDelegate {
+@IBDesignable class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate, TaskBrowserTabViewDelegate {
     
     // Used by our potential parent VC to show/hide our view
     class func tabsHeight() -> CGFloat {
@@ -133,7 +133,7 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
             // We also add a 1px tall rule underneath the tabBar
             let rule = UIView()
             rule.translatesAutoresizingMaskIntoConstraints = false
-            rule.backgroundColor = UIColor.royal200
+            rule.backgroundColor = UIColor.lightGray
             view.addSubview(rule)
             rule.rsd_alignBelow(view: tabButtonStackView, padding: 0.0)
             rule.rsd_alignToSuperview([.leading, .trailing], padding: 0.0)
@@ -203,7 +203,7 @@ extension TaskBrowserViewController: UICollectionViewDelegate, UICollectionViewD
             
             let task = selectedTaskGroup.tasks[indexPath.row]
             cell?.image = nil
-            task.imageVendor?.fetchImage(for: CGSize(width: 0.0, height: 0.0)) { (_, img) in
+            task.imageVendor?.fetchImage(for: collectionView.layoutAttributesForItem(at: indexPath)?.size ?? .zero) { (_, img) in
                 cell?.image = img
             }
             cell?.title = task.title?.uppercased()
@@ -235,8 +235,7 @@ extension TaskBrowserViewController: UICollectionViewDelegate, UICollectionViewD
             return UIEdgeInsetsMake(0, 0, 0, 0)
         }
         
-        // We do this so the cells are centered horizontally
-
+        // TODO: jbruhin 5-3-18 optimize this for all screen sizes, use spacing rather than insets
         let totalCellWidth = cellSize.width * CGFloat(selectedTaskGroup.tasks.count)
         let totalSpacingWidth = minCellSpacing * (CGFloat(selectedTaskGroup.tasks.count) - 1)
         let inset = (collectionView.frame.size.width - CGFloat(totalCellWidth + totalSpacingWidth)) / 2
@@ -249,17 +248,17 @@ protocol TaskBrowserTabViewDelegate {
     func taskGroupSelected(identifier: String)
 }
 
-class TaskBrowserTabView: UIView {
+@IBDesignable class TaskBrowserTabView: UIView {
     
     public var taskGroupIdentifier: String?
     public var delegate: TaskBrowserTabViewDelegate?
     
-    public var title: String? {
+    @IBInspectable public var title: String? {
         didSet {
             label.text = title
         }
     }
-    public var isSelected: Bool = false {
+    @IBInspectable public var isSelected: Bool = false {
         didSet {
             rule.isHidden = !isSelected
         }
@@ -315,7 +314,7 @@ class TaskBrowserTabView: UIView {
     }
 }
 
-class TaskCollectionViewCell: UICollectionViewCell {
+@IBDesignable class TaskCollectionViewCell: UICollectionViewCell {
     
     private let kVerticalPadding: CGFloat = 5.0
 

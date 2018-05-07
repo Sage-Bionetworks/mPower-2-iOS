@@ -33,14 +33,14 @@
 
 import UIKit
 
-class ProgressCircleView: UIView {
+@IBDesignable class ProgressCircleView: UIView {
     
     private let kVerticalPad: CGFloat = 12.0
 
     let progressShape = CAShapeLayer()
     let backgroundShape = CAShapeLayer()
     
-    public var progress: Double = 30.0 {
+    @IBInspectable public var progress: Double = 30.0 {
         didSet {
             updateProgress()
         }
@@ -109,14 +109,14 @@ class ProgressCircleView: UIView {
         backgroundShape.frame = frame
         backgroundShape.position = center
         backgroundShape.path = UIBezierPath(ovalIn: frame).cgPath
-        backgroundShape.strokeColor = UIColor.royal200.cgColor
+        backgroundShape.strokeColor = UIColor.rsd_dialRingBackground.cgColor
         backgroundShape.lineWidth = strokeWidth
         backgroundShape.fillColor = UIColor.white.cgColor
         
         progressShape.frame = frame
         progressShape.path = backgroundShape.path
         progressShape.position = backgroundShape.position
-        progressShape.strokeColor = UIColor.royal500.cgColor
+        progressShape.strokeColor = UIColor.rsd_dialRing.cgColor
         progressShape.lineWidth = backgroundShape.lineWidth
         progressShape.fillColor = UIColor.clear.cgColor
         progressShape.strokeEnd = CGFloat(progress/100.0)

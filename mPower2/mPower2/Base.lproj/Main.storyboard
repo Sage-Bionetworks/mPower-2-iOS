@@ -83,31 +83,36 @@
                                                 <constraint firstAttribute="height" constant="120" id="iX8-Uz-Haf"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Good morning, Margo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jml-3Z-WXc">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Good morning, Margo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jml-3Z-WXc">
                                             <rect key="frame" x="30" y="141" width="315" height="29"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="24"/>
                                             <color key="textColor" red="0.25490196078431371" green="0.28235294117647058" blue="0.34901960784313724" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What would you like to do today?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4hg-YA-Q5T">
-                                            <rect key="frame" x="30" y="178" width="315" height="22"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What would you like to do today?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4hg-YA-Q5T">
+                                            <rect key="frame" x="30" y="178" width="315" height="20"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                             <color key="textColor" red="0.25490196079999999" green="0.28235294119999998" blue="0.34901960780000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="4hg-YA-Q5T" secondAttribute="trailing" constant="30" id="6ux-Pu-TOL"/>
-                                        <constraint firstItem="4hg-YA-Q5T" firstAttribute="top" secondItem="jml-3Z-WXc" secondAttribute="bottom" constant="8" id="G29-NW-1jS"/>
+                                        <constraint firstAttribute="right" secondItem="4hg-YA-Q5T" secondAttribute="right" constant="30" id="6ux-Pu-TOL"/>
                                         <constraint firstItem="khX-Dl-GeU" firstAttribute="centerX" secondItem="yQl-6I-FdA" secondAttribute="centerX" id="JOh-sS-7aC"/>
                                         <constraint firstItem="4hg-YA-Q5T" firstAttribute="leading" secondItem="yQl-6I-FdA" secondAttribute="leading" constant="30" id="KFr-3r-ImF"/>
+                                        <constraint firstItem="4hg-YA-Q5T" firstAttribute="top" secondItem="jml-3Z-WXc" secondAttribute="bottom" constant="8" symbolic="YES" id="MLP-ky-7xV"/>
                                         <constraint firstItem="jml-3Z-WXc" firstAttribute="top" secondItem="khX-Dl-GeU" secondAttribute="bottom" constant="21" id="MPU-gr-Y2A"/>
                                         <constraint firstItem="khX-Dl-GeU" firstAttribute="top" secondItem="yQl-6I-FdA" secondAttribute="top" id="hFA-LA-nxg"/>
-                                        <constraint firstAttribute="trailing" secondItem="jml-3Z-WXc" secondAttribute="trailing" constant="30" id="mkw-qw-Y2J"/>
+                                        <constraint firstAttribute="right" secondItem="jml-3Z-WXc" secondAttribute="right" constant="30" id="mkw-qw-Y2J"/>
                                         <constraint firstItem="jml-3Z-WXc" firstAttribute="leading" secondItem="yQl-6I-FdA" secondAttribute="leading" constant="30" id="tMa-YM-MBh"/>
                                     </constraints>
                                 </view>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="rect" keyPath="contentInset">
+                                        <rect key="value" x="115" y="0.0" width="0.0" height="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pqV-SR-epJ">
                                 <rect key="frame" x="0.0" y="418" width="375" height="200"/>
@@ -162,6 +167,11 @@
                                     <constraint firstAttribute="height" constant="70" id="gJY-Nn-FMp"/>
                                     <constraint firstAttribute="width" constant="70" id="vLH-hj-0O4"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="progress">
+                                        <integer key="value" value="25"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

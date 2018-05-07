@@ -114,11 +114,11 @@ class TrackingViewController: UIViewController {
         
         // TODO: jbruhin 5-1-18 will need to make the following dynamic based on...something
         actionBarView.isHidden = !shouldShowActionBar
-        if shouldShowActionBar {
-            // Add some top inset on the tableView
-            let inset = actionBarView.frame.origin.y + actionBarView.frame.size.height
-            tableView.contentInset = UIEdgeInsets(top: inset, left: 0.0, bottom: 0.0, right: 0.0)
-        }
+//        if shouldShowActionBar {
+//            // Add some top inset on the tableView
+//            let inset = actionBarView.frame.origin.y + actionBarView.frame.size.height
+//            tableView.contentInset = UIEdgeInsets(top: inset, left: 0.0, bottom: 0.0, right: 0.0)
+//        }
         //
     }
     
@@ -132,25 +132,3 @@ class TrackingViewController: UIViewController {
         // TODO: jbruhin 5-1-18 implement
     }
 }
-
-extension TrackingViewController: RSDTaskViewControllerDelegate {
-
-    // MARK: RSTTaskViewControllerDelegate
-    func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
-        // dismiss the view controller
-        (taskController as? UIViewController)?.dismiss(animated: true) {
-        }
-        
-        print("\n\n=== Completed: \(reason) error:\(String(describing: error))")
-        print(taskController.taskPath.result)
-    }
-    
-    func taskController(_ taskController: RSDTaskController, readyToSave taskPath: RSDTaskPath) {
-        
-    }
-    
-    func taskController(_ taskController: RSDTaskController, asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController? {
-        return nil
-    }
-}
-
