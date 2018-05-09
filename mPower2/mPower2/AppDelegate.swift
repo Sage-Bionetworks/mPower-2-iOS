@@ -35,15 +35,58 @@ import UIKit
 import BridgeApp
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
-
-    var window: UIWindow?
+class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
     
-    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
-        SBABridgeConfiguration.shared.setupBridge(with: SBAFactory())
-        
-        return true
+    override func applicationDidBecomeActive(_ application: UIApplication) {
+        super.applicationDidBecomeActive(application)
+        if BridgeSDK.authManager.isAuthenticated() {
+            showMainViewController(animated: true)
+        } else {
+            showSignInViewController(animated: true)
+        }
+    }
+    
+    func showMainViewController(animated: Bool) {
+        guard self.rootViewController?.state != .main else { return }
+        guard let storyboard = openStoryboard("Main"),
+            let vc = storyboard.instantiateInitialViewController()
+            else {
+            fatalError("Failed to instantiate initial view controller in the main storyboard.")
+        }
+        self.transition(to: vc, state: .main, animated: true)
+    }
+    
+    func showSignInViewController(animated: Bool) {
+        guard self.rootViewController?.state != .onboarding else { return }
+        do {
+            let resourceTransformer = RSDResourceTransformerObject(resourceName: "SignIn")
+            let task = try RSDFactory.shared.decodeTask(with: resourceTransformer)
+            let taskPath = RSDTaskPath(task: task)
+            let vc = RSDTaskViewController(taskPath: taskPath)
+            vc.delegate = self
+            self.transition(to: vc, state: .onboarding, animated: true)
+        } catch let err {
+            fatalError("Failed to decode the SignIn task. \(err)")
+        }
+    }
+    
+    func openStoryboard(_ name: String) -> UIStoryboard? {
+        return UIStoryboard(name: name, bundle: nil)
+    }
+    
+    
+    // MARK: RSDTaskViewControllerDelegate
+    
+    func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
+        guard BridgeSDK.authManager.isAuthenticated() else { return }
+        showMainViewController(animated: true)
+    }
+    
+    func taskController(_ taskController: RSDTaskController, readyToSave taskPath: RSDTaskPath) {
+    }
+    
+    func taskController(_ taskController: RSDTaskController, asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController? {
+        return nil
     }
 }
 

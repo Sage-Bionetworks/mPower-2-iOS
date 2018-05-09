@@ -66,9 +66,9 @@
                     },
                     {
                         "identifier":"preConsent",
-                        "dataType":"boolean",
-                        "uiHint":"toggle",
-                        "prompt":"pre-consented"
+                        "dataType":"singleChoice.boolean",
+                        "uiHint":"checkbox",
+                        "choices":[ {"text":"pre-consented", "value":true }]
                     }
                 ],
                 "image":{
@@ -76,7 +76,11 @@
                     "placementType":"iconAbove"
                 },
                 "colorTheme":{
-                    "usesLightStyle":true
+                     "colorStyle": {
+                         "header": "darkBackground",
+                         "body": "lightBackground",
+                         "footer": "lightBackground"
+                     }
                 },
                 "viewTheme":{
                     "viewIdentifier":"ExternalIDRegistration",

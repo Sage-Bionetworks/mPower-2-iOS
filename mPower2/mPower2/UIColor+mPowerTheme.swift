@@ -42,10 +42,6 @@ extension UIColor {
         return UIColor.royal500
     }
 
-    @objc open class var veryLightPrimaryTintColor: UIColor {
-        return UIColor.royal400
-    }
-
     @objc open class var lightPrimaryTintColor: UIColor {
         return UIColor.royal400
     }
