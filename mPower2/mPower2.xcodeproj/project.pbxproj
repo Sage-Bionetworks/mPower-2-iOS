@@ -456,6 +456,11 @@
 		0334415220995311009B97A9 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				F8D3E77B2062F1B900CD351C /* MainViewController.swift */,
+				608241F12093D9F70026E843 /* ExternalIDRegistrationViewController.swift */,
+				603B7BC220913B1A00794B7C /* PhoneRegistrationViewController.swift */,
+				608241DA2093D9A90026E843 /* RegistrationIntroViewController.swift */,
+				603B7BA9208E90FF00794B7C /* RegistrationWaitingViewController.swift */,
 				0334415320995328009B97A9 /* TrackingViewController.swift */,
 				0334415520995CCD009B97A9 /* TaskBrowserViewController.swift */,
 			);
@@ -530,9 +535,11 @@
 		F8188F7B2072CF51009AC215 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F8D3E7822062F1B900CD351C /* LaunchScreen.storyboard */,
+				F8D3E77D2062F1B900CD351C /* Main.storyboard */,
+				603B7B92208E90C100794B7C /* Registration.storyboard */,
 				603B7B352085541A00794B7C /* SignIn.json */,
 				F8188FB52072F430009AC215 /* Triggers.json */,
-				F8D3E7822062F1B900CD351C /* LaunchScreen.storyboard */,
 				F8D3E7802062F1B900CD351C /* Assets.xcassets */,
 			);
 			name = Resources;
@@ -597,16 +604,9 @@
 		F8D3E7782062F1B900CD351C /* mPower2 */ = {
 			isa = PBXGroup;
 			children = (
+				F8D3E7792062F1B900CD351C /* AppDelegate.swift */,
 				0334415220995311009B97A9 /* View Controllers */,
 				0349535320981C25006A05B1 /* Custom Views */,
-				F8D3E7792062F1B900CD351C /* AppDelegate.swift */,
-				F8D3E77B2062F1B900CD351C /* MainViewController.swift */,
-				F8D3E77D2062F1B900CD351C /* Main.storyboard */,
-				603B7B92208E90C100794B7C /* Registration.storyboard */,
-				603B7BA9208E90FF00794B7C /* RegistrationWaitingViewController.swift */,
-				603B7BC220913B1A00794B7C /* PhoneRegistrationViewController.swift */,
-				608241F12093D9F70026E843 /* ExternalIDRegistrationViewController.swift */,
-				608241DA2093D9A90026E843 /* RegistrationIntroViewController.swift */,
 				F8188F7B2072CF51009AC215 /* Resources */,
 				F82AE79F206315B900952D74 /* Styleguide */,
 				F8D3E7F52062F9ED00CD351C /* Support Files */,
