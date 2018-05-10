@@ -12,6 +12,7 @@
 		0349535520981C89006A05B1 /* ProgressCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0349535420981C89006A05B1 /* ProgressCircleView.swift */; };
 		03C9DCFE20A4CEB1007074EE /* Symptoms.json in Resources */ = {isa = PBXBuildFile; fileRef = 03C9DCE820A4CEB1007074EE /* Symptoms.json */; };
 		03C9DD0020A4CEC3007074EE /* Medication.json in Resources */ = {isa = PBXBuildFile; fileRef = 03C9DCFF20A4CEC3007074EE /* Medication.json */; };
+		03C9DD0C20A4F956007074EE /* mPower2.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03C9DD0B20A4F956007074EE /* mPower2.strings */; };
 		603B7B362085541A00794B7C /* SignIn.json in Resources */ = {isa = PBXBuildFile; fileRef = 603B7B352085541A00794B7C /* SignIn.json */; };
 		603B7B93208E90C100794B7C /* Registration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 603B7B92208E90C100794B7C /* Registration.storyboard */; };
 		603B7BAA208E90FF00794B7C /* RegistrationWaitingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603B7BA9208E90FF00794B7C /* RegistrationWaitingViewController.swift */; };
@@ -333,6 +334,7 @@
 		0349535420981C89006A05B1 /* ProgressCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProgressCircleView.swift; path = "Custom Views/ProgressCircleView.swift"; sourceTree = "<group>"; };
 		03C9DCE820A4CEB1007074EE /* Symptoms.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Symptoms.json; sourceTree = "<group>"; };
 		03C9DCFF20A4CEC3007074EE /* Medication.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Medication.json; sourceTree = "<group>"; };
+		03C9DD0B20A4F956007074EE /* mPower2.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = mPower2.strings; sourceTree = "<group>"; };
 		603B7B352085541A00794B7C /* SignIn.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SignIn.json; sourceTree = "<group>"; };
 		603B7B92208E90C100794B7C /* Registration.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Registration.storyboard; sourceTree = "<group>"; };
 		603B7BA9208E90FF00794B7C /* RegistrationWaitingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationWaitingViewController.swift; sourceTree = "<group>"; };
@@ -547,6 +549,7 @@
 				F8188FB52072F430009AC215 /* Triggers.json */,
 				03C9DCFF20A4CEC3007074EE /* Medication.json */,
 				F8D3E7802062F1B900CD351C /* Assets.xcassets */,
+				03C9DD0B20A4F956007074EE /* mPower2.strings */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1067,6 +1070,7 @@
 				03C9DD0020A4CEC3007074EE /* Medication.json in Resources */,
 				F8188FB62072F430009AC215 /* Triggers.json in Resources */,
 				F8D3E8032063055500CD351C /* BridgeInfo-private.plist in Resources */,
+				03C9DD0C20A4F956007074EE /* mPower2.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

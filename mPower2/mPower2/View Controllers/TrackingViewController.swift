@@ -51,6 +51,26 @@ class TrackingViewController: UIViewController {
     
     public var shouldShowActionBar = true
     
+    // TODO: jbruhin 5-10-18 - replace this with actual model
+    var completedTaskGroups: [[RSDTaskInfoObject]] = {
+        let taskGroups = [["Symptoms", "Symptoms", "Symptoms"],
+                          ["Medication", "Medication"],
+                          ["Triggers", "Triggers", "Triggers", "Triggers"],
+                          ["Tremor"]]
+        var taskInfosGroups = [[RSDTaskInfoObject]]()
+        for tasks in taskGroups {
+            var taskInfos = [RSDTaskInfoObject]()
+            tasks.forEach({
+                var taskInfo = RSDTaskInfoObject(with: $0)
+                taskInfo.title = $0
+                taskInfo.resourceTransformer = RSDResourceTransformerObject(resourceName: $0)
+                taskInfos.append(taskInfo)
+            })
+            taskInfosGroups.append(taskInfos)
+        }
+        return taskInfosGroups
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -149,5 +169,60 @@ class TrackingViewController: UIViewController {
     // MARK: Actions
     @IBAction func actionBarTapped(_ sender: Any) {
         // TODO: jbruhin 5-1-18 implement
+        presentAlertWithOk(title: "Not implemented yet.", message: "", actionHandler: nil)
+    }
+}
+
+extension TrackingViewController: UITableViewDelegate, UITableViewDataSource {
+    // MARK: UITableView Datasource
+    
+    open func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return completedTaskGroups.count
+    }
+    
+    open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell =  tableView.dequeueReusableCell(withIdentifier: "TrackingTableViewCell", for: indexPath) as! TrackingTableViewCell
+        if let firstTask = completedTaskGroups[indexPath.row].first {
+            cell.iconView.image = firstTask.iconSmall
+            // Update our label text, but keep the attributes defined in Interface Builder
+            let newString = String(format: "%@ %@", String(describing: completedTaskGroups[indexPath.row].count), firstTask.pluralTerm)
+            let newAttributedString = NSMutableAttributedString(attributedString: cell.countLabel.attributedText ?? NSAttributedString(string: ""))
+            newAttributedString.mutableString.setString(newString)
+            cell.countLabel.attributedText = newAttributedString
+        }
+        
+        return cell
+    }
+    
+    // MARK: UITableView Delegate
+    open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // TODO: jbruhin 5-10-18 implement??
+        presentAlertWithOk(title: "Should this do something??", message: "", actionHandler: nil)
+    }
+}
+
+class TrackingTableViewCell: UITableViewCell {
+    
+    // TODO: jbruhin 5-10-18 - optimize positioning of content for different screen sizes
+    @IBOutlet weak var iconView: UIImageView!
+    @IBOutlet weak var countLabel: UILabel!
+    
+}
+
+extension RSDTaskInfoObject {
+    var iconSmall: UIImage? {
+        get {
+            return UIImage(named: "\(self.identifier)TaskIconSmall")
+        }
+    }
+    var pluralTerm: String {
+        get {
+            return Localization.localizedString("TASK_PLURAL_TERM_FOR_\(identifier.uppercased())")
+        }
     }
 }
