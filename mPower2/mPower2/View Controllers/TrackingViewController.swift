@@ -79,13 +79,22 @@ class TrackingViewController: UIViewController {
                 return taskGroup
             }()
             let trackingTaskGroup : RSDTaskGroup = {
-                var taskInfo = RSDTaskInfoObject(with: "Triggers")
-                taskInfo.title = "Triggers"
-                if let image = try? RSDImageWrapper(imageName: "TriggerIcon-oval") {
-                    taskInfo.icon = image
-                }
-                taskInfo.resourceTransformer = RSDResourceTransformerObject(resourceName: "Triggers")
-                var taskGroup = RSDTaskGroupObject(with: "Tracking", tasks: [taskInfo])
+                
+                var taskInfos = [RSDTaskInfoObject]()
+                ["Symptoms", "Medication", "Triggers"].forEach({
+                    var taskInfo = RSDTaskInfoObject(with: $0)
+                    taskInfo.title = $0
+                    taskInfo.resourceTransformer = RSDResourceTransformerObject(resourceName: $0)
+                    // Get the task icon for this taskIdentifier
+                    do {
+                        taskInfo.icon = try RSDImageWrapper(imageName: "\(taskInfo.identifier)TaskIcon")
+                    } catch let err {
+                        print("Failed to load the task icon. \(err)")
+                    }
+                    taskInfos.append(taskInfo)
+                })
+                
+                var taskGroup = RSDTaskGroupObject(with: "Tracking", tasks: taskInfos)
                 taskGroup.title = "Tracking"
                 return taskGroup
             }()
