@@ -86,13 +86,13 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Good morning, Margo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jml-3Z-WXc">
                                             <rect key="frame" x="30" y="141" width="315" height="29"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="24"/>
-                                            <color key="textColor" red="0.25490196078431371" green="0.28235294117647058" blue="0.34901960784313724" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What would you like to do today?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4hg-YA-Q5T">
                                             <rect key="frame" x="30" y="178" width="315" height="20"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                            <color key="textColor" red="0.25490196079999999" green="0.28235294119999998" blue="0.34901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -108,11 +108,6 @@
                                         <constraint firstItem="jml-3Z-WXc" firstAttribute="leading" secondItem="yQl-6I-FdA" secondAttribute="leading" constant="30" id="tMa-YM-MBh"/>
                                     </constraints>
                                 </view>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="rect" keyPath="contentInset">
-                                        <rect key="value" x="115" y="0.0" width="0.0" height="0.0"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                             </tableView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YZE-Ab-Odb">
                                 <rect key="frame" x="0.0" y="418" width="375" height="200"/>
@@ -123,7 +118,7 @@
                                     <segue destination="PKv-Pu-C7V" kind="embed" identifier="TaskBrowserSegue" id="Df0-8n-328"/>
                                 </connections>
                             </containerView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CJS-by-dpw">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CJS-by-dpw" customClass="RoundedCornerView" customModule="mPower2" customModuleProvider="target">
                                 <rect key="frame" x="55" y="45" width="300" height="60"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Chevron" translatesAutoresizingMaskIntoConstraints="NO" id="J8A-ze-t6h">
@@ -146,7 +141,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.3529411764705882" green="0.27843137254901962" blue="0.5607843137254902" alpha="1" colorSpace="deviceRGB"/>
+                                <color key="backgroundColor" red="0.35294117650000001" green="0.2784313725" blue="0.56078431370000004" alpha="1" colorSpace="deviceRGB"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstItem="J8A-ze-t6h" firstAttribute="leading" secondItem="31u-h4-Koc" secondAttribute="trailing" constant="8" id="0Th-mt-iOA"/>
@@ -158,6 +153,11 @@
                                     <constraint firstItem="31u-h4-Koc" firstAttribute="top" secondItem="16e-GU-lCY" secondAttribute="bottom" constant="2" id="aRh-iw-RPN"/>
                                     <constraint firstItem="16e-GU-lCY" firstAttribute="leading" secondItem="CJS-by-dpw" secondAttribute="leading" constant="50" id="pIL-Jc-8ni"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="uHQ-O8-6dr" appends="YES" id="dF9-9i-Iqm"/>
                                 </connections>
@@ -255,7 +255,7 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Com-xo-4ZH">
                                 <rect key="frame" x="0.0" y="50" width="375" height="150"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="20" minimumInteritemSpacing="20" id="39h-R9-E53">
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="20" minimumInteritemSpacing="20" id="39h-R9-E53">
                                     <size key="itemSize" width="80" height="100"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -263,15 +263,26 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="TaskCollectionViewCell" reuseIdentifier="TaskCollectionViewCell" id="6Bp-Kg-JXl" customClass="TaskCollectionViewCell" customModule="mPower2" customModuleProvider="target">
-                                        <rect key="frame" x="15" y="25" width="80" height="100"/>
+                                        <rect key="frame" x="15" y="30" width="80" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="80" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TriggerIcon-oval" translatesAutoresizingMaskIntoConstraints="NO" id="VL3-E0-lRg">
-                                                    <rect key="frame" x="0.0" y="0.0" width="80" height="65"/>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9rx-gx-HMh" customClass="RoundedCornerView" customModule="mPower2" customModuleProvider="target">
+                                                    <rect key="frame" x="7" y="0.0" width="65" height="65"/>
+                                                    <color key="backgroundColor" red="0.96078431369999995" green="0.70196078429999997" blue="0.23529411759999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="32.5"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TriggersTaskIcon" translatesAutoresizingMaskIntoConstraints="NO" id="VL3-E0-lRg">
+                                                    <rect key="frame" x="7.5" y="0.0" width="65" height="65"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
+                                                        <constraint firstAttribute="width" constant="65" id="LIu-Wm-Gpm"/>
                                                         <constraint firstAttribute="height" constant="65" id="XBv-HZ-ibH"/>
                                                     </constraints>
                                                 </imageView>
@@ -287,10 +298,13 @@
                                             </subviews>
                                         </view>
                                         <constraints>
-                                            <constraint firstItem="VL3-E0-lRg" firstAttribute="leading" secondItem="6Bp-Kg-JXl" secondAttribute="leading" id="1jB-sm-T3a"/>
+                                            <constraint firstItem="9rx-gx-HMh" firstAttribute="top" secondItem="VL3-E0-lRg" secondAttribute="top" id="0XK-vy-t7t"/>
                                             <constraint firstItem="Rvz-i7-k0f" firstAttribute="top" secondItem="VL3-E0-lRg" secondAttribute="bottom" constant="5" id="ATE-8P-yRI"/>
-                                            <constraint firstAttribute="trailing" secondItem="VL3-E0-lRg" secondAttribute="trailing" id="Phx-mh-7Xy"/>
+                                            <constraint firstItem="9rx-gx-HMh" firstAttribute="bottom" secondItem="VL3-E0-lRg" secondAttribute="bottom" id="An3-zd-CEX"/>
+                                            <constraint firstItem="VL3-E0-lRg" firstAttribute="centerX" secondItem="6Bp-Kg-JXl" secondAttribute="centerX" id="R6z-Dd-Rdh"/>
                                             <constraint firstItem="VL3-E0-lRg" firstAttribute="top" secondItem="6Bp-Kg-JXl" secondAttribute="top" id="XJj-GS-Pd0"/>
+                                            <constraint firstItem="9rx-gx-HMh" firstAttribute="leading" secondItem="VL3-E0-lRg" secondAttribute="leading" id="YfK-ga-9iZ"/>
+                                            <constraint firstItem="9rx-gx-HMh" firstAttribute="trailing" secondItem="VL3-E0-lRg" secondAttribute="trailing" id="ZKo-ZE-WJQ"/>
                                             <constraint firstAttribute="trailing" secondItem="Rvz-i7-k0f" secondAttribute="trailing" id="aNa-RS-eui"/>
                                             <constraint firstItem="Rvz-i7-k0f" firstAttribute="leading" secondItem="6Bp-Kg-JXl" secondAttribute="leading" id="wuM-Y6-1um"/>
                                         </constraints>
@@ -372,6 +386,6 @@
         <image name="TabInsight_unselected" width="20" height="27"/>
         <image name="TabProfile_unselected" width="28" height="27"/>
         <image name="TabTracking _selected" width="26" height="26"/>
-        <image name="TriggerIcon-oval" width="65" height="65"/>
+        <image name="TriggersTaskIcon" width="34" height="49"/>
     </resources>
 </document>
