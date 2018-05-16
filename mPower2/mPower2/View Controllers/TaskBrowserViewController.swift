@@ -36,7 +36,8 @@ import Research
 import MotorControl
 
 protocol TaskBrowserViewControllerDelegate {
-    func taskBrowserViewControllerToggleVisibility()
+    func taskBrowserToggleVisibility()
+    func taskBrowserTabSelected()
 }
 
 class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate, TaskBrowserTabViewDelegate {
@@ -51,6 +52,7 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
 
     public var shouldShowTopShadow = true
     public var taskGroups: [RSDTaskGroup]?
+    public var delegate: TaskBrowserViewControllerDelegate?
 
     private var selectedTaskGroup: RSDTaskGroup?
     
@@ -85,15 +87,15 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
         if shouldShowTabs(),
             let taskGroups = taskGroups {
             
-            taskGroups.forEach({
-                let tabView = TaskBrowserTabView(frame: .zero, taskGroupIdentifier: $0.identifier)
-                tabView.title = $0.title
+            taskGroups.forEach { (group) in
+                let tabView = TaskBrowserTabView(frame: .zero, taskGroupIdentifier: group.identifier)
+                tabView.title = group.title
                 tabView.delegate = self
                 if let selectedTaskGroup = self.selectedTaskGroup {
-                    tabView.isSelected = ($0.identifier == selectedTaskGroup.identifier)
+                    tabView.isSelected = (group.identifier == selectedTaskGroup.identifier)
                 }
                 tabButtonStackView.addArrangedSubview(tabView)
-            })
+            }
             
             // set the tabView height
             tabsViewHeightConstraint.constant = TaskBrowserViewController.tabsHeight()
@@ -108,6 +110,16 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
 
         // Reload our data
         collectionView.reloadData()
+    }
+    
+    // MARK: Instance methods
+    public func showSelectionIndicator(visible: Bool) {
+        // Iterate all of our tab views and change alpha
+        tabButtonStackView.arrangedSubviews.forEach { (subView) in
+            if let tabView = subView as? TaskBrowserTabView {
+                tabView.rule.alpha = visible ? 1.0 : 0.0
+            }
+        }
     }
     
     // MARK: RSDTaskViewControllerDelegate
@@ -131,16 +143,34 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
     // MARK: TaskBrowserTabViewDelegate
     func taskGroupSelected(identifier: String) {
         
-        // Save our selected task group and reload collection
-        selectedTaskGroup = taskGroups?.filter({ $0.identifier == identifier }).first
-        collectionView.reloadData()
+        guard let newTaskGroup = taskGroups?.filter({ $0.identifier == identifier }).first else {
+            return
+        }
         
-        // Now update the isSelected value of all the tabs
-        tabButtonStackView.arrangedSubviews.forEach({
-            if let tabView = $0 as? TaskBrowserTabView {
-                tabView.isSelected = tabView.taskGroupIdentifier == identifier
+        // If this is the currently selected task group - meaning the user tapped the selected tab,
+        // we tell our delegate to toggle visibility
+        if newTaskGroup.identifier == selectedTaskGroup?.identifier,
+            let delegate = delegate {
+            delegate.taskBrowserToggleVisibility()
+        }
+        else {
+            // Save our selected task group and reload collection
+            selectedTaskGroup = taskGroups?.filter({ $0.identifier == identifier }).first
+            collectionView.reloadData()
+            
+            // Now update the isSelected value of all the tabs
+            tabButtonStackView.arrangedSubviews.forEach {
+                if let tabView = $0 as? TaskBrowserTabView {
+                    tabView.isSelected = tabView.taskGroupIdentifier == identifier
+                }
             }
-        })
+            
+            // Tell our delegate that a tab was selected. It may be that we are hidden and the
+            // parent view might like to show us again
+            if let delegate = delegate {
+                delegate.taskBrowserTabSelected()
+            }
+        }
     }
 }
 
@@ -253,7 +283,7 @@ protocol TaskBrowserTabViewDelegate {
         }
     }
     
-    let rule: UIView = {
+    public let rule: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = UIColor.royal500

@@ -47,9 +47,9 @@ class TrackingViewController: UIViewController {
     @IBOutlet weak var progressCircleView: ProgressCircleView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var taskBrowserContainerView: UIView!
-    
     @IBOutlet weak var taskBrowserTopConstraint: NSLayoutConstraint!
     
+    var taskBrowserVC: TaskBrowserViewController?
     
     var dragDistance: CGFloat = 0.0
     var taskBrowserVisible = true {
@@ -69,12 +69,12 @@ class TrackingViewController: UIViewController {
         var taskInfosGroups = [[RSDTaskInfoObject]]()
         for tasks in taskGroups {
             var taskInfos = [RSDTaskInfoObject]()
-            tasks.forEach({
-                var taskInfo = RSDTaskInfoObject(with: $0)
-                taskInfo.title = $0
-                taskInfo.resourceTransformer = RSDResourceTransformerObject(resourceName: $0)
+            tasks.forEach { (task) in
+                var taskInfo = RSDTaskInfoObject(with: task)
+                taskInfo.title = task
+                taskInfo.resourceTransformer = RSDResourceTransformerObject(resourceName: task)
                 taskInfos.append(taskInfo)
-            })
+            }
             taskInfosGroups.append(taskInfos)
         }
         return taskInfosGroups
@@ -110,10 +110,10 @@ class TrackingViewController: UIViewController {
             let trackingTaskGroup : RSDTaskGroup = {
                 
                 var taskInfos = [RSDTaskInfoObject]()
-                ["Symptoms", "Medication", "Triggers", "Medication", "Medication"].forEach({
-                    var taskInfo = RSDTaskInfoObject(with: $0)
-                    taskInfo.title = $0
-                    taskInfo.resourceTransformer = RSDResourceTransformerObject(resourceName: $0)
+                ["Symptoms", "Medication", "Triggers", "Medication", "Medication"].forEach { (identifier) in
+                    var taskInfo = RSDTaskInfoObject(with: identifier)
+                    taskInfo.title = identifier
+                    taskInfo.resourceTransformer = RSDResourceTransformerObject(resourceName: identifier)
                     // Get the task icon for this taskIdentifier
                     do {
                         taskInfo.icon = try RSDImageWrapper(imageName: "\(taskInfo.identifier)TaskIcon")
@@ -121,7 +121,7 @@ class TrackingViewController: UIViewController {
                         print("Failed to load the task icon. \(err)")
                     }
                     taskInfos.append(taskInfo)
-                })
+                }
                 
                 var taskGroup = RSDTaskGroupObject(with: "Tracking", tasks: taskInfos)
                 taskGroup.title = "Tracking"
@@ -137,6 +137,8 @@ class TrackingViewController: UIViewController {
         if segue.identifier == kTaskBrowserSegueIdentifier,
             let taskBrowser = segue.destination as? TaskBrowserViewController {
             taskBrowser.taskGroups = taskGroups()
+            taskBrowser.delegate = self
+            taskBrowserVC = taskBrowser
         }
     }
     
@@ -166,6 +168,8 @@ class TrackingViewController: UIViewController {
         taskBrowserTopConstraint.constant = taskBrowserTopDistanceWhen(visible: taskBrowserVisible)
         if animated {
             UIView.animate(withDuration: 0.25) {
+                // If browser is not visible, tell the browser to hide the rule at the bottom of the selected tab
+                self.taskBrowserVC?.showSelectionIndicator(visible: self.taskBrowserVisible)
                 self.view.layoutIfNeeded()
             }
         }
@@ -231,7 +235,7 @@ extension TrackingViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension TrackingViewController {
+extension TrackingViewController: TaskBrowserViewControllerDelegate {
     
     // MARK: TaskBrowserViewController management
     
@@ -303,6 +307,16 @@ extension TrackingViewController {
             return heightConstraint.constant
         }
         return 0.0
+    }
+    
+    // MARK: TaskBrowserViewControllerDelegate
+    func taskBrowserToggleVisibility() {
+        taskBrowserVisible = !taskBrowserVisible
+    }
+    func taskBrowserTabSelected() {
+        if !taskBrowserVisible {
+            taskBrowserVisible = true
+        }
     }
 }
 
