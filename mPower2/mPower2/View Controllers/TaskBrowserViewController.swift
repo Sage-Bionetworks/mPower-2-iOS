@@ -47,6 +47,7 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
     }
     
     private let kCollectionCellIdentifier = "TaskCollectionViewCell"
+    private let kMinCellHorizontalSpacing: CGFloat = 5.0
 
     public var shouldShowTopShadow = true
     public var taskGroups: [RSDTaskGroup]?
@@ -183,23 +184,52 @@ extension TaskBrowserViewController: UICollectionViewDelegate, UICollectionViewD
         self.present(vc, animated: true, completion: nil)
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return cellItemSpacing(for: collectionView, layout: collectionViewLayout)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         
+        guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else {
+                return collectionView.contentInset
+        }
+
+        let spacing = cellItemSpacing(for: collectionView, layout: collectionViewLayout)
+        return UIEdgeInsetsMake(flowLayout.sectionInset.top, spacing, flowLayout.sectionInset.bottom, spacing)
+    }
+    
+    func cellItemSpacing(for collectionView: UICollectionView, layout: UICollectionViewLayout) -> CGFloat {
         guard let selectedTaskGroup = selectedTaskGroup,
-            let layout = collectionViewLayout as? UICollectionViewFlowLayout else {
-            return UIEdgeInsetsMake(0, 0, 0, 0)
+            let flowLayout = layout as? UICollectionViewFlowLayout else {
+                return kMinCellHorizontalSpacing
         }
         
-        // TODO: jbruhin 5-3-18 optimize this for all screen sizes, use spacing rather than insets.
-        // The design calls for centering the cells horizontally, which is different the default
-        // collectionView behavior.
+        // We want our cells to be laid out in one horizontal row, with scrolling if necessary.
+        // The default layout behavior for UICollectionView is to layout the cells from left to right.
+        // In our case, we may want the cells centered horizontally in the view, which means we must
+        // calculate the desired spacing so the cells appear centered. However, we may have more cells
+        // than can fit in the collectionView.bounds, in which case we want the cells laid out from
+        // left to right and extending beyond the bounds of the collectionView, then the user can scroll
+        // horizontally as needed. In this case, we want the last visible cell on the right side of the
+        // view to be just partially visible - ie. half on screen, half off screen - to inform the user
+        // that they can scroll to the right to get more.
         
-        let minSpacing: CGFloat = 30.0
-        let totalCellWidth = layout.itemSize.width * CGFloat(selectedTaskGroup.tasks.count)
-        let totalSpacingWidth = minSpacing * (CGFloat(selectedTaskGroup.tasks.count) - 1)
-        let inset = (collectionView.frame.size.width - CGFloat(totalCellWidth + totalSpacingWidth)) / 2
-
-        return UIEdgeInsetsMake(layout.sectionInset.top, inset, layout.sectionInset.bottom, inset)
+        let totalCellWidth = flowLayout.itemSize.width * CGFloat(selectedTaskGroup.tasks.count)
+        let totalSpacingWidth = kMinCellHorizontalSpacing * (CGFloat(selectedTaskGroup.tasks.count) + 1)
+        let totalWidth = totalCellWidth + totalSpacingWidth
+        
+        if totalWidth > collectionView.bounds.width {
+            // Find a spacing value that results in the last visible cell being positioned half off-screen
+            let availableWidth = collectionView.bounds.width - (flowLayout.itemSize.width / 2)
+            let qtyCellsThatFit = floorf(Float(availableWidth / (flowLayout.itemSize.width + kMinCellHorizontalSpacing)))
+            let spacingAdjusted = (availableWidth - (CGFloat(qtyCellsThatFit) * flowLayout.itemSize.width)) / CGFloat(qtyCellsThatFit + 1)
+            return spacingAdjusted
+        }
+        else {
+            // All cells will fit, so use a spacing value that centers them horizontally
+            let cellCount = CGFloat(selectedTaskGroup.tasks.count)
+            return (collectionView.bounds.width - (cellCount * flowLayout.itemSize.width)) / (cellCount + 1.0)
+        }
     }
 }
 
