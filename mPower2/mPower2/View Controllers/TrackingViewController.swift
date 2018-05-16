@@ -46,8 +46,17 @@ class TrackingViewController: UIViewController {
     @IBOutlet weak var actionBarDetailsLabel: UILabel!
     @IBOutlet weak var progressCircleView: ProgressCircleView!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var taskBrowserBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var taskBrowserContainerView: UIView!
+    
+    @IBOutlet weak var taskBrowserTopConstraint: NSLayoutConstraint!
+    
+    
+    var dragDistance: CGFloat = 0.0
+    var taskBrowserVisible = true {
+        didSet {
+            updateTaskBrowserPosition(animated: true)
+        }
+    }
     
     public var shouldShowActionBar = true
     
@@ -101,7 +110,7 @@ class TrackingViewController: UIViewController {
             let trackingTaskGroup : RSDTaskGroup = {
                 
                 var taskInfos = [RSDTaskInfoObject]()
-                ["Symptoms", "Medication", "Triggers"].forEach({
+                ["Symptoms", "Medication", "Triggers", "Medication", "Medication"].forEach({
                     var taskInfo = RSDTaskInfoObject(with: $0)
                     taskInfo.title = $0
                     taskInfo.resourceTransformer = RSDResourceTransformerObject(resourceName: $0)
@@ -137,14 +146,29 @@ class TrackingViewController: UIViewController {
         setupWelcomeText()
         actionBarView.layer.cornerRadius = 4.0
         actionBarView.layer.masksToBounds = true
+                
+        // Add pan gesture to the task browser container
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(dragTaskBrowser(sender:)))
+        taskBrowserContainerView.addGestureRecognizer(pan)
         
         // update variable items
+        updateTaskBrowserPosition(animated: false)
         updateActionBar()
         updateProgressCircle()
     }
     
     func setupWelcomeText() {
         // TODO: jbruhin 5-1-18 update 'welcome' text dynamically based on time of day
+    }
+    
+    func updateTaskBrowserPosition(animated: Bool) {
+        dragDistance = 0.0
+        taskBrowserTopConstraint.constant = taskBrowserTopDistanceWhen(visible: taskBrowserVisible)
+        if animated {
+            UIView.animate(withDuration: 0.25) {
+                self.view.layoutIfNeeded()
+            }
+        }
     }
 
     func updateActionBar() {
@@ -165,6 +189,7 @@ class TrackingViewController: UIViewController {
         // TODO: jbruhin 5-1-18 will be a data source for this at some point
         progressCircleView.displayDay(count: 14)
     }
+    
     
     // MARK: Actions
     @IBAction func actionBarTapped(_ sender: Any) {
@@ -203,6 +228,81 @@ extension TrackingViewController: UITableViewDelegate, UITableViewDataSource {
     open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // TODO: jbruhin 5-10-18 implement??
         presentAlertWithOk(title: "Should this do something??", message: "", actionHandler: nil)
+    }
+}
+
+extension TrackingViewController {
+    
+    // MARK: TaskBrowserViewController management
+    
+    @objc func dragTaskBrowser(sender: UIPanGestureRecognizer) {
+        
+        if sender.state == .ended {
+            updateTaskBrowserPosition(animated: true)
+        }
+        else {
+            let translation = sender.translation(in: taskBrowserContainerView)
+            let newDragDistance = dragDistance + translation.y
+            let newPoint = taskBrowserTopDistanceWhen(visible: taskBrowserVisible) + newDragDistance
+            
+            if shouldDrag(dragPoint: newPoint) {
+                
+                if !taskBrowserVisible && shouldOpenTaskBrowser(dragPoint: newPoint) {
+                    taskBrowserVisible = true
+                    return
+                }
+                
+                if taskBrowserVisible && shouldCloseTaskBrowser(dragPoint: newPoint) {
+                    taskBrowserVisible = false
+                    return
+                }
+                
+                dragDistance = newDragDistance
+                taskBrowserTopConstraint.constant = newPoint
+                sender.setTranslation(CGPoint.zero, in: self.view)
+            }
+        }
+    }
+    
+    func shouldOpenTaskBrowser(dragPoint: CGFloat) -> Bool {
+        // If the drag point is more than 1/3 of the way from closed to open, then we open
+        let contentHeight = taskBrowserHeight() - TaskBrowserViewController.tabsHeight()
+        let triggerPoint = taskBrowserTopDistanceWhen(visible: true) + contentHeight * 2/3
+        return dragPoint < triggerPoint
+    }
+    
+    func shouldCloseTaskBrowser(dragPoint: CGFloat) -> Bool {
+        // If the drag point is more than 1/3 of the way from open to closed, then we close
+        let contentHeight = taskBrowserHeight() - TaskBrowserViewController.tabsHeight()
+        let triggerPoint = taskBrowserTopDistanceWhen(visible: true) + contentHeight * 1/3
+        return dragPoint > triggerPoint
+    }
+    
+    func shouldDrag(dragPoint: CGFloat) -> Bool {
+        // Don't drag if we've gone beyond our closed or open positions
+        let closedPoint = taskBrowserTopDistanceWhen(visible: false)
+        let openedPoint = taskBrowserTopDistanceWhen(visible: true)
+        return dragPoint < closedPoint && dragPoint > openedPoint
+    }
+    
+    func taskBrowserTopDistanceWhen(visible: Bool) -> CGFloat {
+        return view.bounds.height - taskBrowserHeightWhen(visible: visible) - (tabBarController?.tabBar.bounds.height ?? 0.0)
+    }
+    
+    func taskBrowserHeightWhen(visible: Bool) -> CGFloat {
+        if visible {
+            return taskBrowserHeight()
+        }
+        else {
+            return TaskBrowserViewController.tabsHeight()
+        }
+    }
+    
+    func taskBrowserHeight() -> CGFloat {
+        if let heightConstraint = taskBrowserContainerView.rsd_constraint(for: .height, relation: .equal) {
+            return heightConstraint.constant
+        }
+        return 0.0
     }
 }
 

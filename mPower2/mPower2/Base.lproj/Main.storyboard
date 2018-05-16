@@ -232,18 +232,18 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="YZE-Ab-Odb" firstAttribute="trailing" secondItem="vIu-1K-4tb" secondAttribute="trailing" id="3GW-y7-mlq"/>
+                            <constraint firstItem="YZE-Ab-Odb" firstAttribute="trailing" secondItem="GO5-fK-Jmq" secondAttribute="trailing" id="3GW-y7-mlq"/>
                             <constraint firstItem="95F-HW-j3O" firstAttribute="leading" secondItem="vIu-1K-4tb" secondAttribute="leading" constant="20" id="3dZ-0S-3ua"/>
                             <constraint firstItem="95F-HW-j3O" firstAttribute="top" secondItem="vIu-1K-4tb" secondAttribute="top" constant="20" id="7GZ-X5-cyg"/>
+                            <constraint firstItem="YZE-Ab-Odb" firstAttribute="top" secondItem="NuC-GB-bFl" secondAttribute="bottom" id="7RF-kq-6GS"/>
                             <constraint firstItem="CJS-by-dpw" firstAttribute="leading" secondItem="95F-HW-j3O" secondAttribute="centerX" id="AcC-hZ-1Kh"/>
                             <constraint firstItem="NuC-GB-bFl" firstAttribute="leading" secondItem="vIu-1K-4tb" secondAttribute="leading" id="EVb-QI-7Yc"/>
-                            <constraint firstItem="YZE-Ab-Odb" firstAttribute="leading" secondItem="vIu-1K-4tb" secondAttribute="leading" id="Ja5-Rb-RtR"/>
+                            <constraint firstItem="YZE-Ab-Odb" firstAttribute="leading" secondItem="GO5-fK-Jmq" secondAttribute="leading" id="Ja5-Rb-RtR"/>
                             <constraint firstItem="CJS-by-dpw" firstAttribute="top" secondItem="95F-HW-j3O" secondAttribute="top" constant="5" id="Zor-ao-DjH"/>
-                            <constraint firstItem="YZE-Ab-Odb" firstAttribute="top" secondItem="NuC-GB-bFl" secondAttribute="bottom" id="fpY-uN-vZr"/>
+                            <constraint firstItem="YZE-Ab-Odb" firstAttribute="top" secondItem="GO5-fK-Jmq" secondAttribute="top" constant="418" id="mCW-k5-y4u"/>
                             <constraint firstItem="NuC-GB-bFl" firstAttribute="trailing" secondItem="vIu-1K-4tb" secondAttribute="trailing" id="nea-IO-EZO"/>
                             <constraint firstItem="vIu-1K-4tb" firstAttribute="trailing" secondItem="CJS-by-dpw" secondAttribute="trailing" constant="20" id="rkK-mu-iQy"/>
                             <constraint firstItem="NuC-GB-bFl" firstAttribute="top" secondItem="GO5-fK-Jmq" secondAttribute="top" id="t9J-eO-o2A"/>
-                            <constraint firstItem="YZE-Ab-Odb" firstAttribute="bottom" secondItem="vIu-1K-4tb" secondAttribute="bottom" id="vGV-Hj-PE1"/>
                             <constraint firstItem="CJS-by-dpw" firstAttribute="bottom" secondItem="95F-HW-j3O" secondAttribute="bottom" constant="-5" id="zwe-L7-QUk"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="vIu-1K-4tb"/>
@@ -256,6 +256,7 @@
                         <outlet property="progressCircleView" destination="95F-HW-j3O" id="GXP-fg-3p3"/>
                         <outlet property="tableView" destination="NuC-GB-bFl" id="X4q-gU-50B"/>
                         <outlet property="taskBrowserContainerView" destination="YZE-Ab-Odb" id="uyo-HI-ySg"/>
+                        <outlet property="taskBrowserTopConstraint" destination="mCW-k5-y4u" id="KNt-5l-N7D"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9AT-Qk-8iB" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -313,11 +314,11 @@
                                     <size key="itemSize" width="80" height="100"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="15" minY="25" maxX="15" maxY="15"/>
+                                    <inset key="sectionInset" minX="15" minY="20" maxX="15" maxY="15"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="TaskCollectionViewCell" reuseIdentifier="TaskCollectionViewCell" id="6Bp-Kg-JXl" customClass="TaskCollectionViewCell" customModule="mPower2" customModuleProvider="target">
-                                        <rect key="frame" x="15" y="30" width="80" height="100"/>
+                                        <rect key="frame" x="15" y="27.5" width="80" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="80" height="100"/>
@@ -386,13 +387,13 @@
                             <constraint firstItem="Com-xo-4ZH" firstAttribute="top" secondItem="i2I-RR-3B8" secondAttribute="bottom" id="1JN-5D-3hZ"/>
                             <constraint firstItem="i2I-RR-3B8" firstAttribute="top" secondItem="hIW-6W-32N" secondAttribute="top" id="45m-de-wdC"/>
                             <constraint firstItem="Dm2-ie-jnH" firstAttribute="leading" secondItem="hIW-6W-32N" secondAttribute="leading" id="5Eu-X5-CgY"/>
-                            <constraint firstItem="Com-xo-4ZH" firstAttribute="bottom" secondItem="B8T-O2-RRp" secondAttribute="bottom" id="Dey-MW-GOe"/>
-                            <constraint firstItem="i2I-RR-3B8" firstAttribute="leading" secondItem="B8T-O2-RRp" secondAttribute="leading" id="I4Y-pD-psC"/>
-                            <constraint firstItem="i2I-RR-3B8" firstAttribute="trailing" secondItem="B8T-O2-RRp" secondAttribute="trailing" id="IBs-gi-RCI"/>
+                            <constraint firstItem="Com-xo-4ZH" firstAttribute="bottom" secondItem="hIW-6W-32N" secondAttribute="bottom" id="Dey-MW-GOe"/>
+                            <constraint firstItem="i2I-RR-3B8" firstAttribute="leading" secondItem="hIW-6W-32N" secondAttribute="leading" id="I4Y-pD-psC"/>
+                            <constraint firstItem="i2I-RR-3B8" firstAttribute="trailing" secondItem="hIW-6W-32N" secondAttribute="trailing" id="IBs-gi-RCI"/>
                             <constraint firstAttribute="trailing" secondItem="4t7-fK-JHi" secondAttribute="trailing" id="Qns-wG-Rvd"/>
                             <constraint firstItem="4t7-fK-JHi" firstAttribute="top" secondItem="i2I-RR-3B8" secondAttribute="bottom" id="Tzn-sc-rTY"/>
-                            <constraint firstItem="Com-xo-4ZH" firstAttribute="leading" secondItem="B8T-O2-RRp" secondAttribute="leading" id="VRg-ee-TAP"/>
-                            <constraint firstItem="Com-xo-4ZH" firstAttribute="trailing" secondItem="B8T-O2-RRp" secondAttribute="trailing" id="Xdc-Pm-OvE"/>
+                            <constraint firstItem="Com-xo-4ZH" firstAttribute="leading" secondItem="hIW-6W-32N" secondAttribute="leading" id="VRg-ee-TAP"/>
+                            <constraint firstItem="Com-xo-4ZH" firstAttribute="trailing" secondItem="hIW-6W-32N" secondAttribute="trailing" id="Xdc-Pm-OvE"/>
                             <constraint firstAttribute="trailing" secondItem="Dm2-ie-jnH" secondAttribute="trailing" id="cqK-01-aky"/>
                             <constraint firstItem="4t7-fK-JHi" firstAttribute="leading" secondItem="hIW-6W-32N" secondAttribute="leading" id="lIc-BX-8JG"/>
                             <constraint firstItem="Dm2-ie-jnH" firstAttribute="top" secondItem="hIW-6W-32N" secondAttribute="top" constant="-5" id="mOP-ev-Cwu"/>
