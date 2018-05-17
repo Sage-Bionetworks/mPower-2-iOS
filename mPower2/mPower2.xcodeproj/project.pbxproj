@@ -10,8 +10,6 @@
 		0334415420995328009B97A9 /* TrackingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0334415320995328009B97A9 /* TrackingViewController.swift */; };
 		0334415620995CCD009B97A9 /* TaskBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0334415520995CCD009B97A9 /* TaskBrowserViewController.swift */; };
 		0349535520981C89006A05B1 /* ProgressCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0349535420981C89006A05B1 /* ProgressCircleView.swift */; };
-		03C9DCFE20A4CEB1007074EE /* Symptoms.json in Resources */ = {isa = PBXBuildFile; fileRef = 03C9DCE820A4CEB1007074EE /* Symptoms.json */; };
-		03C9DD0020A4CEC3007074EE /* Medication.json in Resources */ = {isa = PBXBuildFile; fileRef = 03C9DCFF20A4CEC3007074EE /* Medication.json */; };
 		03C9DD0C20A4F956007074EE /* mPower2.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03C9DD0B20A4F956007074EE /* mPower2.strings */; };
 		603B7B362085541A00794B7C /* SignIn.json in Resources */ = {isa = PBXBuildFile; fileRef = 603B7B352085541A00794B7C /* SignIn.json */; };
 		603B7B93208E90C100794B7C /* Registration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 603B7B92208E90C100794B7C /* Registration.storyboard */; };
@@ -43,10 +41,11 @@
 		B5FA25FD206985FE00A4FF3D /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7DE2062F28F00CD351C /* ResearchUI.framework */; };
 		B5FA25FF2069867C00A4FF3D /* Walk_And_Balance.json in Resources */ = {isa = PBXBuildFile; fileRef = B5FA25FE2069867C00A4FF3D /* Walk_And_Balance.json */; };
 		F8078F3F20ADF1DC00757F42 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8078F2920ADF1DC00757F42 /* AppDelegate.swift */; };
+		F8078F4320ADFA6A00757F42 /* DataSourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8078F4220ADFA6A00757F42 /* DataSourceManager.swift */; };
+		F8078F4420AE078A00757F42 /* DataSourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8078F4220ADFA6A00757F42 /* DataSourceManager.swift */; };
 		F80CB9EC207D2D2300B4EE5D /* MCTTappingStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80CB9EB207D2D2300B4EE5D /* MCTTappingStepViewController.swift */; };
 		F80CB9EF207D2DE400B4EE5D /* MCTTappingResultObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80CB9EE207D2DE400B4EE5D /* MCTTappingResultObject.swift */; };
 		F80CB9FD207D3AD800B4EE5D /* MotorControl.strings in Resources */ = {isa = PBXBuildFile; fileRef = F80CB9FC207D3AD800B4EE5D /* MotorControl.strings */; };
-		F8188FB62072F430009AC215 /* Triggers.json in Resources */ = {isa = PBXBuildFile; fileRef = F8188FB52072F430009AC215 /* Triggers.json */; };
 		F82AE7B62063160B00952D74 /* UIColor+mPowerTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82AE7B52063160B00952D74 /* UIColor+mPowerTheme.swift */; };
 		F8460D752097CF0C0084E197 /* MCTCountdownStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8460D742097CF0C0084E197 /* MCTCountdownStepViewController.swift */; };
 		F854590E208F986D00D37243 /* NSLocale+UnitTest.h in Headers */ = {isa = PBXBuildFile; fileRef = F854590D208F986D00D37243 /* NSLocale+UnitTest.h */; };
@@ -373,6 +372,7 @@
 		B5DC838C2076B5FD00DEE4A2 /* Finger_Tapping.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Finger_Tapping.json; sourceTree = "<group>"; };
 		B5FA25FE2069867C00A4FF3D /* Walk_And_Balance.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Walk_And_Balance.json; sourceTree = "<group>"; };
 		F8078F2920ADF1DC00757F42 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F8078F4220ADFA6A00757F42 /* DataSourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSourceManager.swift; sourceTree = "<group>"; };
 		F80CB9EB207D2D2300B4EE5D /* MCTTappingStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTTappingStepViewController.swift; sourceTree = "<group>"; };
 		F80CB9EE207D2DE400B4EE5D /* MCTTappingResultObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTTappingResultObject.swift; sourceTree = "<group>"; };
 		F80CB9FC207D3AD800B4EE5D /* MotorControl.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = MotorControl.strings; sourceTree = "<group>"; };
@@ -534,6 +534,24 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		F8078F4020ADF6A300757F42 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				03C9DCE820A4CEB1007074EE /* Symptoms.json */,
+				F8188FB52072F430009AC215 /* Triggers.json */,
+				03C9DCFF20A4CEC3007074EE /* Medication.json */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		F8078F4120ADF9A000757F42 /* Schedule Management */ = {
+			isa = PBXGroup;
+			children = (
+				F8078F4220ADFA6A00757F42 /* DataSourceManager.swift */,
+			);
+			name = "Schedule Management";
+			sourceTree = "<group>";
+		};
 		F80CB9ED207D2D9D00B4EE5D /* ResultObjects */ = {
 			isa = PBXGroup;
 			children = (
@@ -549,9 +567,6 @@
 				F8D3E77D2062F1B900CD351C /* Main.storyboard */,
 				603B7B92208E90C100794B7C /* Registration.storyboard */,
 				603B7B352085541A00794B7C /* SignIn.json */,
-				03C9DCE820A4CEB1007074EE /* Symptoms.json */,
-				F8188FB52072F430009AC215 /* Triggers.json */,
-				03C9DCFF20A4CEC3007074EE /* Medication.json */,
 				F8D3E7802062F1B900CD351C /* Assets.xcassets */,
 				03C9DD0B20A4F956007074EE /* mPower2.strings */,
 			);
@@ -572,6 +587,7 @@
 			children = (
 				F8078F2920ADF1DC00757F42 /* AppDelegate.swift */,
 				F8545982208FA2EE00D37243 /* Info.plist */,
+				F8078F4020ADF6A300757F42 /* Resources */,
 			);
 			path = mPower2TestApp;
 			sourceTree = "<group>";
@@ -614,6 +630,7 @@
 			isa = PBXGroup;
 			children = (
 				F8D3E7792062F1B900CD351C /* AppDelegate.swift */,
+				F8078F4120ADF9A000757F42 /* Schedule Management */,
 				0334415220995311009B97A9 /* View Controllers */,
 				0349535320981C25006A05B1 /* Custom Views */,
 				F8188F7B2072CF51009AC215 /* Resources */,
@@ -1069,11 +1086,8 @@
 				F8D3E7812062F1B900CD351C /* Assets.xcassets in Resources */,
 				F8D3E77F2062F1B900CD351C /* Main.storyboard in Resources */,
 				603B7B362085541A00794B7C /* SignIn.json in Resources */,
-				03C9DCFE20A4CEB1007074EE /* Symptoms.json in Resources */,
 				F8D3E8022063055500CD351C /* sage-mpower-2.pem in Resources */,
 				F8D3E7F72063039200CD351C /* BridgeInfo.plist in Resources */,
-				03C9DD0020A4CEC3007074EE /* Medication.json in Resources */,
-				F8188FB62072F430009AC215 /* Triggers.json in Resources */,
 				F8D3E8032063055500CD351C /* BridgeInfo-private.plist in Resources */,
 				03C9DD0C20A4F956007074EE /* mPower2.strings in Resources */,
 			);
@@ -1122,6 +1136,7 @@
 				F88E8E0020ADEE2600117A99 /* TaskBrowserViewController.swift in Sources */,
 				F85459B7208FA77900D37243 /* UIView+mPowerTheme.swift in Sources */,
 				F85459B6208FA77400D37243 /* UIColor+mPowerTheme.swift in Sources */,
+				F8078F4420AE078A00757F42 /* DataSourceManager.swift in Sources */,
 				F88E8DFE20ADEE2600117A99 /* RegistrationWaitingViewController.swift in Sources */,
 				F88E8DFB20ADEE2600117A99 /* ExternalIDRegistrationViewController.swift in Sources */,
 				F88E8DFC20ADEE2600117A99 /* PhoneRegistrationViewController.swift in Sources */,
@@ -1139,6 +1154,7 @@
 				F8D3E77A2062F1B900CD351C /* AppDelegate.swift in Sources */,
 				0334415620995CCD009B97A9 /* TaskBrowserViewController.swift in Sources */,
 				F82AE7B62063160B00952D74 /* UIColor+mPowerTheme.swift in Sources */,
+				F8078F4320ADFA6A00757F42 /* DataSourceManager.swift in Sources */,
 				603B7BC320913B1A00794B7C /* PhoneRegistrationViewController.swift in Sources */,
 				603B7BAA208E90FF00794B7C /* RegistrationWaitingViewController.swift in Sources */,
 				608241F22093D9F70026E843 /* ExternalIDRegistrationViewController.swift in Sources */,

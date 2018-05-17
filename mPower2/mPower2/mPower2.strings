@@ -33,8 +33,17 @@
  */
 
 // The term to use when referring to multiple instances of a task, such as when describing
-// how may times the user has logged taking medication
+// how may times the user has logged taking medication.
 "TASK_PLURAL_TERM_FOR_MEDICATION" = "Doses";
 "TASK_PLURAL_TERM_FOR_TRIGGERS" = "Triggers";
 "TASK_PLURAL_TERM_FOR_SYMPTOMS" = "Symptoms";
 "TASK_PLURAL_TERM_FOR_TREMOR" = "Activities";
+
+// Titles for the activity groups and infos.
+"Measuring" = "Measuring";
+"Tracking" = "Tracking";
+"Study Burst" = "Study Burst";
+"Triggers" = "Trigger";
+"Symptoms" = "Symptom";
+"Medication" = "Medication";
+
