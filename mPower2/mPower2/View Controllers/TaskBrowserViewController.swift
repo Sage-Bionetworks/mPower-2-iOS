@@ -34,6 +34,7 @@
 import UIKit
 import Research
 import MotorControl
+import BridgeApp
 
 protocol TaskBrowserViewControllerDelegate {
     func taskBrowserToggleVisibility()
@@ -51,10 +52,18 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
     private let kMinCellHorizontalSpacing: CGFloat = 5.0
 
     public var shouldShowTopShadow = true
-    public var taskGroups: [RSDTaskGroup]?
     public var delegate: TaskBrowserViewControllerDelegate?
+    
+    lazy public private(set) var scheduleManagers: [SBAScheduleManager] = {
+        let groupIdentifiers: [RSDIdentifier] = [.trackingTaskGroup, .measuringTaskGroup]
+        return groupIdentifiers.map { DataSourceManager.shared.scheduleManager(with: $0) }
+    }()
+    
+    func scheduleManager(with identifier: String) -> SBAScheduleManager? {
+        return scheduleManagers.first(where: { $0.identifier == identifier })
+    }
 
-    private var selectedTaskGroup: RSDTaskGroup?
+    private var selectedScheduleManager: SBAScheduleManager!
     
     @IBOutlet weak var tabButtonStackView: UIStackView!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -67,46 +76,31 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
         setupView()
     }
     
-    func shouldShowTabs() -> Bool {
-        guard let taskGroups = taskGroups else {
-            return false
-        }
-        return taskGroups.count > 1
-    }
-    
     func setupView() {
         
         // Remove existing managed subviews from tabBar stackView
         tabButtonStackView.arrangedSubviews.forEach({ $0.removeFromSuperview() })
         
         // Let's select the first task group by default.
-        selectedTaskGroup = taskGroups?.first
+        selectedScheduleManager = scheduleManagers.first
         
         // If we have more than one TaskGroup, we create tabs for each group. If we don't, we do not
         // create tabs and we set the height of the tabButtonStackView to 0, essentially hiding it
-        if shouldShowTabs(),
-            let taskGroups = taskGroups {
-            
-            taskGroups.forEach { (group) in
-                let tabView = TaskBrowserTabView(frame: .zero, taskGroupIdentifier: group.identifier)
-                tabView.title = group.title
-                tabView.delegate = self
-                if let selectedTaskGroup = self.selectedTaskGroup {
-                    tabView.isSelected = (group.identifier == selectedTaskGroup.identifier)
-                }
-                tabButtonStackView.addArrangedSubview(tabView)
-            }
-            
-            // set the tabView height
-            tabsViewHeightConstraint.constant = TaskBrowserViewController.tabsHeight()
+        scheduleManagers.forEach { (manager) in
+            manager.reloadData()
+            let tabView = TaskBrowserTabView(frame: .zero, taskGroupIdentifier: manager.identifier)
+            tabView.title = manager.activityGroup?.title
+            tabView.delegate = self
+            tabView.isSelected = (manager.identifier == selectedScheduleManager.identifier)
+            tabButtonStackView.addArrangedSubview(tabView)
         }
-        else {
-            tabsViewHeightConstraint.constant = 0.0
-        }
+        
+        // set the tabView height
+        tabsViewHeightConstraint.constant = TaskBrowserViewController.tabsHeight()
         
         // Hide or show our shadow and rule views
         shadowView.isHidden = !shouldShowTopShadow
-        ruleView.isHidden = !shouldShowTabs()
+        ruleView.isHidden = false
 
         // Reload our data
         collectionView.reloadData()
@@ -127,35 +121,34 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
         // dismiss the view controller
         (taskController as? UIViewController)?.dismiss(animated: true) {
         }
-        
-        print("\n\n=== Completed: \(reason) error:\(String(describing: error))")
-        print(taskController.taskPath.result)
+        // Let the schedule manager handle the cleanup.
+        selectedScheduleManager.taskController(taskController, didFinishWith: reason, error: error)
     }
     
     func taskController(_ taskController: RSDTaskController, readyToSave taskPath: RSDTaskPath) {
-        //
+        selectedScheduleManager.taskController(taskController, readyToSave: taskPath)
     }
     
     func taskController(_ taskController: RSDTaskController, asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController? {
-        return nil
+        return selectedScheduleManager.taskController(taskController, asyncActionControllerFor:configuration)
     }
 
     // MARK: TaskBrowserTabViewDelegate
     func taskGroupSelected(identifier: String) {
         
-        guard let newTaskGroup = taskGroups?.filter({ $0.identifier == identifier }).first else {
+        guard let newManager = scheduleManager(with: identifier) else {
             return
         }
         
         // If this is the currently selected task group - meaning the user tapped the selected tab,
         // we tell our delegate to toggle visibility
-        if newTaskGroup.identifier == selectedTaskGroup?.identifier,
+        if newManager.identifier == selectedScheduleManager?.identifier,
             let delegate = delegate {
             delegate.taskBrowserToggleVisibility()
         }
         else {
             // Save our selected task group and reload collection
-            selectedTaskGroup = taskGroups?.filter({ $0.identifier == identifier }).first
+            selectedScheduleManager = newManager
             collectionView.reloadData()
             
             // Now update the isSelected value of all the tabs
@@ -178,17 +171,17 @@ extension TaskBrowserViewController: UICollectionViewDelegate, UICollectionViewD
     
     // MARK: UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let selectedTaskGroup = selectedTaskGroup else {
+        guard let group = selectedScheduleManager?.activityGroup else {
             return 0
         }
-        return selectedTaskGroup.tasks.count
+        return group.activityIdentifiers.count
     }
     
     // MARK: UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kCollectionCellIdentifier, for: indexPath) as? TaskCollectionViewCell
-        if let selectedTaskGroup = selectedTaskGroup {
+        if let selectedTaskGroup = selectedScheduleManager?.activityGroup {
             
             let task = selectedTaskGroup.tasks[indexPath.row]
             cell?.image = nil
@@ -202,13 +195,13 @@ extension TaskBrowserViewController: UICollectionViewDelegate, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        guard let selectedTaskGroup = selectedTaskGroup else {
+        guard let selectedTaskGroup = selectedScheduleManager?.activityGroup else {
             return
         }
 
         // Get our task and present it
         let taskInfo = selectedTaskGroup.tasks[indexPath.row]
-        guard let taskPath = selectedTaskGroup.instantiateTaskPath(for: taskInfo) else { return }
+        let (taskPath, _, _) = selectedScheduleManager.instantiateTaskPath(for: taskInfo)
         let vc = RSDTaskViewController(taskPath: taskPath)
         vc.delegate = self
         self.present(vc, animated: true, completion: nil)
@@ -229,7 +222,7 @@ extension TaskBrowserViewController: UICollectionViewDelegate, UICollectionViewD
     }
     
     func cellItemSpacing(for collectionView: UICollectionView, layout: UICollectionViewLayout) -> CGFloat {
-        guard let selectedTaskGroup = selectedTaskGroup,
+        guard let selectedTaskGroup = selectedScheduleManager?.activityGroup,
             let flowLayout = layout as? UICollectionViewFlowLayout else {
                 return kMinCellHorizontalSpacing
         }

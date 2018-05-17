@@ -124,7 +124,6 @@ class TrackingViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == kTaskBrowserSegueIdentifier,
             let taskBrowser = segue.destination as? TaskBrowserViewController {
-            taskBrowser.taskGroups = taskGroups()
             taskBrowser.delegate = self
             taskBrowserVC = taskBrowser
         }
