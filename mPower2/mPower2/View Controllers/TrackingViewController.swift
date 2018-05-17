@@ -40,19 +40,38 @@ import ResearchUI
 class TrackingViewController: UIViewController {
     
     private let kTaskBrowserSegueIdentifier = "TaskBrowserSegue"
-    
+    private let kTableViewVerticalPadding = CGFloat(20.0).rsd_proportionalToScreenWidth()
+    private let kTableViewTopInsetNoActionBar = CGFloat(40.0).rsd_proportionalToScreenWidth()
+    private let kHeaderViewHeightSmall = CGFloat(160.0).rsd_proportionalToScreenWidth()
+    private let kHeaderViewHeightMedium = CGFloat(180.0).rsd_proportionalToScreenWidth()
+    private let kHeaderViewHeightLarge = CGFloat(210.0).rsd_proportionalToScreenWidth()
+
+    @IBOutlet weak var headerContentView: UIView!
     @IBOutlet weak var actionBarView: UIView!
     @IBOutlet weak var actionBarTitleLabel: UILabel!
     @IBOutlet weak var actionBarDetailsLabel: UILabel!
     @IBOutlet weak var progressCircleView: ProgressCircleView!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var taskBrowserBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var taskBrowserContainerView: UIView!
+    @IBOutlet weak var taskBrowserTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var headerViewBottomConstraint: NSLayoutConstraint!
     
-    public var shouldShowActionBar = true
+    var taskBrowserVC: TaskBrowserViewController?
+    var tableSetupDone = false
+    var dragDistance: CGFloat = 0.0
+    var taskBrowserVisible = true {
+        didSet {
+            updateTaskBrowserPosition(animated: true)
+        }
+    }
     
+    // TODO: jbruhin 5-1-18 will need to make the following dynamic based on...something
+    public var shouldShowActionBar = false
+    public var shouldShowProgressCircle = true
+
     // TODO: jbruhin 5-10-18 - replace this with actual model
     var completedTaskGroups: [[RSDTaskInfoObject]] = {
+        
         let taskGroups = [["Symptoms", "Symptoms", "Symptoms"],
                           ["Medication", "Medication"],
                           ["Triggers", "Triggers", "Triggers", "Triggers"],
@@ -60,17 +79,19 @@ class TrackingViewController: UIViewController {
         var taskInfosGroups = [[RSDTaskInfoObject]]()
         for tasks in taskGroups {
             var taskInfos = [RSDTaskInfoObject]()
-            tasks.forEach({
-                var taskInfo = RSDTaskInfoObject(with: $0)
-                taskInfo.title = $0
-                taskInfo.resourceTransformer = RSDResourceTransformerObject(resourceName: $0)
+            tasks.forEach { (task) in
+                var taskInfo = RSDTaskInfoObject(with: task)
+                taskInfo.title = task
+                taskInfo.resourceTransformer = RSDResourceTransformerObject(resourceName: task)
                 taskInfos.append(taskInfo)
-            })
+            }
             taskInfosGroups.append(taskInfos)
         }
         return taskInfosGroups
     }()
     
+    // MARK: View lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -88,6 +109,136 @@ class TrackingViewController: UIViewController {
         setupView()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        if !tableSetupDone {
+            // This must be done in viewDidLayoutSubviews() because we might be resizing
+            // the UITableView.headerView and making other adjustments on the tableView.
+            // We only want to call this once from this method.
+            tableSetupDone = true
+            updateTableView()
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == kTaskBrowserSegueIdentifier,
+            let taskBrowser = segue.destination as? TaskBrowserViewController {
+            taskBrowser.taskGroups = taskGroups()
+            taskBrowser.delegate = self
+            taskBrowserVC = taskBrowser
+        }
+    }
+    
+    // MARK: View setup
+
+    func setupView() {
+        
+        // Initial setup
+        setupWelcomeText()
+        actionBarView.layer.cornerRadius = 4.0
+        actionBarView.layer.masksToBounds = true
+                
+        // Add pan gesture to the task browser container
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(dragTaskBrowser(sender:)))
+        taskBrowserContainerView.addGestureRecognizer(pan)
+        
+        // update variable items
+        updateTaskBrowserPosition(animated: false)
+        updateActionBar()
+        updateProgressCircle()
+    }
+
+    func setupWelcomeText() {
+        // TODO: jbruhin 5-1-18 update 'welcome' text dynamically based on time of day
+    }
+    
+    func updateTaskBrowserPosition(animated: Bool) {
+        dragDistance = 0.0
+        taskBrowserTopConstraint.constant = taskBrowserTopDistanceWhen(visible: taskBrowserVisible)
+        if animated {
+            UIView.animate(withDuration: 0.25) {
+                // If browser is not visible, tell the browser to hide the rule at the bottom of the selected tab
+                self.taskBrowserVC?.showSelectionIndicator(visible: self.taskBrowserVisible)
+                self.view.layoutIfNeeded()
+            }
+        }
+    }
+
+    func updateActionBar() {
+        // TODO: jbruhin 5-1-18 will be a data source for this at some point
+        actionBarTitleLabel.text = "Study Burst"
+        actionBarDetailsLabel.text = "4 ACTIVITIES TO DO"
+        
+        // If we should not show it, then make it's height 0, otherwise remove
+        // the height constraint
+        if shouldShowActionBar {
+            if let heightConstraint = actionBarView.rsd_constraint(for: .height, relation: .equal) {
+                NSLayoutConstraint.deactivate([heightConstraint])
+            }
+        }
+        else {
+            actionBarView.rsd_makeHeight(.equal, 0.0)
+        }
+    }
+    
+    func updateProgressCircle() {
+        // TODO: jbruhin 5-1-18 will be a data source for this at some point
+        progressCircleView.displayDay(count: 14)
+        progressCircleView.isHidden = !shouldShowProgressCircle
+    }
+    
+    func updateTableView() {
+        
+        // Based on the variable content - a visible action bar or completed tasks - we do the following:
+        // If we don't have completed tasks, make the tableView.headerView.height equal to the tableView.bounds.height
+        // because we want the content to be centered vertically visually. If we do have completed tasks, then
+        // we make the tableView.headerView.height equal to a constant that varies based on the content we have.
+        // We have to adjust the constraints on the headerContentView to either center vertically in its
+        // superview, or pin the top and bottom to its superview. This will determine how big the image is,
+        // among other things.
+        
+        func adjustHeaderView(to height: CGFloat) {
+            if let headerView = tableView.tableHeaderView {
+
+                var frame = headerView.frame
+                if height != frame.size.height {
+                    frame.size.height = height
+                    headerView.frame = frame
+                    tableView.tableHeaderView = headerView
+                }
+            }
+        }
+        
+        if completedTaskGroups.count > 0 {
+            let height = shouldShowActionBar ? kHeaderViewHeightSmall : kHeaderViewHeightMedium
+            adjustHeaderView(to: height)
+            if let heightConstraint = headerContentView.rsd_constraint(for: .height, relation: .equal) {
+                NSLayoutConstraint.deactivate([heightConstraint])
+            }
+            
+            // Inset the top of the tableView
+            let inset = shouldShowActionBar ? kTableViewVerticalPadding : kTableViewTopInsetNoActionBar
+            tableView.contentInset = UIEdgeInsets(top: inset, left: 0.0, bottom: 0.0, right: 0.0)
+        }
+        else {
+            adjustHeaderView(to: tableView.bounds.height)
+            let contentHeight = [tableView.bounds.height - (2 * kTableViewVerticalPadding), kHeaderViewHeightLarge].min()
+            headerContentView.rsd_makeHeight(.equal, contentHeight ?? 0)
+            
+            // Inset the top of the tableView jto 0
+            tableView.contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
+        }
+
+        // Adjust our contentOffset to account for contentInset
+        tableView.setContentOffset(CGPoint(x: 0, y: -1 * tableView.contentInset.top), animated: false)
+        
+        // Adjust headerView bottom constraint (the padding between bottom label and bottom of view)
+        headerViewBottomConstraint.constant = kTableViewVerticalPadding
+    }
+    
+    // MARK: Model
+    
     func taskGroups() -> [RSDTaskGroup] {
         // TODO: jbruhin 5-1-18 obtain task model from the proper source?? Model also needs more tasks
         // and tasks may need more data, like icon images
@@ -101,10 +252,10 @@ class TrackingViewController: UIViewController {
             let trackingTaskGroup : RSDTaskGroup = {
                 
                 var taskInfos = [RSDTaskInfoObject]()
-                ["Symptoms", "Medication", "Triggers"].forEach({
-                    var taskInfo = RSDTaskInfoObject(with: $0)
-                    taskInfo.title = $0
-                    taskInfo.resourceTransformer = RSDResourceTransformerObject(resourceName: $0)
+                ["Symptoms", "Medication", "Triggers", "Medication", "Medication"].forEach { (identifier) in
+                    var taskInfo = RSDTaskInfoObject(with: identifier)
+                    taskInfo.title = identifier
+                    taskInfo.resourceTransformer = RSDResourceTransformerObject(resourceName: identifier)
                     // Get the task icon for this taskIdentifier
                     do {
                         taskInfo.icon = try RSDImageWrapper(imageName: "\(taskInfo.identifier)TaskIcon")
@@ -112,7 +263,7 @@ class TrackingViewController: UIViewController {
                         print("Failed to load the task icon. \(err)")
                     }
                     taskInfos.append(taskInfo)
-                })
+                }
                 
                 var taskGroup = RSDTaskGroupObject(with: "Tracking", tasks: taskInfos)
                 taskGroup.title = "Tracking"
@@ -124,47 +275,6 @@ class TrackingViewController: UIViewController {
         return taskGroups
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == kTaskBrowserSegueIdentifier,
-            let taskBrowser = segue.destination as? TaskBrowserViewController {
-            taskBrowser.taskGroups = taskGroups()
-        }
-    }
-    
-    func setupView() {
-        
-        // Initial setup
-        setupWelcomeText()
-        actionBarView.layer.cornerRadius = 4.0
-        actionBarView.layer.masksToBounds = true
-        
-        // update variable items
-        updateActionBar()
-        updateProgressCircle()
-    }
-    
-    func setupWelcomeText() {
-        // TODO: jbruhin 5-1-18 update 'welcome' text dynamically based on time of day
-    }
-
-    func updateActionBar() {
-        // TODO: jbruhin 5-1-18 will be a data source for this at some point
-        actionBarTitleLabel.text = "Study Burst"
-        actionBarDetailsLabel.text = "4 ACTIVITIES TO DO"
-        
-        // TODO: jbruhin 5-1-18 will need to make the following dynamic based on...something
-        actionBarView.isHidden = !shouldShowActionBar
-        if shouldShowActionBar {
-            // Inset the top of the tableView to accommodate actionBar
-            let inset = actionBarView.frame.origin.y + actionBarView.frame.size.height
-            tableView.contentInset = UIEdgeInsets(top: inset, left: 0.0, bottom: 0.0, right: 0.0)
-        }
-    }
-    
-    func updateProgressCircle() {
-        // TODO: jbruhin 5-1-18 will be a data source for this at some point
-        progressCircleView.displayDay(count: 14)
-    }
     
     // MARK: Actions
     @IBAction func actionBarTapped(_ sender: Any) {
@@ -203,6 +313,91 @@ extension TrackingViewController: UITableViewDelegate, UITableViewDataSource {
     open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // TODO: jbruhin 5-10-18 implement??
         presentAlertWithOk(title: "Should this do something??", message: "", actionHandler: nil)
+    }
+}
+
+extension TrackingViewController: TaskBrowserViewControllerDelegate {
+    
+    // MARK: TaskBrowserViewController management
+    
+    @objc func dragTaskBrowser(sender: UIPanGestureRecognizer) {
+        
+        if sender.state == .ended {
+            updateTaskBrowserPosition(animated: true)
+        }
+        else {
+            let translation = sender.translation(in: taskBrowserContainerView)
+            let newDragDistance = dragDistance + translation.y
+            let newPoint = taskBrowserTopDistanceWhen(visible: taskBrowserVisible) + newDragDistance
+            
+            if shouldDrag(dragPoint: newPoint) {
+                
+                if !taskBrowserVisible && shouldOpenTaskBrowser(dragPoint: newPoint) {
+                    taskBrowserVisible = true
+                    return
+                }
+                
+                if taskBrowserVisible && shouldCloseTaskBrowser(dragPoint: newPoint) {
+                    taskBrowserVisible = false
+                    return
+                }
+                
+                dragDistance = newDragDistance
+                taskBrowserTopConstraint.constant = newPoint
+                sender.setTranslation(CGPoint.zero, in: self.view)
+            }
+        }
+    }
+    
+    func shouldOpenTaskBrowser(dragPoint: CGFloat) -> Bool {
+        // If the drag point is more than 1/3 of the way from closed to open, then we open
+        let contentHeight = taskBrowserHeight() - TaskBrowserViewController.tabsHeight()
+        let triggerPoint = taskBrowserTopDistanceWhen(visible: true) + contentHeight * 2/3
+        return dragPoint < triggerPoint
+    }
+    
+    func shouldCloseTaskBrowser(dragPoint: CGFloat) -> Bool {
+        // If the drag point is more than 1/3 of the way from open to closed, then we close
+        let contentHeight = taskBrowserHeight() - TaskBrowserViewController.tabsHeight()
+        let triggerPoint = taskBrowserTopDistanceWhen(visible: true) + contentHeight * 1/3
+        return dragPoint > triggerPoint
+    }
+    
+    func shouldDrag(dragPoint: CGFloat) -> Bool {
+        // Don't drag if we've gone beyond our closed or open positions
+        let closedPoint = taskBrowserTopDistanceWhen(visible: false)
+        let openedPoint = taskBrowserTopDistanceWhen(visible: true)
+        return dragPoint < closedPoint && dragPoint > openedPoint
+    }
+    
+    func taskBrowserTopDistanceWhen(visible: Bool) -> CGFloat {
+        return view.bounds.height - taskBrowserHeightWhen(visible: visible) - (tabBarController?.tabBar.bounds.height ?? 0.0)
+    }
+    
+    func taskBrowserHeightWhen(visible: Bool) -> CGFloat {
+        if visible {
+            return taskBrowserHeight()
+        }
+        else {
+            return TaskBrowserViewController.tabsHeight()
+        }
+    }
+    
+    func taskBrowserHeight() -> CGFloat {
+        if let heightConstraint = taskBrowserContainerView.rsd_constraint(for: .height, relation: .equal) {
+            return heightConstraint.constant
+        }
+        return 0.0
+    }
+    
+    // MARK: TaskBrowserViewControllerDelegate
+    func taskBrowserToggleVisibility() {
+        taskBrowserVisible = !taskBrowserVisible
+    }
+    func taskBrowserTabSelected() {
+        if !taskBrowserVisible {
+            taskBrowserVisible = true
+        }
     }
 }
 
