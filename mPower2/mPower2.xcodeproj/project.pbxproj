@@ -42,6 +42,7 @@
 		B5FA25FC206985E600A4FF3D /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7CD2062F28500CD351C /* Research.framework */; };
 		B5FA25FD206985FE00A4FF3D /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7DE2062F28F00CD351C /* ResearchUI.framework */; };
 		B5FA25FF2069867C00A4FF3D /* Walk_And_Balance.json in Resources */ = {isa = PBXBuildFile; fileRef = B5FA25FE2069867C00A4FF3D /* Walk_And_Balance.json */; };
+		F8078F3F20ADF1DC00757F42 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8078F2920ADF1DC00757F42 /* AppDelegate.swift */; };
 		F80CB9EC207D2D2300B4EE5D /* MCTTappingStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80CB9EB207D2D2300B4EE5D /* MCTTappingStepViewController.swift */; };
 		F80CB9EF207D2DE400B4EE5D /* MCTTappingResultObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80CB9EE207D2DE400B4EE5D /* MCTTappingResultObject.swift */; };
 		F80CB9FD207D3AD800B4EE5D /* MotorControl.strings in Resources */ = {isa = PBXBuildFile; fileRef = F80CB9FC207D3AD800B4EE5D /* MotorControl.strings */; };
@@ -49,11 +50,6 @@
 		F82AE7B62063160B00952D74 /* UIColor+mPowerTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82AE7B52063160B00952D74 /* UIColor+mPowerTheme.swift */; };
 		F8460D752097CF0C0084E197 /* MCTCountdownStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8460D742097CF0C0084E197 /* MCTCountdownStepViewController.swift */; };
 		F854590E208F986D00D37243 /* NSLocale+UnitTest.h in Headers */ = {isa = PBXBuildFile; fileRef = F854590D208F986D00D37243 /* NSLocale+UnitTest.h */; };
-		F8545977208FA2ED00D37243 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8545976208FA2ED00D37243 /* AppDelegate.swift */; };
-		F8545979208FA2ED00D37243 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8545978208FA2ED00D37243 /* ViewController.swift */; };
-		F854597C208FA2ED00D37243 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F854597A208FA2ED00D37243 /* Main.storyboard */; };
-		F854597E208FA2EE00D37243 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F854597D208FA2EE00D37243 /* Assets.xcassets */; };
-		F8545981208FA2EE00D37243 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F854597F208FA2EE00D37243 /* LaunchScreen.storyboard */; };
 		F854598A208FA43700D37243 /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7DE2062F28F00CD351C /* ResearchUI.framework */; };
 		F854598B208FA43700D37243 /* ResearchUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7DE2062F28F00CD351C /* ResearchUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F854598F208FA43D00D37243 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7CD2062F28500CD351C /* Research.framework */; };
@@ -73,6 +69,21 @@
 		F8841993207EB77000028A2B /* TremorSectionStep.json in Resources */ = {isa = PBXBuildFile; fileRef = F8841992207EB77000028A2B /* TremorSectionStep.json */; };
 		F88419B5207EC14400028A2B /* ResourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88419B4207EC14400028A2B /* ResourceTests.swift */; };
 		F88419CF207EC22B00028A2B /* NSLocale+UnitTest.m in Sources */ = {isa = PBXBuildFile; fileRef = F88419CE207EC22B00028A2B /* NSLocale+UnitTest.m */; };
+		F88E8DFB20ADEE2600117A99 /* ExternalIDRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608241F12093D9F70026E843 /* ExternalIDRegistrationViewController.swift */; };
+		F88E8DFC20ADEE2600117A99 /* PhoneRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603B7BC220913B1A00794B7C /* PhoneRegistrationViewController.swift */; };
+		F88E8DFD20ADEE2600117A99 /* RegistrationIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608241DA2093D9A90026E843 /* RegistrationIntroViewController.swift */; };
+		F88E8DFE20ADEE2600117A99 /* RegistrationWaitingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603B7BA9208E90FF00794B7C /* RegistrationWaitingViewController.swift */; };
+		F88E8DFF20ADEE2600117A99 /* TrackingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0334415320995328009B97A9 /* TrackingViewController.swift */; };
+		F88E8E0020ADEE2600117A99 /* TaskBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0334415520995CCD009B97A9 /* TaskBrowserViewController.swift */; };
+		F88E8E0120ADEE2B00117A99 /* ProgressCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0349535420981C89006A05B1 /* ProgressCircleView.swift */; };
+		F88E8E0220ADEE3B00117A99 /* SignIn.json in Resources */ = {isa = PBXBuildFile; fileRef = 603B7B352085541A00794B7C /* SignIn.json */; };
+		F88E8E0320ADEE3B00117A99 /* Symptoms.json in Resources */ = {isa = PBXBuildFile; fileRef = 03C9DCE820A4CEB1007074EE /* Symptoms.json */; };
+		F88E8E0420ADEE3B00117A99 /* Medication.json in Resources */ = {isa = PBXBuildFile; fileRef = 03C9DCFF20A4CEC3007074EE /* Medication.json */; };
+		F88E8E0520ADEE4200117A99 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E7822062F1B900CD351C /* LaunchScreen.storyboard */; };
+		F88E8E0620ADEE4700117A99 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E77D2062F1B900CD351C /* Main.storyboard */; };
+		F88E8E0820ADEE5100117A99 /* Registration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 603B7B92208E90C100794B7C /* Registration.storyboard */; };
+		F88E8E0920ADEE6000117A99 /* mPower2.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03C9DD0B20A4F956007074EE /* mPower2.strings */; };
+		F88E8E0A20ADEE6C00117A99 /* BridgeInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E7F62063039200CD351C /* BridgeInfo.plist */; };
 		F8D3E77A2062F1B900CD351C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D3E7792062F1B900CD351C /* AppDelegate.swift */; };
 		F8D3E77F2062F1B900CD351C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E77D2062F1B900CD351C /* Main.storyboard */; };
 		F8D3E7812062F1B900CD351C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E7802062F1B900CD351C /* Assets.xcassets */; };
@@ -361,6 +372,7 @@
 		B5D822F6207449D400C03F3C /* MCTInstructionStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTInstructionStepViewController.swift; sourceTree = "<group>"; };
 		B5DC838C2076B5FD00DEE4A2 /* Finger_Tapping.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Finger_Tapping.json; sourceTree = "<group>"; };
 		B5FA25FE2069867C00A4FF3D /* Walk_And_Balance.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Walk_And_Balance.json; sourceTree = "<group>"; };
+		F8078F2920ADF1DC00757F42 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F80CB9EB207D2D2300B4EE5D /* MCTTappingStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTTappingStepViewController.swift; sourceTree = "<group>"; };
 		F80CB9EE207D2DE400B4EE5D /* MCTTappingResultObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTTappingResultObject.swift; sourceTree = "<group>"; };
 		F80CB9FC207D3AD800B4EE5D /* MotorControl.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = MotorControl.strings; sourceTree = "<group>"; };
@@ -369,11 +381,6 @@
 		F8460D742097CF0C0084E197 /* MCTCountdownStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTCountdownStepViewController.swift; sourceTree = "<group>"; };
 		F854590D208F986D00D37243 /* NSLocale+UnitTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLocale+UnitTest.h"; sourceTree = "<group>"; };
 		F8545974208FA2ED00D37243 /* mPower2TestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mPower2TestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		F8545976208FA2ED00D37243 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		F8545978208FA2ED00D37243 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		F854597B208FA2ED00D37243 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		F854597D208FA2EE00D37243 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		F8545980208FA2EE00D37243 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F8545982208FA2EE00D37243 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F854599F208FA58800D37243 /* ResourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceTests.swift; sourceTree = "<group>"; };
 		F8841979207EB4E400028A2B /* TappingSectionStep.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TappingSectionStep.json; sourceTree = "<group>"; };
@@ -563,11 +570,7 @@
 		F8545975208FA2ED00D37243 /* mPower2TestApp */ = {
 			isa = PBXGroup;
 			children = (
-				F8545976208FA2ED00D37243 /* AppDelegate.swift */,
-				F8545978208FA2ED00D37243 /* ViewController.swift */,
-				F854597A208FA2ED00D37243 /* Main.storyboard */,
-				F854597D208FA2EE00D37243 /* Assets.xcassets */,
-				F854597F208FA2EE00D37243 /* LaunchScreen.storyboard */,
+				F8078F2920ADF1DC00757F42 /* AppDelegate.swift */,
 				F8545982208FA2EE00D37243 /* Info.plist */,
 			);
 			path = mPower2TestApp;
@@ -1044,11 +1047,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F88E8E0620ADEE4700117A99 /* Main.storyboard in Resources */,
+				F88E8E0820ADEE5100117A99 /* Registration.storyboard in Resources */,
 				F85459B4208FA76200D37243 /* Triggers.json in Resources */,
-				F8545981208FA2EE00D37243 /* LaunchScreen.storyboard in Resources */,
-				F854597E208FA2EE00D37243 /* Assets.xcassets in Resources */,
-				F854597C208FA2ED00D37243 /* Main.storyboard in Resources */,
+				F88E8E0420ADEE3B00117A99 /* Medication.json in Resources */,
+				F88E8E0320ADEE3B00117A99 /* Symptoms.json in Resources */,
+				F88E8E0520ADEE4200117A99 /* LaunchScreen.storyboard in Resources */,
+				F88E8E0220ADEE3B00117A99 /* SignIn.json in Resources */,
 				F85459B5208FA76D00D37243 /* Assets.xcassets in Resources */,
+				F88E8E0920ADEE6000117A99 /* mPower2.strings in Resources */,
+				F88E8E0A20ADEE6C00117A99 /* BridgeInfo.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1107,10 +1115,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F8078F3F20ADF1DC00757F42 /* AppDelegate.swift in Sources */,
+				F88E8DFD20ADEE2600117A99 /* RegistrationIntroViewController.swift in Sources */,
+				F88E8E0120ADEE2B00117A99 /* ProgressCircleView.swift in Sources */,
+				F88E8DFF20ADEE2600117A99 /* TrackingViewController.swift in Sources */,
+				F88E8E0020ADEE2600117A99 /* TaskBrowserViewController.swift in Sources */,
 				F85459B7208FA77900D37243 /* UIView+mPowerTheme.swift in Sources */,
-				F8545979208FA2ED00D37243 /* ViewController.swift in Sources */,
-				F8545977208FA2ED00D37243 /* AppDelegate.swift in Sources */,
 				F85459B6208FA77400D37243 /* UIColor+mPowerTheme.swift in Sources */,
+				F88E8DFE20ADEE2600117A99 /* RegistrationWaitingViewController.swift in Sources */,
+				F88E8DFB20ADEE2600117A99 /* ExternalIDRegistrationViewController.swift in Sources */,
+				F88E8DFC20ADEE2600117A99 /* PhoneRegistrationViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1245,22 +1259,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		F854597A208FA2ED00D37243 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F854597B208FA2ED00D37243 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		F854597F208FA2EE00D37243 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F8545980208FA2EE00D37243 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
 		F8D3E77D2062F1B900CD351C /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
