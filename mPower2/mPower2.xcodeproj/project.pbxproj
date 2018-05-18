@@ -84,7 +84,6 @@
 		F88E8E0420ADEE3B00117A99 /* Medication.json in Resources */ = {isa = PBXBuildFile; fileRef = 03C9DCFF20A4CEC3007074EE /* Medication.json */; };
 		F88E8E0520ADEE4200117A99 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E7822062F1B900CD351C /* LaunchScreen.storyboard */; };
 		F88E8E0620ADEE4700117A99 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E77D2062F1B900CD351C /* Main.storyboard */; };
-		F88E8E0820ADEE5100117A99 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		F88E8E0920ADEE6000117A99 /* mPower2.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03C9DD0B20A4F956007074EE /* mPower2.strings */; };
 		F88E8E0A20ADEE6C00117A99 /* BridgeInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E7F62063039200CD351C /* BridgeInfo.plist */; };
 		F8D3E77A2062F1B900CD351C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D3E7792062F1B900CD351C /* AppDelegate.swift */; };
@@ -1076,7 +1075,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F88E8E0620ADEE4700117A99 /* Main.storyboard in Resources */,
-				F88E8E0820ADEE5100117A99 /* (null) in Resources */,
 				F85459B4208FA76200D37243 /* Triggers.json in Resources */,
 				F88E8E0420ADEE3B00117A99 /* Medication.json in Resources */,
 				F88E8E0320ADEE3B00117A99 /* Symptoms.json in Resources */,
