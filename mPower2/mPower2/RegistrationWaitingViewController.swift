@@ -42,11 +42,12 @@ class RegistrationWaitingViewController: RSDStepViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        // TODO: emm 2018-04-25 get phone # from results via custom task controller and set the phoneLabel
+        self.phoneLabel.text = (self.taskController as? SignInTaskViewController)?.phoneNumber
     }
     
     @IBAction func didTapChangeMobileButton(_ sender: Any) {
         // TODO emm 2018-05-03 get this working
+        presentAlertWithOk(title: "Not implemented yet.", message: "", actionHandler: nil)
 //        guard let answerFormat = formItem.answerFormat as? SBATextResultCreator else { return }
 //
 //        let alertController = UIAlertController(title: formItem.text, message: "", preferredStyle: .alert)

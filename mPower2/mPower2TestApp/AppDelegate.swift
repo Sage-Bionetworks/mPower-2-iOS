@@ -37,6 +37,8 @@ import Research
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    weak var smsSignInDelegate: SignInDelegate? = nil
+
     var window: UIWindow?
 
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
@@ -74,6 +76,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    func showAppropriateViewController(animated: Bool) {
+    }
 
 }
 

@@ -38,20 +38,14 @@ import BridgeSDK
 
 class PhoneRegistrationViewController: RSDTableStepViewController {
 
-    var resultText: String? {
-        let taskResult = self.taskController.taskResult
-        let phoneResultIdentifier = "enterPhoneNumber"
-        guard let phoneNumber = taskResult?.findAnswerResult(with: phoneResultIdentifier)?.value as? String
-            else {
-                return nil
-        }
-
-        return phoneNumber
-    }
-    
     func signUpAndRequestSMSLink(completion: @escaping SBBNetworkManagerCompletionBlock) {
-        guard let phoneNumber = self.resultText, !phoneNumber.isEmpty else { return }
-        let regionCode = "US" // TODO: emm 2018-04-25 Handle non-US phone numbers for international studies
+        guard let taskController = self.taskController as? SignInTaskViewController,
+            let phoneNumber = taskController.phoneNumber,
+            let regionCode = taskController.regionCode,
+            !phoneNumber.isEmpty,
+            !regionCode.isEmpty else {
+                return
+        }
         let signUp: SBBSignUp = SBBSignUp()
         signUp.checkForConsent = true
         signUp.phone = SBBPhone()
