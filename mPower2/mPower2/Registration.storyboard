@@ -117,7 +117,7 @@
                                         <rect key="frame" x="24" y="346" width="272" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="120" id="pT6-yi-96D"/>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="80" id="pcS-kk-9zy"/>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="32" id="pcS-kk-9zy"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                         <color key="textColor" red="0.25490196079999999" green="0.28235294119999998" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -126,14 +126,14 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="1000" misplaced="YES" text="Your registration link is on its way!" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o3f-jn-lwu">
                                         <rect key="frame" x="24" y="258" width="272" height="81"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="32" id="4MG-0B-P4C"/>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="32" id="4MG-0B-P4C"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
                                         <color key="textColor" red="0.25490196079999999" green="0.28235294119999998" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pPg-EO-a3r" customClass="RSDUnderlinedButton" customModule="ResearchUI">
-                                        <rect key="frame" x="70.5" y="420.5" width="179" height="32.5"/>
+                                        <rect key="frame" x="70.5" y="467.5" width="179" height="32.5"/>
                                         <state key="normal" title="Change mobile number"/>
                                         <connections>
                                             <action selector="didTapChangeMobileButton:" destination="EgZ-vC-TR2" eventType="touchUpInside" id="eee-uh-IAM"/>
@@ -146,7 +146,7 @@
                                     <constraint firstAttribute="trailing" secondItem="KnH-k1-TOz" secondAttribute="trailing" constant="24" id="LMU-n9-08x"/>
                                     <constraint firstItem="KnH-k1-TOz" firstAttribute="leading" secondItem="nBS-5w-xU9" secondAttribute="leading" constant="24" id="OLa-ZR-w0d"/>
                                     <constraint firstItem="pPg-EO-a3r" firstAttribute="centerX" secondItem="nBS-5w-xU9" secondAttribute="centerX" id="SqL-H7-P23"/>
-                                    <constraint firstItem="pPg-EO-a3r" firstAttribute="top" secondItem="KnH-k1-TOz" secondAttribute="bottom" constant="30.5" id="TYD-cG-jBd"/>
+                                    <constraint firstItem="pPg-EO-a3r" firstAttribute="top" secondItem="KnH-k1-TOz" secondAttribute="bottom" constant="80" id="TYD-cG-jBd"/>
                                     <constraint firstAttribute="trailing" secondItem="o3f-jn-lwu" secondAttribute="trailing" constant="24" id="axV-Pf-rfH"/>
                                     <constraint firstItem="o3f-jn-lwu" firstAttribute="leading" secondItem="nBS-5w-xU9" secondAttribute="leading" constant="24" id="gNC-ve-fYv"/>
                                 </constraints>
@@ -156,14 +156,14 @@
                                     <outlet property="titleLabel" destination="o3f-jn-lwu" id="asA-El-xih"/>
                                 </connections>
                             </view>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wSl-Fj-TIm" customClass="MCTCompletionGradient" customModule="mPower2" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="237.5"/>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wSl-Fj-TIm" customClass="MCTCompletionGradient" customModule="MotorControl">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="243.5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="200" id="tKs-MA-ecu"/>
                                 </constraints>
                             </view>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" image="Completion-WalkAndBalance" translatesAutoresizingMaskIntoConstraints="NO" id="4Er-BM-A58">
-                                <rect key="frame" x="53.5" y="40.5" width="213" height="158"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" image="expectSMS" translatesAutoresizingMaskIntoConstraints="NO" id="4Er-BM-A58">
+                                <rect key="frame" x="53.5" y="41.5" width="213" height="162"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
@@ -196,7 +196,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Ic-5b-awS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="778" y="222"/>
+            <point key="canvasLocation" x="776.25" y="221.83098591549296"/>
         </scene>
         <!--Phone Registration View Controller-->
         <scene sceneID="WSD-gZ-2sO">
@@ -230,6 +230,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Completion-WalkAndBalance" width="221" height="158"/>
+        <image name="expectSMS" width="129" height="162"/>
     </resources>
 </document>

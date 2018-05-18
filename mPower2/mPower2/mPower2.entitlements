@@ -15,6 +15,7 @@
 	<key>keychain-access-groups</key>
 	<array>
 		<string>$(AppIdentifierPrefix)org.sagebionetworks.mPower2</string>
+		<string>$(AppIdentifierPrefix)org.sagebase.Bridge</string>
 	</array>
 </dict>
 </plist>

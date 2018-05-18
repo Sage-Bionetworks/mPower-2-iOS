@@ -43,14 +43,35 @@ protocol SignInDelegate : class {
 class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
     
     weak var smsSignInDelegate: SignInDelegate? = nil
+    
+    var userSessionInfo: SBBUserSessionInfo?
+    
+    override func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]?) -> Bool {
+        NotificationCenter.default.addObserver(forName: .sbbUserSessionUpdated, object: nil, queue: .main) { (notification) in
+            guard let info = notification.userInfo?[kSBBUserSessionInfoKey] as? SBBUserSessionInfo else {
+                fatalError("Expected notification userInfo to contain a user session info object")
+            }
+            self.userSessionInfo = info
+        }
+        
+        return super.application(application, willFinishLaunchingWithOptions: launchOptions)
+    }
+    
+    func showAppropriateViewController(animated: Bool) {
+        if BridgeSDK.authManager.isAuthenticated() {
+            if userSessionInfo?.consentedValue ?? false {
+                showMainViewController(animated: animated)
+            } else {
+                showConsentViewController(animated: animated)
+            }
+        } else {
+            showSignInViewController(animated: animated)
+        }
+    }
 
     override func applicationDidBecomeActive(_ application: UIApplication) {
         super.applicationDidBecomeActive(application)
-        if BridgeSDK.authManager.isAuthenticated() {
-            showMainViewController(animated: true)
-        } else {
-            showSignInViewController(animated: true)
-        }
+        self.showAppropriateViewController(animated: true)
     }
     
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
@@ -119,6 +140,14 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
         self.transition(to: vc, state: .onboarding, animated: true)
     }
     
+    func showConsentViewController(animated: Bool) {
+        guard self.rootViewController?.state != .consent else { return }
+        let vc = ConsentViewController()
+        // TODO emm 2018-05-11 put this in BridgeInfo or AppConfig?
+        vc.url = URL(string: "http://mpower.sagebridge.org/")
+        self.transition(to: vc, state: .consent, animated: true)
+    }
+    
     func openStoryboard(_ name: String) -> UIStoryboard? {
         return UIStoryboard(name: name, bundle: nil)
     }
@@ -128,7 +157,7 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
     
     func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
         guard BridgeSDK.authManager.isAuthenticated() else { return }
-        showMainViewController(animated: true)
+        showAppropriateViewController(animated: true)
     }
     
     func taskController(_ taskController: RSDTaskController, readyToSave taskPath: RSDTaskPath) {

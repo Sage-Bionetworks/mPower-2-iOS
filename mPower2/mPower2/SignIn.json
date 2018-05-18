@@ -41,8 +41,8 @@
                 "text":"To become part of mPower, enter your phone number to get started.",
                 "placeholder":"Enter your mobile number",
                 "image":{
-                    "imageName": "TapLeft1",
-                    "placementType":"iconAbove"
+                    "imageName": "phonebook",
+                    "placementType":"topBackground"
                 },
                 "colorTheme":{
                     "usesLightStyle":true
@@ -56,7 +56,7 @@
              {
                 "identifier":"enterExternalId",
                 "type":"form",
-                "text":"To become part of mPower, enter your external ID and password to get started.",
+                "text":"To become part of mPower, enter your external ID to get started.",
                 "inputFields": [
                     {
                         "identifier":"externalId",
@@ -93,7 +93,7 @@
                  "type":"instruction",
                  "title":"Your registration link is on its way!",
                  "image":{
-                     "imageName":"Completion",
+                     "imageName":"expectSMS",
                      "placementType":"topBackground"
                  },
                  "viewTheme":{

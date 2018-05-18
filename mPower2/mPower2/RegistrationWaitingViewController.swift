@@ -47,6 +47,7 @@ class RegistrationWaitingViewController: RSDStepViewController {
     
     @IBAction func didTapChangeMobileButton(_ sender: Any) {
         // TODO emm 2018-05-03 get this working
+        presentAlertWithOk(title: "Not implemented yet.", message: "", actionHandler: nil)
 //        guard let answerFormat = formItem.answerFormat as? SBATextResultCreator else { return }
 //
 //        let alertController = UIAlertController(title: formItem.text, message: "", preferredStyle: .alert)
