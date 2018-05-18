@@ -37,27 +37,24 @@ import Research
 import BridgeSDK
 import BridgeApp
 
-struct ConsentInfo: Decodable {
-    enum SharingScope: String, Codable {
-        case no_sharing, sponsors_and_partners, all_qualified_researchers
-        
-        func bridgeValue() -> SBBParticipantDataSharingScope {
-            switch self {
-            case .no_sharing:
-                return .none
-            case .sponsors_and_partners:
-                return .study
-            case .all_qualified_researchers:
-                return .all
-            }
+enum SharingScope: String, Codable {
+    case no_sharing, sponsors_and_partners, all_qualified_researchers
+    
+    func bridgeValue() -> SBBParticipantDataSharingScope {
+        switch self {
+        case .no_sharing:
+            return .none
+        case .sponsors_and_partners:
+            return .study
+        case .all_qualified_researchers:
+            return .all
         }
     }
-    
-    let name: String
-    let scope: SharingScope?
 }
 
 class ConsentViewController: RSDWebViewController, WKScriptMessageHandler {
+    static let consentControllerName = "consentHandler"
+    
     override func webViewConfiguration() -> WKWebViewConfiguration {
         let configuration = super.webViewConfiguration()
         let source = """
@@ -72,6 +69,7 @@ class ConsentViewController: RSDWebViewController, WKScriptMessageHandler {
         let consentsScript = WKUserScript(source: source, injectionTime: .atDocumentStart, forMainFrameOnly: true)
         let contentController = WKUserContentController()
         contentController.addUserScript(consentsScript)
+        contentController.add(self, name: ConsentViewController.consentControllerName)
         configuration.userContentController = contentController
         configuration.preferences.javaScriptCanOpenWindowsAutomatically = true
         
@@ -79,17 +77,18 @@ class ConsentViewController: RSDWebViewController, WKScriptMessageHandler {
     }
     
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        if message.name == "consentHandler" {
-            let decoder = RSDFactory.shared.createJSONDecoder()
-            guard let jsonBlob = message.body as? String,
-                let jsonObj = jsonBlob.data(using: .utf8),
-                let info = try? decoder.decode(ConsentInfo.self, from: jsonObj)
+        if message.name == ConsentViewController.consentControllerName {
+            guard let info = message.body as? [ String: SBBJSONValue ],
+                    let name = info["name"] as? String,
+                    let scopeString = info["scope"] as? String,
+                    let scope = SharingScope(rawValue: scopeString)?.bridgeValue()
                 else {
                     return
             }
             
             self.activityIndicator.startAnimating()
-            BridgeSDK.consentManager.consentSignature(info.name, forSubpopulationGuid: BridgeSDK.bridgeInfo.studyIdentifier, birthdate: nil, signatureImage: nil, dataSharing: info.scope?.bridgeValue() ?? .none) { (response, error) in
+            BridgeSDK.consentManager.consentSignature(name, forSubpopulationGuid: BridgeSDK.bridgeInfo.studyIdentifier, birthdate: nil, signatureImage: nil, dataSharing: scope) { (response, error) in
+                // TODO emm 2018-05-18 in case of error, throw up a dialog and then stay on the page so they can try again
                 // transition to whatever the correct app state is at this point
                 DispatchQueue.main.async {
                     self.activityIndicator.stopAnimating()
