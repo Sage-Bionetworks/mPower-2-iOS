@@ -86,6 +86,12 @@
 		F88E8E0620ADEE4700117A99 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E77D2062F1B900CD351C /* Main.storyboard */; };
 		F88E8E0920ADEE6000117A99 /* mPower2.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03C9DD0B20A4F956007074EE /* mPower2.strings */; };
 		F88E8E0A20ADEE6C00117A99 /* BridgeInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E7F62063039200CD351C /* BridgeInfo.plist */; };
+		F8C58DB120AF4823001C7B7F /* TodayScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C58DB020AF4823001C7B7F /* TodayScheduleManager.swift */; };
+		F8C58DB220AF4823001C7B7F /* TodayScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C58DB020AF4823001C7B7F /* TodayScheduleManager.swift */; };
+		F8C58DCA20AF5E86001C7B7F /* StudyBurstScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C58DC920AF5E86001C7B7F /* StudyBurstScheduleManager.swift */; };
+		F8C58DCB20AF5E86001C7B7F /* StudyBurstScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C58DC920AF5E86001C7B7F /* StudyBurstScheduleManager.swift */; };
+		F8C58DD520AF8CCC001C7B7F /* SurveyScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C58DD420AF8CCC001C7B7F /* SurveyScheduleManager.swift */; };
+		F8C58DD620AF8CCC001C7B7F /* SurveyScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C58DD420AF8CCC001C7B7F /* SurveyScheduleManager.swift */; };
 		F8D3E77A2062F1B900CD351C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D3E7792062F1B900CD351C /* AppDelegate.swift */; };
 		F8D3E77F2062F1B900CD351C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E77D2062F1B900CD351C /* Main.storyboard */; };
 		F8D3E7812062F1B900CD351C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E7802062F1B900CD351C /* Assets.xcassets */; };
@@ -393,6 +399,9 @@
 		F88419B4207EC14400028A2B /* ResourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceTests.swift; sourceTree = "<group>"; };
 		F88419CC207EC22A00028A2B /* MotorControlTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MotorControlTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		F88419CE207EC22B00028A2B /* NSLocale+UnitTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLocale+UnitTest.m"; sourceTree = "<group>"; };
+		F8C58DB020AF4823001C7B7F /* TodayScheduleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayScheduleManager.swift; sourceTree = "<group>"; };
+		F8C58DC920AF5E86001C7B7F /* StudyBurstScheduleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyBurstScheduleManager.swift; sourceTree = "<group>"; };
+		F8C58DD420AF8CCC001C7B7F /* SurveyScheduleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyScheduleManager.swift; sourceTree = "<group>"; };
 		F8D3E7762062F1B900CD351C /* mPower2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mPower2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8D3E7792062F1B900CD351C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F8D3E77E2062F1B900CD351C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -555,6 +564,9 @@
 			isa = PBXGroup;
 			children = (
 				F8078F4220ADFA6A00757F42 /* DataSourceManager.swift */,
+				F8C58DB020AF4823001C7B7F /* TodayScheduleManager.swift */,
+				F8C58DC920AF5E86001C7B7F /* StudyBurstScheduleManager.swift */,
+				F8C58DD420AF8CCC001C7B7F /* SurveyScheduleManager.swift */,
 			);
 			name = "Schedule Management";
 			sourceTree = "<group>";
@@ -1145,6 +1157,9 @@
 				F88E8DFF20ADEE2600117A99 /* TrackingViewController.swift in Sources */,
 				F88E8E0020ADEE2600117A99 /* TaskBrowserViewController.swift in Sources */,
 				F85459B7208FA77900D37243 /* UIView+mPowerTheme.swift in Sources */,
+				F8C58DCB20AF5E86001C7B7F /* StudyBurstScheduleManager.swift in Sources */,
+				F8C58DB220AF4823001C7B7F /* TodayScheduleManager.swift in Sources */,
+				F8C58DD620AF8CCC001C7B7F /* SurveyScheduleManager.swift in Sources */,
 				F85459B6208FA77400D37243 /* UIColor+mPowerTheme.swift in Sources */,
 				F8078F4420AE078A00757F42 /* DataSourceManager.swift in Sources */,
 				F88E8DFE20ADEE2600117A99 /* RegistrationWaitingViewController.swift in Sources */,
@@ -1165,6 +1180,9 @@
 				60F45524209CF10100C532A0 /* SignInTaskViewController.swift in Sources */,
 				F8D3E77A2062F1B900CD351C /* AppDelegate.swift in Sources */,
 				0334415620995CCD009B97A9 /* TaskBrowserViewController.swift in Sources */,
+				F8C58DCA20AF5E86001C7B7F /* StudyBurstScheduleManager.swift in Sources */,
+				F8C58DB120AF4823001C7B7F /* TodayScheduleManager.swift in Sources */,
+				F8C58DD520AF8CCC001C7B7F /* SurveyScheduleManager.swift in Sources */,
 				F82AE7B62063160B00952D74 /* UIColor+mPowerTheme.swift in Sources */,
 				F8078F4320ADFA6A00757F42 /* DataSourceManager.swift in Sources */,
 				603B7BC320913B1A00794B7C /* PhoneRegistrationViewController.swift in Sources */,
