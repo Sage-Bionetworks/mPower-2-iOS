@@ -93,7 +93,7 @@ class ConsentViewController: RSDWebViewController, WKScriptMessageHandler {
                 // transition to whatever the correct app state is at this point
                 DispatchQueue.main.async {
                     self.activityIndicator.stopAnimating()
-                    guard let appDelegate = SBAAppDelegate.shared as? AppDelegate else { return }
+                    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
                     appDelegate.showAppropriateViewController(animated: true)
                 }
             }

@@ -35,6 +35,10 @@ import Research
 import ResearchUI
 import BridgeSDK
 
+protocol SignInDelegate : class {
+    func signIn(token: String)
+}
+
 class SignInTaskViewController: RSDTaskViewController, SignInDelegate {
     var phoneNumber: String? {
         let taskResult = self.taskResult

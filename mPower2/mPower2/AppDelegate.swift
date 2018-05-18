@@ -35,10 +35,6 @@ import UIKit
 import BridgeApp
 import BridgeSDK
 
-protocol SignInDelegate : class {
-    func signIn(token: String)
-}
-
 @UIApplicationMain
 class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
     
