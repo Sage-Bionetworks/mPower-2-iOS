@@ -12,11 +12,12 @@
 		0349535520981C89006A05B1 /* ProgressCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0349535420981C89006A05B1 /* ProgressCircleView.swift */; };
 		03C9DD0C20A4F956007074EE /* mPower2.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03C9DD0B20A4F956007074EE /* mPower2.strings */; };
 		603B7B362085541A00794B7C /* SignIn.json in Resources */ = {isa = PBXBuildFile; fileRef = 603B7B352085541A00794B7C /* SignIn.json */; };
-		603B7B93208E90C100794B7C /* Registration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 603B7B92208E90C100794B7C /* Registration.storyboard */; };
 		603B7BAA208E90FF00794B7C /* RegistrationWaitingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603B7BA9208E90FF00794B7C /* RegistrationWaitingViewController.swift */; };
 		603B7BC320913B1A00794B7C /* PhoneRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603B7BC220913B1A00794B7C /* PhoneRegistrationViewController.swift */; };
 		608241DB2093D9A90026E843 /* RegistrationIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608241DA2093D9A90026E843 /* RegistrationIntroViewController.swift */; };
 		608241F22093D9F70026E843 /* ExternalIDRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608241F12093D9F70026E843 /* ExternalIDRegistrationViewController.swift */; };
+		60A1576E209D16C50033FAB5 /* Registration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60A1576D209D16C40033FAB5 /* Registration.storyboard */; };
+		60F45524209CF10100C532A0 /* SignInTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F45523209CF10100C532A0 /* SignInTaskViewController.swift */; };
 		B508B31C2076ECA3001645CF /* MCTHandSelectionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B508B31B2076ECA3001645CF /* MCTHandSelectionStepObject.swift */; };
 		B508B39920772D76001645CF /* MCTSkippableSectionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B508B39820772D76001645CF /* MCTSkippableSectionStepObject.swift */; };
 		B532ACED208150C00009EAD3 /* MCTCompletionGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B532ACEC208150C00009EAD3 /* MCTCompletionGradient.swift */; };
@@ -345,11 +346,12 @@
 		03C9DCFF20A4CEC3007074EE /* Medication.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Medication.json; sourceTree = "<group>"; };
 		03C9DD0B20A4F956007074EE /* mPower2.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = mPower2.strings; sourceTree = "<group>"; };
 		603B7B352085541A00794B7C /* SignIn.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SignIn.json; sourceTree = "<group>"; };
-		603B7B92208E90C100794B7C /* Registration.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Registration.storyboard; sourceTree = "<group>"; };
 		603B7BA9208E90FF00794B7C /* RegistrationWaitingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationWaitingViewController.swift; sourceTree = "<group>"; };
 		603B7BC220913B1A00794B7C /* PhoneRegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneRegistrationViewController.swift; sourceTree = "<group>"; };
 		608241DA2093D9A90026E843 /* RegistrationIntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationIntroViewController.swift; sourceTree = "<group>"; };
 		608241F12093D9F70026E843 /* ExternalIDRegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalIDRegistrationViewController.swift; sourceTree = "<group>"; };
+		60A1576D209D16C40033FAB5 /* Registration.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Registration.storyboard; sourceTree = "<group>"; };
+		60F45523209CF10100C532A0 /* SignInTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInTaskViewController.swift; sourceTree = "<group>"; };
 		B508B31B2076ECA3001645CF /* MCTHandSelectionStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTHandSelectionStepObject.swift; sourceTree = "<group>"; };
 		B508B39820772D76001645CF /* MCTSkippableSectionStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTSkippableSectionStepObject.swift; sourceTree = "<group>"; };
 		B532ACEC208150C00009EAD3 /* MCTCompletionGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTCompletionGradient.swift; sourceTree = "<group>"; };
@@ -467,6 +469,7 @@
 		0334415220995311009B97A9 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				60F45523209CF10100C532A0 /* SignInTaskViewController.swift */,
 				608241F12093D9F70026E843 /* ExternalIDRegistrationViewController.swift */,
 				603B7BC220913B1A00794B7C /* PhoneRegistrationViewController.swift */,
 				608241DA2093D9A90026E843 /* RegistrationIntroViewController.swift */,
@@ -565,7 +568,7 @@
 			children = (
 				F8D3E7822062F1B900CD351C /* LaunchScreen.storyboard */,
 				F8D3E77D2062F1B900CD351C /* Main.storyboard */,
-				603B7B92208E90C100794B7C /* Registration.storyboard */,
+				60A1576D209D16C40033FAB5 /* Registration.storyboard */,
 				603B7B352085541A00794B7C /* SignIn.json */,
 				F8D3E7802062F1B900CD351C /* Assets.xcassets */,
 				03C9DD0B20A4F956007074EE /* mPower2.strings */,
@@ -891,6 +894,9 @@
 							com.apple.Keychain = {
 								enabled = 1;
 							};
+							com.apple.SafariKeychain = {
+								enabled = 1;
+							};
 						};
 					};
 					F8D3E7892062F1B900CD351C = {
@@ -1082,7 +1088,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F8D3E7842062F1B900CD351C /* LaunchScreen.storyboard in Resources */,
-				603B7B93208E90C100794B7C /* Registration.storyboard in Resources */,
+				60A1576E209D16C50033FAB5 /* Registration.storyboard in Resources */,
 				F8D3E7812062F1B900CD351C /* Assets.xcassets in Resources */,
 				F8D3E77F2062F1B900CD351C /* Main.storyboard in Resources */,
 				603B7B362085541A00794B7C /* SignIn.json in Resources */,
@@ -1151,6 +1157,7 @@
 				0349535520981C89006A05B1 /* ProgressCircleView.swift in Sources */,
 				608241DB2093D9A90026E843 /* RegistrationIntroViewController.swift in Sources */,
 				0334415420995328009B97A9 /* TrackingViewController.swift in Sources */,
+				60F45524209CF10100C532A0 /* SignInTaskViewController.swift in Sources */,
 				F8D3E77A2062F1B900CD351C /* AppDelegate.swift in Sources */,
 				0334415620995CCD009B97A9 /* TaskBrowserViewController.swift in Sources */,
 				F82AE7B62063160B00952D74 /* UIColor+mPowerTheme.swift in Sources */,

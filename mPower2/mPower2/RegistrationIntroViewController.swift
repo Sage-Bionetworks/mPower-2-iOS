@@ -35,7 +35,7 @@ import UIKit
 import ResearchUI
 import Research
 
-class RegistrationIntroViewController: RSDTableStepViewController {
+class RegistrationIntroViewController: RSDStepViewController {
 
     override func shouldHideAction(for actionType: RSDUIActionType) -> Bool {
         #if !DEBUG

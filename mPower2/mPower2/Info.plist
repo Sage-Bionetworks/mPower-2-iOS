@@ -18,6 +18,8 @@
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>2.0</string>
+	<key>CFBundleURLTypes</key>
+	<array/>
 	<key>CFBundleVersion</key>
 	<string>6</string>
 	<key>LSRequiresIPhoneOS</key>
@@ -25,11 +27,11 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Required for app submission - Not used</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>mPower would like to access your phone's location to help gather data about your movement patterns. Research has shown that someone's movement patterns might be related to their disease burden.</string>
+	<string>mPower would like to access your phone&apos;s location to help gather data about your movement patterns. Research has shown that someone&apos;s movement patterns might be related to their disease burden.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>mPower would like to access your phone's location to help gather data about your movement patterns. Research has shown that someone's movement patterns might be related to their disease burden.</string>
+	<string>mPower would like to access your phone&apos;s location to help gather data about your movement patterns. Research has shown that someone&apos;s movement patterns might be related to their disease burden.</string>
 	<key>NSMotionUsageDescription</key>
-	<string>mPower would like to access your phone's motion sensors to help gather data during activities.</string>
+	<string>mPower would like to access your phone&apos;s motion sensors to help gather data during activities.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Required for app submission - Not used</string>
 	<key>UIBackgroundModes</key>

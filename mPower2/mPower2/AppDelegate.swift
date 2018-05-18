@@ -33,10 +33,17 @@
 
 import UIKit
 import BridgeApp
+import BridgeSDK
+
+protocol SignInDelegate : class {
+    func signIn(token: String)
+}
 
 @UIApplicationMain
 class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
     
+    weak var smsSignInDelegate: SignInDelegate? = nil
+
     override func applicationDidBecomeActive(_ application: UIApplication) {
         super.applicationDidBecomeActive(application)
         if BridgeSDK.authManager.isAuthenticated() {
@@ -46,6 +53,55 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
         }
     }
     
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+        guard let url = userActivity.webpageURL else {
+            debugPrint("Unrecognized userActivity passed to app delegate:\(String(describing: userActivity))")
+            return false
+        }
+        let components = url.pathComponents
+        guard components.count == 4,
+            url.host! == "ws.sagebridge.org",
+            components[1] == BridgeSDK.bridgeInfo.studyIdentifier,
+            components[2] == "phoneSignIn"
+            else {
+                debugPrint("Asked to open an unsupported URL, punting to Safari: \(String(describing:userActivity.webpageURL))")
+                UIApplication.shared.open(url)
+                return true
+        }
+        
+        let token = components[3]
+        
+        // pass the token to the SMS sign-in delegate, if any
+        if smsSignInDelegate != nil {
+            smsSignInDelegate?.signIn(token: token)
+            return true
+        } else {
+            // there's no SMS sign-in delegate so try to get the phone info from the participant record.
+            BridgeSDK.participantManager.getParticipantRecord { (record, error) in
+                guard let participant = record as? SBBStudyParticipant, error == nil else { return }
+                guard let phoneNumber = participant.phone?.number,
+                    let regionCode = participant.phone?.regionCode,
+                    !phoneNumber.isEmpty,
+                    !regionCode.isEmpty else {
+                        return
+                }
+                
+                BridgeSDK.authManager.signIn(withPhoneNumber:phoneNumber, regionCode:regionCode, token:token, completion: { (task, result, error) in
+                    if (error as NSError?)?.code == SBBErrorCode.serverPreconditionNotMet.rawValue {
+                        DispatchQueue.main.async {
+                            // TODO emm 2018-05-04 signed in but not consented -- go to consent flow
+                        }
+                    } else if error != nil {
+                        // TODO emm 2018-05-04 handle error from Bridge
+                        debugPrint("Error attempting to sign in with SMS link while not in registration flow:\n\(String(describing: error))\n\nResult:\n\(String(describing: result))")
+                    }
+                })
+            }
+        }
+        
+        return true
+    }
+
     func showMainViewController(animated: Bool) {
         guard self.rootViewController?.state != .main else { return }
         guard let storyboard = openStoryboard("Main"),
@@ -58,16 +114,9 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
     
     func showSignInViewController(animated: Bool) {
         guard self.rootViewController?.state != .onboarding else { return }
-        do {
-            let resourceTransformer = RSDResourceTransformerObject(resourceName: "SignIn")
-            let task = try RSDFactory.shared.decodeTask(with: resourceTransformer)
-            let taskPath = RSDTaskPath(task: task)
-            let vc = RSDTaskViewController(taskPath: taskPath)
-            vc.delegate = self
-            self.transition(to: vc, state: .onboarding, animated: true)
-        } catch let err {
-            fatalError("Failed to decode the SignIn task. \(err)")
-        }
+        let vc = SignInTaskViewController()
+        vc.delegate = self
+        self.transition(to: vc, state: .onboarding, animated: true)
     }
     
     func openStoryboard(_ name: String) -> UIStoryboard? {
@@ -88,5 +137,6 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
     func taskController(_ taskController: RSDTaskController, asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController? {
         return nil
     }
+    
 }
 

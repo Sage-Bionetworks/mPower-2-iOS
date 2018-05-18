@@ -42,7 +42,7 @@ class RegistrationWaitingViewController: RSDStepViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        // TODO: emm 2018-04-25 get phone # from results via custom task controller and set the phoneLabel
+        self.phoneLabel.text = (self.taskController as? SignInTaskViewController)?.phoneNumber
     }
     
     @IBAction func didTapChangeMobileButton(_ sender: Any) {
