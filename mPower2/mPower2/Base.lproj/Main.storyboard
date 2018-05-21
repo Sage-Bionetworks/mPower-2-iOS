@@ -84,7 +84,7 @@
                                                     <rect key="frame" x="30" y="0.0" width="315" height="134"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Good morning, Margo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jml-3Z-WXc">
-                                                    <rect key="frame" x="30" y="144" width="315" height="29"/>
+                                                    <rect key="frame" x="65" y="144" width="245" height="29"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="29" id="oRi-9e-EU4"/>
                                                     </constraints>
@@ -93,7 +93,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What would you like to do today?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4hg-YA-Q5T">
-                                                    <rect key="frame" x="30" y="178" width="315" height="20"/>
+                                                    <rect key="frame" x="60.5" y="178" width="254.5" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="IVm-Ae-4sP"/>
                                                     </constraints>
@@ -104,15 +104,17 @@
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstItem="jml-3Z-WXc" firstAttribute="leading" secondItem="yQl-6I-FdA" secondAttribute="leading" constant="30" id="8FV-PH-c5y"/>
+                                                <constraint firstItem="4hg-YA-Q5T" firstAttribute="centerX" secondItem="yQl-6I-FdA" secondAttribute="centerX" id="1Nk-np-xaT"/>
+                                                <constraint firstItem="jml-3Z-WXc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="yQl-6I-FdA" secondAttribute="leading" constant="30" id="8FV-PH-c5y"/>
                                                 <constraint firstItem="khX-Dl-GeU" firstAttribute="leading" secondItem="yQl-6I-FdA" secondAttribute="leading" constant="30" id="C8X-yG-Dc4"/>
+                                                <constraint firstItem="jml-3Z-WXc" firstAttribute="centerX" secondItem="yQl-6I-FdA" secondAttribute="centerX" id="T1H-4R-xyV"/>
                                                 <constraint firstAttribute="trailing" secondItem="khX-Dl-GeU" secondAttribute="trailing" constant="30" id="V5Z-Wn-YFN"/>
                                                 <constraint firstItem="jml-3Z-WXc" firstAttribute="top" secondItem="khX-Dl-GeU" secondAttribute="bottom" constant="10" id="Vek-vb-sSq"/>
-                                                <constraint firstAttribute="trailing" secondItem="4hg-YA-Q5T" secondAttribute="trailing" constant="30" id="Wno-Tu-VXO"/>
-                                                <constraint firstItem="4hg-YA-Q5T" firstAttribute="leading" secondItem="yQl-6I-FdA" secondAttribute="leading" constant="30" id="XHO-zq-VPp"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="4hg-YA-Q5T" secondAttribute="trailing" constant="30" id="Wno-Tu-VXO"/>
+                                                <constraint firstItem="4hg-YA-Q5T" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="yQl-6I-FdA" secondAttribute="leading" constant="30" id="XHO-zq-VPp"/>
                                                 <constraint firstAttribute="bottom" secondItem="4hg-YA-Q5T" secondAttribute="bottom" constant="30" id="kuV-9W-Fy8"/>
                                                 <constraint firstItem="khX-Dl-GeU" firstAttribute="top" secondItem="yQl-6I-FdA" secondAttribute="top" id="nC2-fg-Rtm"/>
-                                                <constraint firstAttribute="trailing" secondItem="jml-3Z-WXc" secondAttribute="trailing" constant="30" id="sKv-UL-9CZ"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="jml-3Z-WXc" secondAttribute="trailing" constant="30" id="sKv-UL-9CZ"/>
                                                 <constraint firstItem="4hg-YA-Q5T" firstAttribute="top" secondItem="jml-3Z-WXc" secondAttribute="bottom" constant="5" id="ydF-e1-4F5"/>
                                             </constraints>
                                         </view>
@@ -290,6 +292,9 @@
                         <outlet property="actionBarTitleLabel" destination="16e-GU-lCY" id="qMO-Td-cJm"/>
                         <outlet property="actionBarView" destination="CJS-by-dpw" id="m6R-gy-OVk"/>
                         <outlet property="headerContentView" destination="yQl-6I-FdA" id="PHZ-6S-w0V"/>
+                        <outlet property="headerGreetingLabel" destination="jml-3Z-WXc" id="70R-ui-tqj"/>
+                        <outlet property="headerImageView" destination="khX-Dl-GeU" id="4gA-sM-Ef9"/>
+                        <outlet property="headerMessageLabel" destination="4hg-YA-Q5T" id="sLt-ie-hD1"/>
                         <outlet property="headerViewBottomConstraint" destination="kuV-9W-Fy8" id="s5g-zg-SdN"/>
                         <outlet property="progressCircleView" destination="95F-HW-j3O" id="GXP-fg-3p3"/>
                         <outlet property="tableView" destination="NuC-GB-bFl" id="X4q-gU-50B"/>
@@ -388,12 +393,21 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GreenCheckmark" translatesAutoresizingMaskIntoConstraints="NO" id="klf-xI-p8y">
+                                                    <rect key="frame" x="48" y="0.0" width="24" height="24"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="24" id="idi-Kq-HUa"/>
+                                                        <constraint firstAttribute="height" constant="24" id="tEv-DU-3YO"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                         </view>
                                         <constraints>
                                             <constraint firstItem="9rx-gx-HMh" firstAttribute="top" secondItem="VL3-E0-lRg" secondAttribute="top" id="0XK-vy-t7t"/>
                                             <constraint firstItem="Rvz-i7-k0f" firstAttribute="top" secondItem="VL3-E0-lRg" secondAttribute="bottom" constant="5" id="ATE-8P-yRI"/>
+                                            <constraint firstItem="klf-xI-p8y" firstAttribute="top" secondItem="VL3-E0-lRg" secondAttribute="top" id="AaU-kq-jFp"/>
                                             <constraint firstItem="9rx-gx-HMh" firstAttribute="bottom" secondItem="VL3-E0-lRg" secondAttribute="bottom" id="An3-zd-CEX"/>
+                                            <constraint firstItem="klf-xI-p8y" firstAttribute="trailing" secondItem="VL3-E0-lRg" secondAttribute="trailing" id="HCp-Af-0Za"/>
                                             <constraint firstItem="VL3-E0-lRg" firstAttribute="centerX" secondItem="6Bp-Kg-JXl" secondAttribute="centerX" id="R6z-Dd-Rdh"/>
                                             <constraint firstItem="VL3-E0-lRg" firstAttribute="top" secondItem="6Bp-Kg-JXl" secondAttribute="top" id="XJj-GS-Pd0"/>
                                             <constraint firstItem="9rx-gx-HMh" firstAttribute="leading" secondItem="VL3-E0-lRg" secondAttribute="leading" id="YfK-ga-9iZ"/>
@@ -402,6 +416,7 @@
                                             <constraint firstItem="Rvz-i7-k0f" firstAttribute="leading" secondItem="6Bp-Kg-JXl" secondAttribute="leading" id="wuM-Y6-1um"/>
                                         </constraints>
                                         <connections>
+                                            <outlet property="completedCheckmark" destination="klf-xI-p8y" id="vFv-ls-wpW"/>
                                             <outlet property="imageView" destination="VL3-E0-lRg" id="hBu-dr-Zep"/>
                                             <outlet property="label" destination="Rvz-i7-k0f" id="NLT-k7-pnz"/>
                                         </connections>
@@ -474,6 +489,7 @@
     </scenes>
     <resources>
         <image name="Chevron" width="11" height="20"/>
+        <image name="GreenCheckmark" width="24" height="24"/>
         <image name="Sunrise" width="143" height="120"/>
         <image name="SymptomsTaskIconSmall" width="20" height="32"/>
         <image name="TabHistory_unselected" width="25" height="24"/>

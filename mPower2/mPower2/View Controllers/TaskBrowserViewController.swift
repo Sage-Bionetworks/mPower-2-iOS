@@ -189,6 +189,7 @@ extension TaskBrowserViewController: UICollectionViewDelegate, UICollectionViewD
                 cell?.image = img
             }
             cell?.title = task.title?.uppercased()
+            cell?.isCompleted = selectedScheduleManager.isCompleted(for: task, on: Date())            
         }
         return cell ?? UICollectionViewCell()
     }
@@ -345,6 +346,7 @@ class TaskCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var completedCheckmark: UIImageView!
     
     public var title: String? {
         didSet {
@@ -354,6 +356,11 @@ class TaskCollectionViewCell: UICollectionViewCell {
     public var image: UIImage? {
         didSet {
             imageView.image = image
+        }
+    }
+    public var isCompleted: Bool = false {
+        didSet {
+            completedCheckmark.isHidden = !isCompleted
         }
     }
  }

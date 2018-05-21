@@ -35,6 +35,7 @@ import UIKit
 import MotorControl
 import Research
 import ResearchUI
+import BridgeApp
 
 @IBDesignable
 class TrackingViewController: UIViewController {
@@ -47,6 +48,9 @@ class TrackingViewController: UIViewController {
     private let kHeaderViewHeightLarge = CGFloat(210.0).rsd_proportionalToScreenWidth()
 
     @IBOutlet weak var headerContentView: UIView!
+    @IBOutlet weak var headerImageView: UIImageView!
+    @IBOutlet weak var headerGreetingLabel: UILabel!
+    @IBOutlet weak var headerMessageLabel: UILabel!
     @IBOutlet weak var actionBarView: UIView!
     @IBOutlet weak var actionBarTitleLabel: UILabel!
     @IBOutlet weak var actionBarDetailsLabel: UILabel!
@@ -143,9 +147,12 @@ class TrackingViewController: UIViewController {
         taskBrowserContainerView.addGestureRecognizer(pan)
         
         // update variable items
+        // TODO: jbruhin 5-21-18 calls to these methods will likely have to move based on how and
+        // when data gets updated. 'updateWelcomeContent()' may have to be called from viewWillAppear()
         updateTaskBrowserPosition(animated: false)
         updateActionBar()
         updateProgressCircle()
+        updateWelcomeContent()
     }
 
     func setupWelcomeText() {
@@ -163,7 +170,45 @@ class TrackingViewController: UIViewController {
             }
         }
     }
+    
+    func updateWelcomeContent() {
+        
+        // Change the content based on the time of day: morning, afternoon, evening and whether or not the user
+        // has completed any tasks today
+        
+        let content: (imageName: String, greeting: String, message: String) = {
+            let firstName = SBAParticipantManager.shared.studyParticipant?.firstName
+            var imageName: String
+            var greeting: String
+            switch Date().timeRange() {
+            case .morning:
+                imageName = "WelcomeMorning"
+                greeting = firstName == nil ?
+                    Localization.localizedString("MORNING_WELCOME_GREETING") :
+                    Localization.localizedStringWithFormatKey("MORNING_WELCOME_GREETING_TO_%@", firstName!)
+            case .afternoon:
+                imageName = "WelcomeAfternoon"
+                greeting = firstName == nil ?
+                    Localization.localizedString("AFTERNOON_WELCOME_GREETING") :
+                    Localization.localizedStringWithFormatKey("AFTERNOON_WELCOME_GREETING_TO_%@", firstName!)
+            case .evening, .night:
+                imageName = "WelcomeEvening"
+                greeting = firstName == nil ?
+                    Localization.localizedString("EVENING_WELCOME_GREETING") :
+                    Localization.localizedStringWithFormatKey("EVENING_WELCOME_GREETING_TO_%@", firstName!)
+            }
+            let message = completedTaskGroups.count > 0 ?
+                Localization.localizedString("WELCOME_MESSAGE_SOME_TASKS_DONE") :
+                Localization.localizedString("WELCOME_MESSAGE_NO_TASKS_DONE")
 
+            return (imageName, greeting, message)
+        }()
+        
+        headerImageView.image = UIImage(named: content.imageName)
+        headerGreetingLabel.text = content.greeting
+        headerMessageLabel.text = content.message
+    }
+    
     func updateActionBar() {
         // TODO: jbruhin 5-1-18 will be a data source for this at some point
         actionBarTitleLabel.text = "Study Burst"
