@@ -11,7 +11,7 @@
 	<key>appUpdateURL</key>
 	<string>https://notsupported.null</string>
 	<key>cacheDaysAhead</key>
-	<integer>90</integer>
+	<integer>104</integer>
 	<key>cacheDaysBehind</key>
 	<integer>730</integer>
 </dict>

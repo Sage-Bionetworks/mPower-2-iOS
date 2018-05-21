@@ -40,6 +40,7 @@ extension RSDIdentifier {
     static let measuringTaskGroup: RSDIdentifier = "Measuring"
     static let trackingTaskGroup: RSDIdentifier = "Tracking"
     static let studyBurstTaskGroup: RSDIdentifier = "Study Burst"
+    static let surveyTaskGroup: RSDIdentifier = "Health Surveys"
     
     static let triggersTask: RSDIdentifier = "Triggers"
     static let symptomsTask: RSDIdentifier = "Symptoms"
@@ -85,9 +86,20 @@ class DataSourceManager {
     
     func scheduleManager(with identifier: RSDIdentifier) -> SBAScheduleManager {
         installTaskGroupsIfNeeded()
-        let scheduleManager = SBAScheduleManager()
+        let scheduleManager: SBAScheduleManager
+        switch identifier {
+        case .studyBurstTaskGroup:
+            scheduleManager = StudyBurstScheduleManager()
+        default:
+            scheduleManager = SBAScheduleManager()
+        }
         scheduleManager.activityGroup = activityGroup(with: identifier)
         return scheduleManager
+    }
+    
+    func todayHistoryScheduleManager() -> TodayHistoryScheduleManager {
+        installTaskGroupsIfNeeded()
+        return TodayHistoryScheduleManager()
     }
 
     // MARK: Install the task groups from either the bridge configuration or embedded resources.
@@ -110,7 +122,7 @@ class DataSourceManager {
                 } else {
                     switch groupIdentifier {
                     case .trackingTaskGroup:
-                        return [.triggersTask, .medicationTask, .symptomsTask]
+                        return RSDIdentifier.trackingTasks
                     case .measuringTaskGroup:
                         return [.triggersTask, .tremorTask, .walkAndBalanceTask]
                     case .studyBurstTaskGroup:
