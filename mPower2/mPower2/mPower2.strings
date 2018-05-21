@@ -51,3 +51,15 @@
 "Symptoms" = "Symptom";
 "Medication" = "Medication";
 
+// Welcome language
+"MORNING_WELCOME_GREETING_TO_%@" = "Good morning, %@";
+"AFTERNOON_WELCOME_GREETING_TO_%@" = "Good afternoon, %@";
+"EVENING_WELCOME_GREETING_TO_%@" = "Good evening, %@";
+// Used when we don't have a first name
+"MORNING_WELCOME_GREETING" = "Good morning";
+"AFTERNOON_WELCOME_GREETING" = "Good afternoon";
+"EVENING_WELCOME_GREETING" = "Good evening";
+
+"WELCOME_MESSAGE_SOME_TASKS_DONE" = "Here’s what you’ve been up to";
+"WELCOME_MESSAGE_NO_TASKS_DONE" = "What would you like to do today?";
+
