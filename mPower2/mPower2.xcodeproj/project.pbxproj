@@ -50,6 +50,9 @@
 		F80CB9EC207D2D2300B4EE5D /* MCTTappingStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80CB9EB207D2D2300B4EE5D /* MCTTappingStepViewController.swift */; };
 		F80CB9EF207D2DE400B4EE5D /* MCTTappingResultObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80CB9EE207D2DE400B4EE5D /* MCTTappingResultObject.swift */; };
 		F80CB9FD207D3AD800B4EE5D /* MotorControl.strings in Resources */ = {isa = PBXBuildFile; fileRef = F80CB9FC207D3AD800B4EE5D /* MotorControl.strings */; };
+		F81BE7BF20B4AB4B00EE57D3 /* AppConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = F81BE7BE20B4AB4B00EE57D3 /* AppConfig.json */; };
+		F81BE7C020B4B8F700EE57D3 /* BridgeSDK_Test.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F81BE7B520B4AA7C00EE57D3 /* BridgeSDK_Test.framework */; };
+		F81BE7C120B4B8F700EE57D3 /* BridgeSDK_Test.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F81BE7B520B4AA7C00EE57D3 /* BridgeSDK_Test.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F82AE7B62063160B00952D74 /* UIColor+mPowerTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82AE7B52063160B00952D74 /* UIColor+mPowerTheme.swift */; };
 		F8460D752097CF0C0084E197 /* MCTCountdownStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8460D742097CF0C0084E197 /* MCTCountdownStepViewController.swift */; };
 		F854590E208F986D00D37243 /* NSLocale+UnitTest.h in Headers */ = {isa = PBXBuildFile; fileRef = F854590D208F986D00D37243 /* NSLocale+UnitTest.h */; };
@@ -64,7 +67,6 @@
 		F854599B208FA46800D37243 /* MotorControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E82D2063072100CD351C /* MotorControl.framework */; };
 		F854599C208FA46800D37243 /* MotorControl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E82D2063072100CD351C /* MotorControl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F85459A0208FA58800D37243 /* ResourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F854599F208FA58800D37243 /* ResourceTests.swift */; };
-		F85459B4208FA76200D37243 /* Triggers.json in Resources */ = {isa = PBXBuildFile; fileRef = F8188FB52072F430009AC215 /* Triggers.json */; };
 		F85459B5208FA76D00D37243 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E7802062F1B900CD351C /* Assets.xcassets */; };
 		F85459B6208FA77400D37243 /* UIColor+mPowerTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82AE7B52063160B00952D74 /* UIColor+mPowerTheme.swift */; };
 		F85459B7208FA77900D37243 /* UIView+mPowerTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B587AC07206D696800542548 /* UIView+mPowerTheme.swift */; };
@@ -80,8 +82,6 @@
 		F88E8E0020ADEE2600117A99 /* TaskBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0334415520995CCD009B97A9 /* TaskBrowserViewController.swift */; };
 		F88E8E0120ADEE2B00117A99 /* ProgressCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0349535420981C89006A05B1 /* ProgressCircleView.swift */; };
 		F88E8E0220ADEE3B00117A99 /* SignIn.json in Resources */ = {isa = PBXBuildFile; fileRef = 603B7B352085541A00794B7C /* SignIn.json */; };
-		F88E8E0320ADEE3B00117A99 /* Symptoms.json in Resources */ = {isa = PBXBuildFile; fileRef = 03C9DCE820A4CEB1007074EE /* Symptoms.json */; };
-		F88E8E0420ADEE3B00117A99 /* Medication.json in Resources */ = {isa = PBXBuildFile; fileRef = 03C9DCFF20A4CEC3007074EE /* Medication.json */; };
 		F88E8E0520ADEE4200117A99 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E7822062F1B900CD351C /* LaunchScreen.storyboard */; };
 		F88E8E0620ADEE4700117A99 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E77D2062F1B900CD351C /* Main.storyboard */; };
 		F88E8E0920ADEE6000117A99 /* mPower2.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03C9DD0B20A4F956007074EE /* mPower2.strings */; };
@@ -121,6 +121,20 @@
 			proxyType = 2;
 			remoteGlobalIDString = F875575620807E2300235078;
 			remoteInfo = "Research-UnitTest";
+		};
+		F81BE7B420B4AA7C00EE57D3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F8D3E7AC2062F27600CD351C /* BridgeSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F81BE77820B4951F00EE57D3;
+			remoteInfo = "BridgeSDK-Test";
+		};
+		F81BE7C220B4B8F700EE57D3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F8D3E7AC2062F27600CD351C /* BridgeSDK.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = F81BE77720B4951F00EE57D3;
+			remoteInfo = "BridgeSDK-Test";
 		};
 		F8545986208FA38900D37243 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -324,6 +338,7 @@
 				F8545998208FA45500D37243 /* BridgeApp.framework in Embed Frameworks */,
 				F8545990208FA43D00D37243 /* Research.framework in Embed Frameworks */,
 				F8545994208FA44800D37243 /* BridgeSDK.framework in Embed Frameworks */,
+				F81BE7C120B4B8F700EE57D3 /* BridgeSDK_Test.framework in Embed Frameworks */,
 				F854599C208FA46800D37243 /* MotorControl.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -350,8 +365,6 @@
 		0334415320995328009B97A9 /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TodayViewController.swift; path = "View Controllers/TodayViewController.swift"; sourceTree = "<group>"; };
 		0334415520995CCD009B97A9 /* TaskBrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TaskBrowserViewController.swift; path = "View Controllers/TaskBrowserViewController.swift"; sourceTree = "<group>"; };
 		0349535420981C89006A05B1 /* ProgressCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProgressCircleView.swift; path = "Custom Views/ProgressCircleView.swift"; sourceTree = "<group>"; };
-		03C9DCE820A4CEB1007074EE /* Symptoms.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Symptoms.json; sourceTree = "<group>"; };
-		03C9DCFF20A4CEC3007074EE /* Medication.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Medication.json; sourceTree = "<group>"; };
 		03C9DD0B20A4F956007074EE /* mPower2.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = mPower2.strings; sourceTree = "<group>"; };
 		603B7B352085541A00794B7C /* SignIn.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SignIn.json; sourceTree = "<group>"; };
 		603B7BA9208E90FF00794B7C /* RegistrationWaitingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationWaitingViewController.swift; sourceTree = "<group>"; };
@@ -387,7 +400,7 @@
 		F80CB9EB207D2D2300B4EE5D /* MCTTappingStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTTappingStepViewController.swift; sourceTree = "<group>"; };
 		F80CB9EE207D2DE400B4EE5D /* MCTTappingResultObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTTappingResultObject.swift; sourceTree = "<group>"; };
 		F80CB9FC207D3AD800B4EE5D /* MotorControl.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = MotorControl.strings; sourceTree = "<group>"; };
-		F8188FB52072F430009AC215 /* Triggers.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Triggers.json; sourceTree = "<group>"; };
+		F81BE7BE20B4AB4B00EE57D3 /* AppConfig.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AppConfig.json; sourceTree = "<group>"; };
 		F82AE7B52063160B00952D74 /* UIColor+mPowerTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+mPowerTheme.swift"; sourceTree = "<group>"; };
 		F8460D742097CF0C0084E197 /* MCTCountdownStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTCountdownStepViewController.swift; sourceTree = "<group>"; };
 		F854590D208F986D00D37243 /* NSLocale+UnitTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLocale+UnitTest.h"; sourceTree = "<group>"; };
@@ -435,6 +448,7 @@
 				F8545997208FA45500D37243 /* BridgeApp.framework in Frameworks */,
 				F854598F208FA43D00D37243 /* Research.framework in Frameworks */,
 				F8545993208FA44800D37243 /* BridgeSDK.framework in Frameworks */,
+				F81BE7C020B4B8F700EE57D3 /* BridgeSDK_Test.framework in Frameworks */,
 				F854599B208FA46800D37243 /* MotorControl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -553,9 +567,6 @@
 		F8078F4020ADF6A300757F42 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				03C9DCE820A4CEB1007074EE /* Symptoms.json */,
-				F8188FB52072F430009AC215 /* Triggers.json */,
-				03C9DCFF20A4CEC3007074EE /* Medication.json */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -592,6 +603,14 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		F81BE7A520B4AA7C00EE57D3 /* Mock Responses */ = {
+			isa = PBXGroup;
+			children = (
+				F81BE7BE20B4AB4B00EE57D3 /* AppConfig.json */,
+			);
+			path = "Mock Responses";
+			sourceTree = "<group>";
+		};
 		F82AE79F206315B900952D74 /* Styleguide */ = {
 			isa = PBXGroup;
 			children = (
@@ -606,6 +625,7 @@
 			children = (
 				F8078F2920ADF1DC00757F42 /* AppDelegate.swift */,
 				F8545982208FA2EE00D37243 /* Info.plist */,
+				F81BE7A520B4AA7C00EE57D3 /* Mock Responses */,
 				F8078F4020ADF6A300757F42 /* Resources */,
 			);
 			path = mPower2TestApp;
@@ -696,6 +716,7 @@
 				F8D3E7BE2062F27600CD351C /* BridgeSDKTests.xctest */,
 				F8D3E7C02062F27600CD351C /* BridgeSDKIntegration.app */,
 				F8D3E7C22062F27600CD351C /* BridgeSDKIntegrationTests.xctest */,
+				F81BE7B520B4AA7C00EE57D3 /* BridgeSDK_Test.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -796,6 +817,7 @@
 				F8545996208FA44800D37243 /* PBXTargetDependency */,
 				F854599A208FA45500D37243 /* PBXTargetDependency */,
 				F854599E208FA46800D37243 /* PBXTargetDependency */,
+				F81BE7C320B4B8F700EE57D3 /* PBXTargetDependency */,
 			);
 			name = mPower2TestApp;
 			productName = mPower2TestApp;
@@ -981,6 +1003,13 @@
 			remoteRef = B5D56CC7208131770080AE38 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		F81BE7B520B4AA7C00EE57D3 /* BridgeSDK_Test.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = BridgeSDK_Test.framework;
+			remoteRef = F81BE7B420B4AA7C00EE57D3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		F8D3E7A72062F26D00CD351C /* BridgeApp.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -1087,14 +1116,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				F88E8E0620ADEE4700117A99 /* Main.storyboard in Resources */,
-				F85459B4208FA76200D37243 /* Triggers.json in Resources */,
-				F88E8E0420ADEE3B00117A99 /* Medication.json in Resources */,
-				F88E8E0320ADEE3B00117A99 /* Symptoms.json in Resources */,
 				F88E8E0520ADEE4200117A99 /* LaunchScreen.storyboard in Resources */,
 				F88E8E0220ADEE3B00117A99 /* SignIn.json in Resources */,
 				F85459B5208FA76D00D37243 /* Assets.xcassets in Resources */,
 				F88E8E0920ADEE6000117A99 /* mPower2.strings in Resources */,
 				F88E8E0A20ADEE6C00117A99 /* BridgeInfo.plist in Resources */,
+				F81BE7BF20B4AB4B00EE57D3 /* AppConfig.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1238,6 +1265,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		F81BE7C320B4B8F700EE57D3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "BridgeSDK-Test";
+			targetProxy = F81BE7C220B4B8F700EE57D3 /* PBXContainerItemProxy */;
+		};
 		F8545987208FA38900D37243 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = F8545973208FA2ED00D37243 /* mPower2TestApp */;
