@@ -73,9 +73,8 @@ class TodayViewController: UIViewController {
         return surveyManager.hasSurvey && studyBurstManager.isCompletedForToday
     }
     
-    public var shouldShowActionBar : Bool {
-        return (self.studyBurstManager.hasStudyBurst && !self.studyBurstManager.isCompletedForToday) ||
-            surveyManager.hasSurvey
+    var shouldShowActionBar : Bool {
+        return !self.studyBurstManager.isCompletedForToday || surveyManager.hasSurvey
     }
     
     // MARK: View lifecycle
@@ -105,7 +104,7 @@ class TodayViewController: UIViewController {
             // the UITableView.headerView and making other adjustments on the tableView.
             // We only want to call this once from this method.
             tableSetupDone = true
-            updateTableView()
+            updateTableViewIfNeeded()
         }
     }
     
@@ -124,7 +123,13 @@ class TodayViewController: UIViewController {
         // Initial setup.
         actionBarView.layer.cornerRadius = 4.0
         actionBarView.layer.masksToBounds = true
-                
+        actionBarView.backgroundColor = UIColor.primaryTintColor
+        
+        // set up view for initial state.
+        self.updateActionBar()
+        self.updateProgressCircle()
+        self.updateWelcomeContent()
+        
         // Add pan gesture to the task browser container.
         let pan = UIPanGestureRecognizer(target: self, action: #selector(dragTaskBrowser(sender:)))
         taskBrowserContainerView.addGestureRecognizer(pan)
@@ -133,18 +138,22 @@ class TodayViewController: UIViewController {
         self.updateTaskBrowserPosition(animated: false)
         
         // Update the welcome whenever the user is returning to the app.
-        self.updateWelcomeContent()
         NotificationCenter.default.addObserver(forName: .UIApplicationWillEnterForeground, object: nil, queue: OperationQueue.main) { (_) in
             self.updateWelcomeContent()
         }
         
         // Update the study burst or survey to show in the action bar when those change.
-        self.updateActionBar()
-        NotificationCenter.default.addObserver(forName: .SBAUpdatedScheduledActivities, object: todayManager, queue: OperationQueue.main) { (_) in
-            self.updateActionBar()
-            self.updateProgressCircle()
-            self.updateWelcomeContent()
-            self.tableView.reloadData()
+        let managers = [todayManager, studyBurstManager, surveyManager]
+        managers.forEach {
+            NotificationCenter.default.addObserver(forName: .SBAUpdatedScheduledActivities, object: $0, queue: OperationQueue.main) { (notification) in
+                if let _ = notification.object as? TodayHistoryScheduleManager {
+                    self.updateWelcomeContent()
+                    self.tableView.reloadData()
+                }
+                self.updateActionBar()
+                self.updateProgressCircle()
+                self.updateTableViewIfNeeded()
+            }
         }
     }
     
@@ -254,7 +263,7 @@ class TodayViewController: UIViewController {
             let boldFont = UIFont(descriptor: fontDescriptor, size: fontSize)
             attributedString.addAttribute(.font, value: boldFont, range: boldRange)
         }
-        actionBarTitleLabel.attributedText = attributedString
+        actionBarDetailsLabel.attributedText = attributedString
         
         // Fire update in 1 second.
         let delay = DispatchTime.now() + .seconds(1)
@@ -269,8 +278,10 @@ class TodayViewController: UIViewController {
         
         if shouldShowSurvey {
             progressCircleView.isHidden = false
+            progressCircleView.progress = 0.5
             // TODO: syoung 05/21/2018 Get the health survey icon from Stockard
-            // progressCircleView.displayIcon(image: healthIcon)
+            let healthIcon = UIImage(named: "activitiesTaskIconSmall")
+            progressCircleView.displayIcon(image: healthIcon)
         }
         else if studyBurstManager.hasStudyBurst {
             progressCircleView.isHidden = false
@@ -284,7 +295,18 @@ class TodayViewController: UIViewController {
         }
     }
     
-    func updateTableView() {
+    private var _previousItemCount : Int?
+    private var _previousShouldShowActionBar : Bool?
+    
+    func updateTableViewIfNeeded() {
+        
+        let itemCount = todayManager.items.count
+        let shouldShowActionBar = self.shouldShowActionBar
+        guard itemCount != _previousItemCount || shouldShowActionBar != _previousShouldShowActionBar else {
+            return
+        }
+        _previousItemCount = itemCount
+        _previousShouldShowActionBar = shouldShowActionBar
         
         // Based on the variable content - a visible action bar or completed tasks - we do the following:
         // If we don't have completed tasks, make the tableView.headerView.height equal to the tableView.bounds.height
@@ -306,7 +328,7 @@ class TodayViewController: UIViewController {
             }
         }
         
-        if todayManager.items.count > 0 {
+        if itemCount > 0 {
             let height = shouldShowActionBar ? kHeaderViewHeightSmall : kHeaderViewHeightMedium
             adjustHeaderView(to: height)
             if let heightConstraint = headerContentView.rsd_constraint(for: .height, relation: .equal) {

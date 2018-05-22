@@ -32,17 +32,31 @@
 //
 
 import UIKit
+import ResearchUI
 
 @IBDesignable class ProgressCircleView: UIView {
     
     private let kVerticalPad: CGFloat = 12.0
-
-    let progressShape = CAShapeLayer()
-    let backgroundShape = CAShapeLayer()
+    private let strokeWidth: CGFloat = 4.0
     
-    @IBInspectable public var progress: Double = 30.0 {
-        didSet {
-            updateProgress()
+    lazy private var progressRing : RSDCountdownDial = {
+        let frame = self.bounds.insetBy(dx: strokeWidth / 2, dy: strokeWidth / 2)
+        let ring = RSDCountdownDial(frame: frame)
+        ring.dialWidth = strokeWidth
+        ring.ringWidth = strokeWidth
+        ring.backgroundColor = UIColor.white
+        ring.progressColor = UIColor.primaryTintColor
+        insertSubview(ring, at: 0)
+        ring.rsd_alignAllToSuperview(padding: strokeWidth / 2)
+        return ring
+    }()
+    
+    @IBInspectable public var progress: CGFloat {
+        get {
+            return progressRing.progress
+        }
+        set {
+            progressRing.progress = newValue
         }
     }
     
@@ -79,65 +93,19 @@ import UIKit
         imageView.rsd_alignAllToSuperview(padding: 10.0)
         return UIImageView()
     }()
-
-
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
-        commonInit()
-    }
-    
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        commonInit()
-    }
-    
-    fileprivate func commonInit() {
-        layer.addSublayer(backgroundShape)
-        layer.addSublayer(progressShape)
-        updateProgress()
-    }
     
     override func prepareForInterfaceBuilder() {
         super.prepareForInterfaceBuilder()
-        commonInit()
         displayDay(count: 14)
         setNeedsDisplay()
     }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        progressShape.frame = bounds
-        backgroundShape.frame = bounds
-    }
-    
-    func updateProgress() {
-        
-        let shortestSide: CGFloat = min(self.frame.size.width, self.frame.size.height)
-        let strokeWidth: CGFloat = 4.0
-        let frame = CGRect(x: strokeWidth/2, y: strokeWidth/2, width: shortestSide - strokeWidth, height: shortestSide - strokeWidth)
-        
-        backgroundShape.frame = frame
-        backgroundShape.position = center
-        backgroundShape.path = UIBezierPath(ovalIn: frame).cgPath
-        backgroundShape.strokeColor = UIColor.rsd_dialRingBackground.cgColor
-        backgroundShape.lineWidth = strokeWidth
-        backgroundShape.fillColor = UIColor.white.cgColor
-        
-        progressShape.frame = frame
-        progressShape.path = backgroundShape.path
-        progressShape.position = backgroundShape.position
-        progressShape.strokeColor = UIColor.rsd_dialRing.cgColor
-        progressShape.lineWidth = backgroundShape.lineWidth
-        progressShape.fillColor = UIColor.clear.cgColor
-        progressShape.strokeEnd = CGFloat(progress/100.0)
-    }
-    
     public func displayDay(count: Int) {
         dayCountLabel.text = String(count)
         show(day: true, icon: false)
     }
     
-    public func displayIcon(image: UIImage) {
+    public func displayIcon(image: UIImage?) {
         imageView.image = image
         show(day: false, icon: true)
     }

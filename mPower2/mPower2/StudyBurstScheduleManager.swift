@@ -69,8 +69,8 @@ class StudyBurstScheduleManager : SBAScheduleManager {
     private var _expiresOn : Date?
     
     /// What is the current progress on required activities?
-    public var progress : Double {
-        return Double(finishedSchedules.count) / Double(totalActivitiesCount)
+    public var progress : CGFloat {
+        return CGFloat(finishedSchedules.count) / CGFloat(totalActivitiesCount)
     }
     
     /// Is the Study burst completed for today?
