@@ -45,6 +45,7 @@ import UIKit
             updateProgress()
         }
     }
+    
     lazy var dayLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -58,6 +59,7 @@ import UIKit
         label.rsd_alignToSuperview([.top], padding: kVerticalPad)
         return UILabel()
     }()
+    
     lazy var dayCountLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -69,6 +71,7 @@ import UIKit
         label.rsd_alignToSuperview([.leading, .trailing, .bottom], padding: 0.0)
         return label
     }()
+    
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -133,13 +136,16 @@ import UIKit
         dayCountLabel.text = String(count)
         show(day: true, icon: false)
     }
+    
     public func displayIcon(image: UIImage) {
         imageView.image = image
         show(day: false, icon: true)
     }
+    
     public func displayEmpty() {
         show(day: false, icon: false)
     }
+    
     private func show(day: Bool, icon: Bool) {
         dayLabel.isHidden = !day
         dayCountLabel.isHidden = !day

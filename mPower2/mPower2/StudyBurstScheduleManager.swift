@@ -54,11 +54,28 @@ class StudyBurstScheduleManager : SBAScheduleManager {
     public private(set) var missedDaysCount: Int = 0
     
     /// When does the study burst expire?
-    public private(set) var expiresOn : Date?
+    public var expiresOn : Date? {
+        guard let expiresOn = _expiresOn else { return nil }
+        if expiresOn > Date() {
+            return expiresOn
+        }
+        else {
+            DispatchQueue.main.async {
+                self.didUpdateScheduledActivities(from: self.scheduledActivities)
+            }
+            return nil
+        }
+    }
+    private var _expiresOn : Date?
     
     /// What is the current progress on required activities?
     public var progress : Double {
         return Double(finishedSchedules.count) / Double(totalActivitiesCount)
+    }
+    
+    /// Is the Study burst completed for today?
+    public var isCompletedForToday : Bool {
+        return !hasStudyBurst || (finishedSchedules.count == totalActivitiesCount)
     }
     
     /// Total number of activities
@@ -78,13 +95,16 @@ class StudyBurstScheduleManager : SBAScheduleManager {
         let requests: [FetchRequest] = group.activityIdentifiers.map {
             var predicate = SBBScheduledActivity.activityIdentifierPredicate(with:$0.stringValue)
             if $0 == .studyBurstCompletedTask {
-                let startBurst = Date().startOfDay().addingNumberOfDays(-1 * self.numberOfDays)
-                let afterPredicate = SBBScheduledActivity.availableAfterPredicate(startBurst)
-                let beforePredicate = SBBScheduledActivity.availableBeforePredicate(Date().startOfDay().addingNumberOfDays(1))
-                predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [afterPredicate, beforePredicate, predicate])
+                let start = Date().startOfDay().addingNumberOfDays(-1 * self.numberOfDays)
+                let end = Date().startOfDay().addingNumberOfDays(1)
+                predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
+                    SBBScheduledActivity.availablePredicate(from: start, to: end),
+                    predicate])
             }
             else {
-                predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [SBBScheduledActivity.availableTodayPredicate(), predicate])
+                predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
+                    SBBScheduledActivity.availableTodayPredicate(),
+                    predicate])
             }
             return FetchRequest(predicate: predicate, sortDescriptors: nil, fetchLimit: nil)
         }
@@ -104,7 +124,7 @@ class StudyBurstScheduleManager : SBAScheduleManager {
             self.missedDaysCount = pastSchedules.reduce(0, { $0 + ($1.finishedOn == nil ? 1 : 0) })
             
             if studyMarker.finishedOn != nil {
-                self.expiresOn = nil
+                self._expiresOn = nil
                 self.finishedSchedules = self.scheduledActivities.filter {
                     $0.activityIdentifier != studyMarker.activityIdentifier &&
                     Calendar.current.isDateInToday($0.scheduledOn)
@@ -115,13 +135,13 @@ class StudyBurstScheduleManager : SBAScheduleManager {
                 self.finishedSchedules = schedules
                 if self.totalActivitiesCount == schedules.count, let finishedOn = finishedOn {
                     // The activities for today were marked as finished by a different schedule manager.
-                    self.expiresOn = nil
+                    self._expiresOn = nil
                     studyMarker.startedOn = startedOn ?? Date()
                     studyMarker.finishedOn = finishedOn
                     super.sendUpdated(for: [studyMarker])
                 }
                 else {
-                    self.expiresOn = finishedOn?.addingTimeInterval(expiresLimit)
+                    self._expiresOn = finishedOn?.addingTimeInterval(expiresLimit)
                 }
             }
         }
@@ -150,7 +170,7 @@ class StudyBurstScheduleManager : SBAScheduleManager {
             var sendSchedules = schedules
             if self.totalActivitiesCount == schedules.count, let finishedOn = finishedOn,
                 let studyMarker = self.studyMarker(), studyMarker.finishedOn == nil {
-                self.expiresOn = nil
+                self._expiresOn = nil
                 studyMarker.startedOn = startedOn ?? Date()
                 studyMarker.finishedOn = finishedOn
                 sendSchedules.append(studyMarker)

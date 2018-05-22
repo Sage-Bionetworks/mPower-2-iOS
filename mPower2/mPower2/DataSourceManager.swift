@@ -101,7 +101,16 @@ class DataSourceManager {
         installTaskGroupsIfNeeded()
         return TodayHistoryScheduleManager()
     }
-
+    
+    func studyBurstScheduleManager() -> StudyBurstScheduleManager {
+        return self.scheduleManager(with: .studyBurstTaskGroup) as! StudyBurstScheduleManager
+    }
+    
+    func surveyManager() -> SurveyScheduleManager {
+        installTaskGroupsIfNeeded()
+        return SurveyScheduleManager()
+    }
+    
     // MARK: Install the task groups from either the bridge configuration or embedded resources.
     
     private var _hasInstalledTaskGroups = false

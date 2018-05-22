@@ -65,7 +65,7 @@
         <!--Tracking-->
         <scene sceneID="K30-UP-uTD">
             <objects>
-                <viewController title="Tracking" id="CeP-ub-RAF" customClass="TrackingViewController" customModule="mPower2" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Tracking" id="CeP-ub-RAF" customClass="TodayViewController" customModule="mPower2" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="GO5-fK-Jmq">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -134,7 +134,7 @@
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TrackingTableViewCell" id="1pv-1k-C9b" customClass="TrackingTableViewCell" customModule="mPower2" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TrackingTableViewCell" id="1pv-1k-C9b" customClass="TodayTableViewCell" customModule="mPower2" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="256" width="375" height="62"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1pv-1k-C9b" id="tJt-HP-GsT">

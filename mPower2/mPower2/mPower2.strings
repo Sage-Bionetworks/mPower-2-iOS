@@ -63,3 +63,7 @@
 "WELCOME_MESSAGE_SOME_TASKS_DONE" = "Here’s what you’ve been up to";
 "WELCOME_MESSAGE_NO_TASKS_DONE" = "What would you like to do today?";
 
+// Study Burst
+"ACTIVITIES_TO_DO_%@" = "%@ ACTIVITIES TO DO";
+"PROGRESS_EXPIRES_%@" = "Progress expires in %@";
+

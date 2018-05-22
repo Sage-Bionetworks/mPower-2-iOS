@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0334415420995328009B97A9 /* TrackingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0334415320995328009B97A9 /* TrackingViewController.swift */; };
+		0334415420995328009B97A9 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0334415320995328009B97A9 /* TodayViewController.swift */; };
 		0334415620995CCD009B97A9 /* TaskBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0334415520995CCD009B97A9 /* TaskBrowserViewController.swift */; };
 		0349535520981C89006A05B1 /* ProgressCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0349535420981C89006A05B1 /* ProgressCircleView.swift */; };
 		03C9DD0C20A4F956007074EE /* mPower2.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03C9DD0B20A4F956007074EE /* mPower2.strings */; };
@@ -76,7 +76,7 @@
 		F88E8DFC20ADEE2600117A99 /* PhoneRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603B7BC220913B1A00794B7C /* PhoneRegistrationViewController.swift */; };
 		F88E8DFD20ADEE2600117A99 /* RegistrationIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608241DA2093D9A90026E843 /* RegistrationIntroViewController.swift */; };
 		F88E8DFE20ADEE2600117A99 /* RegistrationWaitingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603B7BA9208E90FF00794B7C /* RegistrationWaitingViewController.swift */; };
-		F88E8DFF20ADEE2600117A99 /* TrackingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0334415320995328009B97A9 /* TrackingViewController.swift */; };
+		F88E8DFF20ADEE2600117A99 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0334415320995328009B97A9 /* TodayViewController.swift */; };
 		F88E8E0020ADEE2600117A99 /* TaskBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0334415520995CCD009B97A9 /* TaskBrowserViewController.swift */; };
 		F88E8E0120ADEE2B00117A99 /* ProgressCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0349535420981C89006A05B1 /* ProgressCircleView.swift */; };
 		F88E8E0220ADEE3B00117A99 /* SignIn.json in Resources */ = {isa = PBXBuildFile; fileRef = 603B7B352085541A00794B7C /* SignIn.json */; };
@@ -347,7 +347,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0334415320995328009B97A9 /* TrackingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TrackingViewController.swift; path = "View Controllers/TrackingViewController.swift"; sourceTree = "<group>"; };
+		0334415320995328009B97A9 /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TodayViewController.swift; path = "View Controllers/TodayViewController.swift"; sourceTree = "<group>"; };
 		0334415520995CCD009B97A9 /* TaskBrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TaskBrowserViewController.swift; path = "View Controllers/TaskBrowserViewController.swift"; sourceTree = "<group>"; };
 		0349535420981C89006A05B1 /* ProgressCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProgressCircleView.swift; path = "Custom Views/ProgressCircleView.swift"; sourceTree = "<group>"; };
 		03C9DCE820A4CEB1007074EE /* Symptoms.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Symptoms.json; sourceTree = "<group>"; };
@@ -486,7 +486,7 @@
 				603B7BC220913B1A00794B7C /* PhoneRegistrationViewController.swift */,
 				608241DA2093D9A90026E843 /* RegistrationIntroViewController.swift */,
 				603B7BA9208E90FF00794B7C /* RegistrationWaitingViewController.swift */,
-				0334415320995328009B97A9 /* TrackingViewController.swift */,
+				0334415320995328009B97A9 /* TodayViewController.swift */,
 				0334415520995CCD009B97A9 /* TaskBrowserViewController.swift */,
 				6076F2CA20A6680B00F6235E /* ConsentViewController.swift */,
 			);
@@ -1154,7 +1154,7 @@
 				F88E8DFD20ADEE2600117A99 /* RegistrationIntroViewController.swift in Sources */,
 				F88E8E0120ADEE2B00117A99 /* ProgressCircleView.swift in Sources */,
 				60169BBB20AF445800D29532 /* SignInTaskViewController.swift in Sources */,
-				F88E8DFF20ADEE2600117A99 /* TrackingViewController.swift in Sources */,
+				F88E8DFF20ADEE2600117A99 /* TodayViewController.swift in Sources */,
 				F88E8E0020ADEE2600117A99 /* TaskBrowserViewController.swift in Sources */,
 				F85459B7208FA77900D37243 /* UIView+mPowerTheme.swift in Sources */,
 				F8C58DCB20AF5E86001C7B7F /* StudyBurstScheduleManager.swift in Sources */,
@@ -1176,7 +1176,7 @@
 				B587AC08206D696800542548 /* UIView+mPowerTheme.swift in Sources */,
 				0349535520981C89006A05B1 /* ProgressCircleView.swift in Sources */,
 				608241DB2093D9A90026E843 /* RegistrationIntroViewController.swift in Sources */,
-				0334415420995328009B97A9 /* TrackingViewController.swift in Sources */,
+				0334415420995328009B97A9 /* TodayViewController.swift in Sources */,
 				60F45524209CF10100C532A0 /* SignInTaskViewController.swift in Sources */,
 				F8D3E77A2062F1B900CD351C /* AppDelegate.swift in Sources */,
 				0334415620995CCD009B97A9 /* TaskBrowserViewController.swift in Sources */,
