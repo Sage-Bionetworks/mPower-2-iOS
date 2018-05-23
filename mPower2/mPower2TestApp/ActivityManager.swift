@@ -36,12 +36,52 @@ import BridgeSDK
 import BridgeApp
 import Research
 
-let firstName = "Rumplestiltskin"
-let dataGroups: [String] = []
-let createdOn = Date().startOfDay().addingNumberOfDays(-3).addingTimeInterval(9.2 * 60 * 60)
-let studyBurstFinishedOn: [Int : Date] = [ 0 : createdOn.addingTimeInterval(2.4 * 60 * 60),
-                                           2 : createdOn.addingNumberOfDays(2).addingTimeInterval(30 * 60)]
-let finisedTodayTasks: [RSDIdentifier] = [.tappingTask, .walkAndBalanceTask]
+public struct StudySetup {
+    init() { }
+    
+    /// First name of the participant.
+    var firstName = "Rumplestiltskin"
+    
+    /// The data groups to set for this participant.
+    var dataGroups: [String] = []
+    
+    /// The date when the participant started the study. Hardcoded to 6:15AM local time.
+    var createdOn: Date {
+        return Date().startOfDay().addingNumberOfDays(-1 * Int(studyBurstDay)).addingTimeInterval(6.25 * 60 * 60)
+    }
+
+    /// Study Burst "day" where Day 0 is the day the participant was "created".
+    var studyBurstDay: UInt = 3
+    
+    /// The days in the past when the particpant finished all the tasks.
+    var studyBurstFinishedOnDays: [Int] = [0, 2]
+    
+    /// Generated days of the study burst to mark as finished. This only applies to days that are past.
+    func mapStudyBurstFinishedOn() -> [Int : Date] {
+        let firstDay = createdOn.startOfDay().addingTimeInterval(8 * 60 * 60)
+        return studyBurstFinishedOnDays.rsd_filteredDictionary { (day) -> (Int, Date)? in
+            guard day < self.studyBurstDay else { return nil }
+            let time = TimeInterval(arc4random_uniform(12 * 60 * 60))
+            let timestamp = firstDay.addingNumberOfDays(day).addingTimeInterval(time)
+            return (day, timestamp)
+        }
+    }
+    
+    /// A list of the tasks to mark as finished today.
+    var finishedTodayTasks: [RSDIdentifier] = [.tappingTask, .walkAndBalanceTask]
+    
+    /// The time to use as the time until today's finished tasks will expire. Default = 15 min.
+    var timeUntilExpires: TimeInterval = 15 * 60
+    
+    func createParticipant() -> SBBStudyParticipant {
+        return SBBStudyParticipant(dictionaryRepresentation: [
+            "createdOn" : (createdOn as NSDate).iso8601String(),
+            "dataGroups" : dataGroups,
+            "firstName" : firstName,
+            "phoneVerified" : NSNumber(value: true),
+            ])!
+    }
+}
 
 public class ActivityManager : NSObject, SBBActivityManagerProtocol {
     
@@ -51,13 +91,15 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
     
     var activityGuidMap : [RSDIdentifier : String] = [:]
     
+    var studySetup: StudySetup = StudySetup()
+    
     func buildSchedules() {
-        buildTrackingTasks()
-        buildMeasuringTasks()
-        buildStudyBurstTasks()
+        buildTrackingTasks(studySetup)
+        buildMeasuringTasks(studySetup)
+        buildStudyBurstTasks(studySetup)
     }
     
-    func buildTrackingTasks() {
+    func buildTrackingTasks(_ studySetup: StudySetup) {
         
         let activityGroup = SBAActivityGroupObject(identifier: RSDIdentifier.trackingTaskGroup.stringValue,
                                                    title: "Tracking",
@@ -71,6 +113,7 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
         activityGroup.activityIdentifiers.forEach { (identifier) in
             switch identifier {
             case .medicationTask:
+                // TODO: syoung 05/23/2018 Add schedules for past days.
                 // Medication task is set up for a single daily task.
                 let scheduledOn = Date().startOfDay()
                 let schedule = createSchedule(with: identifier,
@@ -83,7 +126,7 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
                 
             default:
                 // triggers and symptoms are persistent.
-                let scheduledOn = createdOn
+                let scheduledOn = studySetup.createdOn
                 let schedule = createSchedule(with: identifier,
                                           scheduledOn: scheduledOn,
                                           expiresOn: nil,
@@ -95,7 +138,7 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
         }
     }
     
-    func buildMeasuringTasks() {
+    func buildMeasuringTasks(_ studySetup: StudySetup) {
         
         let activityGroup = SBAActivityGroupObject(identifier: RSDIdentifier.measuringTaskGroup.stringValue,
                                                    title: "Measuring",
@@ -107,15 +150,17 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
                                                    schedulePlanGuidMap: nil)
     
         // measuring tasks are persistent.
+        let studyBurstFinishedOn = studySetup.mapStudyBurstFinishedOn()
         let studyBurstDates = studyBurstFinishedOn.enumerated().map { $0.element.value }.sorted()
         activityGroup.activityIdentifiers.enumerated().forEach{ (offset, identifier) in
             
+            let finishedTime: TimeInterval = studySetup.timeUntilExpires - 3600 + TimeInterval(offset) * 4 * 60
             var datesToAdd = studyBurstDates
-            if finisedTodayTasks.contains(identifier) {
-                datesToAdd.append(Date().addingTimeInterval(-1 * TimeInterval(offset) * 4 * 60))
+            if studySetup.finishedTodayTasks.contains(identifier) {
+                datesToAdd.append(Date().addingTimeInterval(finishedTime))
             }
             
-            var scheduledOn = createdOn
+            var scheduledOn = studySetup.createdOn
             datesToAdd.forEach {
                 let finishedOn = $0.addingTimeInterval(-1 * TimeInterval(offset) * 4 * 60)
                 let schedule = self.createSchedule(with: identifier,
@@ -138,7 +183,7 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
         }
     }
     
-    func buildStudyBurstTasks() {
+    func buildStudyBurstTasks(_ studySetup: StudySetup) {
         
         let activityGroup = SBAActivityGroupObject(identifier: RSDIdentifier.studyBurstTaskGroup.stringValue,
                                                    title: "Study Burst",
@@ -150,6 +195,8 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
                                                    schedulePlanGuidMap: nil)
         
         // only add the study burst marker for this group, but add one for each day.
+        let createdOn = studySetup.createdOn
+        let studyBurstFinishedOn = studySetup.mapStudyBurstFinishedOn()
         for day in 0..<14 {
             
             let scheduledOn = createdOn.startOfDay().addingNumberOfDays(day)
