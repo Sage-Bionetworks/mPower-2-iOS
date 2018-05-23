@@ -64,7 +64,7 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
                                                    image: nil,
                                                    activityIdentifiers: [.triggersTask, .medicationTask, .symptomsTask],
                                                    notificationIdentifier: nil,
-                                                   schedulePlanGuid: UUID().uuidString,
+                                                   schedulePlanGuid: "e24e6601-1822-48b0-8770-00870d870708",
                                                    schedulePlanGuidMap: nil)
         
         activityGroup.activityIdentifiers.forEach { (identifier) in
@@ -102,7 +102,7 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
                                                    image: nil,
                                                    activityIdentifiers: [.tappingTask, .tremorTask, .walkAndBalanceTask],
                                                    notificationIdentifier: nil,
-                                                   schedulePlanGuid: UUID().uuidString,
+                                                   schedulePlanGuid: "3d898a6f-1ef2-4ece-9e9f-025d94bcd130",
                                                    schedulePlanGuidMap: nil)
     
         // measuring tasks are persistent.

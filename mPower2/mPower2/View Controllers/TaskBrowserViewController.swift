@@ -93,6 +93,9 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
             tabView.delegate = self
             tabView.isSelected = (manager.identifier == selectedScheduleManager.identifier)
             tabButtonStackView.addArrangedSubview(tabView)
+            NotificationCenter.default.addObserver(forName: .SBAUpdatedScheduledActivities, object: manager, queue: OperationQueue.main) { (notification) in
+                self.collectionView.reloadData()
+            }
         }
         
         // set the tabView height

@@ -92,7 +92,11 @@ class TodayHistoryScheduleManager : SBAScheduleManager {
     
     /// Override to fetch the schedules for all activities that were finished today.
     override func fetchRequests() -> [FetchRequest] {
-        let fetchRequest = FetchRequest(predicate: SBBScheduledActivity.finishedOnDatePredicate(on: Date()),
+        let finishedPredicate = SBBScheduledActivity.finishedOnDatePredicate(on: Date())
+        let studyBurstPredicate = NSCompoundPredicate(notPredicateWithSubpredicate:
+            SBBScheduledActivity.activityIdentifierPredicate(with: RSDIdentifier.studyBurstCompletedTask.stringValue))
+        let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [finishedPredicate, studyBurstPredicate])
+        let fetchRequest = FetchRequest(predicate: predicate,
                                         sortDescriptors: nil,
                                         fetchLimit: nil)
         return [fetchRequest]
@@ -116,7 +120,8 @@ class TodayHistoryScheduleManager : SBAScheduleManager {
                 }()
                 
                 // TODO: syoung 05/18/2018 Implement counting the logged items rather than just the finished schedules.
-                let count = schedules.count
+                
+                let count = filteredSchedules.count
                 
                 guard count > 0 else { return nil }
                 return TodayHistoryItem(type: itemType, schedules: filteredSchedules, count: count)

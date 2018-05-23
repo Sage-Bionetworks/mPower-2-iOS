@@ -50,8 +50,10 @@ extension RSDIdentifier {
     static let tappingTask: RSDIdentifier =  MCTTaskIdentifier.tapping.identifier
     static let tremorTask: RSDIdentifier = MCTTaskIdentifier.tremor.identifier
     static let walkAndBalanceTask: RSDIdentifier = MCTTaskIdentifier.walkAndBalance.identifier
+    static let measuringTasks: [RSDIdentifier] = [.tappingTask, .tremorTask, .walkAndBalanceTask]
     
     static let studyBurstCompletedTask: RSDIdentifier = "study-burst-task"
+    static let studyBurstTasks: [RSDIdentifier] = [.tappingTask, .tremorTask, .walkAndBalanceTask, .studyBurstCompletedTask]
 }
 
 extension MCTTaskInfo : SBAActivityInfo {
@@ -133,9 +135,9 @@ class DataSourceManager {
                     case .trackingTaskGroup:
                         return RSDIdentifier.trackingTasks
                     case .measuringTaskGroup:
-                        return [.triggersTask, .tremorTask, .walkAndBalanceTask]
+                        return RSDIdentifier.measuringTasks
                     case .studyBurstTaskGroup:
-                        return [.triggersTask, .tremorTask, .walkAndBalanceTask, .studyBurstCompletedTask]
+                        return RSDIdentifier.studyBurstTasks
                     default:
                         assertionFailure("The list above of task groups to build does not match this one.")
                         return []
