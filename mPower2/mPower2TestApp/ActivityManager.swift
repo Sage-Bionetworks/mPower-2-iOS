@@ -36,11 +36,12 @@ import BridgeSDK
 import BridgeApp
 import Research
 
-let createdOn = Date()
 let firstName = "Rumplestiltskin"
 let dataGroups: [String] = []
-
-let studyBurstFinishedOn: [Int : Date] = [:]
+let createdOn = Date().startOfDay().addingNumberOfDays(-3).addingTimeInterval(9.2 * 60 * 60)
+let studyBurstFinishedOn: [Int : Date] = [ 0 : createdOn.addingTimeInterval(2.4 * 60 * 60),
+                                           2 : createdOn.addingNumberOfDays(2).addingTimeInterval(30 * 60)]
+let finisedTodayTasks: [RSDIdentifier] = [.tappingTask, .walkAndBalanceTask]
 
 public class ActivityManager : NSObject, SBBActivityManagerProtocol {
     
@@ -106,8 +107,27 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
                                                    schedulePlanGuidMap: nil)
     
         // measuring tasks are persistent.
-        activityGroup.activityIdentifiers.forEach { (identifier) in
-            let scheduledOn = createdOn
+        let studyBurstDates = studyBurstFinishedOn.enumerated().map { $0.element.value }.sorted()
+        activityGroup.activityIdentifiers.enumerated().forEach{ (offset, identifier) in
+            
+            var datesToAdd = studyBurstDates
+            if finisedTodayTasks.contains(identifier) {
+                datesToAdd.append(Date().addingTimeInterval(-1 * TimeInterval(offset) * 4 * 60))
+            }
+            
+            var scheduledOn = createdOn
+            datesToAdd.forEach {
+                let finishedOn = $0.addingTimeInterval(-1 * TimeInterval(offset) * 4 * 60)
+                let schedule = self.createSchedule(with: identifier,
+                                                   scheduledOn: scheduledOn,
+                                                   expiresOn: nil,
+                                                   finishedOn: finishedOn,
+                                                   clientData: nil,
+                                                   schedulePlanGuid: activityGroup.schedulePlanGuid)
+                self.schedules.append(schedule)
+                scheduledOn = finishedOn
+            }
+
             let schedule = createSchedule(with: identifier,
                                           scheduledOn: scheduledOn,
                                           expiresOn: nil,
@@ -154,7 +174,7 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
             ])!
         schedule.scheduledOn = scheduledOn
         schedule.expiresOn = expiresOn
-        schedule.startedOn = finishedOn
+        schedule.startedOn = finishedOn?.addingTimeInterval(-3 * 60)
         schedule.finishedOn = finishedOn
         schedule.clientData = clientData
         schedule.persistent = NSNumber(value: (expiresOn == nil))

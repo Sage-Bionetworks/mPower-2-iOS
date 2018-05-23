@@ -73,6 +73,9 @@ class StudyBurstScheduleManager : SBAScheduleManager {
         return CGFloat(finishedSchedules.count) / CGFloat(totalActivitiesCount)
     }
     
+    /// Today marker used to update the schedules.
+    public private(set) var today: Date?
+    
     /// Is the Study burst completed for today?
     public var isCompletedForToday : Bool {
         return !hasStudyBurst || (finishedSchedules.count == totalActivitiesCount)
@@ -115,9 +118,13 @@ class StudyBurstScheduleManager : SBAScheduleManager {
     
     /// Override to build the new set of today history items.
     override func didUpdateScheduledActivities(from previousActivities: [SBBScheduledActivity]) {
+        guard (today == nil) || !Calendar.current.isDateInToday(today!) || !isCompletedForToday
+            else {
+                return
+        }
+        today = Date()
         
         if let studyMarker = self.studyMarker() {
-            
             self.hasStudyBurst = true
             
             var schedules = self.scheduledActivities
@@ -133,15 +140,12 @@ class StudyBurstScheduleManager : SBAScheduleManager {
             
             if studyMarker.isCompleted {
                 self._expiresOn = nil
-                self.finishedSchedules = self.scheduledActivities.filter {
-                    $0.activityIdentifier != studyMarker.activityIdentifier &&
-                    Calendar.current.isDateInToday($0.scheduledOn)
-                }
+                self.finishedSchedules = self.filterFinishedSchedules(schedules).0
             }
             else {
-                let (schedules, startedOn, finishedOn) = self.filterFinishedSchedules(schedules)
-                self.finishedSchedules = schedules
-                if self.totalActivitiesCount == schedules.count, let finishedOn = finishedOn {
+                let (filtered, startedOn, finishedOn) = self.filterFinishedSchedules(schedules)
+                self.finishedSchedules = filtered
+                if self.totalActivitiesCount == filtered.count, let finishedOn = finishedOn {
                     // The activities for today were marked as finished by a different schedule manager.
                     self._expiresOn = nil
                     studyMarker.startedOn = startedOn ?? Date()
@@ -217,14 +221,17 @@ class StudyBurstScheduleManager : SBAScheduleManager {
     
     /// Get the filtered list of finished schedules.
     func filterFinishedSchedules(_ schedules: [SBBScheduledActivity], gracePeriod: TimeInterval = 0) -> ([SBBScheduledActivity], startedOn: Date?, finishedOn: Date?) {
-        let finishedPredicate = SBBScheduledActivity.finishedOnOrAfterPredicate(startTimeWindow().addingTimeInterval(-1 * gracePeriod))
+        let startWindow = startTimeWindow().addingTimeInterval(-1 * gracePeriod)
         var finishedOn : Date?
         var startedOn : Date?
         let results = schedules.filter {
-            if Calendar.current.isDateInToday($0.scheduledOn) && finishedPredicate.evaluate(with: $0) {
-                if (finishedOn == nil) || ($0.finishedOn! < finishedOn!) {
-                    finishedOn = $0.finishedOn
-                    startedOn = $0.startedOn
+            if let scheduleFinished = $0.finishedOn, scheduleFinished >= startWindow {
+                if (finishedOn == nil) || (finishedOn! < scheduleFinished) {
+                    finishedOn = scheduleFinished
+                }
+                if let scheduleStarted = $0.startedOn,
+                    ((startedOn == nil) || (startedOn! > scheduleStarted)) {
+                    startedOn = scheduleStarted
                 }
                 return true
             }
