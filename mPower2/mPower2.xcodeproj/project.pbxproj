@@ -566,13 +566,6 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		F8078F4020ADF6A300757F42 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
 		F8078F4120ADF9A000757F42 /* Schedule Management */ = {
 			isa = PBXGroup;
 			children = (
@@ -629,7 +622,6 @@
 				F8C58DFB20AFA2FD001C7B7F /* ActivityManager.swift */,
 				F8545982208FA2EE00D37243 /* Info.plist */,
 				F81BE7A520B4AA7C00EE57D3 /* Mock Responses */,
-				F8078F4020ADF6A300757F42 /* Resources */,
 			);
 			path = mPower2TestApp;
 			sourceTree = "<group>";

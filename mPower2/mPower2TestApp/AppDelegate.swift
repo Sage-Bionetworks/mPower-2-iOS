@@ -61,12 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SBABridgeConfiguration.shared.setupBridge(with: SBAFactory()) {
         }
         
-        let participant = SBBStudyParticipant(dictionaryRepresentation: [
-            "createdOn" : (createdOn as NSDate).iso8601String(),
-            "dataGroups" : dataGroups,
-            "firstName" : firstName,
-            "phoneVerified" : NSNumber(value: true),
-            ])!
+        let participant = activityManager.studySetup.createParticipant()
         
         self.testHarness!.post(participant)
         
