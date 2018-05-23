@@ -67,7 +67,8 @@ public struct StudySetup {
         }
     }
     
-    /// A list of the tasks to mark as finished today.
+    /// A list of the tasks to mark as finished today for a study burst. If included, this will be used to
+    /// define the order of the tasks for display in the study burst view.
     var finishedTodayTasks: [RSDIdentifier] = [.tappingTask, .walkAndBalanceTask]
     
     /// The time to use as the time until today's finished tasks will expire. Default = 15 min.
@@ -150,13 +151,24 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
                                                    schedulePlanGuidMap: nil)
     
         // measuring tasks are persistent.
+        let finishedTodayTasks = studySetup.finishedTodayTasks
+        var orderedTasks = finishedTodayTasks
+        activityGroup.activityIdentifiers.forEach {
+            if !orderedTasks.contains($0) {
+                orderedTasks.append($0)
+            }
+        }
+        
+        UserDefaults.standard.set(orderedTasks.map { $0.stringValue }, forKey: "StudyBurstTaskOrder")
+        UserDefaults.standard.set(Date(), forKey: "StudyBurstTimestamp")
+        
         let studyBurstFinishedOn = studySetup.mapStudyBurstFinishedOn()
         let studyBurstDates = studyBurstFinishedOn.enumerated().map { $0.element.value }.sorted()
-        activityGroup.activityIdentifiers.enumerated().forEach{ (offset, identifier) in
+        orderedTasks.enumerated().forEach{ (offset, identifier) in
             
             let finishedTime: TimeInterval = studySetup.timeUntilExpires - 3600 + TimeInterval(offset) * 4 * 60
             var datesToAdd = studyBurstDates
-            if studySetup.finishedTodayTasks.contains(identifier) {
+            if finishedTodayTasks.contains(identifier) {
                 datesToAdd.append(Date().addingTimeInterval(finishedTime))
             }
             
