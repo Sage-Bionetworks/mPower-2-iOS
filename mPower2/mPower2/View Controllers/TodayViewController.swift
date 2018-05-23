@@ -38,7 +38,7 @@ import ResearchUI
 import BridgeApp
 
 @IBDesignable
-class TrackingViewController: UIViewController {
+class TodayViewController: UIViewController {
     
     private let kTaskBrowserSegueIdentifier = "TaskBrowserSegue"
     private let kTableViewVerticalPadding = CGFloat(20.0).rsd_proportionalToScreenWidth()
@@ -69,29 +69,16 @@ class TrackingViewController: UIViewController {
         }
     }
     
-    // TODO: jbruhin 5-1-18 will need to make the following dynamic based on...something
-    public var shouldShowActionBar = false
-    public var shouldShowProgressCircle = true
-
-    // TODO: jbruhin 5-10-18 - replace this with actual model
-    var completedTaskGroups: [[RSDTaskInfoObject]] = {
-        
-        let taskGroups = [["Symptoms", "Symptoms", "Symptoms"],
-                          ["Medication", "Medication"],
-                          ["Triggers", "Triggers", "Triggers", "Triggers"],
-                          ["Tremor"]]
-        var taskInfosGroups = [[RSDTaskInfoObject]]()
-        for tasks in taskGroups {
-            var taskInfos = [RSDTaskInfoObject]()
-            tasks.forEach { (task) in
-                var taskInfo = RSDTaskInfoObject(with: task)
-                taskInfo.title = task
-                taskInfo.resourceTransformer = RSDResourceTransformerObject(resourceName: task)
-                taskInfos.append(taskInfo)
-            }
-            taskInfosGroups.append(taskInfos)
-        }
-        return taskInfosGroups
+    var shouldShowSurvey : Bool {
+        return surveyManager.hasSurvey && studyBurstManager.isCompletedForToday
+    }
+    
+    var shouldShowActionBar : Bool {
+        return !self.studyBurstManager.isCompletedForToday || surveyManager.hasSurvey
+    }
+    
+    lazy var firstName : String? = {
+        SBAParticipantManager.shared.studyParticipant?.firstName
     }()
     
     // MARK: View lifecycle
@@ -106,6 +93,13 @@ class TrackingViewController: UIViewController {
                                                          image: UIImage(named: "TabTracking _selected")?.withRenderingMode(UIImageRenderingMode.alwaysOriginal),
                                                          selectedImage: UIImage(named: "TabTracking _selected"))
         tabBarItem = customTabBarItem
+        
+        // Add an observer for changes to the study participant.
+        NotificationCenter.default.addObserver(forName: .SBAStudyParticipantUpdated, object: nil, queue: .main) { (notification) in
+            self.firstName = (notification.object as? SBAParticipantManager)?.studyParticipant?.firstName
+            self.updateWelcomeContent()
+        }
+        self.firstName = SBAParticipantManager.shared.studyParticipant?.firstName
     }
     
     override func prepareForInterfaceBuilder() {
@@ -121,7 +115,7 @@ class TrackingViewController: UIViewController {
             // the UITableView.headerView and making other adjustments on the tableView.
             // We only want to call this once from this method.
             tableSetupDone = true
-            updateTableView()
+            updateTableViewIfNeeded()
         }
     }
     
@@ -137,26 +131,41 @@ class TrackingViewController: UIViewController {
 
     func setupView() {
         
-        // Initial setup
-        setupWelcomeText()
+        // Initial setup.
         actionBarView.layer.cornerRadius = 4.0
         actionBarView.layer.masksToBounds = true
-                
-        // Add pan gesture to the task browser container
+        actionBarView.backgroundColor = UIColor.primaryTintColor
+        
+        // set up view for initial state.
+        self.updateActionBar()
+        self.updateProgressCircle()
+        self.updateWelcomeContent()
+        
+        // Add pan gesture to the task browser container.
         let pan = UIPanGestureRecognizer(target: self, action: #selector(dragTaskBrowser(sender:)))
         taskBrowserContainerView.addGestureRecognizer(pan)
         
-        // update variable items
-        // TODO: jbruhin 5-21-18 calls to these methods will likely have to move based on how and
-        // when data gets updated. 'updateWelcomeContent()' may have to be called from viewWillAppear()
-        updateTaskBrowserPosition(animated: false)
-        updateActionBar()
-        updateProgressCircle()
-        updateWelcomeContent()
-    }
-
-    func setupWelcomeText() {
-        // TODO: jbruhin 5-1-18 update 'welcome' text dynamically based on time of day
+        // TODO: syoung 05/21/2018 - figure out what this is doing and what notifications may change it's position.
+        self.updateTaskBrowserPosition(animated: false)
+        
+        // Update the welcome whenever the user is returning to the app.
+        NotificationCenter.default.addObserver(forName: .UIApplicationWillEnterForeground, object: nil, queue: OperationQueue.main) { (_) in
+            self.updateWelcomeContent()
+        }
+        
+        // Update the study burst or survey to show in the action bar when those change.
+        let managers = [todayManager, studyBurstManager, surveyManager]
+        managers.forEach {
+            NotificationCenter.default.addObserver(forName: .SBAUpdatedScheduledActivities, object: $0, queue: OperationQueue.main) { (notification) in
+                if let _ = notification.object as? TodayHistoryScheduleManager {
+                    self.updateWelcomeContent()
+                    self.tableView.reloadData()
+                }
+                self.updateActionBar()
+                self.updateProgressCircle()
+                self.updateTableViewIfNeeded()
+            }
+        }
     }
     
     func updateTaskBrowserPosition(animated: Bool) {
@@ -177,7 +186,7 @@ class TrackingViewController: UIViewController {
         // has completed any tasks today
         
         let content: (imageName: String, greeting: String, message: String) = {
-            let firstName = SBAParticipantManager.shared.studyParticipant?.firstName
+            let firstName = self.firstName
             var imageName: String
             var greeting: String
             switch Date().timeRange() {
@@ -197,7 +206,7 @@ class TrackingViewController: UIViewController {
                     Localization.localizedString("EVENING_WELCOME_GREETING") :
                     Localization.localizedStringWithFormatKey("EVENING_WELCOME_GREETING_TO_%@", firstName!)
             }
-            let message = completedTaskGroups.count > 0 ?
+            let message = todayManager.items.count > 0 ?
                 Localization.localizedString("WELCOME_MESSAGE_SOME_TASKS_DONE") :
                 Localization.localizedString("WELCOME_MESSAGE_NO_TASKS_DONE")
 
@@ -210,29 +219,105 @@ class TrackingViewController: UIViewController {
     }
     
     func updateActionBar() {
-        // TODO: jbruhin 5-1-18 will be a data source for this at some point
-        actionBarTitleLabel.text = "Study Burst"
-        actionBarDetailsLabel.text = "4 ACTIVITIES TO DO"
-        
+
         // If we should not show it, then make it's height 0, otherwise remove
         // the height constraint
+        let previousConstraint = actionBarView.rsd_constraint(for: .height, relation: .equal)
         if shouldShowActionBar {
-            if let heightConstraint = actionBarView.rsd_constraint(for: .height, relation: .equal) {
+            if let heightConstraint = previousConstraint {
                 NSLayoutConstraint.deactivate([heightConstraint])
             }
+            
+            if shouldShowSurvey, let schedule = surveyManager.scheduledActivities.first {
+                actionBarTitleLabel.text = schedule.activity.title
+                actionBarDetailsLabel.text = schedule.activity.detail
+            }
+            else {
+                actionBarTitleLabel.text = studyBurstManager.activityGroup!.title
+                if let expiresOn = studyBurstManager.expiresOn {
+                    updateStudyBurstExpirationTime(expiresOn)
+                }
+                else {
+                    actionBarDetailsLabel.text = Localization.localizedStringWithFormatKey("ACTIVITIES_TO_DO_%@", NSNumber(value: studyBurstManager.totalActivitiesCount))
+                }
+            }
         }
-        else {
+        else if (previousConstraint == nil) {
             actionBarView.rsd_makeHeight(.equal, 0.0)
         }
     }
     
-    func updateProgressCircle() {
-        // TODO: jbruhin 5-1-18 will be a data source for this at some point
-        progressCircleView.displayDay(count: 14)
-        progressCircleView.isHidden = !shouldShowProgressCircle
+    func updateStudyBurstExpirationTime(_ expiresOn: Date) {
+
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.hour, .minute, .second]
+        formatter.collapsesLargestUnit = false
+        formatter.zeroFormattingBehavior = .pad
+        formatter.allowsFractionalUnits = false
+        formatter.unitsStyle = .positional
+        let timeString = formatter.string(from: Date(), to: expiresOn)!
+        
+        let marker = "%@"
+        let format = Localization.localizedString("PROGRESS_EXPIRES_%@")
+        
+        let mutableString = NSMutableString(string: format)
+        let markerRange = mutableString.range(of: marker)
+        mutableString.replaceCharacters(in: markerRange, with: timeString)
+        let boldRange = NSRange(location: markerRange.location, length: (timeString as NSString).length)
+        let attributedString = NSMutableAttributedString(string: mutableString as String)
+        let fullRange = NSRange(location: 0, length: attributedString.length)
+        
+        let fontSize: CGFloat = 14
+        let font = UIFont.italicSystemFont(ofSize: fontSize)
+        attributedString.addAttribute(.font, value: font, range: fullRange)
+        if let fontDescriptor = font.fontDescriptor.withSymbolicTraits([.traitItalic, .traitBold]) {
+            let boldFont = UIFont(descriptor: fontDescriptor, size: fontSize)
+            attributedString.addAttribute(.font, value: boldFont, range: boldRange)
+        }
+        actionBarDetailsLabel.attributedText = attributedString
+        
+        // Fire update in 1 second.
+        let delay = DispatchTime.now() + .seconds(1)
+        DispatchQueue.main.asyncAfter(deadline: delay) {
+            if let expiresOn = self.studyBurstManager.expiresOn {
+                self.updateStudyBurstExpirationTime(expiresOn)
+            }
+        }
     }
     
-    func updateTableView() {
+    func updateProgressCircle() {
+        
+        if shouldShowSurvey {
+            progressCircleView.isHidden = false
+            progressCircleView.progress = 0.5
+            // TODO: syoung 05/21/2018 Get the health survey icon from Stockard
+            let healthIcon = UIImage(named: "activitiesTaskIconSmall")
+            progressCircleView.displayIcon(image: healthIcon)
+        }
+        else if studyBurstManager.hasStudyBurst {
+            progressCircleView.isHidden = false
+            if let day = studyBurstManager.dayCount {
+                progressCircleView.displayDay(count: day)
+            }
+            progressCircleView.progress = studyBurstManager.progress
+        }
+        else {
+            progressCircleView.isHidden = true
+        }
+    }
+    
+    private var _previousItemCount : Int?
+    private var _previousShouldShowActionBar : Bool?
+    
+    func updateTableViewIfNeeded() {
+        
+        let itemCount = todayManager.items.count
+        let shouldShowActionBar = self.shouldShowActionBar
+        guard itemCount != _previousItemCount || shouldShowActionBar != _previousShouldShowActionBar else {
+            return
+        }
+        _previousItemCount = itemCount
+        _previousShouldShowActionBar = shouldShowActionBar
         
         // Based on the variable content - a visible action bar or completed tasks - we do the following:
         // If we don't have completed tasks, make the tableView.headerView.height equal to the tableView.bounds.height
@@ -254,7 +339,7 @@ class TrackingViewController: UIViewController {
             }
         }
         
-        if completedTaskGroups.count > 0 {
+        if itemCount > 0 {
             let height = shouldShowActionBar ? kHeaderViewHeightSmall : kHeaderViewHeightMedium
             adjustHeaderView(to: height)
             if let heightConstraint = headerContentView.rsd_constraint(for: .height, relation: .equal) {
@@ -283,42 +368,9 @@ class TrackingViewController: UIViewController {
     
     // MARK: Model
     
-    func taskGroups() -> [RSDTaskGroup] {
-        // TODO: jbruhin 5-1-18 obtain task model from the proper source?? Model also needs more tasks
-        // and tasks may need more data, like icon images
-        let taskGroups: [RSDTaskGroup] = {
-            let activeTaskGroup : RSDTaskGroup = {
-                let taskInfos = MCTTaskIdentifier.all().map { MCTTaskInfo($0) }
-                var taskGroup = RSDTaskGroupObject(with: "Measuring", tasks: taskInfos)
-                taskGroup.title = "Measuring"
-                return taskGroup
-            }()
-            let trackingTaskGroup : RSDTaskGroup = {
-                
-                var taskInfos = [RSDTaskInfoObject]()
-                ["Symptoms", "Medication", "Triggers", "Medication", "Medication"].forEach { (identifier) in
-                    var taskInfo = RSDTaskInfoObject(with: identifier)
-                    taskInfo.title = identifier
-                    taskInfo.resourceTransformer = RSDResourceTransformerObject(resourceName: identifier)
-                    // Get the task icon for this taskIdentifier
-                    do {
-                        taskInfo.icon = try RSDImageWrapper(imageName: "\(taskInfo.identifier)TaskIcon")
-                    } catch let err {
-                        print("Failed to load the task icon. \(err)")
-                    }
-                    taskInfos.append(taskInfo)
-                }
-                
-                var taskGroup = RSDTaskGroupObject(with: "Tracking", tasks: taskInfos)
-                taskGroup.title = "Tracking"
-                return taskGroup
-            }()
-            
-            return [trackingTaskGroup, activeTaskGroup]
-        }()
-        return taskGroups
-    }
-    
+    let todayManager = DataSourceManager.shared.todayHistoryScheduleManager()
+    let studyBurstManager = DataSourceManager.shared.studyBurstScheduleManager()
+    let surveyManager = DataSourceManager.shared.surveyManager()
     
     // MARK: Actions
     @IBAction func actionBarTapped(_ sender: Any) {
@@ -327,7 +379,7 @@ class TrackingViewController: UIViewController {
     }
 }
 
-extension TrackingViewController: UITableViewDelegate, UITableViewDataSource {
+extension TodayViewController: UITableViewDelegate, UITableViewDataSource {
     // MARK: UITableView Datasource
     
     open func numberOfSections(in tableView: UITableView) -> Int {
@@ -335,20 +387,17 @@ extension TrackingViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return completedTaskGroups.count
+        return todayManager.items.count
     }
     
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell =  tableView.dequeueReusableCell(withIdentifier: "TrackingTableViewCell", for: indexPath) as! TrackingTableViewCell
-        if let firstTask = completedTaskGroups[indexPath.row].first {
-            cell.iconView.image = firstTask.iconSmall
-            // Update our label text, but keep the attributes defined in Interface Builder
-            let newString = String(format: "%@ %@", String(describing: completedTaskGroups[indexPath.row].count), firstTask.pluralTerm)
-            let newAttributedString = NSMutableAttributedString(attributedString: cell.countLabel.attributedText ?? NSAttributedString(string: ""))
-            newAttributedString.mutableString.setString(newString)
-            cell.countLabel.attributedText = newAttributedString
-        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TrackingTableViewCell", for: indexPath) as! TodayTableViewCell
+        let item = todayManager.items[indexPath.row]
+        cell.iconView.image = item.icon
+        
+        // TODO: syoung 05/21/2018 FIXME!!! This should be a button that shows the results associated with this count, but there isn't any UI for that.
+        cell.countLabel.text = item.title
         
         return cell
     }
@@ -360,7 +409,7 @@ extension TrackingViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension TrackingViewController: TaskBrowserViewControllerDelegate {
+extension TodayViewController: TaskBrowserViewControllerDelegate {
     
     // MARK: TaskBrowserViewController management
     
@@ -445,7 +494,7 @@ extension TrackingViewController: TaskBrowserViewControllerDelegate {
     }
 }
 
-class TrackingTableViewCell: UITableViewCell {
+class TodayTableViewCell: UITableViewCell {
     
     // TODO: jbruhin 5-10-18 - optimize positioning of content for different screen sizes
     @IBOutlet weak var iconView: UIImageView!

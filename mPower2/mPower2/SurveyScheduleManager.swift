@@ -36,6 +36,10 @@ import BridgeApp
 
 class SurveyScheduleManager : SBAScheduleManager {
     
+    var hasSurvey : Bool {
+        return scheduledActivities.count > 0
+    }
+    
     override func fetchRequests() -> [SBAScheduleManager.FetchRequest] {
         
         // TODO: syoung 05/18/2018 Unit test this for accuracy.

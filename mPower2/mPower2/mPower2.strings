@@ -37,11 +37,11 @@
 "TASK_PLURAL_TERM_FOR_MEDICATION" = "%@ Doses";
 "TASK_PLURAL_TERM_FOR_TRIGGERS" = "%@ Triggers";
 "TASK_PLURAL_TERM_FOR_SYMPTOMS" = "%@ Symptoms";
-"TASK_PLURAL_TERM_FOR_TREMOR" = "%@ Activities";
+"TASK_PLURAL_TERM_FOR_ACTIVITIES" = "%@ Activities";
 "TASK_SINGULAR_TERM_FOR_MEDICATION" = "%@ Dose";
 "TASK_SINGULAR_TERM_FOR_TRIGGERS" = "%@ Trigger";
 "TASK_SINGULAR_TERM_FOR_SYMPTOMS" = "%@ Symptom";
-"TASK_SINGULAR_TERM_FOR_TREMOR" = "%@ Activity";
+"TASK_SINGULAR_TERM_FOR_ACTIVITIES" = "%@ Activity";
 
 // Titles for the activity groups and infos.
 "Measuring" = "Measuring";
@@ -62,4 +62,8 @@
 
 "WELCOME_MESSAGE_SOME_TASKS_DONE" = "Here’s what you’ve been up to";
 "WELCOME_MESSAGE_NO_TASKS_DONE" = "What would you like to do today?";
+
+// Study Burst
+"ACTIVITIES_TO_DO_%@" = "%@ ACTIVITIES TO DO";
+"PROGRESS_EXPIRES_%@" = "Progress expires in %@";
 

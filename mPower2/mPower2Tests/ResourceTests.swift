@@ -48,15 +48,8 @@ class ResourceTests: XCTestCase {
         super.tearDown()
     }
     
-    func testTriggers() {
+    func testExample() {
 
-        let resourceTransformer = RSDResourceTransformerObject(resourceName: "Triggers")
-        let factory = SBAFactory()
-        do {
-            let _ = try factory.decodeTask(with: resourceTransformer)
-        }
-        catch let err {
-            XCTFail("Failed to decode the task: \(err)")
-        }
+        XCTAssertTrue(true)
     }
 }
