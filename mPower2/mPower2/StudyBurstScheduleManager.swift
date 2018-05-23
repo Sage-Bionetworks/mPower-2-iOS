@@ -91,24 +91,26 @@ class StudyBurstScheduleManager : SBAScheduleManager {
         guard let group = self.activityGroup else {
             return super.fetchRequests()
         }
-        
-        let requests: [FetchRequest] = group.activityIdentifiers.map {
-            var predicate = SBBScheduledActivity.activityIdentifierPredicate(with:$0.stringValue)
+
+        let predicates: [NSPredicate] = group.activityIdentifiers.map {
+            let predicate = SBBScheduledActivity.activityIdentifierPredicate(with:$0.stringValue)
+            let start: Date
+            let end: Date
             if $0 == .studyBurstCompletedTask {
-                let start = Date().startOfDay().addingNumberOfDays(-1 * self.numberOfDays)
-                let end = Date().startOfDay().addingNumberOfDays(1)
-                predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
-                    SBBScheduledActivity.availablePredicate(from: start, to: end),
-                    predicate])
+                start = Date().startOfDay().addingNumberOfDays(-2 * self.numberOfDays)
+                end = Date().startOfDay().addingNumberOfDays(2 * self.numberOfDays)
             }
             else {
-                predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
-                    SBBScheduledActivity.availableTodayPredicate(),
-                    predicate])
+                start = Date().startOfDay()
+                end = start.addingNumberOfDays(1)
             }
-            return FetchRequest(predicate: predicate, sortDescriptors: nil, fetchLimit: nil)
+            return NSCompoundPredicate(andPredicateWithSubpredicates: [
+                SBBScheduledActivity.availablePredicate(from: start, to: end),
+                predicate])
         }
-        return requests
+        let filter = NSCompoundPredicate(orPredicateWithSubpredicates: predicates)
+        
+        return [FetchRequest(predicate: filter, sortDescriptors: nil, fetchLimit: nil)]
     }
     
     /// Override to build the new set of today history items.
@@ -118,12 +120,18 @@ class StudyBurstScheduleManager : SBAScheduleManager {
             
             self.hasStudyBurst = true
             
+            var schedules = self.scheduledActivities
+            let markerSchedules = schedules.remove(where: { studyMarker.activityIdentifier == $0.activityIdentifier })
+            
             let todayStart = Date().startOfDay()
-            let pastSchedules = self.scheduledActivities.filter { $0.scheduledOn < todayStart }
+            let pastSchedules = markerSchedules.filter {
+                $0.scheduledOn < todayStart && studyMarker.activityIdentifier == $0.activityIdentifier
+            }
+            self.numberOfDays = schedules.count
             self.dayCount = pastSchedules.count + 1
             self.missedDaysCount = pastSchedules.reduce(0, { $0 + ($1.finishedOn == nil ? 1 : 0) })
             
-            if studyMarker.finishedOn != nil {
+            if studyMarker.isCompleted {
                 self._expiresOn = nil
                 self.finishedSchedules = self.scheduledActivities.filter {
                     $0.activityIdentifier != studyMarker.activityIdentifier &&
@@ -131,7 +139,7 @@ class StudyBurstScheduleManager : SBAScheduleManager {
                 }
             }
             else {
-                let (schedules, startedOn, finishedOn) = self.filterFinishedSchedules(self.scheduledActivities)
+                let (schedules, startedOn, finishedOn) = self.filterFinishedSchedules(schedules)
                 self.finishedSchedules = schedules
                 if self.totalActivitiesCount == schedules.count, let finishedOn = finishedOn {
                     // The activities for today were marked as finished by a different schedule manager.
@@ -147,6 +155,8 @@ class StudyBurstScheduleManager : SBAScheduleManager {
         }
         else {
             self.hasStudyBurst = false
+            self._expiresOn = nil
+            self.dayCount = nil
         }
 
         super.didUpdateScheduledActivities(from: previousActivities)
@@ -183,7 +193,8 @@ class StudyBurstScheduleManager : SBAScheduleManager {
     /// Returns the study burst completed marker for today.
     func studyMarker() -> SBBScheduledActivity? {
         return self.scheduledActivities.first(where: {
-            Calendar.current.isDateInToday($0.scheduledOn) && $0.activityIdentifier == RSDIdentifier.studyBurstCompletedTask.stringValue
+            Calendar.current.isDateInToday($0.scheduledOn) &&
+                $0.activityIdentifier == RSDIdentifier.studyBurstCompletedTask.stringValue
         })
     }
     

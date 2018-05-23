@@ -77,6 +77,10 @@ class TodayViewController: UIViewController {
         return !self.studyBurstManager.isCompletedForToday || surveyManager.hasSurvey
     }
     
+    lazy var firstName : String? = {
+        SBAParticipantManager.shared.studyParticipant?.firstName
+    }()
+    
     // MARK: View lifecycle
 
     override func viewDidLoad() {
@@ -89,6 +93,13 @@ class TodayViewController: UIViewController {
                                                          image: UIImage(named: "TabTracking _selected")?.withRenderingMode(UIImageRenderingMode.alwaysOriginal),
                                                          selectedImage: UIImage(named: "TabTracking _selected"))
         tabBarItem = customTabBarItem
+        
+        // Add an observer for changes to the study participant.
+        NotificationCenter.default.addObserver(forName: .SBAStudyParticipantUpdated, object: nil, queue: .main) { (notification) in
+            self.firstName = (notification.object as? SBAParticipantManager)?.studyParticipant?.firstName
+            self.updateWelcomeContent()
+        }
+        self.firstName = SBAParticipantManager.shared.studyParticipant?.firstName
     }
     
     override func prepareForInterfaceBuilder() {
@@ -175,7 +186,7 @@ class TodayViewController: UIViewController {
         // has completed any tasks today
         
         let content: (imageName: String, greeting: String, message: String) = {
-            let firstName = SBAParticipantManager.shared.studyParticipant?.firstName
+            let firstName = self.firstName
             var imageName: String
             var greeting: String
             switch Date().timeRange() {

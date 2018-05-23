@@ -92,6 +92,7 @@
 		F8C58DCB20AF5E86001C7B7F /* StudyBurstScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C58DC920AF5E86001C7B7F /* StudyBurstScheduleManager.swift */; };
 		F8C58DD520AF8CCC001C7B7F /* SurveyScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C58DD420AF8CCC001C7B7F /* SurveyScheduleManager.swift */; };
 		F8C58DD620AF8CCC001C7B7F /* SurveyScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C58DD420AF8CCC001C7B7F /* SurveyScheduleManager.swift */; };
+		F8C58DFC20AFA2FD001C7B7F /* ActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C58DFB20AFA2FD001C7B7F /* ActivityManager.swift */; };
 		F8D3E77A2062F1B900CD351C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D3E7792062F1B900CD351C /* AppDelegate.swift */; };
 		F8D3E77F2062F1B900CD351C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E77D2062F1B900CD351C /* Main.storyboard */; };
 		F8D3E7812062F1B900CD351C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E7802062F1B900CD351C /* Assets.xcassets */; };
@@ -415,6 +416,7 @@
 		F8C58DB020AF4823001C7B7F /* TodayScheduleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayScheduleManager.swift; sourceTree = "<group>"; };
 		F8C58DC920AF5E86001C7B7F /* StudyBurstScheduleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyBurstScheduleManager.swift; sourceTree = "<group>"; };
 		F8C58DD420AF8CCC001C7B7F /* SurveyScheduleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyScheduleManager.swift; sourceTree = "<group>"; };
+		F8C58DFB20AFA2FD001C7B7F /* ActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityManager.swift; sourceTree = "<group>"; };
 		F8D3E7762062F1B900CD351C /* mPower2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mPower2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8D3E7792062F1B900CD351C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F8D3E77E2062F1B900CD351C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -624,6 +626,7 @@
 			isa = PBXGroup;
 			children = (
 				F8078F2920ADF1DC00757F42 /* AppDelegate.swift */,
+				F8C58DFB20AFA2FD001C7B7F /* ActivityManager.swift */,
 				F8545982208FA2EE00D37243 /* Info.plist */,
 				F81BE7A520B4AA7C00EE57D3 /* Mock Responses */,
 				F8078F4020ADF6A300757F42 /* Resources */,
@@ -1189,6 +1192,7 @@
 				F8C58DD620AF8CCC001C7B7F /* SurveyScheduleManager.swift in Sources */,
 				F85459B6208FA77400D37243 /* UIColor+mPowerTheme.swift in Sources */,
 				F8078F4420AE078A00757F42 /* DataSourceManager.swift in Sources */,
+				F8C58DFC20AFA2FD001C7B7F /* ActivityManager.swift in Sources */,
 				F88E8DFE20ADEE2600117A99 /* RegistrationWaitingViewController.swift in Sources */,
 				60169BD120AF445C00D29532 /* ConsentViewController.swift in Sources */,
 				F88E8DFB20ADEE2600117A99 /* ExternalIDRegistrationViewController.swift in Sources */,
