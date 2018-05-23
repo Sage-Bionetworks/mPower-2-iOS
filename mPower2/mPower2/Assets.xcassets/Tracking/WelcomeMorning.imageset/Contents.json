@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "Sunrise.png",
+      "filename" : "Sunrise vector.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Sunrise@2x.png",
+      "filename" : "Sunrise vector@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Sunrise@3x.png",
+      "filename" : "Sunrise vector@3x.png",
       "scale" : "3x"
     }
   ],
