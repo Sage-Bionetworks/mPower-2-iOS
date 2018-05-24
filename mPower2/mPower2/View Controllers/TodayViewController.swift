@@ -169,14 +169,23 @@ class TodayViewController: UIViewController {
     }
     
     func updateTaskBrowserPosition(animated: Bool) {
+        
+        // Update the vertical position of the task browser based on it's visible state
+        
         dragDistance = 0.0
         taskBrowserTopConstraint.constant = taskBrowserTopDistanceWhen(visible: taskBrowserVisible)
-        if animated {
-            UIView.animate(withDuration: 0.25) {
-                // If browser is not visible, tell the browser to hide the rule at the bottom of the selected tab
-                self.taskBrowserVC?.showSelectionIndicator(visible: self.taskBrowserVisible)
-                self.view.layoutIfNeeded()
-            }
+        
+        guard animated else {
+            // If browser is not visible, tell the browser to hide the rule at the bottom of the selected tab
+            self.taskBrowserVC?.showSelectionIndicator(visible: self.taskBrowserVisible)
+            self.view.layoutIfNeeded()
+            return
+        }
+        
+        UIView.animate(withDuration: 0.25) {
+            // If browser is not visible, tell the browser to hide the rule at the bottom of the selected tab
+            self.taskBrowserVC?.showSelectionIndicator(visible: self.taskBrowserVisible)
+            self.view.layoutIfNeeded()
         }
     }
     
