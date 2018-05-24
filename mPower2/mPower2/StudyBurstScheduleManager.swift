@@ -89,6 +89,41 @@ class StudyBurstScheduleManager : SBAScheduleManager {
     /// Subset of the finished schedules.
     public private(set) var finishedSchedules: [SBBScheduledActivity] = []
     
+    /// Returns an ordered set of task info objects. This will change each day, but should retain the saved
+    /// order for any given day.
+    public func orderedTasks() -> [RSDTaskInfo] {
+        guard let tasks = self.activityGroup?.tasks else {
+            return []
+        }
+
+        let userDefaults = UserDefaults.standard
+        let orderKey = "StudyBurstTaskOrder"
+        let timestampKey = "StudyBurstTimestamp"
+        
+        if let storedOrder = userDefaults.array(forKey: orderKey) as? [String],
+            let timestamp = userDefaults.object(forKey: timestampKey) as? Date,
+            Calendar.current.isDateInToday(timestamp) {
+            // If the timestamp is still valid for today, then sort using the stored order.
+            return tasks.sorted(by: {
+                guard let idx1 = storedOrder.index(of: $0.identifier),
+                    let idx2 = storedOrder.index(of: $1.identifier)
+                    else {
+                        return false
+                }
+                return idx1 < idx2
+            })
+        }
+        else {
+            // Otherwise, shuffle the tasks and store order of the the task identifiers.
+            var shuffledTasks = tasks
+            shuffledTasks.shuffle()
+            let sortOrder = shuffledTasks.map { $0.identifier }
+            userDefaults.set(sortOrder, forKey: orderKey)
+            userDefaults.set(Date(), forKey: timestampKey)
+            return shuffledTasks
+        }
+    }
+    
     /// Override to get past 14 days of study burst markers and today's activities.
     override func fetchRequests() -> [SBAScheduleManager.FetchRequest] {
         guard let group = self.activityGroup else {
@@ -240,5 +275,17 @@ class StudyBurstScheduleManager : SBAScheduleManager {
             }
         }
         return (results, startedOn, finishedOn)
+    }
+}
+
+extension Array {
+    
+    mutating public func shuffle() {
+        var last = self.count - 1
+        while last > 0 {
+            let rand = Int(arc4random_uniform(UInt32(last)))
+            self.swapAt(last, rand)
+            last -= 1
+        }
     }
 }
