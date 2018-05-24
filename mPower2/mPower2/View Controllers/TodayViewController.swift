@@ -336,6 +336,10 @@ class TodayViewController: UIViewController {
         // superview, or pin the top and bottom to its superview. This will determine how big the image is,
         // among other things.
         
+        // We need to make sure any layout changes, like if the action bar is shown or hidden, are applied before
+        // making the adjustments below
+        self.view.layoutIfNeeded()
+
         func adjustHeaderView(to height: CGFloat) {
             if let headerView = tableView.tableHeaderView {
 
