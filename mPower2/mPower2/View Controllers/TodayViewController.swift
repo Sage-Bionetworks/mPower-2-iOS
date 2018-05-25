@@ -69,16 +69,16 @@ class TodayViewController: UIViewController {
         }
     }
     
-    var haveActiveSurvey : Bool {
+    var hasActiveSurvey : Bool {
         return surveyManager.hasSurvey && studyBurstManager.isCompletedForToday
     }
     
-    var haveActiveStudyBurst : Bool {
+    var hasActiveStudyBurst : Bool {
         return self.studyBurstManager.hasStudyBurst && !self.studyBurstManager.isCompletedForToday
     }
     
     var shouldShowActionBar : Bool {
-        return haveActiveSurvey || haveActiveStudyBurst
+        return hasActiveSurvey || hasActiveStudyBurst
     }
     
     lazy var firstName : String? = {
@@ -239,7 +239,7 @@ class TodayViewController: UIViewController {
                 NSLayoutConstraint.deactivate([heightConstraint])
             }
             
-            if haveActiveSurvey, let schedule = surveyManager.scheduledActivities.first {
+            if hasActiveSurvey, let schedule = surveyManager.scheduledActivities.first {
                 actionBarTitleLabel.text = schedule.activity.title
                 actionBarDetailsLabel.text = schedule.activity.detail
             }
@@ -298,14 +298,14 @@ class TodayViewController: UIViewController {
     
     func updateProgressCircle() {
         
-        if haveActiveSurvey {
+        if hasActiveSurvey {
             progressCircleView.isHidden = false
             progressCircleView.progress = 0.5
             // TODO: syoung 05/21/2018 Get the health survey icon from Stockard
             let healthIcon = UIImage(named: "activitiesTaskIconSmall")
             progressCircleView.displayIcon(image: healthIcon)
         }
-        else if haveActiveStudyBurst {
+        else if hasActiveStudyBurst {
             progressCircleView.isHidden = false
             if let day = studyBurstManager.dayCount {
                 progressCircleView.displayDay(count: day)
@@ -390,10 +390,10 @@ class TodayViewController: UIViewController {
     // MARK: Actions
     @IBAction func actionBarTapped(_ sender: Any) {
         // TODO: jbruhin 5-1-18 implement
-        if haveActiveSurvey {
+        if hasActiveSurvey {
             
         }
-        else if haveActiveStudyBurst {
+        else if hasActiveStudyBurst {
             
         }
     }
