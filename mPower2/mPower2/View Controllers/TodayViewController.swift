@@ -69,12 +69,16 @@ class TodayViewController: UIViewController {
         }
     }
     
-    var shouldShowSurvey : Bool {
+    var hasActiveSurvey : Bool {
         return surveyManager.hasSurvey && studyBurstManager.isCompletedForToday
     }
     
+    var hasActiveStudyBurst : Bool {
+        return self.studyBurstManager.hasStudyBurst && !self.studyBurstManager.isCompletedForToday
+    }
+    
     var shouldShowActionBar : Bool {
-        return !self.studyBurstManager.isCompletedForToday || surveyManager.hasSurvey
+        return hasActiveSurvey || hasActiveStudyBurst
     }
     
     lazy var firstName : String? = {
@@ -169,14 +173,21 @@ class TodayViewController: UIViewController {
     }
     
     func updateTaskBrowserPosition(animated: Bool) {
+        
+        // Update the vertical position of the task browser based on it's visible state
+        
         dragDistance = 0.0
         taskBrowserTopConstraint.constant = taskBrowserTopDistanceWhen(visible: taskBrowserVisible)
-        if animated {
-            UIView.animate(withDuration: 0.25) {
-                // If browser is not visible, tell the browser to hide the rule at the bottom of the selected tab
-                self.taskBrowserVC?.showSelectionIndicator(visible: self.taskBrowserVisible)
-                self.view.layoutIfNeeded()
-            }
+        
+        guard animated else {
+            self.taskBrowserVC?.showSelectionIndicator(visible: self.taskBrowserVisible)
+            self.view.layoutIfNeeded()
+            return
+        }
+        
+        UIView.animate(withDuration: 0.25) {
+            self.taskBrowserVC?.showSelectionIndicator(visible: self.taskBrowserVisible)
+            self.view.layoutIfNeeded()
         }
     }
     
@@ -228,7 +239,7 @@ class TodayViewController: UIViewController {
                 NSLayoutConstraint.deactivate([heightConstraint])
             }
             
-            if shouldShowSurvey, let schedule = surveyManager.scheduledActivities.first {
+            if hasActiveSurvey, let schedule = surveyManager.scheduledActivities.first {
                 actionBarTitleLabel.text = schedule.activity.title
                 actionBarDetailsLabel.text = schedule.activity.detail
             }
@@ -287,14 +298,14 @@ class TodayViewController: UIViewController {
     
     func updateProgressCircle() {
         
-        if shouldShowSurvey {
+        if hasActiveSurvey {
             progressCircleView.isHidden = false
             progressCircleView.progress = 0.5
             // TODO: syoung 05/21/2018 Get the health survey icon from Stockard
             let healthIcon = UIImage(named: "activitiesTaskIconSmall")
             progressCircleView.displayIcon(image: healthIcon)
         }
-        else if studyBurstManager.hasStudyBurst {
+        else if hasActiveStudyBurst {
             progressCircleView.isHidden = false
             if let day = studyBurstManager.dayCount {
                 progressCircleView.displayDay(count: day)
@@ -327,6 +338,10 @@ class TodayViewController: UIViewController {
         // superview, or pin the top and bottom to its superview. This will determine how big the image is,
         // among other things.
         
+        // We need to make sure any layout changes, like if the action bar is shown or hidden, are applied before
+        // making the adjustments below
+        self.view.layoutIfNeeded()
+
         func adjustHeaderView(to height: CGFloat) {
             if let headerView = tableView.tableHeaderView {
 
@@ -375,7 +390,12 @@ class TodayViewController: UIViewController {
     // MARK: Actions
     @IBAction func actionBarTapped(_ sender: Any) {
         // TODO: jbruhin 5-1-18 implement
-        presentAlertWithOk(title: "Not implemented yet.", message: "", actionHandler: nil)
+        if hasActiveSurvey {
+            
+        }
+        else if hasActiveStudyBurst {
+            
+        }
     }
 }
 
