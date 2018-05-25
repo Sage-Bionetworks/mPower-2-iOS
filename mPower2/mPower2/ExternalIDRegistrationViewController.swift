@@ -38,17 +38,19 @@ import BridgeSDK
 
 class ExternalIDRegistrationViewController: RSDTableStepViewController {
 
-    func credentials() -> (externalId: String, preconsent: Bool)? {
+    func credentials() -> (externalId: String, firstName: String, preconsent: Bool)? {
         let taskResult = self.taskController.taskResult
         let externalIdResultIdentifier = "externalId"
+        let firstNameResultIdentifier = "firstName"
         let preConsentResultIdentifier = "preConsent"
         guard let externalId = taskResult?.findAnswerResult(with: externalIdResultIdentifier)?.value as? String,
+            let firstName = taskResult?.findAnswerResult(with: firstNameResultIdentifier)?.value as? String,
             let preconsent = taskResult?.findAnswerResult(with: preConsentResultIdentifier)?.value as? Bool
             else {
                 return nil
         }
 
-        return (externalId, preconsent)
+        return (externalId, firstName, preconsent)
     }
 
     
@@ -58,6 +60,7 @@ class ExternalIDRegistrationViewController: RSDTableStepViewController {
         let signUp: SBBSignUp = SBBSignUp()
         signUp.checkForConsent = true
         signUp.externalId = credentials.externalId
+        signUp.firstName = credentials.firstName
         signUp.password = credentials.externalId
         
         // TODO emm 2018-05-03 if we move this code to BridgeApp, we should prolly use an RSDCohortRule

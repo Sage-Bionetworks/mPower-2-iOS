@@ -65,6 +65,12 @@
                         "prompt":"external ID"
                     },
                     {
+                        "identifier":"firstName",
+                        "dataType":"string",
+                        "uiHint":"textfield",
+                        "prompt":"First name"
+                    },
+                    {
                         "identifier":"preConsent",
                         "dataType":"singleChoice.boolean",
                         "uiHint":"checkbox",
