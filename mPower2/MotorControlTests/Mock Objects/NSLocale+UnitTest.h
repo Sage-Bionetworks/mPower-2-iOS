@@ -1,6 +1,6 @@
 //
 //  NSLocale+UnitTest.h
-//  ResearchStack2
+//  MotorControlTests
 //
 //  Copyright © 2018 Sage Bionetworks. All rights reserved.
 //

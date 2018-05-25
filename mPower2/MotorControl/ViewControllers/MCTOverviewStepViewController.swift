@@ -33,6 +33,24 @@
 
 import Foundation
 
+internal protocol MCTInternalStepController : RSDStepController {
+}
+
+extension MCTInternalStepController {
+    
+    /// Adds a result for whether or not this run represents a "first run". A "first run"
+    /// occurs anytime the user has never run the task before, or hasn't run the task in
+    /// one month.
+    internal func setIsFirstRunResult(_ isFirstRun: Bool) {
+        var firstRunResult = RSDAnswerResultObject(identifier: MCTOverviewStepViewController.firstRunKey, answerType: .boolean)
+        firstRunResult.value = isFirstRun
+        self.taskController.taskPath.topLevelTaskPath.appendAsyncResult(with: firstRunResult)
+    }
+}
+
+extension MCTOverviewStepViewController : MCTInternalStepController {
+}
+
 open class MCTOverviewStepViewController : RSDOverviewStepViewController {
     
     /// The key to store whether or not this is a first run in the task result under.
@@ -83,6 +101,7 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
                 iconTitles[idx].text = iconInfo.title
             }
         }
+        
         // If this is the first time the activity has been done or it has been more than
         // a month since the last run we show the task info, otherwise we show a smaller
         // screen and provide an info button in case the user wants to see the info.
@@ -91,13 +110,8 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
         let lastRun = defaults.object(forKey: timestampKey) as? Date
         let monthAgo = Calendar.current.date(byAdding: .month, value: -1, to: Date())!
         let isFirstRun = (lastRun == nil) || (lastRun! < monthAgo)
-        _setIsFirstRunResult(isFirstRun)
+        setIsFirstRunResult(isFirstRun)
         defaults.set(Date(), forKey: timestampKey)
-        /// The image view that is used to show the animation.
-        var animationView: UIImageView? {
-            return (self.navigationHeader as? RSDStepHeaderView)?.imageView
-        }
-        animationView?.stopAnimating()
         
         // It is critical for the view to be entirely layed out before the next code executes,
         // otherwise the scroll view offset may be computed incorrectly.
@@ -105,6 +119,7 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
         self.statusBarBackgroundView?.layoutIfNeeded()
         if isFirstRun {
             self._scrollToBottom()
+            self._stopAnimating()
         } else if let titleLabel = self.stepTitleLabel {
             // We add a 30 pixel margin to the bottom of the title label so it isn't squished
             // up against the bottom of the scroll view.
@@ -123,13 +138,11 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
         self.scrollViewBackgroundHeightConstraint.constant = placementType == .topMarginBackground ? self.statusBarBackgroundView!.bounds.height : CGFloat(0)
     }
     
-    /// Adds a result for whether or not this run represents a "first run", A "first run"
-    /// occurs anytime the user has never run the task before, or hasn't run the task in
-    /// one month.
-    private func _setIsFirstRunResult(_ isFirstRun: Bool) {
-        var stepResult = RSDAnswerResultObject(identifier: MCTOverviewStepViewController.firstRunKey, answerType: .boolean)
-        stepResult.value = isFirstRun
-        self.taskController.taskPath.appendStepHistory(with: stepResult)
+    /// Stops the animation view from animating.
+    private func _stopAnimating() {
+        /// The image view that is used to show the animation.
+        let animationView = (self.navigationHeader as? RSDStepHeaderView)?.imageView
+        animationView?.stopAnimating()
     }
     
     /// Sets whether the components are hidden, and whether scrolling is enabled
@@ -201,6 +214,8 @@ open class MCTOverviewStepViewController : RSDOverviewStepViewController {
         }) { (_) in
             self.navigationFooter?.shouldShowShadow = true
         }
+        
+        self._stopAnimating()
     }
     
     // Makes the scroll view scroll all the way down.

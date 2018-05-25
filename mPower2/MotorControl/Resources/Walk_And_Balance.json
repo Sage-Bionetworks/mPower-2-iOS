@@ -1,5 +1,5 @@
 {
-    "identifier":"Walk And Balance",
+    "identifier":"WalkAndBalance",
     "shouldHideActions":["goBackward", "skip"],
     "progressMarkers":["volumeUp", "pantsWithPocket","phoneInPocket.1","walk", "balance"],
     "steps":[
@@ -15,8 +15,9 @@
                                }
                             ],
                  "image":{
-                     "imageName":"F-Walking2",
-                     "placementType":"topMarginBackground"
+                     "imageNames":["F-Walking1", "F-Walking2", "F-Walking3", "F-Walking4", "F-Walking5"],
+                     "placementType":"topMarginBackground",
+                     "animationDuration":2.5
                  },
                 "icons": [
                           {
@@ -37,7 +38,7 @@
                         "buttonTitle":"Get started"
                     },
                     "skip":{
-                        "reminderIdentifier":"Walk and Balance"
+                        "reminderIdentifier":"WalkAndBalance"
                     }
                  },
                  "colorTheme":{
@@ -59,9 +60,9 @@
                 "text":"You will be walking continuously at your normal pace for 30 seconds. Try to walk in a straight path. If you need to turn around then turn around as if you are walking around a cone.",
                 "isFirstRunOnly": true,
                 "image":{
-                    "imageNames":["F-Walking1", "F-Walking2", "F-Walking3", "F-Walking4"],
+                    "imageNames":["F-Walking1", "F-Walking2", "F-Walking3", "F-Walking4", "F-Walking5"],
                     "placementType":"topMarginBackground",
-                    "animationDuration":2
+                    "animationDuration":2.5
                 },
                 "colorTheme":{
                     "colorStyle": {
@@ -110,7 +111,7 @@
                  "identifier":"pantsWithPocket",
                  "type":"instruction",
                  "title":"Pants with front pockets",
-                 "text":"Before continuing on with the short walk, please make sure you have front pockets so you have a place to put the phone.",
+                 "text":"Before continuing on with the short walk, please make sure you have front pockets so you have a place to put the phone. If you do not have pockets you can place the phone in the waistband of your pants.",
                  "image":{
                      "imageName":"F-PantsPocket",
                      "placementType":"topBackground"
@@ -128,7 +129,7 @@
                  },
                  "actions":{
                      "goForward":{
-                        "buttonTitle":"I have front pockets"
+                        "buttonTitle":"Got front pockets"
                      }
                  }
              },
@@ -152,11 +153,32 @@
                      "viewIdentifier":"Instruction",
                      "storyboardIdentifier":"ActiveTaskSteps"
                  },
-                 "text":"This test measures your leg movement. and you will need to put your phone in your front pocket.",
+                 "text":"This test measures your leg movement and you will need to put your phone in your front pocket. If you do not have pockets you can place the phone in the waistband of your pants.",
                  "actions":{
                      "goForward":{
-                         "buttonTitle":"The phone is in a pocket"
+                         "buttonTitle":"Putting it in my pocket"
                      }
+                 }
+             },
+             {
+                 "identifier":"countdown.1",
+                 "type":"countdown",
+                 "text":"Begin in...",
+                 "image":{
+                     "imageName":"F-Walking1",
+                     "placementType":"fullsizeBackground"
+                 },
+                 "viewTheme":{
+                     "viewIdentifier":"Countdown",
+                     "storyboardIdentifier":"ActiveTaskSteps"
+                 },
+                 "colorTheme":{
+                     "usesLightStyle":true
+                 },
+                 "duration":5,
+                 "commands":["playSoundOnStart", "transitionAutomatically"],
+                 "spokenInstructions":{
+                     "start":"Place the phone in your pocket."
                  }
              },
              {
@@ -166,38 +188,11 @@
                                  {
                                      "identifier":"motion",
                                      "type":"motion",
-                                     "startStepIdentifier":"countdown",
                                      "requiresBackgroundAudio":true,
                                      "recorderTypes":["accelerometer", "gyro"]
                                  }
                                 ],
                  "steps":[
-                          {
-                              "identifier":"countdown",
-                              "type":"countdown",
-                              "text":"Begin in...",
-                              "image":{
-                                  "imageName":"F-Walking1",
-                                  "placementType":"fullsizeBackground"
-                              },
-                              "viewTheme":{
-                                  "viewIdentifier":"Countdown",
-                                  "storyboardIdentifier":"ActiveTaskSteps"
-                              },
-                              "colorTheme":{
-                                  "usesLightStyle":true
-                              },
-                              "duration":5,
-                              "commands":["playSoundOnStart", "transitionAutomatically"],
-                              "spokenInstructions":{
-                                  "start":"Place the phone in your pocket."
-                              },
-                              "actions":{
-                                  "skip":{
-                                      "skipToIdentifier":"countdown"
-                                  }
-                              }
-                          },
                           {
                               "identifier":"motion",
                               "type":"active",
@@ -213,6 +208,18 @@
                               "viewTheme":{
                                   "viewIdentifier":"Action",
                                   "storyboardIdentifier":"ActiveTaskSteps"
+                              },
+                              "actions":{
+                                  "skip":{
+                                      "type":"navigation",
+                                      "skipToIdentifier":"countdown.1",
+                                      "buttonTitle": "Restart test"
+                                  },
+                                  "learnMore":{
+                                      "type":"navigation",
+                                      "skipToIdentifier": "walkInstructions",
+                                      "buttonTitle": "Review instructions"
+                                  }
                               },
                               "commands":["transitionAutomatically", "shouldDisableIdleTimer", "vibrate", "playSound"],
                               "spokenInstructions":{
@@ -258,7 +265,7 @@
                  "identifier":"phoneInPocket.2",
                  "type":"instruction",
                  "title":"Put the phone in your pocket",
-                 "text":"This test measures your leg movement. and you will need to put your phone in your front pocket.",
+                 "text":"This test measures how well you balance and you will need to put your phone in your front pocket. If you do not have pockets you can place the phone in the waistband of your pants.",
                  "isFirstRunOnly": true,
                  "image":{
                      "imageNames":["F-PhonePocket1", "F-PhonePocket2", "F-PhonePocket3"],
@@ -278,12 +285,12 @@
                  },
                  "actions":{
                      "goForward":{
-                         "buttonTitle":"The phone is in a pocket"
+                         "buttonTitle":"Putting it in my pocket"
                      }
                  }
              },
              {
-                 "identifier":"countdown",
+                 "identifier":"countdown.2",
                  "type":"countdown",
                  "text":"Begin in...",
                  "isFirstRunOnly": true,
@@ -311,7 +318,6 @@
                                  {
                                  "identifier":"motion",
                                  "type":"motion",
-                                 "startStepIdentifier":"countdown",
                                  "requiresBackgroundAudio":true,
                                  "recorderTypes":[
                                                   "accelerometer",
@@ -337,8 +343,20 @@
                                   "viewIdentifier":"Action",
                                   "storyboardIdentifier":"ActiveTaskSteps"
                               },
+                              "actions":{
+                                  "skip":{
+                                      "type":"navigation",
+                                      "skipToIdentifier":"countdown.1",
+                                      "buttonTitle": "Restart test"
+                                  },
+                                  "learnMore":{
+                                      "type":"navigation",
+                                      "skipToIdentifier": "walkInstructions",
+                                      "buttonTitle": "Review instructions"
+                                  }
+                              },
                               "spokenInstructions":{
-                                  "start":"Turn around 360 degress, then stand still, with your feet about shoulder-width apart. Rest your arms at your side and try to not move.",
+                                  "start":"Turn around 360 degrees, then stand still, with your feet about shoulder-width apart. Rest your arms at your side and try to not move.",
                                   "halfway":"Halfway done.",
                                   "23":"Almost done."
                               }

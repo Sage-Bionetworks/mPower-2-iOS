@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14112" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -16,11 +16,11 @@
         <scene sceneID="akz-t6-sJ1">
             <objects>
                 <viewController storyboardIdentifier="Overview" title="Task Info Step" id="6tO-9u-CiK" userLabel="Overview Step" customClass="MCTOverviewStepViewController" customModule="MotorControl" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="jIF-2E-f2v" customClass="RSDStepNavigationView" customModule="ResearchStack2UI">
+                    <view key="view" contentMode="scaleToFill" id="jIF-2E-f2v" customClass="RSDStepNavigationView" customModule="ResearchUI">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="1200"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bkm-yb-Zxn" customClass="RSDStatusBarBackgroundView" customModule="ResearchStack2UI">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bkm-yb-Zxn" customClass="RSDStatusBarBackgroundView" customModule="ResearchUI">
                                 <rect key="frame" x="0.0" y="0.0" width="450" height="20"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
@@ -30,7 +30,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iS9-lR-8qX" userLabel="Content View">
                                         <rect key="frame" x="0.0" y="0.0" width="450" height="863.5"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n41-Nm-4eq" customClass="RSDNavigationHeaderView" customModule="ResearchStack2UI">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n41-Nm-4eq" customClass="RSDNavigationHeaderView" customModule="ResearchUI">
                                                 <rect key="frame" x="0.0" y="0.0" width="450" height="550.5"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zyn-Pc-VMn">
@@ -247,7 +247,7 @@
                                 </constraints>
                                 <state key="normal" image="closeActivity"/>
                             </button>
-                            <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vpu-4Q-qWD" customClass="RSDGenericNavigationFooterView" customModule="ResearchStack2UI">
+                            <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vpu-4Q-qWD" customClass="RSDGenericNavigationFooterView" customModule="ResearchUI">
                                 <rect key="frame" x="0.0" y="1040" width="450" height="160"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -311,7 +311,7 @@
         <scene sceneID="v8b-ao-kSQ">
             <objects>
                 <viewController storyboardIdentifier="Action" id="kx5-nS-n0F" customClass="MCTActiveStepViewController" customModule="MotorControl" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="mlx-p8-ccw" customClass="RSDStepHeaderView" customModule="ResearchStack2UI">
+                    <view key="view" contentMode="scaleToFill" id="mlx-p8-ccw" customClass="RSDStepHeaderView" customModule="ResearchUI">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -321,17 +321,17 @@
                                     <constraint firstAttribute="width" secondItem="Z9U-qL-Bij" secondAttribute="height" multiplier="375:647" id="YXH-q6-3wn"/>
                                 </constraints>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CRK-Yd-4Pa" customClass="RSDCountdownDial" customModule="ResearchStack2UI">
-                                <rect key="frame" x="49.5" y="157.5" width="222" height="222"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CRK-Yd-4Pa" customClass="RSDCountdownDial" customModule="ResearchUI">
+                                <rect key="frame" x="49" y="157.5" width="222" height="222"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SECONDS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Gl-I3-Byg" userLabel="Unit Label">
-                                        <rect key="frame" x="73.5" y="157" width="75" height="19.5"/>
+                                        <rect key="frame" x="73" y="157" width="75" height="19.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OoL-gH-k3I" userLabel="Second Count Label">
-                                        <rect key="frame" x="50.5" y="30" width="120" height="119.5"/>
+                                        <rect key="frame" x="51" y="30" width="120" height="119.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="100"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -371,21 +371,18 @@
                                 </constraints>
                                 <state key="normal" image="closeActivity"/>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a9c-PV-TEq" userLabel="Restart Button" customClass="RSDRoundedButton" customModule="ResearchStack2UI">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a9c-PV-TEq" userLabel="Restart Button" customClass="RSDRoundedButton" customModule="ResearchUI">
                                 <rect key="frame" x="28" y="423.5" width="264" height="52"/>
                                 <state key="normal" title="Restart Test"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="isSecondaryButton" value="YES"/>
                                 </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="restartButtonTapped:" destination="kx5-nS-n0F" eventType="touchUpInside" id="aK5-8q-QKh"/>
-                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xlT-Pj-FXY" userLabel="Review Button" customClass="RSDUnderlinedButton" customModule="ResearchStack2UI">
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xlT-Pj-FXY" userLabel="Review Button" customClass="RSDUnderlinedButton" customModule="ResearchUI">
                                 <rect key="frame" x="85.5" y="505.5" width="149" height="32.5"/>
                                 <state key="normal" title="Review Instructions"/>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AQ2-43-2k3" customClass="RSDStatusBarBackgroundView" customModule="ResearchStack2UI">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AQ2-43-2k3" customClass="RSDStatusBarBackgroundView" customModule="ResearchUI">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="20"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <viewLayoutGuide key="safeArea" id="6Ol-It-Hby"/>
@@ -423,14 +420,14 @@
                         <connections>
                             <outlet property="cancelButton" destination="a9L-sM-gnJ" id="MT1-cq-JgO"/>
                             <outlet property="imageView" destination="Z9U-qL-Bij" id="ryn-uZ-yUd"/>
+                            <outlet property="learnMoreButton" destination="xlT-Pj-FXY" id="kVE-3Y-FmK"/>
+                            <outlet property="skipButton" destination="a9c-PV-TEq" id="qAo-hZ-mc4"/>
                             <outlet property="titleLabel" destination="Kqn-vH-L1X" id="6QI-wl-HKA"/>
                         </connections>
                     </view>
                     <connections>
                         <outlet property="countdownDial" destination="CRK-Yd-4Pa" id="2Dh-85-TAK"/>
                         <outlet property="countdownLabel" destination="OoL-gH-k3I" id="1d8-Bi-iW4"/>
-                        <outlet property="navigationHeader" destination="mlx-p8-ccw" id="Tar-BD-bWd"/>
-                        <outlet property="restartButton" destination="a9c-PV-TEq" id="ScN-Zz-O3d"/>
                         <outlet property="statusBarBackgroundView" destination="AQ2-43-2k3" id="WJC-SY-FIR"/>
                         <outlet property="unitLabel" destination="4Gl-I3-Byg" id="yfX-kv-8gw"/>
                     </connections>
@@ -442,8 +439,8 @@
         <!--Countdown Step View Controller-->
         <scene sceneID="SB1-Dp-A6s">
             <objects>
-                <viewController storyboardIdentifier="Countdown" id="DiW-Sz-hwr" customClass="RSDCountdownStepViewController" customModule="ResearchStack2UI" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="GS6-LM-X1w" customClass="RSDStepHeaderView" customModule="ResearchStack2UI">
+                <viewController storyboardIdentifier="Countdown" id="DiW-Sz-hwr" customClass="MCTCountdownStepViewController" customModule="MotorControl" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="GS6-LM-X1w" customClass="RSDStepHeaderView" customModule="ResearchUI">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -460,7 +457,7 @@
                                 </constraints>
                                 <state key="normal" image="closeActivity"/>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Qh-cg-kfP" userLabel="Pause Button" customClass="RSDRoundedButton" customModule="ResearchStack2UI">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Qh-cg-kfP" userLabel="Pause Button" customClass="RSDRoundedButton" customModule="ResearchUI">
                                 <rect key="frame" x="28" y="423.5" width="264" height="52"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Pause">
@@ -488,11 +485,11 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4ph-h6-gCc" customClass="RSDUnderlinedButton" customModule="ResearchStack2UI">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4ph-h6-gCc" customClass="RSDUnderlinedButton" customModule="ResearchUI">
                                 <rect key="frame" x="85.5" y="505.5" width="149" height="32.5"/>
                                 <state key="normal" title="Review Instructions"/>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G2D-5j-sDp" customClass="RSDStatusBarBackgroundView" customModule="ResearchStack2UI">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G2D-5j-sDp" customClass="RSDStatusBarBackgroundView" customModule="ResearchUI">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="20"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
@@ -524,12 +521,12 @@
                         <connections>
                             <outlet property="cancelButton" destination="5aE-sq-nnA" id="Nj8-tY-RPt"/>
                             <outlet property="imageView" destination="ePz-9Y-VGg" id="ocU-eT-z7M"/>
+                            <outlet property="learnMoreButton" destination="4ph-h6-gCc" id="h1e-7e-4E6"/>
                             <outlet property="textLabel" destination="9un-Qi-dJY" id="HWg-F6-vS8"/>
                         </connections>
                     </view>
                     <connections>
                         <outlet property="countdownLabel" destination="aga-Uj-SL9" id="EgC-Wk-4IR"/>
-                        <outlet property="navigationHeader" destination="GS6-LM-X1w" id="t8J-ZS-sOm"/>
                         <outlet property="pauseButton" destination="9Qh-cg-kfP" id="Xzj-75-aMt"/>
                         <outlet property="statusBarBackgroundView" destination="G2D-5j-sDp" id="Pzl-58-s9e"/>
                     </connections>
@@ -546,11 +543,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iIr-ya-mvM" userLabel="Status Background" customClass="RSDStatusBarBackgroundView" customModule="ResearchStack2UI">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iIr-ya-mvM" userLabel="Status Background" customClass="RSDStatusBarBackgroundView" customModule="ResearchUI">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="20"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rnw-3v-fHb" customClass="RSDNavigationHeaderView" customModule="ResearchStack2UI">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rnw-3v-fHb" customClass="RSDNavigationHeaderView" customModule="ResearchUI">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="950" text="You just completed a Walk and Balance activity." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hTI-qh-bqI">
@@ -561,7 +558,7 @@
                                         </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vl9-XW-t8b" customClass="RSDRoundedButton" customModule="ResearchStack2UI">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vl9-XW-t8b" customClass="RSDRoundedButton" customModule="ResearchUI">
                                         <rect key="frame" x="24" y="498" width="272" height="52"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <state key="normal" title="Button">
@@ -603,7 +600,7 @@
                                 </constraints>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" image="Completion-WalkAndBalance" translatesAutoresizingMaskIntoConstraints="NO" id="8Ic-xi-B4w">
-                                <rect key="frame" x="53.5" y="42" width="213" height="165"/>
+                                <rect key="frame" x="53.5" y="41.5" width="213" height="165"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
@@ -643,7 +640,7 @@
         <scene sceneID="Eb5-7g-8Os">
             <objects>
                 <viewController storyboardIdentifier="Instruction" title="Task Info Step" id="egW-fK-mOE" userLabel="Instruction Step" customClass="MCTInstructionStepViewController" customModule="MotorControl" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="5Cp-ii-wjf" customClass="RSDStepNavigationView" customModule="ResearchStack2UI">
+                    <view key="view" contentMode="scaleToFill" id="5Cp-ii-wjf" customClass="RSDStepNavigationView" customModule="ResearchUI">
                         <rect key="frame" x="0.0" y="0.0" width="300" height="800"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -653,7 +650,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F8X-9S-6pY" userLabel="Content View">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="532"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vdq-35-6bm" customClass="RSDNavigationHeaderView" customModule="ResearchStack2UI">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vdq-35-6bm" customClass="RSDNavigationHeaderView" customModule="ResearchUI">
                                                 <rect key="frame" x="0.0" y="0.0" width="300" height="373"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xm8-pm-Nnm">
@@ -669,7 +666,7 @@
                                                             <constraint firstAttribute="width" secondItem="ViV-jH-oXA" secondAttribute="height" multiplier="3126:3680" id="sii-dC-Ovk"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <view autoresizesSubviews="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="QjI-Xt-RjZ" customClass="RSDStepProgressView" customModule="ResearchStack2UI">
+                                                    <view autoresizesSubviews="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="QjI-Xt-RjZ" customClass="RSDStepProgressView" customModule="ResearchUI">
                                                         <rect key="frame" x="0.0" y="365" width="300" height="8"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
@@ -766,11 +763,11 @@
                                 </constraints>
                                 <state key="normal" image="closeActivity"/>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9q9-9M-kV3" customClass="RSDStatusBarBackgroundView" customModule="ResearchStack2UI">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9q9-9M-kV3" customClass="RSDStatusBarBackgroundView" customModule="ResearchUI">
                                 <rect key="frame" x="0.0" y="0.0" width="300" height="20"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bKN-FP-EgA" customClass="RSDGenericNavigationFooterView" customModule="ResearchStack2UI">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bKN-FP-EgA" customClass="RSDGenericNavigationFooterView" customModule="ResearchUI">
                                 <rect key="frame" x="0.0" y="700" width="300" height="100"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -824,7 +821,7 @@
         <scene sceneID="rfD-g5-qgL">
             <objects>
                 <viewController storyboardIdentifier="Tapping" id="5TM-KJ-KKp" customClass="MCTTappingStepViewController" customModule="MotorControl" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="6ZJ-Gt-NcM" customClass="RSDStepHeaderView" customModule="ResearchStack2UI">
+                    <view key="view" contentMode="scaleToFill" id="6ZJ-Gt-NcM" customClass="RSDStepHeaderView" customModule="ResearchUI">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -834,11 +831,11 @@
                                     <constraint firstAttribute="width" secondItem="ZOp-KL-twf" secondAttribute="height" multiplier="375:647" id="QCg-dA-PIv"/>
                                 </constraints>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fwv-VO-V1z" customClass="RSDStatusBarBackgroundView" customModule="ResearchStack2UI">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fwv-VO-V1z" customClass="RSDStatusBarBackgroundView" customModule="ResearchUI">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="20"/>
                                 <viewLayoutGuide key="safeArea" id="kNw-UD-QJc"/>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="din-4l-hhu" customClass="RSDCountdownDial" customModule="ResearchStack2UI">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="din-4l-hhu" customClass="RSDCountdownDial" customModule="ResearchUI">
                                 <rect key="frame" x="57" y="157.5" width="206.5" height="206.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SECONDS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c07-hW-t1h" userLabel="Unit Label">
@@ -912,15 +909,12 @@
                                     <constraint firstAttribute="width" secondItem="MSP-pP-izs" secondAttribute="width" multiplier="2" constant="40" id="poi-fA-AXo"/>
                                 </constraints>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pKi-WA-f7L" userLabel="Next Button" customClass="RSDRoundedButton" customModule="ResearchStack2UI">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pKi-WA-f7L" userLabel="Next Button" customClass="RSDRoundedButton" customModule="ResearchUI">
                                 <rect key="frame" x="28" y="416" width="264" height="52"/>
                                 <state key="normal" title="Continue"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="isSecondaryButton" value="YES"/>
                                 </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="restartButtonTapped:" destination="kx5-nS-n0F" eventType="touchUpInside" id="a6M-Nz-mfp"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.32568424940000001" green="0.25694268939999998" blue="0.52321022750000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -981,11 +975,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pBO-sP-e9z" userLabel="Status Background" customClass="RSDStatusBarBackgroundView" customModule="ResearchStack2UI">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pBO-sP-e9z" userLabel="Status Background" customClass="RSDStatusBarBackgroundView" customModule="ResearchUI">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="20"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bcx-92-4sa" customClass="RSDNavigationHeaderView" customModule="ResearchStack2UI">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bcx-92-4sa" customClass="RSDNavigationHeaderView" customModule="ResearchUI">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WMy-P5-8tT" customClass="MCTCompletionGradient" customModule="MotorControl" customModuleProvider="target">
@@ -1013,7 +1007,7 @@
                                         </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6bl-y4-HOm" customClass="RSDRoundedButton" customModule="ResearchStack2UI">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6bl-y4-HOm" customClass="RSDRoundedButton" customModule="ResearchUI">
                                         <rect key="frame" x="24" y="496" width="272" height="52"/>
                                         <state key="normal" title="Button"/>
                                     </button>
@@ -1131,8 +1125,8 @@
     <resources>
         <image name="Completion-FingerTapping" width="157" height="197"/>
         <image name="Completion-WalkAndBalance" width="221" height="158"/>
-        <image name="F-Walking1" width="750" height="885"/>
-        <image name="F-Walking2" width="750" height="885"/>
+        <image name="F-Walking1" width="750" height="1080"/>
+        <image name="F-Walking2" width="750" height="1080"/>
         <image name="PantsWithPockets" width="68" height="68"/>
         <image name="TapLeft1" width="750" height="913"/>
         <image name="closeActivity" width="32" height="32"/>

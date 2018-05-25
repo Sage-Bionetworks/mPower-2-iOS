@@ -90,7 +90,7 @@ class NavigationTests: XCTestCase {
     private func _insertIsFirstRunResult(for taskController: TestTaskController, isFirstRun: Bool) {
         var answerResult = RSDAnswerResultObject(identifier: "isFirstRun", answerType: .boolean)
         answerResult.value = isFirstRun
-        self.taskController.taskPath.appendStepHistory(with: answerResult)
+        self.taskController.taskPath.topLevelTaskPath.appendAsyncResult(with: answerResult)
     }
     
     private func _setupInstructionStepTest() {
