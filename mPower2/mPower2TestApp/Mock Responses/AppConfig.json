@@ -25,12 +25,12 @@
                    }, {
                    "identifier": "Measuring",
                    "title": "Measuring",
-                   "activityIdentifiers": ["Tapping", "Walk and Balance", "Tremor"],
+                   "activityIdentifiers": ["Tapping", "WalkAndBalance", "Tremor"],
                    "schedulePlanGuid": "3d898a6f-1ef2-4ece-9e9f-025d94bcd130"
                    }, {
                    "identifier": "Study Burst",
                    "title": "Study Burst",
-                   "activityIdentifiers": ["Tapping", "Tremor", "Walk and Balance", "study-burst-task"]
+                   "activityIdentifiers": ["Tapping", "Tremor", "WalkAndBalance", "study-burst-task"]
                    }],
         "tasks": [{
                   "identifier": "Triggers",
@@ -492,7 +492,11 @@
                          "type": "SchemaReference"
                          }, {
                          "id": "Triggers",
-                         "revision": 2,
+                         "revision": 3,
+                         "type": "SchemaReference"
+                         }, {
+                         "id": "WalkAndBalance",
+                         "revision": 1,
                          "type": "SchemaReference"
                          }],
     "version": 11,
