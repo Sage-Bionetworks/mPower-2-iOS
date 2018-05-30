@@ -108,8 +108,11 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
                                                    image: nil,
                                                    activityIdentifiers: [.triggersTask, .medicationTask, .symptomsTask],
                                                    notificationIdentifier: nil,
-                                                   schedulePlanGuid: "e24e6601-1822-48b0-8770-00870d870708",
-                                                   schedulePlanGuidMap: nil)
+                                                   schedulePlanGuid: nil,
+                                                   activityGuidMap: [
+                                                    "Medication": "273c4518-7cb6-4496-b1dd-c0b5bf291b09",
+                                                    "Symptoms": "60868b71-30a4-4e04-a00b-3aca6651deb2",
+                                                    "Triggers": "b0f07b7e-408e-4d50-9368-8220971e570c"])
         
         activityGroup.activityIdentifiers.forEach { (identifier) in
             switch identifier {
@@ -148,7 +151,7 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
                                                    activityIdentifiers: [.tappingTask, .tremorTask, .walkAndBalanceTask],
                                                    notificationIdentifier: nil,
                                                    schedulePlanGuid: "3d898a6f-1ef2-4ece-9e9f-025d94bcd130",
-                                                   schedulePlanGuidMap: nil)
+                                                   activityGuidMap: nil)
     
         // measuring tasks are persistent.
         let finishedTodayTasks = studySetup.finishedTodayTasks
@@ -204,7 +207,7 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
                                                    activityIdentifiers: [.studyBurstCompletedTask, .tappingTask, .tremorTask, .walkAndBalanceTask],
                                                    notificationIdentifier: nil,
                                                    schedulePlanGuid: nil,
-                                                   schedulePlanGuidMap: nil)
+                                                   activityGuidMap: nil)
         
         // only add the study burst marker for this group, but add one for each day.
         let createdOn = studySetup.createdOn
