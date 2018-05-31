@@ -48,19 +48,28 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
         return 50.0
     }
     
-    private let kCollectionCellIdentifier = "TaskCollectionViewCell"
-    private let kMinCellHorizontalSpacing: CGFloat = 5.0
-
-    public var shouldShowTopShadow = true
+    public let kMinCellHorizontalSpacing: CGFloat = 5.0
     public var delegate: TaskBrowserViewControllerDelegate?
+    public var scheduleManagers: [SBAScheduleManager]?
     
-    lazy public private(set) var scheduleManagers: [SBAScheduleManager] = {
-        let groupIdentifiers: [RSDIdentifier] = [.trackingTaskGroup, .measuringTaskGroup]
-        return groupIdentifiers.map { DataSourceManager.shared.scheduleManager(with: $0) }
-    }()
+    open var shouldShowTopShadow: Bool {
+        return true
+    }
+    open var shouldShowTabs: Bool {
+        guard let scheduleManagers = scheduleManagers else {
+            return false
+        }
+        return scheduleManagers.count > 1
+    }
+    open var tasks: [RSDTaskInfo] {
+        guard let group = selectedScheduleManager?.activityGroup else {
+            return [RSDTaskInfo]()
+        }
+        return group.tasks
+    }
     
     func scheduleManager(with identifier: String) -> SBAScheduleManager? {
-        return scheduleManagers.first(where: { $0.identifier == identifier })
+        return scheduleManagers?.first(where: { $0.identifier == identifier })
     }
 
     private var selectedScheduleManager: SBAScheduleManager!
@@ -82,11 +91,10 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
         tabButtonStackView.arrangedSubviews.forEach({ $0.removeFromSuperview() })
         
         // Let's select the first task group by default.
-        selectedScheduleManager = scheduleManagers.first
+        selectedScheduleManager = scheduleManagers?.first
         
-        // If we have more than one TaskGroup, we create tabs for each group. If we don't, we do not
-        // create tabs and we set the height of the tabButtonStackView to 0, essentially hiding it
-        scheduleManagers.forEach { (manager) in
+        // Create tabs for each schedule manager
+        scheduleManagers?.forEach { (manager) in
             manager.reloadData()
             let tabView = TaskBrowserTabView(frame: .zero, taskGroupIdentifier: manager.identifier)
             tabView.title = manager.activityGroup?.title
@@ -98,15 +106,23 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
             }
         }
         
-        // set the tabView height
-        tabsViewHeightConstraint.constant = TaskBrowserViewController.tabsHeight()
-        
+        // set the tabView height and hide or show it, along with the rule just below
+        tabsViewHeightConstraint.constant = shouldShowTabs ? TaskBrowserViewController.tabsHeight() : 0.0
+        tabButtonStackView.isHidden = !shouldShowTabs
+        ruleView.isHidden = !shouldShowTabs
+
         // Hide or show our shadow and rule views
         shadowView.isHidden = !shouldShowTopShadow
-        ruleView.isHidden = false
 
         // Reload our data
         collectionView.reloadData()
+    }
+    
+    func startTask(for taskInfo: RSDTaskInfo) {
+        let (taskPath, _, _) = selectedScheduleManager.instantiateTaskPath(for: taskInfo)
+        let vc = RSDTaskViewController(taskPath: taskPath)
+        vc.delegate = self
+        self.present(vc, animated: true, completion: nil)
     }
     
     // MARK: Instance methods
@@ -172,62 +188,52 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
 
 extension TaskBrowserViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    @objc
+    open var collectionCellIdentifier: String {
+        return "TaskCollectionViewCell"
+    }
+    
     // MARK: UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let group = selectedScheduleManager?.activityGroup else {
-            return 0
-        }
-        return group.activityIdentifiers.count
+        return tasks.count
     }
     
     // MARK: UICollectionViewDelegate
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: kCollectionCellIdentifier, for: indexPath) as? TaskCollectionViewCell
-        if let selectedTaskGroup = selectedScheduleManager?.activityGroup {
-            
-            let task = selectedTaskGroup.tasks[indexPath.row]
-            cell?.image = nil
-            task.imageVendor?.fetchImage(for: collectionView.layoutAttributesForItem(at: indexPath)?.size ?? .zero) { (_, img) in
-                cell?.image = img
-            }
-            cell?.title = task.title?.uppercased()
-            cell?.isCompleted = selectedScheduleManager.isCompleted(for: task, on: Date())            
-        }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: collectionCellIdentifier, for: indexPath) as? TaskCollectionViewCell
+        let task = tasks[indexPath.row]
+        cell?.image = task.iconWhite
+        cell?.title = task.title?.uppercased()
+        cell?.isCompleted = selectedScheduleManager.isCompleted(for: task, on: Date())
         return cell ?? UICollectionViewCell()
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    @objc
+    open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        guard let selectedTaskGroup = selectedScheduleManager?.activityGroup else {
-            return
-        }
-
         // Get our task and present it
-        let taskInfo = selectedTaskGroup.tasks[indexPath.row]
-        let (taskPath, _, _) = selectedScheduleManager.instantiateTaskPath(for: taskInfo)
-        let vc = RSDTaskViewController(taskPath: taskPath)
-        vc.delegate = self
-        self.present(vc, animated: true, completion: nil)
+        startTask(for: tasks[indexPath.row])
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return cellItemSpacing(for: collectionView, layout: collectionViewLayout)
+    @objc
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return horizontalSpacing(for: collectionView, layout: collectionViewLayout)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         
         guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else {
                 return collectionView.contentInset
         }
 
-        let spacing = cellItemSpacing(for: collectionView, layout: collectionViewLayout)
+        let spacing = horizontalSpacing(for: collectionView, layout: collectionViewLayout)
         return UIEdgeInsetsMake(flowLayout.sectionInset.top, spacing, flowLayout.sectionInset.bottom, spacing)
     }
     
-    func cellItemSpacing(for collectionView: UICollectionView, layout: UICollectionViewLayout) -> CGFloat {
-        guard let selectedTaskGroup = selectedScheduleManager?.activityGroup,
-            let flowLayout = layout as? UICollectionViewFlowLayout else {
+    @objc
+    open func horizontalSpacing(for collectionView: UICollectionView, layout: UICollectionViewLayout) -> CGFloat {
+        guard let flowLayout = layout as? UICollectionViewFlowLayout else {
                 return kMinCellHorizontalSpacing
         }
         
@@ -241,8 +247,8 @@ extension TaskBrowserViewController: UICollectionViewDelegate, UICollectionViewD
         // view to be just partially visible - ie. half on screen, half off screen - to inform the user
         // that they can scroll to the right to get more.
         
-        let totalCellWidth = flowLayout.itemSize.width * CGFloat(selectedTaskGroup.tasks.count)
-        let totalSpacingWidth = kMinCellHorizontalSpacing * (CGFloat(selectedTaskGroup.tasks.count) + 1)
+        let totalCellWidth = flowLayout.itemSize.width * CGFloat(tasks.count)
+        let totalSpacingWidth = kMinCellHorizontalSpacing * (CGFloat(tasks.count) + 1)
         let totalWidth = totalCellWidth + totalSpacingWidth
         
         if totalWidth > collectionView.bounds.width {
@@ -254,7 +260,7 @@ extension TaskBrowserViewController: UICollectionViewDelegate, UICollectionViewD
         }
         else {
             // All cells will fit, so use a spacing value that centers them horizontally
-            let cellCount = CGFloat(selectedTaskGroup.tasks.count)
+            let cellCount = CGFloat(tasks.count)
             return (collectionView.bounds.width - (cellCount * flowLayout.itemSize.width)) / (cellCount + 1.0)
         }
     }
@@ -337,7 +343,8 @@ protocol TaskBrowserTabViewDelegate {
         setNeedsDisplay()
     }
     
-    @objc func tabSelected() {
+    @objc
+    func tabSelected() {
         if let delegate = delegate,
             let taskGroupIdentifier = taskGroupIdentifier {
             delegate.taskGroupSelected(identifier: taskGroupIdentifier)
