@@ -53,7 +53,7 @@ class TodayViewController: UIViewController {
     @IBOutlet weak var headerMessageLabel: UILabel!
     @IBOutlet weak var actionBarView: UIView!
     @IBOutlet weak var actionBarTitleLabel: UILabel!
-    @IBOutlet weak var actionBarDetailsLabel: UILabel!
+    @IBOutlet weak var actionBarDetailsLabel: StudyBurstProgressExpirationLabel!
     @IBOutlet weak var progressCircleView: ProgressCircleView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var taskBrowserContainerView: UIView!
@@ -126,6 +126,10 @@ class TodayViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == kTaskBrowserSegueIdentifier,
             let taskBrowser = segue.destination as? TaskBrowserViewController {
+            
+            let groupIdentifiers: [RSDIdentifier] = [.trackingTaskGroup, .measuringTaskGroup]
+            let scheduleManagers = groupIdentifiers.map { DataSourceManager.shared.scheduleManager(with: $0) }
+            taskBrowser.scheduleManagers = scheduleManagers
             taskBrowser.delegate = self
             taskBrowserVC = taskBrowser
         }
@@ -170,6 +174,9 @@ class TodayViewController: UIViewController {
                 self.updateTableViewIfNeeded()
             }
         }
+        
+        // Set ourselves as delegate on our progress label so we can provide progress expiry date
+        actionBarDetailsLabel.delegate = self
     }
     
     func updateTaskBrowserPosition(animated: Bool) {
@@ -246,7 +253,7 @@ class TodayViewController: UIViewController {
             else {
                 actionBarTitleLabel.text = studyBurstManager.activityGroup!.title
                 if let expiresOn = studyBurstManager.expiresOn {
-                    updateStudyBurstExpirationTime(expiresOn)
+                    actionBarDetailsLabel.updateStudyBurstExpirationTime(expiresOn)
                 }
                 else {
                     actionBarDetailsLabel.text = Localization.localizedStringWithFormatKey("ACTIVITIES_TO_DO_%@", NSNumber(value: studyBurstManager.totalActivitiesCount))
@@ -258,51 +265,13 @@ class TodayViewController: UIViewController {
         }
     }
     
-    func updateStudyBurstExpirationTime(_ expiresOn: Date) {
-
-        let formatter = DateComponentsFormatter()
-        formatter.allowedUnits = [.hour, .minute, .second]
-        formatter.collapsesLargestUnit = false
-        formatter.zeroFormattingBehavior = .pad
-        formatter.allowsFractionalUnits = false
-        formatter.unitsStyle = .positional
-        let timeString = formatter.string(from: Date(), to: expiresOn)!
-        
-        let marker = "%@"
-        let format = Localization.localizedString("PROGRESS_EXPIRES_%@")
-        
-        let mutableString = NSMutableString(string: format)
-        let markerRange = mutableString.range(of: marker)
-        mutableString.replaceCharacters(in: markerRange, with: timeString)
-        let boldRange = NSRange(location: markerRange.location, length: (timeString as NSString).length)
-        let attributedString = NSMutableAttributedString(string: mutableString as String)
-        let fullRange = NSRange(location: 0, length: attributedString.length)
-        
-        let fontSize: CGFloat = 14
-        let font = UIFont.italicSystemFont(ofSize: fontSize)
-        attributedString.addAttribute(.font, value: font, range: fullRange)
-        if let fontDescriptor = font.fontDescriptor.withSymbolicTraits([.traitItalic, .traitBold]) {
-            let boldFont = UIFont(descriptor: fontDescriptor, size: fontSize)
-            attributedString.addAttribute(.font, value: boldFont, range: boldRange)
-        }
-        actionBarDetailsLabel.attributedText = attributedString
-        
-        // Fire update in 1 second.
-        let delay = DispatchTime.now() + .seconds(1)
-        DispatchQueue.main.asyncAfter(deadline: delay) {
-            if let expiresOn = self.studyBurstManager.expiresOn {
-                self.updateStudyBurstExpirationTime(expiresOn)
-            }
-        }
-    }
-    
     func updateProgressCircle() {
         
         if hasActiveSurvey {
             progressCircleView.isHidden = false
             progressCircleView.progress = 0.5
             // TODO: syoung 05/21/2018 Get the health survey icon from Stockard
-            let healthIcon = UIImage(named: "activitiesTaskIconSmall")
+            let healthIcon = UIImage(named: "activitiesTaskIcon")
             progressCircleView.displayIcon(image: healthIcon)
         }
         else if hasActiveStudyBurst {
@@ -394,8 +363,18 @@ class TodayViewController: UIViewController {
             
         }
         else if hasActiveStudyBurst {
-            
+            if let vc = StudyBurstViewController.instantiate(),
+                let nc = self.navigationController {
+                vc.scheduleManager = studyBurstManager
+                nc.show(vc, sender: self)
+            }
         }
+    }
+}
+
+extension TodayViewController: StudyBurstProgressExpirationLabelDelegate {
+    func studyBurstExpiresOn() -> Date? {
+        return self.studyBurstManager.expiresOn
     }
 }
 
@@ -523,14 +502,64 @@ class TodayTableViewCell: UITableViewCell {
 }
 
 extension RSDTaskInfoObject {
-    var iconSmall: UIImage? {
-        get {
-            return UIImage(named: "\(self.identifier)TaskIconSmall")
-        }
-    }
     var pluralTerm: String {
         get {
             return Localization.localizedString("TASK_PLURAL_TERM_FOR_\(identifier.uppercased())")
         }
     }
+}
+
+extension RSDTaskInfo {
+    var iconWhite: UIImage? {
+        get {
+            return UIImage(named: "\(self.identifier)TaskIconWhite")
+        }
+    }
+}
+
+protocol StudyBurstProgressExpirationLabelDelegate {
+    func studyBurstExpiresOn() -> Date?
+}
+class StudyBurstProgressExpirationLabel: UILabel {
+    
+    var delegate: StudyBurstProgressExpirationLabelDelegate?
+    
+    func updateStudyBurstExpirationTime(_ expiresOn: Date) {
+        
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.hour, .minute, .second]
+        formatter.collapsesLargestUnit = false
+        formatter.zeroFormattingBehavior = .pad
+        formatter.allowsFractionalUnits = false
+        formatter.unitsStyle = .positional
+        let timeString = formatter.string(from: Date(), to: expiresOn)!
+        
+        let marker = "%@"
+        let format = Localization.localizedString("PROGRESS_EXPIRES_%@")
+        
+        let mutableString = NSMutableString(string: format)
+        let markerRange = mutableString.range(of: marker)
+        mutableString.replaceCharacters(in: markerRange, with: timeString)
+        let boldRange = NSRange(location: markerRange.location, length: (timeString as NSString).length)
+        let attributedString = NSMutableAttributedString(string: mutableString as String)
+        let fullRange = NSRange(location: 0, length: attributedString.length)
+        
+        let fontSize: CGFloat = 14
+        let font = self.font ?? UIFont.italicSystemFont(ofSize: fontSize)
+        attributedString.addAttribute(.font, value: font, range: fullRange)
+        if let fontDescriptor = font.fontDescriptor.withSymbolicTraits([.traitItalic, .traitBold]) {
+            let boldFont = UIFont(descriptor: fontDescriptor, size: fontSize)
+            attributedString.addAttribute(.font, value: boldFont, range: boldRange)
+        }
+        self.attributedText = attributedString
+        
+        // Fire update in 1 second.
+        let delay = DispatchTime.now() + .seconds(1)
+        DispatchQueue.main.asyncAfter(deadline: delay) {
+            if let delegate = self.delegate, let date = delegate.studyBurstExpiresOn() {
+                self.updateStudyBurstExpirationTime(date)
+            }
+        }
+    }
+
 }
