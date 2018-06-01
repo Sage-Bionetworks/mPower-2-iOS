@@ -501,14 +501,6 @@ class TodayTableViewCell: UITableViewCell {
     
 }
 
-extension RSDTaskInfoObject {
-    var pluralTerm: String {
-        get {
-            return Localization.localizedString("TASK_PLURAL_TERM_FOR_\(identifier.uppercased())")
-        }
-    }
-}
-
 extension RSDTaskInfo {
     var iconWhite: UIImage? {
         get {
