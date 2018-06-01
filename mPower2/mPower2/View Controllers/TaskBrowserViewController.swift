@@ -205,7 +205,9 @@ extension TaskBrowserViewController: UICollectionViewDelegate, UICollectionViewD
         let task = tasks[indexPath.row]
         cell?.image = task.iconWhite
         cell?.title = task.title?.uppercased()
-        cell?.isCompleted = selectedScheduleManager.isCompleted(for: task, on: Date())
+        cell?.isCompleted =
+            (selectedScheduleManager.activityGroup!.identifier == RSDIdentifier.measuringTaskGroup) &&
+            selectedScheduleManager.isCompleted(for: task, on: Date())
         return cell ?? UICollectionViewCell()
     }
     
