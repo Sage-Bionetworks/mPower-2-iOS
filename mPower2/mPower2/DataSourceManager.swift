@@ -186,7 +186,7 @@ class DataSourceManager {
                                                            activityIdentifiers: activityIdentifiers,
                                                            notificationIdentifier: nil,
                                                            schedulePlanGuid: nil,
-                                                           schedulePlanGuidMap: nil)
+                                                           activityGuidMap: nil)
                 config.addMapping(with: activityGroup)
             }
         }

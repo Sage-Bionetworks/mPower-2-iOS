@@ -210,7 +210,7 @@ class StudyBurstScheduleManager : SBAScheduleManager {
     }
     
     /// Override to update the finished schedules
-    override func sendUpdated(for schedules: [SBBScheduledActivity]) {
+    override func sendUpdated(for schedules: [SBBScheduledActivity], taskPath: RSDTaskPath? = nil) {
         DispatchQueue.main.async {
 
             let unionedSchedules = self.unionSchedules(self.finishedSchedules, updatedSchedules: schedules)
@@ -225,7 +225,7 @@ class StudyBurstScheduleManager : SBAScheduleManager {
                 sendSchedules.append(studyMarker)
             }
             
-            super.sendUpdated(for: sendSchedules)
+            super.sendUpdated(for: sendSchedules, taskPath:taskPath)
         }
     }
     
