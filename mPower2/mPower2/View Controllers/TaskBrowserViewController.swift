@@ -119,7 +119,7 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
     }
     
     func startTask(for taskInfo: RSDTaskInfo) {
-        let (taskPath, _, _) = selectedScheduleManager.instantiateTaskPath(for: taskInfo)
+        let (taskPath, _) = selectedScheduleManager.instantiateTaskPath(for: taskInfo)
         let vc = RSDTaskViewController(taskPath: taskPath)
         vc.delegate = self
         self.present(vc, animated: true, completion: nil)
