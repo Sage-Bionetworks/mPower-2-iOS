@@ -109,29 +109,52 @@ class TodayHistoryScheduleManager : SBAScheduleManager {
         guard !isUpdatingItems else { return }
         isUpdatingItems = true
         
-        var schedules = self.scheduledActivities
+        let schedules = self.scheduledActivities
         offMainQueue.async {
-
-            let items = TodayHistoryItem.sortOrder.compactMap { (itemType) -> TodayHistoryItem? in
-                let filteredSchedules : [SBBScheduledActivity] = {
-                    guard let activityIdentifier = itemType.activityIdentifier else { return schedules }
-                    let predicate = SBBScheduledActivity.activityIdentifierPredicate(with: activityIdentifier.stringValue)
-                    return schedules.remove(where: { predicate.evaluate(with: $0) })
-                }()
-                
-                // TODO: syoung 05/18/2018 Implement counting the logged items rather than just the finished schedules.
-                
-                let count = filteredSchedules.count
-                
-                guard count > 0 else { return nil }
-                return TodayHistoryItem(type: itemType, schedules: filteredSchedules, count: count)
-            }
-            
+            let items = self.consolidateItems(schedules)
             DispatchQueue.main.async {
                 self.items = items
                 self.isUpdatingItems = false
                 super.didUpdateScheduledActivities(from: previousActivities)
             }
         }
+    }
+    
+    func consolidateItems(_ scheduledActivities: [SBBScheduledActivity]) -> [TodayHistoryItem] {
+        var schedules = scheduledActivities
+        let items = TodayHistoryItem.sortOrder.compactMap { (itemType) -> TodayHistoryItem? in
+            let filteredSchedules : [SBBScheduledActivity] = {
+                guard let activityIdentifier = itemType.activityIdentifier else { return schedules }
+                let predicate = SBBScheduledActivity.activityIdentifierPredicate(with: activityIdentifier.stringValue)
+                return schedules.remove(where: { predicate.evaluate(with: $0) })
+            }()
+            
+            let count: Int = {
+                switch itemType {
+                case .triggers, .symptoms:
+                    let clientData: [NSDictionary] = filteredSchedules.flatMap {
+                        return ($0.clientData as? [NSDictionary]) ?? [NSDictionary]()
+                    }
+                    guard clientData.count > 0 else { return 0 }
+                    let decoder = SBAFactory.shared.createJSONDecoder()
+                    return clientData.reduce(0, { (input, dictionary) -> Int in
+                        guard let result = try? decoder.decode(SBATrackedLoggingCollectionResultObject.self, from: dictionary)
+                            else {
+                                return input
+                        }
+                        return input + result.loggingItems.filter { $0.loggedDate != nil }.count
+                    })
+                
+                // TODO: syoung 06/04/2018 Implement counting the medication items rather than just the finished schedules.
+
+                default:
+                    return filteredSchedules.count
+                }
+            }()
+            
+            guard count > 0 else { return nil }
+            return TodayHistoryItem(type: itemType, schedules: filteredSchedules, count: count)
+        }
+        return items
     }
 }
