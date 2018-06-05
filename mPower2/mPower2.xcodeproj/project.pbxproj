@@ -88,6 +88,7 @@
 		F88E8E0620ADEE4700117A99 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E77D2062F1B900CD351C /* Main.storyboard */; };
 		F88E8E0920ADEE6000117A99 /* mPower2.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03C9DD0B20A4F956007074EE /* mPower2.strings */; };
 		F88E8E0A20ADEE6C00117A99 /* BridgeInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E7F62063039200CD351C /* BridgeInfo.plist */; };
+		F89B3DA920C60F8B002EAE2D /* TodayScheduleManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89B3DA820C60F8B002EAE2D /* TodayScheduleManagerTests.swift */; };
 		F8C58DB120AF4823001C7B7F /* TodayScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C58DB020AF4823001C7B7F /* TodayScheduleManager.swift */; };
 		F8C58DB220AF4823001C7B7F /* TodayScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C58DB020AF4823001C7B7F /* TodayScheduleManager.swift */; };
 		F8C58DCA20AF5E86001C7B7F /* StudyBurstScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C58DC920AF5E86001C7B7F /* StudyBurstScheduleManager.swift */; };
@@ -416,6 +417,7 @@
 		F88419B4207EC14400028A2B /* ResourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceTests.swift; sourceTree = "<group>"; };
 		F88419CC207EC22A00028A2B /* MotorControlTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MotorControlTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		F88419CE207EC22B00028A2B /* NSLocale+UnitTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLocale+UnitTest.m"; sourceTree = "<group>"; };
+		F89B3DA820C60F8B002EAE2D /* TodayScheduleManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayScheduleManagerTests.swift; sourceTree = "<group>"; };
 		F8C58DB020AF4823001C7B7F /* TodayScheduleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayScheduleManager.swift; sourceTree = "<group>"; };
 		F8C58DC920AF5E86001C7B7F /* StudyBurstScheduleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyBurstScheduleManager.swift; sourceTree = "<group>"; };
 		F8C58DD420AF8CCC001C7B7F /* SurveyScheduleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyScheduleManager.swift; sourceTree = "<group>"; };
@@ -683,6 +685,7 @@
 			children = (
 				F8D3E7902062F1B900CD351C /* Info.plist */,
 				F854599F208FA58800D37243 /* ResourceTests.swift */,
+				F89B3DA820C60F8B002EAE2D /* TodayScheduleManagerTests.swift */,
 			);
 			path = mPower2Tests;
 			sourceTree = "<group>";
@@ -1225,6 +1228,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F89B3DA920C60F8B002EAE2D /* TodayScheduleManagerTests.swift in Sources */,
 				F85459A0208FA58800D37243 /* ResourceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
