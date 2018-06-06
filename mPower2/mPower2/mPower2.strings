@@ -66,4 +66,5 @@
 // Study Burst
 "ACTIVITIES_TO_DO_%@" = "%@ ACTIVITIES TO DO";
 "PROGRESS_EXPIRES_%@" = "Progress expires in %@";
+"%@_ESTIMATED_MINUTES" = "%@ minutes";
 
