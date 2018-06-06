@@ -72,20 +72,59 @@ class StudyBurstViewController: UIViewController {
         headerView.progressView?.currentStep = scheduleManager?.dayCount ?? 0
         
         // Update greeting and message
-        // TODO: jbruhin 5-31-18 implement using document and rules provided in Jira ticket
-
+        let content = welcomeContent()
+        headerView.titleLabel?.text = content.title
+        headerView.textLabel?.text = content.message
+        
         // Set ourselves as delegate on our progress label so we can provide progress expiry date
         progressLabel.delegate = self
         if let expiresOn = scheduleManager?.expiresOn {
             progressLabel.updateStudyBurstExpirationTime(expiresOn)
         }
         
-        // TODO: jbruhin 5-31-18 I think we're supposed to hide the progress label in certain
-        // circumstances. Need to look into that.
-        
         // Set the height of the progress container view
         progressContainerViewHeightConstraint.constant = kProgressContainerViewHeight
+    }
+    
+    func welcomeContent() -> (title: String?, message: String?) {
         
+        guard let scheduleManager = scheduleManager else {
+            return (nil, nil)
+        }
+        
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .none
+        let currentDaysStr = formatter.string(for: scheduleManager.dayCount)!
+        
+        // The title string is the same regardless of how many days they've missed, if any.
+        // It will vary only by the current day of the study burst
+        let formatStr = String(format: "STUDY_BURST_TITLE_DAY_%@", currentDaysStr)
+        let titleStr = Localization.localizedString(formatStr)
+        
+        let messageStr: String? = {
+            if scheduleManager.missedDaysCount == 0 {
+                // The message will vary by the current day of the study burst
+                let format = String(format: "STUDY_BURST_MESSAGE_DAY_%@", currentDaysStr)
+                return Localization.localizedString(format)
+            }
+            else {
+                // The message will be the same for each day of the study burst and will simply
+                // indicate the current day and the number of missed days
+                let missedDaysStr = formatter.string(for: scheduleManager.missedDaysCount)!
+                
+                let format = scheduleManager.missedDaysCount > 1 ?
+                    Localization.localizedString("STUDY_BURST_MESSAGE_IN_%@_DAYS_MISSED_%@_DAYS") :
+                    Localization.localizedString("STUDY_BURST_MESSAGE_IN_%@_DAYS_MISSED_ONE_DAY")
+                
+                let str = scheduleManager.missedDaysCount > 1 ?
+                    String.localizedStringWithFormat(format, currentDaysStr, missedDaysStr) :
+                    String.localizedStringWithFormat(format, currentDaysStr)
+                
+                return str
+            }
+        }()
+        
+        return (titleStr, messageStr)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

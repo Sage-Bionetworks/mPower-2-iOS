@@ -68,3 +68,38 @@
 "PROGRESS_EXPIRES_%@" = "Progress expires in %@";
 "%@_ESTIMATED_MINUTES" = "%@ minutes";
 
+// Study Burst titles
+"STUDY_BURST_TITLE_DAY_1" = "This is your time!";
+"STUDY_BURST_TITLE_DAY_2" = "You are making a difference!";
+"STUDY_BURST_TITLE_DAY_3" = "Great Job!";
+"STUDY_BURST_TITLE_DAY_4" = "Your input matters!";
+"STUDY_BURST_TITLE_DAY_5" = "Let’s see how you are doing today!";
+"STUDY_BURST_TITLE_DAY_6" = "Thank you!";
+"STUDY_BURST_TITLE_DAY_7" = "You can do it!";
+"STUDY_BURST_TITLE_DAY_8" = "You are fantastic!";
+"STUDY_BURST_TITLE_DAY_9" = "You are on a roll!";
+"STUDY_BURST_TITLE_DAY_10" = "You are amazing!";
+"STUDY_BURST_TITLE_DAY_11" = "Keep up the good work!";
+"STUDY_BURST_TITLE_DAY_12" = "Your contribution is important!";
+"STUDY_BURST_TITLE_DAY_13" = "Every day is a new day!";
+"STUDY_BURST_TITLE_DAY_14" = "This is your time!";
+
+// Study Burst messages
+"STUDY_BURST_MESSAGE_DAY_1" = "Use the daily activities to focus on your health.";
+"STUDY_BURST_MESSAGE_DAY_2" = "You are contributing to PD research.";
+"STUDY_BURST_MESSAGE_DAY_3" = "We could not do this study without you.";
+"STUDY_BURST_MESSAGE_DAY_4" = "Your participation is helping PD research.";
+"STUDY_BURST_MESSAGE_DAY_5" = "Use the following activities to track your memory & tremors.";
+"STUDY_BURST_MESSAGE_DAY_6" = "You are helping us make a difference in PD research.";
+"STUDY_BURST_MESSAGE_DAY_7" = "By completing activities, you can track your daily health.";
+"STUDY_BURST_MESSAGE_DAY_8" = "Log your medications and symptoms to keep on track.";
+"STUDY_BURST_MESSAGE_DAY_9" = "The finger tapping activity allows you to see trends in your motor skills.";
+"STUDY_BURST_MESSAGE_DAY_10" = "We could not do this study without you.";
+"STUDY_BURST_MESSAGE_DAY_11" = "As you complete activities, check out the trends feature.";
+"STUDY_BURST_MESSAGE_DAY_12" = "The walking activity provides us with daily data on your gait and balance.";
+"STUDY_BURST_MESSAGE_DAY_13" = "As you complete more activities, you will be able to see trends & patterns.";
+"STUDY_BURST_MESSAGE_DAY_14" = "Use the activities to track how you are doing today.";
+
+"STUDY_BURST_MESSAGE_IN_%@_DAYS_MISSED_%@_DAYS" = "In %1$@ days you’ve only missed %2$@ Study Burst days!";
+"STUDY_BURST_MESSAGE_IN_%@_DAYS_MISSED_ONE_DAY" = "In %1$@ days you’ve only missed 1 Study Burst day!";
+

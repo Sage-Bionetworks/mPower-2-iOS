@@ -476,11 +476,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nH1-DJ-oLi" customClass="RSDTableStepHeaderView" customModule="ResearchUI">
-                                <rect key="frame" x="0.0" y="20" width="375" height="200"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="197"/>
                                 <color key="backgroundColor" red="0.35294117650000001" green="0.2784313725" blue="0.56078431370000004" alpha="1" colorSpace="deviceRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="200" id="dTG-y1-Ofv"/>
-                                </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="shouldShowProgress" value="YES"/>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="shouldShowCloseButton" value="YES"/>
@@ -496,7 +493,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ILU-DV-qfP">
-                                <rect key="frame" x="0.0" y="220" width="375" height="80"/>
+                                <rect key="frame" x="0.0" y="217" width="375" height="80"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wtt-X0-0rP" customClass="ProgressCircleView" customModule="mPower2" customModuleProvider="target">
                                         <rect key="frame" x="152" y="15" width="70" height="70"/>
@@ -540,7 +537,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Uo-MT-PcF" customClass="StudyBurstProgressExpirationLabel" customModule="mPower2" customModuleProvider="target">
-                                <rect key="frame" x="16" y="310" width="343" height="19.5"/>
+                                <rect key="frame" x="16" y="307" width="343" height="19.5"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Progress expires in ">
                                         <attributes>
@@ -560,7 +557,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3b7-vY-cgE">
-                                <rect key="frame" x="0.0" y="339.5" width="375" height="230.5"/>
+                                <rect key="frame" x="0.0" y="336.5" width="375" height="233.5"/>
                                 <connections>
                                     <segue destination="nUZ-7l-T0m" kind="embed" identifier="StudyBurstTaskBrowserSegue" id="0tD-fs-gUf"/>
                                 </connections>
@@ -650,7 +647,7 @@
             <objects>
                 <viewController id="nUZ-7l-T0m" customClass="StudyBurstTaskBrowserViewController" customModule="mPower2" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="XPt-bP-aUT">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="230.5"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="233.5"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jm9-XO-hGI" customClass="RSDShadowGradient" customModule="ResearchUI">
@@ -685,7 +682,7 @@
                                 </constraints>
                             </stackView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Xmj-xU-g2G">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="230.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="233.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="YtG-ps-ean">
                                     <size key="itemSize" width="115" height="90"/>
