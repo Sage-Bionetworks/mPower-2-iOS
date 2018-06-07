@@ -36,6 +36,21 @@ import Research
 import ResearchUI
 import BridgeSDK
 
+// https://stackoverflow.com/a/27140764
+extension UIResponder {
+    private weak static var _currentFirstResponder: UIResponder? = nil
+    
+    public static var current: UIResponder? {
+        UIResponder._currentFirstResponder = nil
+        UIApplication.shared.sendAction(#selector(findFirstResponder(sender:)), to: nil, from: nil, for: nil)
+        return UIResponder._currentFirstResponder
+    }
+    
+    @objc internal func findFirstResponder(sender: AnyObject) {
+        UIResponder._currentFirstResponder = self
+    }
+}
+
 class PhoneRegistrationViewController: RSDTableStepViewController {
 
     func signUpAndRequestSMSLink(completion: @escaping SBBNetworkManagerCompletionBlock) {
@@ -54,13 +69,17 @@ class PhoneRegistrationViewController: RSDTableStepViewController {
         
         BridgeSDK.authManager.signUpStudyParticipant(signUp, completion: { (task, result, error) in
             guard error == nil else {
-                completion(task, result, error)
+                DispatchQueue.main.async {
+                    completion(task, result, error)
+                }
                 return
             }
             
             // we're signed up so request a sign-in link via SMS
             BridgeSDK.authManager.textSignInToken(to: phoneNumber, regionCode: regionCode, completion: { (task, result, error) in
-                completion(task, result, error)
+                DispatchQueue.main.async {
+                    completion(task, result, error)
+                }
             })
         })
     }
@@ -71,17 +90,60 @@ class PhoneRegistrationViewController: RSDTableStepViewController {
             else {
                 return
         }
+        
+        guard let taskController = self.taskController as? SignInTaskViewController,
+                let phoneNumber = taskController.phoneNumber
+            else {
+                return
+        }
 
-        self.signUpAndRequestSMSLink { (task, result, error) in
-            if error == nil {
-                DispatchQueue.main.async {
+        // start with the "original" next step identifier from json (if saved)
+        let stepObject = self.step as! RSDUIStepObject
+        stepObject.nextStepIdentifier = taskController.phoneSavedNextStepIdentifier ?? stepObject.nextStepIdentifier
+        
+        // save the current first responder so we can restore it after any alerts go away
+        let thingBeingEdited = UIResponder.current
+        func restoreResponder() {
+            thingBeingEdited?.becomeFirstResponder()
+        }
+        tableView?.endEditing(false)
+
+        if let _ = phoneNumber.range(of: "\\d\\d\\d55501\\d\\d$", options: .regularExpression) {
+            // they said the secret word so ask if they want to be a tester
+            self.presentAlertWithYesNo(title: "Tester", message: "The phone number you entered is fictional. Do you want to sign in with a test ID?") { (tester) in
+                if tester {
+                    // boop them over to the externalID sign-in step
+                    taskController.phoneSavedNextStepIdentifier = stepObject.nextStepIdentifier
+                    stepObject.nextStepIdentifier = "enterExternalId"
                     super.goForward()
+                } else {
+                    restoreResponder()
                 }
-            } else {
-                // TODO emm 2018-04-25 handle error from Bridge
-                // 400 is the response for an invalid phone number
-                debugPrint("Error attempting to sign up and request SMS link:\n\(String(describing: error))\n\nResult:\n\(String(describing: result))")
             }
+            return
+        }
+
+        taskController.showLoadingView()
+        self.signUpAndRequestSMSLink { (task, result, error) in
+            taskController.hideLoadingIfNeeded()
+            
+            guard let err = error as NSError?
+                else {
+                    super.goForward()
+                    return
+            }
+            
+            // 400 is the response for an invalid phone number
+            if err.code == 400 {
+                self.presentAlertWithOk(title: "Wrong Number", message: "The phone number you entered is not valid. Please enter a valid U.S. phone number.", actionHandler: { (_) in
+                    restoreResponder()
+                })
+            } else {
+                self.presentAlertWithOk(title: "Error", message: "The server returned an error: \(err)", actionHandler: { (_) in
+                    restoreResponder()
+                })
+            }
+            debugPrint("Error attempting to sign up and request SMS link:\n\(String(describing: error))\n\nResult:\n\(String(describing: result))")
         }
     }
 }
