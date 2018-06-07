@@ -354,15 +354,15 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Com-xo-4ZH">
                                 <rect key="frame" x="0.0" y="50" width="375" height="150"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="20" minimumInteritemSpacing="20" id="39h-R9-E53">
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="39h-R9-E53">
                                     <size key="itemSize" width="80" height="100"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="15" minY="20" maxX="15" maxY="15"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="TaskCollectionViewCell" reuseIdentifier="TaskCollectionViewCell" id="6Bp-Kg-JXl" customClass="TaskCollectionViewCell" customModule="mPower2" customModuleProvider="target">
-                                        <rect key="frame" x="15" y="27.5" width="80" height="100"/>
+                                        <rect key="frame" x="0.0" y="25" width="80" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="80" height="100"/>
@@ -476,11 +476,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nH1-DJ-oLi" customClass="RSDTableStepHeaderView" customModule="ResearchUI">
-                                <rect key="frame" x="0.0" y="20" width="375" height="200"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="197"/>
                                 <color key="backgroundColor" red="0.35294117650000001" green="0.2784313725" blue="0.56078431370000004" alpha="1" colorSpace="deviceRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="200" id="dTG-y1-Ofv"/>
-                                </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="shouldShowProgress" value="YES"/>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="shouldShowCloseButton" value="YES"/>
@@ -496,10 +493,10 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ILU-DV-qfP">
-                                <rect key="frame" x="0.0" y="220" width="375" height="100"/>
+                                <rect key="frame" x="0.0" y="217" width="375" height="80"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wtt-X0-0rP" customClass="ProgressCircleView" customModule="mPower2" customModuleProvider="target">
-                                        <rect key="frame" x="152" y="25" width="70" height="70"/>
+                                        <rect key="frame" x="152" y="15" width="70" height="70"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="70" id="K0b-4P-DIq"/>
@@ -512,14 +509,14 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qo1-MG-mGI">
-                                        <rect key="frame" x="242" y="59.5" width="113" height="1"/>
+                                        <rect key="frame" x="242" y="49.5" width="113" height="1"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="7jz-5F-3cQ"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Jc-22-CJe">
-                                        <rect key="frame" x="20" y="59.5" width="112" height="1"/>
+                                        <rect key="frame" x="20" y="49.5" width="112" height="1"/>
                                         <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="TZl-JP-0Nt"/>
@@ -530,7 +527,7 @@
                                 <constraints>
                                     <constraint firstItem="wtt-X0-0rP" firstAttribute="centerY" secondItem="ILU-DV-qfP" secondAttribute="centerY" constant="10" id="4TZ-rr-Krm"/>
                                     <constraint firstItem="wtt-X0-0rP" firstAttribute="leading" secondItem="9Jc-22-CJe" secondAttribute="trailing" constant="20" id="7Iy-IB-5lf"/>
-                                    <constraint firstAttribute="height" constant="100" id="UE0-rm-eQp"/>
+                                    <constraint firstAttribute="height" constant="80" id="UE0-rm-eQp"/>
                                     <constraint firstItem="qo1-MG-mGI" firstAttribute="centerY" secondItem="wtt-X0-0rP" secondAttribute="centerY" id="UWA-V4-JLg"/>
                                     <constraint firstItem="qo1-MG-mGI" firstAttribute="leading" secondItem="wtt-X0-0rP" secondAttribute="trailing" constant="20" id="aL2-nH-7Ji"/>
                                     <constraint firstAttribute="trailing" secondItem="qo1-MG-mGI" secondAttribute="trailing" constant="20" id="cC1-5v-rKk"/>
@@ -539,15 +536,8 @@
                                     <constraint firstItem="9Jc-22-CJe" firstAttribute="centerY" secondItem="wtt-X0-0rP" secondAttribute="centerY" id="uS8-Fz-NTL"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r10-DY-lFo" customClass="RSDGenericNavigationFooterView" customModule="ResearchUI">
-                                <rect key="frame" x="0.0" y="570" width="375" height="97"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isBackHidden" value="YES"/>
-                                </userDefinedRuntimeAttributes>
-                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Uo-MT-PcF" customClass="StudyBurstProgressExpirationLabel" customModule="mPower2" customModuleProvider="target">
-                                <rect key="frame" x="16" y="330" width="343" height="19.5"/>
+                                <rect key="frame" x="16" y="307" width="343" height="19.5"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Progress expires in ">
                                         <attributes>
@@ -567,11 +557,18 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3b7-vY-cgE">
-                                <rect key="frame" x="0.0" y="349.5" width="375" height="220.5"/>
+                                <rect key="frame" x="0.0" y="336.5" width="375" height="233.5"/>
                                 <connections>
                                     <segue destination="nUZ-7l-T0m" kind="embed" identifier="StudyBurstTaskBrowserSegue" id="0tD-fs-gUf"/>
                                 </connections>
                             </containerView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r10-DY-lFo" customClass="RSDGenericNavigationFooterView" customModule="ResearchUI">
+                                <rect key="frame" x="0.0" y="570" width="375" height="97"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isBackHidden" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -588,7 +585,7 @@
                             <constraint firstItem="ILU-DV-qfP" firstAttribute="top" secondItem="nH1-DJ-oLi" secondAttribute="bottom" id="oar-oj-XtZ"/>
                             <constraint firstItem="0Uo-MT-PcF" firstAttribute="top" secondItem="ILU-DV-qfP" secondAttribute="bottom" constant="10" id="sEY-iY-oZR"/>
                             <constraint firstItem="r10-DY-lFo" firstAttribute="top" secondItem="3b7-vY-cgE" secondAttribute="bottom" id="tU1-Fb-f1e"/>
-                            <constraint firstItem="3b7-vY-cgE" firstAttribute="top" secondItem="0Uo-MT-PcF" secondAttribute="bottom" id="uZJ-Py-qri"/>
+                            <constraint firstItem="3b7-vY-cgE" firstAttribute="top" secondItem="0Uo-MT-PcF" secondAttribute="bottom" constant="10" id="uZJ-Py-qri"/>
                             <constraint firstItem="ILU-DV-qfP" firstAttribute="trailing" secondItem="D0y-PT-cxn" secondAttribute="trailing" id="vsF-Dg-k5A"/>
                             <constraint firstItem="D0y-PT-cxn" firstAttribute="trailing" secondItem="0Uo-MT-PcF" secondAttribute="trailing" constant="16" id="yuD-n2-6nK"/>
                         </constraints>
@@ -599,6 +596,7 @@
                         <outlet property="navFooterView" destination="r10-DY-lFo" id="zmY-Im-e0F"/>
                         <outlet property="progressCircleView" destination="wtt-X0-0rP" id="Vaa-dN-beG"/>
                         <outlet property="progressContainerView" destination="ILU-DV-qfP" id="Vnj-ig-Obr"/>
+                        <outlet property="progressContainerViewHeightConstraint" destination="UE0-rm-eQp" id="DHn-1G-lpa"/>
                         <outlet property="progressLabel" destination="0Uo-MT-PcF" id="op2-af-MV3"/>
                     </connections>
                 </viewController>
@@ -649,7 +647,7 @@
             <objects>
                 <viewController id="nUZ-7l-T0m" customClass="StudyBurstTaskBrowserViewController" customModule="mPower2" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="XPt-bP-aUT">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="220.5"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="233.5"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jm9-XO-hGI" customClass="RSDShadowGradient" customModule="ResearchUI">
@@ -684,17 +682,17 @@
                                 </constraints>
                             </stackView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Xmj-xU-g2G">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="220.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="233.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="20" minimumInteritemSpacing="20" id="YtG-ps-ean">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="YtG-ps-ean">
                                     <size key="itemSize" width="115" height="90"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="15" minY="20" maxX="15" maxY="15"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="StudyBurstCollectionViewCell" id="GiR-5f-Vtu" customClass="StudyBurstCollectionViewCell" customModule="mPower2" customModuleProvider="target">
-                                        <rect key="frame" x="15" y="20" width="115" height="90"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="115" height="90"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="115" height="90"/>
@@ -707,7 +705,7 @@
                                                         <constraint firstAttribute="height" constant="46" id="xiL-MU-QxR"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Finger Tapping" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EC8-Az-681">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Finger Tapping" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="EC8-Az-681">
                                                     <rect key="frame" x="0.0" y="49" width="115" height="19.5"/>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                                     <nil key="textColor"/>
