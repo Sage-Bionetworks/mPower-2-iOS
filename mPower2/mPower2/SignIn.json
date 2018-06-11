@@ -9,6 +9,7 @@
                 "title":"Welcome to mPower",
                 "text":"A Parkinson’s Disease Research Study",
                  "image":{
+                     "type": "fetchable",
                      "imageName":"welcomeScreenImage",
                      "placementType":"topBackground"
                  },
@@ -25,6 +26,7 @@
                  },
                  "actions": {
                       "skip": {
+                                 "type": "navigation",
                                  "buttonTitle" : "use external ID",
                                  "skipToIdentifier": "enterExternalId"
                               }
@@ -41,6 +43,7 @@
                 "text":"To become part of mPower, enter your phone number to get started.",
                 "placeholder":"Enter your mobile number",
                 "image":{
+                    "type": "fetchable",
                     "imageName": "phonebook",
                     "placementType":"topBackground"
                 },
@@ -78,6 +81,7 @@
                     }
                 ],
                 "image":{
+                    "type": "fetchable",
                     "imageName": "TapLeft1",
                     "placementType":"iconAbove"
                 },
@@ -99,6 +103,7 @@
                  "type":"instruction",
                  "title":"Your registration link is on its way!",
                  "image":{
+                     "type": "fetchable",
                      "imageName":"expectSMS",
                      "placementType":"topBackground"
                  },
@@ -114,6 +119,7 @@
                  "title":"Great job!",
                  "text":"You just completed registration.",
                  "image":{
+                     "type": "fetchable",
                      "imageName":"Completion",
                      "placementType":"topBackground"
                  }
