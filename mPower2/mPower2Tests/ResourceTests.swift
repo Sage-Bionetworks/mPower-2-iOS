@@ -52,4 +52,13 @@ class ResourceTests: XCTestCase {
 
         XCTAssertTrue(true)
     }
+    
+    func testSigninTask() {
+        do {
+            let resourceTransformer = RSDResourceTransformerObject(resourceName: "SignIn")
+            let _ = try RSDFactory.shared.decodeTask(with: resourceTransformer)
+        } catch let err {
+            XCTFail("Failed to decode the SignIn task. \(err)")
+        }
+    }
 }

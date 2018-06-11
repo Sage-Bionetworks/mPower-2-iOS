@@ -358,17 +358,43 @@ class TodayViewController: UIViewController {
     
     // MARK: Actions
     @IBAction func actionBarTapped(_ sender: Any) {
-        // TODO: jbruhin 5-1-18 implement
+
         if hasActiveSurvey {
-            
+            // Get our task info for the first survey, create a task and present it
+            if let group = surveyManager.activityGroup,
+                let taskInfo = group.tasks.first {
+                
+                let (taskPath, _) = surveyManager.instantiateTaskPath(for: taskInfo)
+                let vc = RSDTaskViewController(taskPath: taskPath)
+                vc.delegate = self
+                self.present(vc, animated: true, completion: nil)
+            }
         }
         else if hasActiveStudyBurst {
+            // Instantiate a new Study Burst VC, assign the schedule manager and present the VC
             if let vc = StudyBurstViewController.instantiate(),
                 let nc = self.navigationController {
                 vc.scheduleManager = studyBurstManager
                 nc.show(vc, sender: self)
             }
         }
+    }
+}
+
+/// Conforming to this protocol only for presenting Survey tasks
+extension TodayViewController: RSDTaskViewControllerDelegate {
+    
+    // TODO: jbruhin 6/2/18 - do we need to implement anything here???
+    func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
+        //
+    }
+    
+    func taskController(_ taskController: RSDTaskController, readyToSave taskPath: RSDTaskPath) {
+        //
+    }
+    
+    func taskController(_ taskController: RSDTaskController, asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController? {
+        return nil
     }
 }
 
@@ -409,7 +435,7 @@ extension TodayViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension TodayViewController: TaskBrowserViewControllerDelegate {
-    
+
     // MARK: TaskBrowserViewController management
     
     @objc func dragTaskBrowser(sender: UIPanGestureRecognizer) {
@@ -490,6 +516,9 @@ extension TodayViewController: TaskBrowserViewControllerDelegate {
         if !taskBrowserVisible {
             taskBrowserVisible = true
         }
+    }
+    func taskBrowserDidLayoutSubviews() {
+        // nothing
     }
 }
 

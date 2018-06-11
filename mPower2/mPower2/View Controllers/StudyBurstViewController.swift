@@ -37,6 +37,7 @@ import ResearchUI
 
 class StudyBurstViewController: UIViewController {
     
+    private let kProgressContainerViewHeight = CGFloat(80.0).rsd_proportionalToScreenHeight()
     private let kTaskBrowserSegueIdentifier = "StudyBurstTaskBrowserSegue"
 
     @IBOutlet weak var headerView: RSDTableStepHeaderView!
@@ -44,6 +45,7 @@ class StudyBurstViewController: UIViewController {
     @IBOutlet weak var progressCircleView: ProgressCircleView!
     @IBOutlet weak var navFooterView: RSDGenericNavigationFooterView!
     @IBOutlet weak var progressLabel: StudyBurstProgressExpirationLabel!
+    @IBOutlet weak var progressContainerViewHeightConstraint: NSLayoutConstraint!
     
     var scheduleManager: StudyBurstScheduleManager?
     var taskBrowserVC: StudyBurstTaskBrowserViewController?
@@ -52,7 +54,7 @@ class StudyBurstViewController: UIViewController {
         super.viewDidLoad()
         setupView()
     }
-    
+        
     func setupView() {
         // Setup our back button
         headerView.cancelButton?.setImage(UIImage(named: "BackButtonIcon"), for: .normal)
@@ -70,16 +72,59 @@ class StudyBurstViewController: UIViewController {
         headerView.progressView?.currentStep = scheduleManager?.dayCount ?? 0
         
         // Update greeting and message
-        // TODO: jbruhin 5-31-18 implement using document and rules provided in Jira ticket
-
+        let content = welcomeContent()
+        headerView.titleLabel?.text = content.title
+        headerView.textLabel?.text = content.message
+        
         // Set ourselves as delegate on our progress label so we can provide progress expiry date
         progressLabel.delegate = self
         if let expiresOn = scheduleManager?.expiresOn {
             progressLabel.updateStudyBurstExpirationTime(expiresOn)
         }
         
-        // TODO: jbruhin 5-31-18 I think we're supposed to hide the progress label in certain
-        // circumstances. Need to look into that.
+        // Set the height of the progress container view
+        progressContainerViewHeightConstraint.constant = kProgressContainerViewHeight
+    }
+    
+    func welcomeContent() -> (title: String?, message: String?) {
+        
+        guard let scheduleManager = scheduleManager else {
+            return (nil, nil)
+        }
+        
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .none
+        let currentDaysStr = formatter.string(for: scheduleManager.dayCount)!
+        
+        // The title string is the same regardless of how many days they've missed, if any.
+        // It will vary only by the current day of the study burst
+        let formatStr = String(format: "STUDY_BURST_TITLE_DAY_%@", currentDaysStr)
+        let titleStr = Localization.localizedString(formatStr)
+        
+        let messageStr: String? = {
+            if scheduleManager.missedDaysCount == 0 {
+                // The message will vary by the current day of the study burst
+                let format = String(format: "STUDY_BURST_MESSAGE_DAY_%@", currentDaysStr)
+                return Localization.localizedString(format)
+            }
+            else {
+                // The message will be the same for each day of the study burst and will simply
+                // indicate the current day and the number of missed days
+                let missedDaysStr = formatter.string(for: scheduleManager.missedDaysCount)!
+                
+                let format = scheduleManager.missedDaysCount > 1 ?
+                    Localization.localizedString("STUDY_BURST_MESSAGE_IN_%@_DAYS_MISSED_%@_DAYS") :
+                    Localization.localizedString("STUDY_BURST_MESSAGE_IN_%@_DAYS_MISSED_ONE_DAY")
+                
+                let str = scheduleManager.missedDaysCount > 1 ?
+                    String.localizedStringWithFormat(format, currentDaysStr, missedDaysStr) :
+                    String.localizedStringWithFormat(format, currentDaysStr)
+                
+                return str
+            }
+        }()
+        
+        return (titleStr, messageStr)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -116,7 +161,6 @@ extension StudyBurstViewController: StudyBurstProgressExpirationLabelDelegate {
 }
 
 extension StudyBurstViewController: TaskBrowserViewControllerDelegate {
-    
     // MARK: TaskBrowserViewControllerDelegate
     func taskBrowserToggleVisibility() {
         // Nothing
@@ -124,13 +168,21 @@ extension StudyBurstViewController: TaskBrowserViewControllerDelegate {
     func taskBrowserTabSelected() {
         // Nothing
     }
+    func taskBrowserDidLayoutSubviews() {
+        // After the task browser has been layed out, check to see if we should show the shadow on our nav footer view
+        guard let taskBrowserVC = taskBrowserVC else {
+            return
+        }
+        
+        // Test current visible state of shadow before setting it to avoid multiple calls to set the property
+        let shouldShowShadow = taskBrowserVC.collectionView.collectionViewLayout.collectionViewContentSize.height > taskBrowserVC.collectionView.bounds.height
+        if shouldShowShadow != navFooterView.shouldShowShadow {
+            navFooterView.shouldShowShadow = shouldShowShadow
+        }
+    }
 }
 
 class StudyBurstTaskBrowserViewController: TaskBrowserViewController {
-    
-    // TODO: jbruhin 5-31-18 find better way to define number of columns, should be based on available space
-    // even though the design seems to prescribes two columns
-    private let kNumberOfColumns = 2
     
     func firstIncompleteTaskId() -> String? {
         guard let  scheduleManager = scheduleManagers?.first else {
@@ -151,6 +203,12 @@ class StudyBurstTaskBrowserViewController: TaskBrowserViewController {
     }
     
     // MARK: Overrides
+    override var minCellHorizontalSpacing: CGFloat {
+        return 30.0
+    }
+    override var minCellVerticalSpacing: CGFloat {
+        return 10.0
+    }
     override var tasks: [RSDTaskInfo] {
         guard let studyBurstManager = scheduleManagers?.first as? StudyBurstScheduleManager else {
             return [RSDTaskInfo]()
@@ -165,20 +223,6 @@ class StudyBurstTaskBrowserViewController: TaskBrowserViewController {
     }
     override var shouldShowTopShadow: Bool {
         return false
-    }
-    override func horizontalSpacing(for collectionView: UICollectionView, layout: UICollectionViewLayout) -> CGFloat {
-        
-        guard let flowLayout = layout as? UICollectionViewFlowLayout else {
-            return kMinCellHorizontalSpacing
-        }
-        
-        // Center the cells horizontally and distribute them evenly
-        let cellCount = [kNumberOfColumns, tasks.count].min() ?? 0
-        return (collectionView.bounds.width - (CGFloat(cellCount) * flowLayout.itemSize.width)) / (CGFloat(cellCount) + 1.0)
-    }
-    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        // TODO: jbruhin 5-31-18 optimize vertical layout for all screen sizes
-        return 20.0
     }
 
     // MARK: UICollectionViewDelegate
@@ -205,9 +249,9 @@ class StudyBurstTaskBrowserViewController: TaskBrowserViewController {
             cell?.alpha = isCompleted || task.identifier == self.firstIncompleteTaskId() ? 1.0 : 0.5
         }
         
-        // TODO: jbruin 5-31-18 update this label with actual data, not sure yet where it comes from
-        cell?.durationLabel.text = "2 minutes"
-        
+        // Update the estimated minutes label
+        cell?.durationLabel.text = Localization.localizedStringWithFormatKey("%@_ESTIMATED_MINUTES", NSNumber(value: task.estimatedMinutes))
+
         return cell ?? UICollectionViewCell()
     }
     

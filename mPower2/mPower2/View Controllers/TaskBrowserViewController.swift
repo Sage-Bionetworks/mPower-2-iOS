@@ -39,6 +39,7 @@ import BridgeApp
 protocol TaskBrowserViewControllerDelegate {
     func taskBrowserToggleVisibility()
     func taskBrowserTabSelected()
+    func taskBrowserDidLayoutSubviews()
 }
 
 class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate, TaskBrowserTabViewDelegate {
@@ -48,7 +49,6 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
         return 50.0
     }
     
-    public let kMinCellHorizontalSpacing: CGFloat = 5.0
     public var delegate: TaskBrowserViewControllerDelegate?
     public var scheduleManagers: [SBAScheduleManager]?
     
@@ -85,6 +85,14 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
         setupView()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        guard let delegate = delegate else {
+            return
+        }
+        delegate.taskBrowserDidLayoutSubviews()
+    }
+    
     func setupView() {
         
         // Remove existing managed subviews from tabBar stackView
@@ -119,7 +127,7 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
     }
     
     func startTask(for taskInfo: RSDTaskInfo) {
-        let (taskPath, _, _) = selectedScheduleManager.instantiateTaskPath(for: taskInfo)
+        let (taskPath, _) = selectedScheduleManager.instantiateTaskPath(for: taskInfo)
         let vc = RSDTaskViewController(taskPath: taskPath)
         vc.delegate = self
         self.present(vc, animated: true, completion: nil)
@@ -188,9 +196,52 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
 
 extension TaskBrowserViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    /*
+     The objective is to optimize the layout of the cells for different screen sizes and different collection quantities.
+     For instance, if all cells will fit in the collectionView.bounds - so user doesn't have to scroll - then let's
+     center the cells horizontally and vertically. If they won't all fit and the user will need to scroll, then let's
+     space them so there is a portion of a row or column (depending on scroll direction) positioned partly on screen and
+     partly off screen so the user has a visual queue to scroll.
+     */
+    
     @objc
     open var collectionCellIdentifier: String {
         return "TaskCollectionViewCell"
+    }
+    
+    @objc
+    open var minCellHorizontalSpacing: CGFloat {
+        return 5.0
+    }
+    @objc
+    open var minCellVerticalSpacing: CGFloat {
+        return 5.0
+    }
+    
+    func doAllCellsFit() -> Bool {
+        return numberOfRowsThatFit() * numberOfColumnsThatFit() >= tasks.count
+    }
+    
+    func numberOfRowsThatFit() -> Int {
+        guard let flowLayout = flowLayout() else {
+            return 0
+        }
+        let availableHeight: CGFloat = collectionView.bounds.height - minCellVerticalSpacing
+        let cellHeightPlusMinSpacing: CGFloat = flowLayout.itemSize.height + minCellVerticalSpacing
+        return Int(floorf(Float(availableHeight / cellHeightPlusMinSpacing)))
+    }
+    
+    func numberOfColumnsThatFit() -> Int {
+        guard let flowLayout = flowLayout() else {
+            return 0
+        }
+        let availableWidth: CGFloat = collectionView.bounds.width - minCellHorizontalSpacing
+        let cellWidthPlusMinSpacing: CGFloat = flowLayout.itemSize.width + minCellHorizontalSpacing
+        return Int(floorf(Float(availableWidth / cellWidthPlusMinSpacing)))
+    }
+    
+    func flowLayout() -> UICollectionViewFlowLayout? {
+        return collectionView.collectionViewLayout as? UICollectionViewFlowLayout
     }
     
     // MARK: UICollectionViewDataSource
@@ -219,52 +270,87 @@ extension TaskBrowserViewController: UICollectionViewDelegate, UICollectionViewD
         startTask(for: tasks[indexPath.row])
     }
     
-    @objc
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return horizontalSpacing(for: collectionView, layout: collectionViewLayout)
+        guard let flowLayout = flowLayout() else {
+            return 0.0
+        }
+        return flowLayout.scrollDirection == .horizontal ? horizontalSpacing() : verticalSpacing()
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        
-        guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else {
-                return collectionView.contentInset
-        }
-
-        let spacing = horizontalSpacing(for: collectionView, layout: collectionViewLayout)
-        return UIEdgeInsetsMake(flowLayout.sectionInset.top, spacing, flowLayout.sectionInset.bottom, spacing)
+        return UIEdgeInsetsMake(verticalSpacing(), horizontalSpacing(), verticalSpacing(), horizontalSpacing())
     }
     
-    @objc
-    open func horizontalSpacing(for collectionView: UICollectionView, layout: UICollectionViewLayout) -> CGFloat {
-        guard let flowLayout = layout as? UICollectionViewFlowLayout else {
-                return kMinCellHorizontalSpacing
+    open func horizontalSpacing() -> CGFloat {
+        guard let flowLayout = flowLayout() else {
+                return minCellHorizontalSpacing
         }
         
-        // We want our cells to be laid out in one horizontal row, with scrolling if necessary.
-        // The default layout behavior for UICollectionView is to layout the cells from left to right.
-        // In our case, we may want the cells centered horizontally in the view, which means we must
-        // calculate the desired spacing so the cells appear centered. However, we may have more cells
-        // than can fit in the collectionView.bounds, in which case we want the cells laid out from
-        // left to right and extending beyond the bounds of the collectionView, then the user can scroll
-        // horizontally as needed. In this case, we want the last visible cell on the right side of the
-        // view to be just partially visible - ie. half on screen, half off screen - to inform the user
-        // that they can scroll to the right to get more.
-        
-        let totalCellWidth = flowLayout.itemSize.width * CGFloat(tasks.count)
-        let totalSpacingWidth = kMinCellHorizontalSpacing * (CGFloat(tasks.count) + 1)
-        let totalWidth = totalCellWidth + totalSpacingWidth
-        
-        if totalWidth > collectionView.bounds.width {
-            // Find a spacing value that results in the last visible cell being positioned half off-screen
-            let availableWidth = collectionView.bounds.width - (flowLayout.itemSize.width / 2)
-            let qtyCellsThatFit = floorf(Float(availableWidth / (flowLayout.itemSize.width + kMinCellHorizontalSpacing)))
-            let spacingAdjusted = (availableWidth - (CGFloat(qtyCellsThatFit) * flowLayout.itemSize.width)) / CGFloat(qtyCellsThatFit + 1)
-            return spacingAdjusted
+        if doAllCellsFit() || flowLayout.scrollDirection == .vertical {
+            // Use a spacing value that centers them horizontally. First figure out how many columns we actually have
+            let rawColCount = ceilf(Float(tasks.count) / Float(numberOfRowsThatFit()))
+            let colCount: CGFloat = {
+                if tasks.count > numberOfColumnsThatFit() {
+                    return CGFloat([CGFloat(rawColCount), CGFloat(numberOfColumnsThatFit())].min() ?? 0)            }
+                else {
+                    return CGFloat(tasks.count)
+                }
+            }()
+            return (collectionView.bounds.width - (colCount * flowLayout.itemSize.width)) / (colCount + 1.0)
         }
         else {
-            // All cells will fit, so use a spacing value that centers them horizontally
-            let cellCount = CGFloat(tasks.count)
-            return (collectionView.bounds.width - (cellCount * flowLayout.itemSize.width)) / (cellCount + 1.0)
+            // We want the last visible cells on the right side of the view to be just partially visible to inform the
+            // user that they can scroll to the right to get more. So we take the last row that will fit and 'move it'
+            // half way off screen. If onle one column fits, then we just use the minimum spacing
+            let availableWidth = collectionView.bounds.width - (flowLayout.itemSize.width / 2)
+            let numberColumnsAdjusted = numberOfColumnsThatFit() - 1
+            let spacingAdjusted: CGFloat = {
+                if numberColumnsAdjusted == 0 {
+                    return minCellHorizontalSpacing
+                }
+                else {
+                    return (availableWidth - (CGFloat(numberColumnsAdjusted) * flowLayout.itemSize.width)) / CGFloat(numberColumnsAdjusted + 1)
+                    
+                }
+            }()
+            return spacingAdjusted
+        }
+    }
+    
+    open func verticalSpacing() -> CGFloat {
+        guard let flowLayout = flowLayout() else {
+            return minCellVerticalSpacing
+        }
+        
+        if doAllCellsFit() || flowLayout.scrollDirection == .horizontal {
+            // Use a spacing value that centers them vertically. First figure out how many rows we actually have
+            let rawRowCount = ceilf(Float(tasks.count) / Float(numberOfColumnsThatFit()))
+            let rowCount: CGFloat = {
+                if tasks.count > numberOfRowsThatFit() {
+                    return CGFloat([CGFloat(rawRowCount), CGFloat(numberOfRowsThatFit())].min() ?? 0)
+                }
+                else {
+                    return CGFloat(tasks.count)
+                }
+            }()
+
+            return (collectionView.bounds.height - (rowCount * flowLayout.itemSize.height)) / (rowCount + 1.0)
+        }
+        else {
+            // We want the last visible cells on the bottom of the view to be just partially visible to inform the
+            // user that they can scroll down to get more. So we take the last row that will fit and 'move it'
+            // half way off screen. If only one row fits, then we just use the minimum spacing
+            let availableHeight = collectionView.bounds.height - (flowLayout.itemSize.height / 2)
+            let numberRowsAdjusted = numberOfRowsThatFit() - 1
+            let spacingAdjusted: CGFloat = {
+                if numberRowsAdjusted == 0 {
+                    return minCellVerticalSpacing
+                }
+                else {
+                    return (availableHeight - (CGFloat(numberRowsAdjusted) * flowLayout.itemSize.height)) / CGFloat(numberRowsAdjusted + 1)
+                }
+            }()
+            return spacingAdjusted
         }
     }
 }
