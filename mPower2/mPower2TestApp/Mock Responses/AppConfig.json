@@ -15,24 +15,46 @@
     "modifiedOn": "2018-05-18T21:23:20.401Z",
     "clientData": {
         "studyDuration": {
-            "year": 1
+            "year": 2
         },
-        "groups": [{
+        "groups": [
+                   {
                    "identifier": "Tracking",
                    "title": "Tracking",
-                   "activityIdentifiers": ["Symptoms", "Medication", "Triggers"],
-                   "schedulePlanGuid": "e24e6601-1822-48b0-8770-00870d870708"
-                   }, {
+                   "activityIdentifiers": [
+                                           "Symptoms",
+                                           "Medication",
+                                           "Triggers"
+                                           ],
+                   "activityGuidMap": {
+                   "Medication": "273c4518-7cb6-4496-b1dd-c0b5bf291b09",
+                   "Symptoms": "60868b71-30a4-4e04-a00b-3aca6651deb2",
+                   "Triggers": "b0f07b7e-408e-4d50-9368-8220971e570c"
+                   }
+                   },
+                   {
                    "identifier": "Measuring",
                    "title": "Measuring",
-                   "activityIdentifiers": ["Tapping", "WalkAndBalance", "Tremor"],
+                   "activityIdentifiers": [
+                                           "Tapping",
+                                           "WalkAndBalance",
+                                           "Tremor"
+                                           ],
                    "schedulePlanGuid": "3d898a6f-1ef2-4ece-9e9f-025d94bcd130"
-                   }, {
+                   },
+                   {
                    "identifier": "Study Burst",
                    "title": "Study Burst",
-                   "activityIdentifiers": ["Tapping", "Tremor", "WalkAndBalance", "study-burst-task"]
-                   }],
-        "tasks": [{
+                   "activityIdentifiers": [
+                                           "Tapping",
+                                           "Tremor",
+                                           "WalkAndBalance",
+                                           "study-burst-task"
+                                           ]
+                   }
+                   ],
+        "tasks": [
+                  {
                   "identifier": "Triggers",
                   "type": "tracking",
                   "selection": {
@@ -50,6 +72,7 @@
                   "title": "Your triggers",
                   "actions": {
                   "addMore": {
+                  "type":"default",
                   "buttonTitle": "Edit triggers"
                   }
                   },
@@ -61,83 +84,110 @@
                   }
                   }
                   },
-                  "items": [{
+                  "items": [
+                            {
                             "sectionIdentifier": "Environment",
                             "identifier": "Cold"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Environment",
                             "identifier": "Hot"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Environment",
                             "identifier": "Darkness"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Environment",
                             "identifier": "Humidity"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Lifestyle",
                             "identifier": "Bedtime, early"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Lifestyle",
                             "identifier": "Bedtime, late"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Lifestyle",
                             "identifier": "Diet, protein"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Lifestyle",
                             "identifier": "Diet, carbohydrates"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Lifestyle",
                             "identifier": "Diet, fiber"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Lifestyle",
                             "identifier": "Diet, caffeine"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Lifestyle",
                             "identifier": "Diet, alcohol"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Lifestyle",
                             "identifier": "Diet, vegetarian"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Lifestyle",
                             "identifier": "Exercise, aerobic, high intensity"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Lifestyle",
                             "identifier": "Exercise, aerobic, low intensity"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Lifestyle",
                             "identifier": "Exercise, stretching"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Lifestyle",
                             "identifier": "Exercise, boxing"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Lifestyle",
                             "identifier": "Exercise, Tai Chi"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Lifestyle",
                             "identifier": "Exercise, yoga"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Lifestyle",
                             "identifier": "Sitting still"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Lifestyle",
                             "identifier": "Illness"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Lifestyle",
                             "identifier": "Stress"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Lifestyle",
                             "identifier": "Traveling"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Holistic treatments",
                             "identifier": "Acupuncture"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Holistic treatments",
                             "identifier": "Aromatherapy"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Holistic treatments",
                             "identifier": "Homeopathic therapy"
-                            }]
-                  }, {
+                            }
+                            ]
+                  },
+                  {
                   "identifier": "Symptoms",
                   "type": "tracking",
                   "selection": {
@@ -157,6 +207,7 @@
                   "title": "Today’s symptoms",
                   "actions": {
                   "addMore": {
+                  "type": "default",
                   "buttonTitle": "Edit symptoms"
                   }
                   },
@@ -168,196 +219,263 @@
                   }
                   }
                   },
-                  "items": [{
+                  "items": [
+                            {
                             "sectionIdentifier": "Cognitive",
                             "identifier": "Amnesia"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Cognitive",
                             "identifier": "Compulsions"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Cognitive",
                             "identifier": "Confusion in the evening hours"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Cognitive",
                             "identifier": "Dementia"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Cognitive",
                             "identifier": "Difficulty doing complex tasks"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Cognitive",
                             "identifier": "Difficulty in multitasking"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Cognitive",
                             "identifier": "Difficulty thinking and understanding"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Cognitive",
                             "identifier": "Feeling like somebody is behind you"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Cognitive",
                             "identifier": "Hallucinations"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Cognitive",
                             "identifier": "Hand-eye coordination"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Cognitive",
                             "identifier": "Short term memory loss",
                             "detail": "(difficulty remembering)"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Facial",
                             "identifier": "Jaw stiffness"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Facial",
                             "identifier": "Reduced facial expression"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Facial",
                             "identifier": "Blank stare"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Facial",
                             "identifier": "Drooling"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "GI and Urinary",
                             "identifier": "Constipation"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "GI and Urinary",
                             "identifier": "Dribbling or leaking of urine"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "GI and Urinary",
                             "identifier": "Frequent urination at night"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Mood",
                             "identifier": "Anger"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Mood",
                             "identifier": "Anxiety"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Mood",
                             "identifier": "Apathy",
                             "detail": "(lack of interest or enthusiasm)"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Mood",
                             "identifier": "Depression",
                             "detail": "(low mood disorder)"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Muscular and Motor",
                             "identifier": "Dexterity"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Muscular and Motor",
                             "identifier": "Difficulty standing"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Muscular and Motor",
                             "identifier": "Difficulty walking"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Muscular and Motor",
                             "identifier": "Difficulty walking backwards"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Muscular and Motor",
                             "identifier": "Difficulty with bodily movements"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Muscular and Motor",
                             "identifier": "Falling"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Muscular and Motor",
                             "identifier": "Freezing"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Muscular and Motor",
                             "identifier": "Grip strength"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Muscular and Motor",
                             "identifier": "Involuntary movements"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Nasal",
                             "identifier": "Distorted sense of smell"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Nasal",
                             "identifier": "Loss of smell"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Sleep",
                             "identifier": "Acting out in your dreams"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Sleep",
                             "identifier": "Daytime sleepiness"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Sleep",
                             "identifier": "Early awakening"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Sleep",
                             "identifier": "Night terrors"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Sleep",
                             "identifier": "Nightmares"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Sleep",
                             "identifier": "Restless sleep"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Sleep",
                             "identifier": "Sleep disturbances"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Sleep",
                             "identifier": "Yawning a lot"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Speech",
                             "identifier": "Impaired voice"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Speech",
                             "identifier": "Soft speech"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Speech",
                             "identifier": "Voice box spasms"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Speech",
                             "identifier": "Talking fast"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Vision",
                             "identifier": "Difficulty focusing visually"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Whole body",
                             "identifier": "Aches and pains"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Whole body",
                             "identifier": "Dizziness"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Whole body",
                             "identifier": "Fatigue"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Whole body",
                             "identifier": "Feeling cold"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Whole body",
                             "identifier": "Feeling hot"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Whole body",
                             "identifier": "Poor balance"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Whole body",
                             "identifier": "Restlessness"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Whole body",
                             "identifier": "Tingling of extremities",
                             "detail": "(hands, arms, or feet)"
-                            }],
-                  "sections": [{
+                            }
+                            ],
+                  "sections": [
+                               {
                                "identifier": "Cognitive",
                                "detail": "(mental processing)"
-                               }, {
+                               },
+                               {
                                "identifier": "Facial"
-                               }, {
+                               },
+                               {
                                "identifier": "GI and Urinary"
-                               }, {
+                               },
+                               {
                                "identifier": "Mood"
-                               }, {
+                               },
+                               {
                                "identifier": "Muscular and Motor"
-                               }, {
+                               },
+                               {
                                "identifier": "Nasal"
-                               }, {
+                               },
+                               {
                                "identifier": "Sleep"
-                               }, {
+                               },
+                               {
                                "identifier": "Speech"
-                               }, {
+                               },
+                               {
                                "identifier": "Vision"
-                               }, {
+                               },
+                               {
                                "identifier": "Whole body"
-                               }]
-                  }, {
+                               }
+                               ]
+                  },
+                  {
                   "identifier": "Medication",
                   "type": "medicationTracking",
                   "selection": {
@@ -371,111 +489,142 @@
                   }
                   }
                   },
-                  "items": [{
+                  "items": [
+                            {
                             "sectionIdentifier": "Amantadine",
                             "identifier": "Immediate release amantadine",
                             "detail": "(Symmetrel)"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Amantadine",
                             "identifier": "Extended release amantadine",
                             "detail": "(Gocovri)"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Anticholinergic Medications",
                             "identifier": "Artane",
                             "detail": "(Trihexyphenidyl)"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Anticholinergic Medications",
                             "identifier": "Cogentin",
                             "detail": "(Benztropine)"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Catechol-O-methyltransferase inhibitors",
                             "identifier": "Comtan",
                             "detail": "(Entacapone)"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Catechol-O-methyltransferase inhibitors",
                             "identifier": "Stalevo",
                             "detail": "(Levodopa / Carbidopa and Entacapone)"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Catechol-O-methyltransferase inhibitors",
                             "identifier": "Tasmar",
                             "detail": "(Tolcapone)"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Dopamine promotor",
                             "identifier": "Apokyn",
                             "detail": "(Apomorphine)"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Dopamine promotor",
                             "identifier": "Mirapex ER",
                             "detail": "(Pramipexole)"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Dopamine promotor",
                             "identifier": "Neupro",
                             "detail": "(Rotigotine)"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Dopamine promotor",
                             "identifier": "Requip",
                             "detail": "(Ropinrole)"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Dopamine promotor",
                             "identifier": "Requip XL",
                             "detail": "(Ropinrole)"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Dopamine replacement therapy",
                             "identifier": "Duopa",
                             "detail": "(Carbidopa / Levodopa)"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Dopamine replacement therapy",
                             "identifier": "Parcopa",
                             "detail": "(Carbidopa / Levodopa)"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Dopamine replacement therapy",
                             "identifier": "Sinemet",
                             "detail": "(Carbidopa / Levodopa)"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Dopamine replacement therapy",
                             "identifier": "Sinemet CR",
                             "detail": "(Carbidopa / Levodopa)"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Dopamine replacement therapy",
                             "identifier": "Stalevo",
                             "detail": "(Carbidopa / Levodopa)"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Dopamine replacement therapy",
                             "identifier": "Rytary",
                             "detail": "(Carbidopa / Levodopa)"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Monoamine Oxidase B inhibitors",
                             "identifier": "Azilect",
                             "detail": "(Rasagiline)"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Monoamine Oxidase B inhibitors",
                             "identifier": "Elderpryl",
                             "detail": "(Selegiline)"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Monoamine Oxidase B inhibitors",
                             "identifier": "Xadago",
                             "detail": "(Safinamide)"
-                            }, {
+                            },
+                            {
                             "sectionIdentifier": "Monoamine Oxidase B inhibitors",
                             "identifier": "Zelapar",
                             "detail": "(Selegiline)"
-                            }],
-                  "sections": [{
+                            }
+                            ],
+                  "sections": [
+                               {
                                "identifier": "Amantadine"
-                               }, {
+                               },
+                               {
                                "identifier": "Anticholinergic Medications"
-                               }, {
+                               },
+                               {
                                "identifier": "Catechol-O-methyltransferase inhibitors",
                                "detail": "(COMT)"
-                               }, {
+                               },
+                               {
                                "identifier": "Dopamine promotor"
-                               }, {
+                               },
+                               {
                                "identifier": "Dopamine replacement therapy"
-                               }, {
+                               },
+                               {
                                "identifier": "Monoamine Oxidase B inhibitors",
                                "detail": "(MAO-B)"
-                               }]
-                  }]
+                               }
+                               ]
+                  }
+                  ]
     },
     "surveyReferences": [],
     "schemaReferences": [{
