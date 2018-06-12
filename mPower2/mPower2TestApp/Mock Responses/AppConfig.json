@@ -17,6 +17,9 @@
         "studyDuration": {
             "year": 2
         },
+        "taskToSchemaIdentifierMap": {
+            "StudyBurst": "study-burst-task"
+        },
         "groups": [
                    {
                    "identifier": "Tracking",
@@ -72,7 +75,7 @@
                   "title": "Your triggers",
                   "actions": {
                   "addMore": {
-                  "type":"default",
+                  "type": "default",
                   "buttonTitle": "Edit triggers"
                   }
                   },
@@ -628,6 +631,10 @@
     },
     "surveyReferences": [],
     "schemaReferences": [{
+                         "id": "StudyBurst",
+                         "revision": 1,
+                         "type": "SchemaReference"
+                         }, {
                          "id": "Symptoms",
                          "revision": 2,
                          "type": "SchemaReference"

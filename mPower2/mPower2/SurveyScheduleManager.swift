@@ -44,7 +44,7 @@ class SurveyScheduleManager : SBAScheduleManager {
         
         // TODO: syoung 05/18/2018 Unit test this for accuracy.
         
-        let excludeTaskGroupIdentifiers = Set(SBABridgeConfiguration.shared.activityGroups.compactMap {
+        let excludeTaskGroupIdentifiers = Set(self.configuration.installedGroups.compactMap {
             return ($0.identifier == self.identifier) ? nil : $0.activityIdentifiers
             }.flatMap { $0 })
         let taskPredicate = NSPredicate(format: "(activity.survey != nil) AND NOT(activity.survey.identifier IN %@)", excludeTaskGroupIdentifiers)
