@@ -256,7 +256,7 @@ class StudyBurstScheduleManager : SBAScheduleManager {
             }
             archive.insertDictionary(intoArchive: json, filename: "tasks", createdOn: finishedOn)
             
-            try archive.complete()
+            try archive.completeArchive(createdOn: finishedOn, with: nil)
             
             self.offMainQueue.async {
                 archive.encryptAndUploadArchive()
