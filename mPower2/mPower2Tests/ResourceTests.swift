@@ -33,6 +33,7 @@
 
 import XCTest
 @testable import mPower2TestApp
+@testable import BridgeApp
 import Research
 import BridgeApp
 
@@ -51,5 +52,35 @@ class ResourceTests: XCTestCase {
     func testExample() {
 
         XCTAssertTrue(true)
+    }
+    
+    func testSigninTask() {
+        do {
+            let resourceTransformer = RSDResourceTransformerObject(resourceName: "SignIn")
+            let _ = try RSDFactory.shared.decodeTask(with: resourceTransformer)
+        } catch let err {
+            XCTFail("Failed to decode the SignIn task. \(err)")
+        }
+    }
+    
+    func testAppConfig() {
+        do {
+            let resourceTransformer = RSDResourceTransformerObject(resourceName: "AppConfig")
+            let (data, resourceType) = try resourceTransformer.resourceData()
+            XCTAssertEqual(resourceType, .json)
+            let json = try JSONSerialization.jsonObject(with: data, options: [])
+            guard let clientData = (json as? [String : Any])?["clientData"] as? SBBJSONValue else {
+                XCTFail("Failed to decode clientData. \(json)")
+                return
+            }
+            let decoder = SBAFactory().createJSONDecoder()
+            let mappingObject = try decoder.decode(SBAActivityMappingObject.self, from: clientData)
+            
+            XCTAssertEqual(mappingObject.studyDuration?.year, 2)
+            
+            
+        } catch let err {
+            XCTFail("Failed to decode the SignIn task. \(err)")
+        }
     }
 }

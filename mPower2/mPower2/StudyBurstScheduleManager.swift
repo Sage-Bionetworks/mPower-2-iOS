@@ -182,9 +182,7 @@ class StudyBurstScheduleManager : SBAScheduleManager {
                 self.finishedSchedules = filtered
                 if self.totalActivitiesCount == filtered.count, let finishedOn = finishedOn {
                     // The activities for today were marked as finished by a different schedule manager.
-                    self._expiresOn = nil
-                    studyMarker.startedOn = startedOn ?? Date()
-                    studyMarker.finishedOn = finishedOn
+                    self.markCompleted(studyMarker: studyMarker, startedOn: startedOn, finishedOn: finishedOn, finishedSchedules: finishedSchedules)
                     super.sendUpdated(for: [studyMarker])
                 }
                 else {
@@ -211,6 +209,11 @@ class StudyBurstScheduleManager : SBAScheduleManager {
     
     /// Override to update the finished schedules
     override func sendUpdated(for schedules: [SBBScheduledActivity], taskPath: RSDTaskPath? = nil) {
+        guard taskPath == nil else {
+            super.sendUpdated(for: schedules, taskPath:taskPath)
+            return
+        }
+        
         DispatchQueue.main.async {
 
             let unionedSchedules = self.unionSchedules(self.finishedSchedules, updatedSchedules: schedules)
@@ -219,14 +222,50 @@ class StudyBurstScheduleManager : SBAScheduleManager {
             var sendSchedules = schedules
             if self.totalActivitiesCount == schedules.count, let finishedOn = finishedOn,
                 let studyMarker = self.studyMarker(), studyMarker.finishedOn == nil {
-                self._expiresOn = nil
-                studyMarker.startedOn = startedOn ?? Date()
-                studyMarker.finishedOn = finishedOn
+                self.markCompleted(studyMarker: studyMarker, startedOn: startedOn, finishedOn: finishedOn, finishedSchedules: finishedSchedules)
                 sendSchedules.append(studyMarker)
             }
             
-            super.sendUpdated(for: sendSchedules, taskPath:taskPath)
+            super.sendUpdated(for: sendSchedules, taskPath: taskPath)
         }
+    }
+    
+    func markCompleted(studyMarker: SBBScheduledActivity, startedOn: Date?, finishedOn: Date, finishedSchedules: [SBBScheduledActivity]) {
+        
+        self._expiresOn = nil
+        studyMarker.startedOn = startedOn ?? Date()
+        studyMarker.finishedOn = finishedOn
+        
+        guard let identifier = studyMarker.activityIdentifier,
+            let schemaInfo = studyMarker.schemaInfo else {
+                return
+        }
+        
+        do {
+        
+            // build the archive
+            let archive = SBAScheduledActivityArchive(identifier: identifier, schemaInfo: schemaInfo, schedule: studyMarker)
+            var json: [String : Any] = [ "taskOrder" : self.orderedTasks().map { $0.identifier }.joined(separator: ",")]
+            finishedSchedules.forEach {
+                guard let identifier = $0.activityIdentifier, let finishedOn = $0.finishedOn else { return }
+                json[identifier] = [
+                    "startDate": ($0.startedOn ?? Date()).jsonObject(),
+                    "endDate": finishedOn.jsonObject(),
+                    "scheduleGuid": $0.guid
+                ]
+            }
+            archive.insertDictionary(intoArchive: json, filename: "tasks", createdOn: finishedOn)
+            
+            try archive.completeArchive(createdOn: finishedOn, with: nil)
+            
+            self.offMainQueue.async {
+                archive.encryptAndUploadArchive()
+            }
+        }
+        catch let err {
+            print("Failed to archive the study burst data. \(err)")
+        }
+        
     }
     
     /// Returns the study burst completed marker for today.

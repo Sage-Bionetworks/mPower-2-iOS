@@ -78,12 +78,12 @@ class DataSourceManager {
     static let shared = DataSourceManager()
     private init() { }
     
-    var config : SBABridgeConfiguration {
+    var configuration : SBABridgeConfiguration {
         return SBABridgeConfiguration.shared
     }
     
     func activityGroup(with identifier: RSDIdentifier) -> SBAActivityGroup? {
-        return config.activityGroups.first(where: { $0.identifier == identifier.stringValue })
+        return configuration.activityGroup(with: identifier.stringValue)
     }
     
     func scheduleManager(with identifier: RSDIdentifier) -> SBAScheduleManager {
@@ -120,7 +120,7 @@ class DataSourceManager {
         guard !_hasInstalledTaskGroups else { return }
         _hasInstalledTaskGroups = true
         
-        let installedGroups = config.activityGroups
+        let installedGroups = configuration.installedGroups
         
         let rsdIdentifiers: [RSDIdentifier] = [.measuringTaskGroup, .trackingTaskGroup, .studyBurstTaskGroup]
         rsdIdentifiers.forEach { (groupIdentifier) in
@@ -151,14 +151,14 @@ class DataSourceManager {
                 guard activityId != .studyBurstCompletedTask else { return }
                 
                 // If the installed info has an image then it's loaded.
-                let installedInfo = config.activityInfoMap[activityId.stringValue]
+                let installedInfo = configuration.activityInfo(for: activityId.stringValue)
                 if installedInfo?.imageVendor != nil { return }
                 
                 // Install the task and task info.
                 if let mctIdentifier = MCTTaskIdentifier(rawValue: activityId.stringValue) {
                     let taskInfo = MCTTaskInfo(mctIdentifier)
-                    config.addMapping(with: taskInfo)
-                    config.addMapping(with: taskInfo.task)
+                    configuration.addMapping(with: taskInfo)
+                    configuration.addMapping(with: taskInfo.task)
                 }
                 else {
                     let image = UIImage(named: "\(activityId.stringValue)TaskIcon")
@@ -173,7 +173,7 @@ class DataSourceManager {
                                                          iconImage: image,
                                                          resource: resource,
                                                          moduleId: moduleId)
-                    config.addMapping(with: taskInfo)
+                    configuration.addMapping(with: taskInfo)
                 }
             }
             
@@ -187,7 +187,7 @@ class DataSourceManager {
                                                            notificationIdentifier: nil,
                                                            schedulePlanGuid: nil,
                                                            activityGuidMap: nil)
-                config.addMapping(with: activityGroup)
+                configuration.addMapping(with: activityGroup)
             }
         }
     }
