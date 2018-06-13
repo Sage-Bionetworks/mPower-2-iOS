@@ -144,7 +144,7 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
     }
     
     // MARK: RSDTaskViewControllerDelegate
-    func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
+    open func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
         // dismiss the view controller
         (taskController as? UIViewController)?.dismiss(animated: true) {
         }

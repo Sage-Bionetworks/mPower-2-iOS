@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aoW-sk-zkl">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="NuD-Wm-4G6">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -790,10 +790,101 @@
             </objects>
             <point key="canvasLocation" x="2422" y="-475"/>
         </scene>
+        <!--Study Burst Completion View Controller-->
+        <scene sceneID="ECP-j6-V4D">
+            <objects>
+                <viewController storyboardIdentifier="StudyBurstCompletionViewController" id="NuD-Wm-4G6" customClass="StudyBurstCompletionViewController" customModule="mPower2" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="1iT-tN-oBv">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TGH-P5-MQB" customClass="MCTCompletionGradient" customModule="mPower2" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="20" width="375" height="253"/>
+                            </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" image="StudyBurstComplete" translatesAutoresizingMaskIntoConstraints="NO" id="otF-xL-ZKy">
+                                <rect key="frame" x="0.0" y="20" width="375" height="253"/>
+                                <color key="backgroundColor" red="0.50980392156862742" green="0.89803921568627454" blue="0.71372549019607845" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zsa-5q-KpI" userLabel="Status Background" customClass="RSDStatusBarBackgroundView" customModule="ResearchUI">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="20"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="GrX-RI-kFA"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QYu-LA-xaI" customClass="RSDGenericNavigationFooterView" customModule="ResearchUI">
+                                <rect key="frame" x="0.0" y="570" width="375" height="97"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="97" placeholder="YES" id="WGd-1H-Dsp"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isBackHidden" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="950" text="You just completed your first Study Burst" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YEp-IP-aPa">
+                                <rect key="frame" x="16" y="356" width="343" height="57.5"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="1000" text="Congratulations!" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hwN-Dl-u5h">
+                                <rect key="frame" x="16" y="307" width="343" height="36"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="950" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0SQ-Vl-5Tc">
+                                <rect key="frame" x="16" y="428.5" width="343" height="129"/>
+                                <string key="text">The scientists are now starting to analyze your data. In order to complete their analysis, they have a short health survey for you to complete. Don’t worry, this shouldn’t take any more than  4 minutes.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="otF-xL-ZKy" firstAttribute="trailing" secondItem="TGH-P5-MQB" secondAttribute="trailing" id="42f-2P-pEu"/>
+                            <constraint firstItem="QYu-LA-xaI" firstAttribute="bottom" secondItem="Rvm-Yl-pU5" secondAttribute="bottom" id="48b-9F-b8D"/>
+                            <constraint firstItem="QYu-LA-xaI" firstAttribute="top" relation="greaterThanOrEqual" secondItem="0SQ-Vl-5Tc" secondAttribute="bottom" constant="10" id="7PQ-SQ-uWo"/>
+                            <constraint firstItem="Rvm-Yl-pU5" firstAttribute="trailing" secondItem="YEp-IP-aPa" secondAttribute="trailing" constant="16" id="DKh-dr-uft"/>
+                            <constraint firstItem="otF-xL-ZKy" firstAttribute="bottom" secondItem="TGH-P5-MQB" secondAttribute="bottom" id="Gvn-NP-8Pr"/>
+                            <constraint firstItem="otF-xL-ZKy" firstAttribute="leading" secondItem="TGH-P5-MQB" secondAttribute="leading" id="Iuu-uU-Cnq"/>
+                            <constraint firstAttribute="trailing" secondItem="Zsa-5q-KpI" secondAttribute="trailing" id="M5a-KE-BzB"/>
+                            <constraint firstItem="YEp-IP-aPa" firstAttribute="top" secondItem="hwN-Dl-u5h" secondAttribute="bottom" constant="13" id="SuN-o1-jUE"/>
+                            <constraint firstItem="hwN-Dl-u5h" firstAttribute="leading" secondItem="Rvm-Yl-pU5" secondAttribute="leading" constant="16" id="UyD-0c-bv9"/>
+                            <constraint firstItem="TGH-P5-MQB" firstAttribute="top" secondItem="Zsa-5q-KpI" secondAttribute="bottom" id="YC3-Vr-sIq"/>
+                            <constraint firstItem="QYu-LA-xaI" firstAttribute="trailing" secondItem="Rvm-Yl-pU5" secondAttribute="trailing" id="bPZ-qG-Yjj"/>
+                            <constraint firstItem="Zsa-5q-KpI" firstAttribute="top" secondItem="1iT-tN-oBv" secondAttribute="top" id="cWx-j4-pgQ"/>
+                            <constraint firstItem="0SQ-Vl-5Tc" firstAttribute="leading" secondItem="Rvm-Yl-pU5" secondAttribute="leading" constant="16" id="dFE-hx-H64"/>
+                            <constraint firstItem="Rvm-Yl-pU5" firstAttribute="trailing" secondItem="hwN-Dl-u5h" secondAttribute="trailing" constant="16" id="dbe-H9-y11"/>
+                            <constraint firstItem="QYu-LA-xaI" firstAttribute="leading" secondItem="Rvm-Yl-pU5" secondAttribute="leading" id="fkJ-Jf-3Ha"/>
+                            <constraint firstItem="otF-xL-ZKy" firstAttribute="top" secondItem="TGH-P5-MQB" secondAttribute="top" id="grh-qJ-Jjb"/>
+                            <constraint firstItem="hwN-Dl-u5h" firstAttribute="top" secondItem="TGH-P5-MQB" secondAttribute="bottom" constant="34" id="jWu-VU-iwQ"/>
+                            <constraint firstItem="TGH-P5-MQB" firstAttribute="leading" secondItem="Rvm-Yl-pU5" secondAttribute="leading" id="jrI-70-jzz"/>
+                            <constraint firstItem="Rvm-Yl-pU5" firstAttribute="trailing" secondItem="0SQ-Vl-5Tc" secondAttribute="trailing" constant="16" id="lLZ-pD-Moc"/>
+                            <constraint firstItem="TGH-P5-MQB" firstAttribute="trailing" secondItem="Rvm-Yl-pU5" secondAttribute="trailing" id="o0i-u0-kPw"/>
+                            <constraint firstItem="YEp-IP-aPa" firstAttribute="leading" secondItem="Rvm-Yl-pU5" secondAttribute="leading" constant="16" id="sH7-3k-H3D"/>
+                            <constraint firstItem="Zsa-5q-KpI" firstAttribute="leading" secondItem="1iT-tN-oBv" secondAttribute="leading" id="uY1-DX-45a"/>
+                            <constraint firstItem="0SQ-Vl-5Tc" firstAttribute="top" secondItem="YEp-IP-aPa" secondAttribute="bottom" constant="15" id="wFs-gJ-OoK"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Rvm-Yl-pU5"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="shouldShowProgress" value="NO"/>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="shouldShowCloseButton" value="YES"/>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                    <connections>
+                        <outlet property="detailLabel" destination="0SQ-Vl-5Tc" id="UEz-xc-PoE"/>
+                        <outlet property="navFooterView" destination="QYu-LA-xaI" id="Zne-dh-hLu"/>
+                        <outlet property="textLabel" destination="YEp-IP-aPa" id="e3w-KJ-65S"/>
+                        <outlet property="titleLabel" destination="hwN-Dl-u5h" id="bAB-4p-cFy"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uPf-jS-JQ1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3125.5999999999999" y="-436.73163418290858"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Chevron" width="11" height="20"/>
         <image name="GreenCheckmark" width="24" height="24"/>
+        <image name="StudyBurstComplete" width="375" height="253"/>
         <image name="SymptomsTaskIcon" width="29" height="45"/>
         <image name="TabHistory_unselected" width="25" height="24"/>
         <image name="TabInsight_unselected" width="20" height="27"/>
