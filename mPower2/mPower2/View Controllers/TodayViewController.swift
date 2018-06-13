@@ -384,18 +384,25 @@ class TodayViewController: UIViewController {
 /// Conforming to this protocol only for presenting Survey tasks
 extension TodayViewController: RSDTaskViewControllerDelegate {
     
-    // TODO: jbruhin 6/2/18 - do we need to implement anything here???
     func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
-        //
+        // dismiss the view controller
+        (taskController as? UIViewController)?.dismiss(animated: true) {
+        }
+        // Let the schedule manager handle the cleanup.
+        studyBurstManager.taskController(taskController, didFinishWith: reason, error: error)
+        
+        // Update the view
+        updateActionBar()
     }
     
     func taskController(_ taskController: RSDTaskController, readyToSave taskPath: RSDTaskPath) {
-        //
+        studyBurstManager.taskController(taskController, readyToSave: taskPath)
     }
     
     func taskController(_ taskController: RSDTaskController, asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController? {
-        return nil
+        return studyBurstManager.taskController(taskController, asyncActionControllerFor:configuration)
     }
+
 }
 
 extension TodayViewController: StudyBurstProgressExpirationLabelDelegate {
