@@ -17,6 +17,13 @@ class StudyBurstCompletionViewController: UIViewController {
     @IBOutlet weak var detailLabel: UILabel!
     @IBOutlet weak var navFooterView: RSDGenericNavigationFooterView!
     
+    var surveyManager: SurveyScheduleManager?
+
+    static func instantiate() -> StudyBurstCompletionViewController? {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        return storyboard.instantiateViewController(withIdentifier: "StudyBurstCompletionViewController") as? StudyBurstCompletionViewController
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -24,11 +31,6 @@ class StudyBurstCompletionViewController: UIViewController {
         setupView()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     func setupView() {
         
         // Populate the labels
@@ -38,12 +40,55 @@ class StudyBurstCompletionViewController: UIViewController {
 
         // Configure the next button
         navFooterView.nextButton?.addTarget(self, action: #selector(nextHit(sender:)), for: .touchUpInside)
+        
+        // Show or hide the next button
+        navFooterView.isHidden = !hasActiveSurvey
     }
+    
+    var hasActiveSurvey : Bool {
+        return surveyManager?.hasSurvey ?? false
+    }
+
     
     // MARK: Actions
     @objc
     func nextHit(sender: Any) {
-        // TODO: jbruhin 6-7-18 implement
+        
+        guard let surveyManager = surveyManager,
+            let group = surveyManager.activityGroup,
+            let taskInfo = group.tasks.first else {
+            return
+        }
+        
+        // Get our task info for the first survey, create a task and present it
+        let (taskPath, _) = surveyManager.instantiateTaskPath(for: taskInfo)
+        let vc = RSDTaskViewController(taskPath: taskPath)
+        vc.delegate = self
+        self.present(vc, animated: true, completion: nil)
     }
 
+}
+
+extension StudyBurstCompletionViewController: RSDTaskViewControllerDelegate {
+    
+    // MARK: RSDTaskViewControllerDelegate
+    open func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
+        // dismiss the view controller then pop to root VC
+        (taskController as? UIViewController)?.dismiss(animated: true) {
+            self.navigationController?.popToRootViewController(animated: true)
+        }
+        guard let surveyManager = surveyManager else { return }
+        // Let the schedule manager handle the cleanup.
+        surveyManager.taskController(taskController, didFinishWith: reason, error: error)
+    }
+    
+    func taskController(_ taskController: RSDTaskController, readyToSave taskPath: RSDTaskPath) {
+        guard let surveyManager = surveyManager else { return }
+        surveyManager.taskController(taskController, readyToSave: taskPath)
+    }
+    
+    func taskController(_ taskController: RSDTaskController, asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController? {
+        guard let surveyManager = surveyManager else { return nil }
+        return surveyManager.taskController(taskController, asyncActionControllerFor:configuration)
+    }
 }
