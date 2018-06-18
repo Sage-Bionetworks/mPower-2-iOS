@@ -16,6 +16,8 @@ class StudyBurstCompletionViewController: UIViewController {
     @IBOutlet weak var textLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!
     @IBOutlet weak var navFooterView: RSDGenericNavigationFooterView!
+    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var statusBarBackgroundView: RSDStatusBarBackgroundView!
     
     var surveyManager: SurveyScheduleManager?
 
@@ -43,6 +45,9 @@ class StudyBurstCompletionViewController: UIViewController {
         
         // Show or hide the next button
         navFooterView.isHidden = !hasActiveSurvey
+        
+        // Assign color to the status bar background view
+        statusBarBackgroundView.overlayColor = UIColor.rsd_statusBarOverlayLightStyle
     }
     
     var hasActiveSurvey : Bool {
@@ -66,7 +71,10 @@ class StudyBurstCompletionViewController: UIViewController {
         vc.delegate = self
         self.present(vc, animated: true, completion: nil)
     }
-
+    
+    @IBAction func backHit(_ sender: Any) {
+        navigationController?.popViewController(animated: true)
+    }
 }
 
 extension StudyBurstCompletionViewController: RSDTaskViewControllerDelegate {
