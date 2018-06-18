@@ -39,6 +39,7 @@ class StudyBurstViewController: UIViewController {
     
     private let kProgressContainerViewHeight = CGFloat(80.0).rsd_proportionalToScreenHeight()
     private let kTaskBrowserSegueIdentifier = "StudyBurstTaskBrowserSegue"
+    private let kHasSeenCompletionKey = "HasSeenStudyBurstCompletion"
 
     @IBOutlet weak var headerView: RSDTableStepHeaderView!
     @IBOutlet weak var progressContainerView: UIView!
@@ -47,15 +48,39 @@ class StudyBurstViewController: UIViewController {
     @IBOutlet weak var progressLabel: StudyBurstProgressExpirationLabel!
     @IBOutlet weak var progressContainerViewHeightConstraint: NSLayoutConstraint!
     
-    var scheduleManager: StudyBurstScheduleManager?
     var taskBrowserVC: StudyBurstTaskBrowserViewController?
+    
+    var studyBurstManager: StudyBurstScheduleManager?
+    var surveyManager: SurveyScheduleManager?
+
+    var hasSeenCompletion: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: kHasSeenCompletionKey)
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: kHasSeenCompletionKey)
+            UserDefaults.standard.synchronize()
+        }
+    }
+    
+    var shouldShowCompletionView: Bool {
+        get {
+            // The completion view is shown to the user only once and only if they are done for today
+            return !hasSeenCompletion && (studyBurstManager?.isCompletedForToday ?? false)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
     }
-        
+
     func setupView() {
+        
+        guard let studyBurstManager = studyBurstManager else {
+            return
+        }
+        
         // Setup our back button
         headerView.cancelButton?.setImage(UIImage(named: "BackButtonIcon"), for: .normal)
         headerView.cancelButton?.addTarget(self, action: #selector(backHit(sender:)), for: .touchUpInside)
@@ -64,12 +89,12 @@ class StudyBurstViewController: UIViewController {
         navFooterView.nextButton?.addTarget(self, action: #selector(nextHit(sender:)), for: .touchUpInside)
         
         // Update progress circle
-        progressCircleView.progress = scheduleManager?.progress ?? 0.0
-        progressCircleView.displayDay(count: scheduleManager?.dayCount ?? 0)
+        progressCircleView.progress = studyBurstManager.progress
+        progressCircleView.displayDay(count: studyBurstManager.dayCount ?? 0)
         
         // Update progress view
-        headerView.progressView?.totalSteps = scheduleManager?.numberOfDays ?? 0
-        headerView.progressView?.currentStep = scheduleManager?.dayCount ?? 0
+        headerView.progressView?.totalSteps = studyBurstManager.numberOfDays
+        headerView.progressView?.currentStep = studyBurstManager.dayCount ?? 0
         
         // Update greeting and message
         let content = welcomeContent()
@@ -78,7 +103,7 @@ class StudyBurstViewController: UIViewController {
         
         // Set ourselves as delegate on our progress label so we can provide progress expiry date
         progressLabel.delegate = self
-        if let expiresOn = scheduleManager?.expiresOn {
+        if let expiresOn = studyBurstManager.expiresOn {
             progressLabel.updateStudyBurstExpirationTime(expiresOn)
         }
         
@@ -88,13 +113,13 @@ class StudyBurstViewController: UIViewController {
     
     func welcomeContent() -> (title: String?, message: String?) {
         
-        guard let scheduleManager = scheduleManager else {
-            return (nil, nil)
+        guard let studyBurstManager = studyBurstManager else {
+            return ("", "")
         }
-        
+
         let formatter = NumberFormatter()
         formatter.numberStyle = .none
-        let currentDaysStr = formatter.string(for: scheduleManager.dayCount)!
+        let currentDaysStr = formatter.string(for: studyBurstManager.dayCount)!
         
         // The title string is the same regardless of how many days they've missed, if any.
         // It will vary only by the current day of the study burst
@@ -102,7 +127,7 @@ class StudyBurstViewController: UIViewController {
         let titleStr = Localization.localizedString(formatStr)
         
         let messageStr: String? = {
-            if scheduleManager.missedDaysCount == 0 {
+            if studyBurstManager.missedDaysCount == 0 {
                 // The message will vary by the current day of the study burst
                 let format = String(format: "STUDY_BURST_MESSAGE_DAY_%@", currentDaysStr)
                 return Localization.localizedString(format)
@@ -110,13 +135,13 @@ class StudyBurstViewController: UIViewController {
             else {
                 // The message will be the same for each day of the study burst and will simply
                 // indicate the current day and the number of missed days
-                let missedDaysStr = formatter.string(for: scheduleManager.missedDaysCount)!
+                let missedDaysStr = formatter.string(for: studyBurstManager.missedDaysCount)!
                 
-                let format = scheduleManager.missedDaysCount > 1 ?
+                let format = studyBurstManager.missedDaysCount > 1 ?
                     Localization.localizedString("STUDY_BURST_MESSAGE_IN_%@_DAYS_MISSED_%@_DAYS") :
                     Localization.localizedString("STUDY_BURST_MESSAGE_IN_%@_DAYS_MISSED_ONE_DAY")
                 
-                let str = scheduleManager.missedDaysCount > 1 ?
+                let str = studyBurstManager.missedDaysCount > 1 ?
                     String.localizedStringWithFormat(format, currentDaysStr, missedDaysStr) :
                     String.localizedStringWithFormat(format, currentDaysStr)
                 
@@ -129,10 +154,10 @@ class StudyBurstViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == kTaskBrowserSegueIdentifier,
-            let taskBrowser = segue.destination as? StudyBurstTaskBrowserViewController {
-            if let scheduleManager = scheduleManager {
-                taskBrowser.scheduleManagers = [scheduleManager]
-            }
+            let taskBrowser = segue.destination as? StudyBurstTaskBrowserViewController,
+            let studyBurstManager = studyBurstManager {
+            
+            taskBrowser.scheduleManagers = [studyBurstManager]
             taskBrowser.delegate = self
             taskBrowserVC = taskBrowser
         }
@@ -150,17 +175,44 @@ class StudyBurstViewController: UIViewController {
         }
     }
     @objc func nextHit(sender: Any) {
-        taskBrowserVC?.startNextTask()
+        // If user is completed for today, then show the Completion VC, otherwise, show the next task
+        if studyBurstManager?.isCompletedForToday ?? false {
+            showCompletionView()
+        }
+        else {
+            taskBrowserVC?.startNextTask()
+        }
+    }
+    
+    func showCompletionView() {
+        // Instantiate the completion VC and push it on current navigation stack
+        if let vc = StudyBurstCompletionViewController.instantiate() {
+            vc.surveyManager = surveyManager
+            self.show(vc, sender: true)
+            // Mark that user has now seen the study burst completion
+            hasSeenCompletion = true
+        }
     }
 }
 
 extension StudyBurstViewController: StudyBurstProgressExpirationLabelDelegate {
     func studyBurstExpiresOn() -> Date? {
-        return scheduleManager?.expiresOn
+        return studyBurstManager?.expiresOn
     }
 }
 
 extension StudyBurstViewController: TaskBrowserViewControllerDelegate {
+    
+    func taskBrowserDidFinish(task: RSDTaskPath) {
+        if shouldShowCompletionView {
+            showCompletionView()
+        }
+        else {
+            // Since we're not showing the completion view, we need to pop to the root VC
+            self.navigationController?.popToRootViewController(animated: true)
+        }
+    }
+    
     // MARK: TaskBrowserViewControllerDelegate
     func taskBrowserToggleVisibility() {
         // Nothing

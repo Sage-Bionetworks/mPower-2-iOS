@@ -371,10 +371,11 @@ class TodayViewController: UIViewController {
             }
         }
         else if hasActiveStudyBurst {
-            // Instantiate a new Study Burst VC, assign the schedule manager and present the VC
+            // Instantiate a new Study Burst VC and present it
             if let vc = StudyBurstViewController.instantiate(),
                 let nc = self.navigationController {
-                vc.scheduleManager = studyBurstManager
+                vc.studyBurstManager = studyBurstManager
+                vc.surveyManager = surveyManager
                 nc.show(vc, sender: self)
             }
         }
@@ -384,18 +385,25 @@ class TodayViewController: UIViewController {
 /// Conforming to this protocol only for presenting Survey tasks
 extension TodayViewController: RSDTaskViewControllerDelegate {
     
-    // TODO: jbruhin 6/2/18 - do we need to implement anything here???
     func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
-        //
+        // dismiss the view controller
+        (taskController as? UIViewController)?.dismiss(animated: true) {
+        }
+        // Let the schedule manager handle the cleanup.
+        studyBurstManager.taskController(taskController, didFinishWith: reason, error: error)
+        
+        // Update the view
+        updateActionBar()
     }
     
     func taskController(_ taskController: RSDTaskController, readyToSave taskPath: RSDTaskPath) {
-        //
+        studyBurstManager.taskController(taskController, readyToSave: taskPath)
     }
     
     func taskController(_ taskController: RSDTaskController, asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController? {
-        return nil
+        return studyBurstManager.taskController(taskController, asyncActionControllerFor:configuration)
     }
+
 }
 
 extension TodayViewController: StudyBurstProgressExpirationLabelDelegate {
@@ -519,6 +527,9 @@ extension TodayViewController: TaskBrowserViewControllerDelegate {
     }
     func taskBrowserDidLayoutSubviews() {
         // nothing
+    }
+    func taskBrowserDidFinish(task: RSDTaskPath) {
+        // Nothing
     }
 }
 
