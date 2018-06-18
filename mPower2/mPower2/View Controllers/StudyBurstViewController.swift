@@ -175,7 +175,23 @@ class StudyBurstViewController: UIViewController {
         }
     }
     @objc func nextHit(sender: Any) {
-        taskBrowserVC?.startNextTask()
+        // If user is completed for today, then show the Completion VC, otherwise, show the next task
+        if studyBurstManager?.isCompletedForToday ?? false {
+            showCompletionView()
+        }
+        else {
+            taskBrowserVC?.startNextTask()
+        }
+    }
+    
+    func showCompletionView() {
+        // Instantiate the completion VC and push it on current navigation stack
+        if let vc = StudyBurstCompletionViewController.instantiate() {
+            vc.surveyManager = surveyManager
+            self.show(vc, sender: true)
+            // Mark that user has now seen the study burst completion
+            hasSeenCompletion = true
+        }
     }
 }
 
@@ -188,15 +204,12 @@ extension StudyBurstViewController: StudyBurstProgressExpirationLabelDelegate {
 extension StudyBurstViewController: TaskBrowserViewControllerDelegate {
     
     func taskBrowserDidFinish(task: RSDTaskPath) {
-        
         if shouldShowCompletionView {
-            // Instantiate the completion VC and push it on current navigation stack
-            if let vc = StudyBurstCompletionViewController.instantiate() {
-                vc.surveyManager = surveyManager
-                self.show(vc, sender: true)
-                // Mark that user has now seen the study burst completion
-                hasSeenCompletion = true
-            }
+            showCompletionView()
+        }
+        else {
+            // Since we're not showing the completion view, we need to pop to the root VC
+            self.navigationController?.popToRootViewController(animated: true)
         }
     }
     
