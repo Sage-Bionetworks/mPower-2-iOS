@@ -371,10 +371,11 @@ class TodayViewController: UIViewController {
             }
         }
         else if hasActiveStudyBurst {
-            // Instantiate a new Study Burst VC, assign the schedule manager and present the VC
+            // Instantiate a new Study Burst VC and present it
             if let vc = StudyBurstViewController.instantiate(),
                 let nc = self.navigationController {
-                vc.scheduleManager = studyBurstManager
+                vc.studyBurstManager = studyBurstManager
+                vc.surveyManager = surveyManager
                 nc.show(vc, sender: self)
             }
         }
@@ -526,6 +527,9 @@ extension TodayViewController: TaskBrowserViewControllerDelegate {
     }
     func taskBrowserDidLayoutSubviews() {
         // nothing
+    }
+    func taskBrowserDidFinish(task: RSDTaskPath) {
+        // Nothing
     }
 }
 
