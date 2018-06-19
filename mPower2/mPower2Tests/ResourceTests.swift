@@ -78,9 +78,58 @@ class ResourceTests: XCTestCase {
             
             XCTAssertEqual(mappingObject.studyDuration?.year, 2)
             
-            
         } catch let err {
             XCTFail("Failed to decode the SignIn task. \(err)")
         }
     }
+    
+    func testTriggers() {
+        let identifier = "Triggers"
+        do {
+            let resourceTransformer = RSDResourceTransformerObject(resourceName: identifier)
+            let _ = try RSDFactory.shared.decodeTask(with: resourceTransformer)
+        } catch let err {
+            XCTFail("Failed to decode the \(identifier) task. \(err)")
+        }
+    }
+    
+    func testSymptoms() {
+        let identifier = "Symptoms"
+        do {
+            let resourceTransformer = RSDResourceTransformerObject(resourceName: identifier)
+            let _ = try RSDFactory.shared.decodeTask(with: resourceTransformer)
+        } catch let err {
+            XCTFail("Failed to decode the \(identifier) task. \(err)")
+        }
+    }
+    
+    func testMedication() {
+        let identifier = "Medication"
+        do {
+            let resourceTransformer = RSDResourceTransformerObject(resourceName: identifier)
+            let _ = try RSDFactory.shared.decodeTask(with: resourceTransformer)
+        } catch let err {
+            XCTFail("Failed to decode the \(identifier) task. \(err)")
+        }
+    }
+    
+//    func testStudyBurst() {
+//        let identifier = "study-burst-task"
+//        do {
+//            let resourceTransformer = RSDResourceTransformerObject(resourceName: identifier)
+//            let _ = try RSDFactory.shared.decodeTask(with: resourceTransformer)
+//        } catch let err {
+//            XCTFail("Failed to decode the \(identifier) task. \(err)")
+//        }
+//    }
+    
+//    func testStudyBurstComplete() {
+//        let identifier = "StudyBurstComplete"
+//        do {
+//            let resourceTransformer = RSDResourceTransformerObject(resourceName: identifier)
+//            let _ = try RSDFactory.shared.decodeTask(with: resourceTransformer)
+//        } catch let err {
+//            XCTFail("Failed to decode the \(identifier) task. \(err)")
+//        }
+//    }
 }
