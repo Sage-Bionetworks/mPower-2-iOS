@@ -41,27 +41,27 @@
               "detail": "(Tolcapone)"
               },
               {
-              "sectionIdentifier": "Dopamine promotor",
+              "sectionIdentifier": "Dopamine promoter",
               "identifier": "Apokyn",
               "detail": "(Apomorphine)"
               },
               {
-              "sectionIdentifier": "Dopamine promotor",
+              "sectionIdentifier": "Dopamine promoter",
               "identifier": "Mirapex ER",
               "detail": "(Pramipexole)"
               },
               {
-              "sectionIdentifier": "Dopamine promotor",
+              "sectionIdentifier": "Dopamine promoter",
               "identifier": "Neupro",
               "detail": "(Rotigotine)"
               },
               {
-              "sectionIdentifier": "Dopamine promotor",
+              "sectionIdentifier": "Dopamine promoter",
               "identifier": "Requip",
               "detail": "(Ropinrole)"
               },
               {
-              "sectionIdentifier": "Dopamine promotor",
+              "sectionIdentifier": "Dopamine promoter",
               "identifier": "Requip XL",
               "detail": "(Ropinrole)"
               },
@@ -127,7 +127,7 @@
                  "detail": "(COMT)"
                  },
                  {
-                 "identifier": "Dopamine promotor"
+                 "identifier": "Dopamine promoter"
                  },
                  {
                  "identifier": "Dopamine replacement therapy"
