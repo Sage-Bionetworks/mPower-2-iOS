@@ -1,0 +1,22 @@
+{
+    "identifier": "study-burst-task",
+    "type": "studyBurst",
+    "numberOfDays": 14,
+    "activeTaskGroupIdentifier": "Measuring",
+    "competionTasks" : [
+                         {
+                         "default": true,
+                         "activityIdentifiers": ["StudyBurstCompletion"]
+                         },
+                         {
+                         "burst": 0,
+                         "day": 0,
+                         "activityIdentifiers": ["Demographics","StudyBurstReminder"]
+                         },
+                         {
+                         "burst": 0,
+                         "day": 13,
+                         "activityIdentifiers": ["Engagement"]
+                         }
+    ]
+}
