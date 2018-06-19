@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aoW-sk-zkl">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aoW-sk-zkl">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -79,13 +79,13 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yQl-6I-FdA">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="228"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="228"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WelcomeAfternoon" translatesAutoresizingMaskIntoConstraints="NO" id="khX-Dl-GeU">
-                                                    <rect key="frame" x="30" y="0.0" width="315" height="134"/>
+                                                    <rect key="frame" x="30" y="0.0" width="260" height="134"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Good morning, Margo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jml-3Z-WXc">
-                                                    <rect key="frame" x="65" y="144" width="245" height="29"/>
+                                                    <rect key="frame" x="37.5" y="144" width="245" height="29"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="29" id="oRi-9e-EU4"/>
                                                     </constraints>
@@ -94,7 +94,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What would you like to do today?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4hg-YA-Q5T">
-                                                    <rect key="frame" x="60.5" y="178" width="254.5" height="20"/>
+                                                    <rect key="frame" x="33" y="178" width="254.5" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="20" id="IVm-Ae-4sP"/>
                                                     </constraints>
@@ -135,7 +135,7 @@
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TrackingTableViewCell" id="1pv-1k-C9b" customClass="TodayTableViewCell" customModule="mPower2" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TrackingTableViewCell" id="1pv-1k-C9b" customClass="TodayTableViewCell" customModule="mPower2" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="256" width="375" height="62"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1pv-1k-C9b" id="tJt-HP-GsT">
@@ -795,7 +795,7 @@
         <scene sceneID="ECP-j6-V4D">
             <objects>
                 <viewController storyboardIdentifier="StudyBurstCompletionViewController" id="NuD-Wm-4G6" customClass="StudyBurstCompletionViewController" customModule="mPower2" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="1iT-tN-oBv">
+                    <view key="view" contentMode="scaleToFill" id="1iT-tN-oBv" customClass="RSDStepNavigationView" customModule="ResearchUI">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -880,11 +880,16 @@
                             <constraint firstItem="0SQ-Vl-5Tc" firstAttribute="top" secondItem="YEp-IP-aPa" secondAttribute="bottom" constant="15" id="wFs-gJ-OoK"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Rvm-Yl-pU5"/>
+                        <connections>
+                            <outlet property="cancelButton" destination="y3X-2I-HVo" id="UbR-WY-zsW"/>
+                            <outlet property="detailLabel" destination="0SQ-Vl-5Tc" id="Omb-yc-kW7"/>
+                            <outlet property="textLabel" destination="YEp-IP-aPa" id="ul0-zg-RqZ"/>
+                            <outlet property="titleLabel" destination="hwN-Dl-u5h" id="eUq-Cj-J6n"/>
+                        </connections>
                     </view>
                     <connections>
-                        <outlet property="backButton" destination="y3X-2I-HVo" id="hqP-JD-3Fd"/>
                         <outlet property="detailLabel" destination="0SQ-Vl-5Tc" id="UEz-xc-PoE"/>
-                        <outlet property="navFooterView" destination="QYu-LA-xaI" id="Zne-dh-hLu"/>
+                        <outlet property="navigationFooter" destination="QYu-LA-xaI" id="SVd-La-KVa"/>
                         <outlet property="statusBarBackgroundView" destination="Zsa-5q-KpI" id="Fat-8b-dS3"/>
                         <outlet property="textLabel" destination="YEp-IP-aPa" id="e3w-KJ-65S"/>
                         <outlet property="titleLabel" destination="hwN-Dl-u5h" id="bAB-4p-cFy"/>

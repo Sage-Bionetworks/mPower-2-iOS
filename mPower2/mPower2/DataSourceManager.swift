@@ -158,20 +158,18 @@ class DataSourceManager {
                 if let mctIdentifier = MCTTaskIdentifier(rawValue: activityId.stringValue) {
                     let taskInfo = MCTTaskInfo(mctIdentifier)
                     configuration.addMapping(with: taskInfo)
-                    configuration.addMapping(with: taskInfo.task)
                 }
                 else {
                     let image = UIImage(named: "\(activityId.stringValue)TaskIcon")
-                    let title = Localization.localizedString(activityId.stringValue)
-                    let moduleId = installedInfo?.moduleId
-                    let resource: RSDResourceTransformerObject? = (moduleId != nil) ? nil : RSDResourceTransformerObject(resourceName: activityId.stringValue)
+                    let title = installedInfo?.title ?? Localization.localizedString(activityId.stringValue)
+                    let moduleId = installedInfo?.moduleId ?? SBAModuleIdentifier(rawValue: activityId.stringValue)
                     let taskInfo = SBAActivityInfoObject(identifier: activityId,
                                                          title: title,
-                                                         subtitle: nil,
-                                                         detail: nil,
-                                                         estimatedMinutes: nil,
+                                                         subtitle: installedInfo?.subtitle,
+                                                         detail: installedInfo?.detail,
+                                                         estimatedMinutes: installedInfo?.estimatedMinutes,
                                                          iconImage: image,
-                                                         resource: resource,
+                                                         resource: nil,
                                                          moduleId: moduleId)
                     configuration.addMapping(with: taskInfo)
                 }
