@@ -35,6 +35,10 @@ import UIKit
 import BridgeApp
 import ResearchUI
 
+extension RSDIdentifier {
+    static let studyBurstCompletionStep: RSDIdentifier = "studyBurstCompletion"
+}
+
 class StudyBurstViewController: UIViewController {
     
     private let kProgressContainerViewHeight = CGFloat(80.0).rsd_proportionalToScreenHeight()
@@ -50,23 +54,11 @@ class StudyBurstViewController: UIViewController {
     
     var taskBrowserVC: StudyBurstTaskBrowserViewController?
     
-    var studyBurstManager: StudyBurstScheduleManager?
-    var surveyManager: SurveyScheduleManager?
-
-    var hasSeenCompletion: Bool {
-        get {
-            return UserDefaults.standard.bool(forKey: kHasSeenCompletionKey)
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: kHasSeenCompletionKey)
-            UserDefaults.standard.synchronize()
-        }
-    }
+    var studyBurstManager: StudyBurstScheduleManager!
     
     var shouldShowCompletionView: Bool {
         get {
-            // The completion view is shown to the user only once and only if they are done for today
-            return !hasSeenCompletion && (studyBurstManager?.isCompletedForToday ?? false)
+            return studyBurstManager?.isCompletedForToday ?? false
         }
     }
     
@@ -170,14 +162,13 @@ class StudyBurstViewController: UIViewController {
     
     // MARK: Actions
     @objc func backHit(sender: Any) {
-        if let nc = self.navigationController {
-            nc.popViewController(animated: true)
-        }
+        self.navigationController?.popToRootViewController(animated: true)
     }
+    
     @objc func nextHit(sender: Any) {
         // If user is completed for today, then show the Completion VC, otherwise, show the next task
         if studyBurstManager?.isCompletedForToday ?? false {
-            showCompletionView()
+            self.navigationController?.popToRootViewController(animated: true)
         }
         else {
             taskBrowserVC?.startNextTask()
@@ -185,13 +176,52 @@ class StudyBurstViewController: UIViewController {
     }
     
     func showCompletionView() {
-        // Instantiate the completion VC and push it on current navigation stack
-        if let vc = StudyBurstCompletionViewController.instantiate() {
-            vc.surveyManager = surveyManager
-            self.show(vc, sender: true)
-            // Mark that user has now seen the study burst completion
-            hasSeenCompletion = true
+        // TODO: syoung 06/20/2018 Update title/text to "congradulations" with party sprinkles.
+        self.navFooterView.nextButton?.setTitle(Localization.buttonDone(), for: .normal)
+        
+        // If there is a task to do today, then push it.
+        if let taskPath = studyBurstManager.completionTaskPath() {
+            let vc = RSDTaskViewController(taskPath: taskPath)
+            vc.delegate = self
+            self.navigationController!.pushViewController(vc, animated: false)
         }
+    }
+}
+
+extension StudyBurstViewController: RSDTaskViewControllerDelegate {
+    
+    open func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
+        // dismiss the view controller
+        if let vc = taskController as? UIViewController {
+            if vc == self.navigationController?.topViewController {
+                self.navigationController?.popToRootViewController(animated: true)
+            }
+            else {
+                vc.dismiss(animated: true) {
+                    self.navigationController?.popToRootViewController(animated: false)
+                }
+            }
+        }
+        // Let the schedule manager handle the cleanup.
+        studyBurstManager.taskController(taskController, didFinishWith: reason, error: error)
+    }
+
+    func taskController(_ taskController: RSDTaskController, readyToSave taskPath: RSDTaskPath) {
+        studyBurstManager.taskController(taskController, readyToSave: taskPath)
+    }
+
+    func taskController(_ taskController: RSDTaskController, asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController? {
+        return studyBurstManager.taskController(taskController, asyncActionControllerFor:configuration)
+    }
+    
+    func taskViewController(_ taskViewController: UIViewController, viewControllerFor step: Any) -> UIViewController? {
+        guard let step = step as? RSDStep, step.identifier == RSDIdentifier.studyBurstCompletionStep
+            else {
+                return nil
+        }
+        let vc = StudyBurstCompletionViewController.instantiate()
+        vc?.step = step
+        return vc
     }
 }
 
@@ -206,10 +236,6 @@ extension StudyBurstViewController: TaskBrowserViewControllerDelegate {
     func taskBrowserDidFinish(task: RSDTaskPath) {
         if shouldShowCompletionView {
             showCompletionView()
-        }
-        else {
-            // Since we're not showing the completion view, we need to pop to the root VC
-            self.navigationController?.popToRootViewController(animated: true)
         }
     }
     

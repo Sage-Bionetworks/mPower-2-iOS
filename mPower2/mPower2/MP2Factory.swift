@@ -34,6 +34,7 @@
 import Foundation
 import BridgeApp
 
+/// Stub out the factory.
 class MP2Factory : SBAFactory {
     
 }

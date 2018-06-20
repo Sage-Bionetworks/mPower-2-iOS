@@ -67,9 +67,6 @@
 "ACTIVITIES_TO_DO_%@" = "%@ ACTIVITIES TO DO";
 "PROGRESS_EXPIRES_%@" = "Progress expires in %@";
 "%@_ESTIMATED_MINUTES" = "%@ minutes";
-"STUDY_BURST_COMPLETION_TITLE" = "Congratulations!";
-"STUDY_BURST_COMPLETION_TEXT" = "You just completed your first Study Burst";
-"STUDY_BURST_COMPLETION_DETAIL" = "The scientists are now starting to analyze your data. In order to complete their analysis, they have a short health survey for you to complete. Don’t worry, this shouldn’t take any more than 4 minutes.";
 
 // Study Burst titles
 "STUDY_BURST_TITLE_DAY_1" = "This is your time!";

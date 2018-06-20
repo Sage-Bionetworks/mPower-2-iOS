@@ -46,6 +46,10 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
         return MP2Factory()
     }
     
+    override func instantiateBridgeConfiguration() -> SBABridgeConfiguration {
+        return MP2BridgeConfiguration()
+    }
+    
     override func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]?) -> Bool {
         NotificationCenter.default.addObserver(forName: .sbbUserSessionUpdated, object: nil, queue: .main) { (notification) in
             guard let info = notification.userInfo?[kSBBUserSessionInfoKey] as? SBBUserSessionInfo else {
