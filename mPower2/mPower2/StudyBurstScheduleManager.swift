@@ -164,6 +164,11 @@ class StudyBurstScheduleManager : SBAScheduleManager {
         return !hasStudyBurst || (finishedSchedules.count == totalActivitiesCount)
     }
     
+    public func isFinalTask(_ taskPath: RSDTaskPath) -> Bool {
+        let activities = Set(finishedSchedules.compactMap { $0.activityIdentifier }).union([taskPath.identifier])
+        return activities.count == totalActivitiesCount
+    }
+    
     /// Total number of activities
     public var totalActivitiesCount : Int {
         return (activityGroup?.activityIdentifiers.count ?? 1)
@@ -174,7 +179,13 @@ class StudyBurstScheduleManager : SBAScheduleManager {
     
     /// Returns an ordered set of task info objects. This will change each day, but should retain the saved
     /// order for any given day.
-    public func orderedTasks() -> [RSDTaskInfo] {
+    public var orderedTasks: [RSDTaskInfo] {
+        // Look in-memory first.
+        if let orderedTasks = _orderedTasks,
+            let timestamp = _shuffleTimestamp, Calendar.current.isDateInToday(timestamp) {
+            return orderedTasks
+        }
+        
         guard let tasks = self.activityGroup?.tasks else {
             return []
         }
@@ -183,11 +194,12 @@ class StudyBurstScheduleManager : SBAScheduleManager {
         let orderKey = "StudyBurstTaskOrder"
         let timestampKey = "StudyBurstTimestamp"
         
+        
         if let storedOrder = userDefaults.array(forKey: orderKey) as? [String],
             let timestamp = userDefaults.object(forKey: timestampKey) as? Date,
             Calendar.current.isDateInToday(timestamp) {
             // If the timestamp is still valid for today, then sort using the stored order.
-            return tasks.sorted(by: {
+            _orderedTasks = tasks.sorted(by: {
                 guard let idx1 = storedOrder.index(of: $0.identifier),
                     let idx2 = storedOrder.index(of: $1.identifier)
                     else {
@@ -195,17 +207,23 @@ class StudyBurstScheduleManager : SBAScheduleManager {
                 }
                 return idx1 < idx2
             })
+            _shuffleTimestamp = timestamp
         }
         else {
             // Otherwise, shuffle the tasks and store order of the the task identifiers.
             var shuffledTasks = tasks
             shuffledTasks.shuffle()
+            _orderedTasks = shuffledTasks
+            _shuffleTimestamp = Date()
             let sortOrder = shuffledTasks.map { $0.identifier }
             userDefaults.set(sortOrder, forKey: orderKey)
-            userDefaults.set(Date(), forKey: timestampKey)
-            return shuffledTasks
+            userDefaults.set(_shuffleTimestamp, forKey: timestampKey)
         }
+        
+        return _orderedTasks!
     }
+    private var _orderedTasks: [RSDTaskInfo]?
+    private var _shuffleTimestamp: Date?
     
     public var isLastDay: Bool {
         guard let _ = self.dayCount, self.hasStudyBurst else { return false }
@@ -218,12 +236,12 @@ class StudyBurstScheduleManager : SBAScheduleManager {
         // Look for the most appropriate completion tasks for today.
         let thisDay = self.isLastDay ? self.numberOfDays : ((self.pastDaysCount - self.missedDaysCount) + 1)
         let pastTasks = self.studyBurst.completionTasks.filter {
-            guard let day = $0.day, day <= thisDay else { return false }
+            guard let day = $0.day, day < thisDay else { return false }
             return ($0.firstOnly ?? false)
         }
         
         // Only return something if the marked day is
-        guard self.isCompletedForToday, (self.hasStudyBurst || pastTasks.count > 0)
+        guard self.hasStudyBurst || pastTasks.count > 0
             else {
                 return nil
         }
@@ -236,7 +254,7 @@ class StudyBurstScheduleManager : SBAScheduleManager {
             }
         }
         
-        func step(for schedule: SBBScheduledActivity) -> RSDStep? {
+        func step(schedule: SBBScheduledActivity) -> RSDStep? {
             guard let activityReference = schedule.activity.activityReference else { return nil }
             if let step = activityReference as? RSDStep {
                 return step
@@ -249,39 +267,44 @@ class StudyBurstScheduleManager : SBAScheduleManager {
             }
         }
         
-        func taskSteps(for task: StudyBurstConfiguration.CompletionTask) -> [RSDStep] {
+        func step(activityIdentifier: RSDIdentifier) -> RSDStep? {
+            // Otherwise, look for a transformer in the configuration.
+            guard let transformer = self.configuration.instantiateTaskTransformer(for: activityIdentifier.moduleIdentifier)
+                else {
+                    return nil
+            }
+            
+            // And create a task info step if found.
+            let taskInfo = RSDTaskInfoObject(with: activityIdentifier.rawValue)
+            return RSDTaskInfoStepObject(with: taskInfo, taskTransformer: transformer)
+        }
+        
+        // Add the steps for past tasks that weren't completed and today's tasks.
+        var steps: [RSDStep] = pastSchedules.compactMap { step(schedule: $0) }
+        
+        func addSteps(for task: StudyBurstConfiguration.CompletionTask) {
             let firstOnly = task.firstOnly ?? false
-            return task.activityIdentifiers.compactMap { (activityIdentifier) -> RSDStep? in
+            task.activityIdentifiers.forEach { (activityIdentifier) in
                 let schedule = self.scheduledActivities.filter {
                     $0.activityIdentifier == activityIdentifier.stringValue &&
                     (!firstOnly || !$0.isCompleted)
                     }.sorted(by: { $0.scheduledOn < $1.scheduledOn }).last
-                guard !firstOnly || (schedule != nil) else { return nil }
+                guard !firstOnly || (schedule != nil) else { return }
                 
-                // If there is a schedule then look for the step from that.
-                if schedule != nil, let step = step(for: schedule!) {
-                    return step
+                // Look for a step
+                if !steps.contains(where: { $0.identifier == activityIdentifier.stringValue }),
+                    let step: RSDStep = (schedule != nil) ? step(schedule: schedule!) : step(activityIdentifier: activityIdentifier) {
+                    steps.append(step)
                 }
-
-                // Otherwise, look for a transformer in the configuration.
-                guard let transformer = self.configuration.instantiateTaskTransformer(for: activityIdentifier.moduleIdentifier)
-                    else {
-                        return nil
-                }
-
-                // And create a task info step if found.
-                let taskInfo = RSDTaskInfoObject(with: activityIdentifier.rawValue)
-                return RSDTaskInfoStepObject(with: taskInfo, taskTransformer: transformer)
             }
         }
         
-        // Add the steps for past tasks that weren't completed and today's tasks.
-        var steps: [RSDStep] = pastSchedules.compactMap { step(for: $0) }
+
         if let todayOnlyTask = self.studyBurst.completionTasks.first(where: { $0.day == thisDay}) {
-            steps.append(contentsOf: taskSteps(for: todayOnlyTask))
+            addSteps(for: todayOnlyTask)
         }
         else if steps.count == 0, let foundTask = self.studyBurst.completionTasks.first(where: { $0.day == nil }) {
-            steps.append(contentsOf: taskSteps(for: foundTask))
+            addSteps(for: foundTask)
         }
 
         // If there aren't any steps then return nil.
@@ -390,7 +413,7 @@ class StudyBurstScheduleManager : SBAScheduleManager {
         
             // build the archive
             let archive = SBAScheduledActivityArchive(identifier: identifier, schemaInfo: schemaInfo, schedule: studyMarker)
-            var json: [String : Any] = [ "taskOrder" : self.orderedTasks().map { $0.identifier }.joined(separator: ",")]
+            var json: [String : Any] = [ "taskOrder" : self.orderedTasks.map { $0.identifier }.joined(separator: ",")]
             finishedSchedules.forEach {
                 guard let identifier = $0.activityIdentifier, let finishedOn = $0.finishedOn else { return }
                 json[identifier] = [
@@ -437,7 +460,7 @@ class StudyBurstScheduleManager : SBAScheduleManager {
         self.pastDaysCount = pastSchedules.count
         
         if hasStudyBurst {
-            self.dayCount = min(dayCount, self.numberOfDays)
+            self.dayCount = dayCount
             self.missedDaysCount = missedDaysCount
         }
         else {

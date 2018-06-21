@@ -111,6 +111,16 @@ class StudyBurstTests: XCTestCase {
         XCTAssertTrue(scheduleManager.isCompletedForToday)
         XCTAssertFalse(scheduleManager.isLastDay)
         
+        let demographics = scheduleManager.scheduledActivities.filter {
+            $0.activityIdentifier == RSDIdentifier.demographics.stringValue
+        }
+        XCTAssertEqual(demographics.count, 1)
+        
+        let studyBurstReminder = scheduleManager.scheduledActivities.filter {
+            $0.activityIdentifier == RSDIdentifier.studyBurstReminder.stringValue
+        }
+        XCTAssertEqual(studyBurstReminder.count, 1)
+        
         let completionTask = scheduleManager.completionTaskPath()
         XCTAssertNotNil(completionTask)
     }
@@ -139,7 +149,7 @@ class StudyBurstTests: XCTestCase {
         XCTAssertNil(scheduleManager.updateFailed_error)
         XCTAssertNotNil(scheduleManager.update_fetchedActivities)
         XCTAssertNotNil(scheduleManager.activityGroup)
-        XCTAssertEqual(scheduleManager.dayCount, 14)
+        XCTAssertEqual(scheduleManager.dayCount, 15)
         XCTAssertTrue(scheduleManager.hasStudyBurst)
         XCTAssertEqual(scheduleManager.finishedSchedules.count, 3)
         XCTAssertTrue(scheduleManager.isCompletedForToday)
@@ -175,7 +185,7 @@ class StudyBurstTests: XCTestCase {
         XCTAssertNil(scheduleManager.updateFailed_error)
         XCTAssertNotNil(scheduleManager.update_fetchedActivities)
         XCTAssertNotNil(scheduleManager.activityGroup)
-        XCTAssertEqual(scheduleManager.dayCount, 14)
+        XCTAssertEqual(scheduleManager.dayCount, 15)
         XCTAssertTrue(scheduleManager.hasStudyBurst)
         XCTAssertEqual(scheduleManager.finishedSchedules.count, 3)
         XCTAssertTrue(scheduleManager.isCompletedForToday)

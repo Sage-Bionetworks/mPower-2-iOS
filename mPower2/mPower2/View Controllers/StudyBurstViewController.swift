@@ -57,9 +57,7 @@ class StudyBurstViewController: UIViewController {
     var studyBurstManager: StudyBurstScheduleManager!
     
     var shouldShowCompletionView: Bool {
-        get {
-            return studyBurstManager?.isCompletedForToday ?? false
-        }
+        return studyBurstManager?.isCompletedForToday ?? false
     }
     
     override func viewDidLoad() {
@@ -233,8 +231,8 @@ extension StudyBurstViewController: StudyBurstProgressExpirationLabelDelegate {
 
 extension StudyBurstViewController: TaskBrowserViewControllerDelegate {
     
-    func taskBrowserDidFinish(task: RSDTaskPath) {
-        if shouldShowCompletionView {
+    func taskBrowserDidFinish(task: RSDTaskPath, reason: RSDTaskFinishReason) {
+        if reason == .completed, studyBurstManager.isFinalTask(task) {
             showCompletionView()
         }
     }
@@ -263,7 +261,7 @@ extension StudyBurstViewController: TaskBrowserViewControllerDelegate {
 class StudyBurstTaskBrowserViewController: TaskBrowserViewController {
     
     func firstIncompleteTaskId() -> String? {
-        guard let  scheduleManager = scheduleManagers?.first else {
+        guard let scheduleManager = scheduleManagers?.first else {
             return nil
         }
         let task = tasks.first(where: { (taskInfo) -> Bool in
@@ -284,21 +282,26 @@ class StudyBurstTaskBrowserViewController: TaskBrowserViewController {
     override var minCellHorizontalSpacing: CGFloat {
         return 30.0
     }
+    
     override var minCellVerticalSpacing: CGFloat {
         return 10.0
     }
+    
     override var tasks: [RSDTaskInfo] {
         guard let studyBurstManager = scheduleManagers?.first as? StudyBurstScheduleManager else {
             return [RSDTaskInfo]()
         }
-        return studyBurstManager.orderedTasks()
+        return studyBurstManager.orderedTasks
     }
+    
     override var collectionCellIdentifier: String {
         return "StudyBurstCollectionViewCell"
     }
+    
     override var shouldShowTabs: Bool {
         return false
     }
+    
     override var shouldShowTopShadow: Bool {
         return false
     }

@@ -527,7 +527,7 @@ extension TodayViewController: TaskBrowserViewControllerDelegate {
     func taskBrowserDidLayoutSubviews() {
         // nothing
     }
-    func taskBrowserDidFinish(task: RSDTaskPath) {
+    func taskBrowserDidFinish(task: RSDTaskPath, reason: RSDTaskFinishReason) {
         // Nothing
     }
 }

@@ -1,0 +1,32 @@
+{
+    "identifier":"StudyBurstReminder",
+    "shouldHideActions":["skip"],
+    "progressMarkers":[],
+    "steps":[
+             {
+                "identifier":"reminder",
+                "type":"form",
+                "title":"Let’s set a Reminder for your Study Bursts",
+                "detail":"To make it easier for you to remember to do the study burst, you can do the activities during something you normally do every day, such as taking your medications.",
+                 "image":{
+                     "type": "fetchable",
+                     "imageName":"remindersIcon",
+                     "placementType":"iconBefore"
+                 },
+                 "inputFields": [
+                                 {
+                                 "identifier": "reminderTime",
+                                 "dataType": "date",
+                                 "prompt": "Set reminder",
+                                 "range" : { "codingFormat" : "HH:mm" }
+                                 },
+                                 {
+                                 "identifier": "noReminder",
+                                 "dataType": "boolean",
+                                 "uiHint": "checkbox",
+                                 "prompt": "Do not set Reminder"
+                                 }
+                 ]
+             }
+        ]
+}
