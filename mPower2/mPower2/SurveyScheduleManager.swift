@@ -34,7 +34,13 @@
 import Foundation
 import BridgeApp
 
+
 class SurveyScheduleManager : SBAScheduleManager {
+    
+    /// The configuration is set up either by the bridge configuration or using defaults defined internally.
+    lazy var studyBurst: StudyBurstConfiguration! = {
+        return (SBABridgeConfiguration.shared as? MP2BridgeConfiguration)?.studyBurst ?? StudyBurstConfiguration()
+    }()
     
     var hasSurvey : Bool {
         return scheduledActivities.count > 0
@@ -44,9 +50,13 @@ class SurveyScheduleManager : SBAScheduleManager {
         
         // TODO: syoung 05/18/2018 Unit test this for accuracy.
         
-        let excludeTaskGroupIdentifiers = Set(self.configuration.installedGroups.compactMap {
-            return ($0.identifier == self.identifier) ? nil : $0.activityIdentifiers
-            }.flatMap { $0 })
+        var excludeTaskGroupIdentifiers = Set<String>()
+        self.configuration.installedGroups.forEach {
+            guard $0.identifier != self.identifier else { return }
+            excludeTaskGroupIdentifiers.formUnion($0.activityIdentifiers.map { $0.stringValue })
+        }
+        excludeTaskGroupIdentifiers.formUnion(self.studyBurst.completionTaskIdentifiers.map { $0.stringValue})
+        
         let taskPredicate = NSPredicate(format: "(activity.survey != nil) AND NOT(activity.survey.identifier IN %@)", excludeTaskGroupIdentifiers)
         let notFinishedPredicate = NSCompoundPredicate(notPredicateWithSubpredicate: SBBScheduledActivity.isFinishedPredicate())
         let availableTodayPredicate = SBBScheduledActivity.availableTodayPredicate()

@@ -58,7 +58,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SBBComponentManager.registerComponent(activityManager, for: SBBActivityManager.self)
         activityManager.buildSchedules()
         
-        SBABridgeConfiguration.shared.setupBridge(with: SBAFactory()) {
+        SBABridgeConfiguration.shared = MP2BridgeConfiguration()
+        SBABridgeConfiguration.shared.setupBridge(with: MP2Factory()) {
         }
         
         let participant = activityManager.studySetup.createParticipant()
