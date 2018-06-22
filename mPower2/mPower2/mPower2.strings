@@ -67,9 +67,6 @@
 "ACTIVITIES_TO_DO_%@" = "%@ ACTIVITIES TO DO";
 "PROGRESS_EXPIRES_%@" = "Progress expires in %@";
 "%@_ESTIMATED_MINUTES" = "%@ minutes";
-"STUDY_BURST_COMPLETION_TITLE" = "Congratulations!";
-"STUDY_BURST_COMPLETION_TEXT" = "You just completed your first Study Burst";
-"STUDY_BURST_COMPLETION_DETAIL" = "The scientists are now starting to analyze your data. In order to complete their analysis, they have a short health survey for you to complete. Don’t worry, this shouldn’t take any more than 4 minutes.";
 
 // Study Burst titles
 "STUDY_BURST_TITLE_DAY_1" = "This is your time!";
@@ -86,6 +83,11 @@
 "STUDY_BURST_TITLE_DAY_12" = "Your contribution is important!";
 "STUDY_BURST_TITLE_DAY_13" = "Every day is a new day!";
 "STUDY_BURST_TITLE_DAY_14" = "This is your time!";
+"STUDY_BURST_TITLE_DAY_15" = "Thank you!";
+"STUDY_BURST_TITLE_DAY_16" = "You can do it!";
+"STUDY_BURST_TITLE_DAY_17" = "You are fantastic!";
+"STUDY_BURST_TITLE_DAY_18" = "You are amazing!";
+"STUDY_BURST_TITLE_DAY_19" = "Your contribution is important!";
 
 // Study Burst messages
 "STUDY_BURST_MESSAGE_DAY_1" = "Use the daily activities to focus on your health.";
@@ -102,6 +104,12 @@
 "STUDY_BURST_MESSAGE_DAY_12" = "The walking activity provides us with daily data on your gait and balance.";
 "STUDY_BURST_MESSAGE_DAY_13" = "As you complete more activities, you will be able to see trends & patterns.";
 "STUDY_BURST_MESSAGE_DAY_14" = "Use the activities to track how you are doing today.";
+"STUDY_BURST_MESSAGE_DAY_15" = "You are helping us make a difference in PD research.";
+"STUDY_BURST_MESSAGE_DAY_16" = "By completing activities, you can track your daily health.";
+"STUDY_BURST_MESSAGE_DAY_17" = "Log your medications and symptoms to keep on track.";
+"STUDY_BURST_MESSAGE_DAY_18" = "We could not do this study without you.";
+"STUDY_BURST_MESSAGE_DAY_19" = "The walking activity provides us with daily data on your gait and balance.";
+
 
 "STUDY_BURST_MESSAGE_IN_%@_DAYS_MISSED_%@_DAYS" = "In %1$@ days you’ve only missed %2$@ Study Burst days!";
 "STUDY_BURST_MESSAGE_IN_%@_DAYS_MISSED_ONE_DAY" = "In %1$@ days you’ve only missed 1 Study Burst day!";

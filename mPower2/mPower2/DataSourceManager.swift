@@ -39,7 +39,6 @@ extension RSDIdentifier {
     
     static let measuringTaskGroup: RSDIdentifier = "Measuring"
     static let trackingTaskGroup: RSDIdentifier = "Tracking"
-    static let studyBurstTaskGroup: RSDIdentifier = "Study Burst"
     static let surveyTaskGroup: RSDIdentifier = "Health Surveys"
     
     static let triggersTask: RSDIdentifier = "Triggers"
@@ -53,14 +52,12 @@ extension RSDIdentifier {
     static let measuringTasks: [RSDIdentifier] = [.tappingTask, .tremorTask, .walkAndBalanceTask]
     
     static let studyBurstCompletedTask: RSDIdentifier = "study-burst-task"
-    static let studyBurstTasks: [RSDIdentifier] = [.tappingTask, .tremorTask, .walkAndBalanceTask, .studyBurstCompletedTask]
+    static let demographics: RSDIdentifier = "Demographics"
+    static let engagement: RSDIdentifier = "Engagement"
+    static let studyBurstReminder: RSDIdentifier = "StudyBurstReminder"
 }
 
 extension MCTTaskInfo : SBAActivityInfo {
-    
-    public var resource: RSDResourceTransformerObject? {
-        return nil
-    }
     
     public var moduleId: SBAModuleIdentifier? {
         return SBAModuleIdentifier(rawValue: self.identifier)
@@ -88,13 +85,7 @@ class DataSourceManager {
     
     func scheduleManager(with identifier: RSDIdentifier) -> SBAScheduleManager {
         installTaskGroupsIfNeeded()
-        let scheduleManager: SBAScheduleManager
-        switch identifier {
-        case .studyBurstTaskGroup:
-            scheduleManager = StudyBurstScheduleManager()
-        default:
-            scheduleManager = SBAScheduleManager()
-        }
+        let scheduleManager = SBAScheduleManager()
         scheduleManager.activityGroup = activityGroup(with: identifier)
         return scheduleManager
     }
@@ -105,7 +96,8 @@ class DataSourceManager {
     }
     
     func studyBurstScheduleManager() -> StudyBurstScheduleManager {
-        return self.scheduleManager(with: .studyBurstTaskGroup) as! StudyBurstScheduleManager
+        installTaskGroupsIfNeeded()
+        return StudyBurstScheduleManager()
     }
     
     func surveyManager() -> SurveyScheduleManager {
@@ -122,7 +114,7 @@ class DataSourceManager {
         
         let installedGroups = configuration.installedGroups
         
-        let rsdIdentifiers: [RSDIdentifier] = [.measuringTaskGroup, .trackingTaskGroup, .studyBurstTaskGroup]
+        let rsdIdentifiers: [RSDIdentifier] = [.measuringTaskGroup, .trackingTaskGroup]
         rsdIdentifiers.forEach { (groupIdentifier) in
             let installedGroup = installedGroups.first(where: { $0.identifier == groupIdentifier.stringValue })
             
@@ -136,8 +128,6 @@ class DataSourceManager {
                         return RSDIdentifier.trackingTasks
                     case .measuringTaskGroup:
                         return RSDIdentifier.measuringTasks
-                    case .studyBurstTaskGroup:
-                        return RSDIdentifier.studyBurstTasks
                     default:
                         assertionFailure("The list above of task groups to build does not match this one.")
                         return []

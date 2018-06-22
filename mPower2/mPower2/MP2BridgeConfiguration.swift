@@ -1,5 +1,5 @@
 //
-//  StudyBurstCompletionViewController.swift
+//  MP2BridgeConfiguration.swift
 //  mPower2
 //
 //  Copyright © 2018 Sage Bionetworks. All rights reserved.
@@ -31,14 +31,24 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import UIKit
+import Foundation
 import BridgeApp
 
-class StudyBurstCompletionViewController: RSDStepViewController {
+class MP2BridgeConfiguration : SBABridgeConfiguration {
     
-    static func instantiate() -> StudyBurstCompletionViewController? {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        return storyboard.instantiateViewController(withIdentifier: "StudyBurstCompletionViewController") as? StudyBurstCompletionViewController
+    var studyBurst: StudyBurstConfiguration = StudyBurstConfiguration()
+    
+    /// Decode the `clientData.studyBurst` configuration object, if present.
+    override func setup(with appConfig: SBBAppConfig) {
+        super.setup(with: appConfig)
+        if let clientData = appConfig.clientData as? [String : Any],
+            let studyBurstData = clientData["studyBurst"] as? NSDictionary {
+            do {
+                let decoder = RSDFactory.shared.createJSONDecoder()
+                self.studyBurst = try decoder.decode(StudyBurstConfiguration.self, from: studyBurstData)
+            } catch let err {
+                debugPrint("Failed to decode the studyBurst object: \(err)")
+            }
+        }
     }
 }
-

@@ -40,7 +40,7 @@ protocol TaskBrowserViewControllerDelegate {
     func taskBrowserToggleVisibility()
     func taskBrowserTabSelected()
     func taskBrowserDidLayoutSubviews()
-    func taskBrowserDidFinish(task: RSDTaskPath)
+    func taskBrowserDidFinish(task: RSDTaskPath, reason: RSDTaskFinishReason)
 }
 
 class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate, TaskBrowserTabViewDelegate {
@@ -56,12 +56,14 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
     open var shouldShowTopShadow: Bool {
         return true
     }
+    
     open var shouldShowTabs: Bool {
         guard let scheduleManagers = scheduleManagers else {
             return false
         }
         return scheduleManagers.count > 1
     }
+    
     open var tasks: [RSDTaskInfo] {
         guard let group = selectedScheduleManager?.activityGroup else {
             return [RSDTaskInfo]()
@@ -146,11 +148,13 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
     
     // MARK: RSDTaskViewControllerDelegate
     open func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
+        // Inform our delegate that we finished a task
+        self.delegate?.taskBrowserDidFinish(task: taskController.taskPath, reason: reason)
+        
         // dismiss the view controller
         (taskController as? UIViewController)?.dismiss(animated: true) {
-            // Inform our delegate that we finished a task
-            self.delegate?.taskBrowserDidFinish(task: taskController.taskPath)
         }
+        
         // Let the schedule manager handle the cleanup.
         selectedScheduleManager.taskController(taskController, didFinishWith: reason, error: error)
     }

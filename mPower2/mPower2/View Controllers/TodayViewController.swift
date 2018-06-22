@@ -375,7 +375,6 @@ class TodayViewController: UIViewController {
             if let vc = StudyBurstViewController.instantiate(),
                 let nc = self.navigationController {
                 vc.studyBurstManager = studyBurstManager
-                vc.surveyManager = surveyManager
                 nc.show(vc, sender: self)
             }
         }
@@ -528,7 +527,7 @@ extension TodayViewController: TaskBrowserViewControllerDelegate {
     func taskBrowserDidLayoutSubviews() {
         // nothing
     }
-    func taskBrowserDidFinish(task: RSDTaskPath) {
+    func taskBrowserDidFinish(task: RSDTaskPath, reason: RSDTaskFinishReason) {
         // Nothing
     }
 }

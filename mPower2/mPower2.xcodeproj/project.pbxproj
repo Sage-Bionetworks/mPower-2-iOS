@@ -57,16 +57,20 @@
 		F81BE7C120B4B8F700EE57D3 /* BridgeSDK_Test.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F81BE7B520B4AA7C00EE57D3 /* BridgeSDK_Test.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F82AE7B62063160B00952D74 /* UIColor+mPowerTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82AE7B52063160B00952D74 /* UIColor+mPowerTheme.swift */; };
 		F832ABD820D8A908005A9025 /* Medication.json in Resources */ = {isa = PBXBuildFile; fileRef = F832ABD720D8A907005A9025 /* Medication.json */; };
-		F832ABDA20D8A916005A9025 /* study-burst-task.json in Resources */ = {isa = PBXBuildFile; fileRef = F832ABD920D8A916005A9025 /* study-burst-task.json */; };
 		F832ABDE20D8A928005A9025 /* Symptoms.json in Resources */ = {isa = PBXBuildFile; fileRef = F832ABDD20D8A928005A9025 /* Symptoms.json */; };
 		F832ABE020D8A933005A9025 /* Triggers.json in Resources */ = {isa = PBXBuildFile; fileRef = F832ABDF20D8A933005A9025 /* Triggers.json */; };
 		F832ABE120D8BB7C005A9025 /* Triggers.json in Resources */ = {isa = PBXBuildFile; fileRef = F832ABDF20D8A933005A9025 /* Triggers.json */; };
 		F832ABE220D8BB7C005A9025 /* Symptoms.json in Resources */ = {isa = PBXBuildFile; fileRef = F832ABDD20D8A928005A9025 /* Symptoms.json */; };
-		F832ABE420D8BB7C005A9025 /* study-burst-task.json in Resources */ = {isa = PBXBuildFile; fileRef = F832ABD920D8A916005A9025 /* study-burst-task.json */; };
 		F832ABE520D8BB7C005A9025 /* Medication.json in Resources */ = {isa = PBXBuildFile; fileRef = F832ABD720D8A907005A9025 /* Medication.json */; };
-		F832ABE720D8C8F3005A9025 /* MP2Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F832ABE620D8C8F3005A9025 /* MP2Factory.swift */; };
 		F832ABE920D8D341005A9025 /* StudyBurstCompletionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F832ABE820D8D341005A9025 /* StudyBurstCompletionViewController.swift */; };
 		F832ABEA20D96FEF005A9025 /* StudyBurstCompletionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F832ABE820D8D341005A9025 /* StudyBurstCompletionViewController.swift */; };
+		F832AC1A20D9A130005A9025 /* StudyBurstTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F832AC1920D9A130005A9025 /* StudyBurstTests.swift */; };
+		F832AC3520DA22DA005A9025 /* MP2BridgeConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F832AC3420DA22DA005A9025 /* MP2BridgeConfiguration.swift */; };
+		F832AC3620DA22DA005A9025 /* MP2BridgeConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F832AC3420DA22DA005A9025 /* MP2BridgeConfiguration.swift */; };
+		F832AC3820DA29E6005A9025 /* MP2Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F832AC3720DA29E6005A9025 /* MP2Factory.swift */; };
+		F832AC3920DA29E6005A9025 /* MP2Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F832AC3720DA29E6005A9025 /* MP2Factory.swift */; };
+		F832AC6620DC5EA5005A9025 /* StudyBurstReminder.json in Resources */ = {isa = PBXBuildFile; fileRef = F832AC5020DC5EA5005A9025 /* StudyBurstReminder.json */; };
+		F832AC6720DC5EA5005A9025 /* StudyBurstReminder.json in Resources */ = {isa = PBXBuildFile; fileRef = F832AC5020DC5EA5005A9025 /* StudyBurstReminder.json */; };
 		F8460D752097CF0C0084E197 /* MCTCountdownStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8460D742097CF0C0084E197 /* MCTCountdownStepViewController.swift */; };
 		F854590E208F986D00D37243 /* NSLocale+UnitTest.h in Headers */ = {isa = PBXBuildFile; fileRef = F854590D208F986D00D37243 /* NSLocale+UnitTest.h */; };
 		F854598A208FA43700D37243 /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7DE2062F28F00CD351C /* ResearchUI.framework */; };
@@ -419,11 +423,13 @@
 		F81BE7BE20B4AB4B00EE57D3 /* AppConfig.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AppConfig.json; sourceTree = "<group>"; };
 		F82AE7B52063160B00952D74 /* UIColor+mPowerTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+mPowerTheme.swift"; sourceTree = "<group>"; };
 		F832ABD720D8A907005A9025 /* Medication.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Medication.json; sourceTree = "<group>"; };
-		F832ABD920D8A916005A9025 /* study-burst-task.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "study-burst-task.json"; sourceTree = "<group>"; };
 		F832ABDD20D8A928005A9025 /* Symptoms.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Symptoms.json; sourceTree = "<group>"; };
 		F832ABDF20D8A933005A9025 /* Triggers.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Triggers.json; sourceTree = "<group>"; };
-		F832ABE620D8C8F3005A9025 /* MP2Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MP2Factory.swift; sourceTree = "<group>"; };
 		F832ABE820D8D341005A9025 /* StudyBurstCompletionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StudyBurstCompletionViewController.swift; path = "View Controllers/StudyBurstCompletionViewController.swift"; sourceTree = "<group>"; };
+		F832AC1920D9A130005A9025 /* StudyBurstTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyBurstTests.swift; sourceTree = "<group>"; };
+		F832AC3420DA22DA005A9025 /* MP2BridgeConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MP2BridgeConfiguration.swift; sourceTree = "<group>"; };
+		F832AC3720DA29E6005A9025 /* MP2Factory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MP2Factory.swift; sourceTree = "<group>"; };
+		F832AC5020DC5EA5005A9025 /* StudyBurstReminder.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = StudyBurstReminder.json; sourceTree = "<group>"; };
 		F8460D742097CF0C0084E197 /* MCTCountdownStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTCountdownStepViewController.swift; sourceTree = "<group>"; };
 		F854590D208F986D00D37243 /* NSLocale+UnitTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLocale+UnitTest.h"; sourceTree = "<group>"; };
 		F8545974208FA2ED00D37243 /* mPower2TestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mPower2TestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -597,7 +603,8 @@
 				F8C58DB020AF4823001C7B7F /* TodayScheduleManager.swift */,
 				F8C58DC920AF5E86001C7B7F /* StudyBurstScheduleManager.swift */,
 				F8C58DD420AF8CCC001C7B7F /* SurveyScheduleManager.swift */,
-				F832ABE620D8C8F3005A9025 /* MP2Factory.swift */,
+				F832AC3720DA29E6005A9025 /* MP2Factory.swift */,
+				F832AC3420DA22DA005A9025 /* MP2BridgeConfiguration.swift */,
 			);
 			name = "Schedule Management";
 			sourceTree = "<group>";
@@ -646,7 +653,7 @@
 				F832ABDF20D8A933005A9025 /* Triggers.json */,
 				F832ABDD20D8A928005A9025 /* Symptoms.json */,
 				F832ABD720D8A907005A9025 /* Medication.json */,
-				F832ABD920D8A916005A9025 /* study-burst-task.json */,
+				F832AC5020DC5EA5005A9025 /* StudyBurstReminder.json */,
 				603B7B352085541A00794B7C /* SignIn.json */,
 			);
 			name = "Task JSON";
@@ -717,6 +724,7 @@
 				F8D3E7902062F1B900CD351C /* Info.plist */,
 				F854599F208FA58800D37243 /* ResourceTests.swift */,
 				F89B3DA820C60F8B002EAE2D /* TodayScheduleManagerTests.swift */,
+				F832AC1920D9A130005A9025 /* StudyBurstTests.swift */,
 			);
 			path = mPower2Tests;
 			sourceTree = "<group>";
@@ -1152,9 +1160,9 @@
 				F88E8E0520ADEE4200117A99 /* LaunchScreen.storyboard in Resources */,
 				F88E8E0220ADEE3B00117A99 /* SignIn.json in Resources */,
 				F85459B5208FA76D00D37243 /* Assets.xcassets in Resources */,
-				F832ABE420D8BB7C005A9025 /* study-burst-task.json in Resources */,
 				F832ABE220D8BB7C005A9025 /* Symptoms.json in Resources */,
 				F832ABE120D8BB7C005A9025 /* Triggers.json in Resources */,
+				F832AC6720DC5EA5005A9025 /* StudyBurstReminder.json in Resources */,
 				F832ABE520D8BB7C005A9025 /* Medication.json in Resources */,
 				F88E8E0920ADEE6000117A99 /* mPower2.strings in Resources */,
 				F88E8E0A20ADEE6C00117A99 /* BridgeInfo.plist in Resources */,
@@ -1171,7 +1179,7 @@
 				F8D3E7812062F1B900CD351C /* Assets.xcassets in Resources */,
 				F832ABDE20D8A928005A9025 /* Symptoms.json in Resources */,
 				F8D3E77F2062F1B900CD351C /* Main.storyboard in Resources */,
-				F832ABDA20D8A916005A9025 /* study-burst-task.json in Resources */,
+				F832AC6620DC5EA5005A9025 /* StudyBurstReminder.json in Resources */,
 				603B7B362085541A00794B7C /* SignIn.json in Resources */,
 				F8D3E8022063055500CD351C /* sage-mpower-2.pem in Resources */,
 				F832ABE020D8A933005A9025 /* Triggers.json in Resources */,
@@ -1232,8 +1240,10 @@
 				F85459B6208FA77400D37243 /* UIColor+mPowerTheme.swift in Sources */,
 				F8078F4420AE078A00757F42 /* DataSourceManager.swift in Sources */,
 				F8C58DFC20AFA2FD001C7B7F /* ActivityManager.swift in Sources */,
+				F832AC3920DA29E6005A9025 /* MP2Factory.swift in Sources */,
 				F88E8DFE20ADEE2600117A99 /* RegistrationWaitingViewController.swift in Sources */,
 				60169BD120AF445C00D29532 /* ConsentViewController.swift in Sources */,
+				F832AC3620DA22DA005A9025 /* MP2BridgeConfiguration.swift in Sources */,
 				F88E8DFB20ADEE2600117A99 /* ExternalIDRegistrationViewController.swift in Sources */,
 				F832ABEA20D96FEF005A9025 /* StudyBurstCompletionViewController.swift in Sources */,
 				F88E8DFC20ADEE2600117A99 /* PhoneRegistrationViewController.swift in Sources */,
@@ -1246,6 +1256,7 @@
 			files = (
 				B587AC08206D696800542548 /* UIView+mPowerTheme.swift in Sources */,
 				0349535520981C89006A05B1 /* ProgressCircleView.swift in Sources */,
+				F832AC3820DA29E6005A9025 /* MP2Factory.swift in Sources */,
 				608241DB2093D9A90026E843 /* RegistrationIntroViewController.swift in Sources */,
 				0334415420995328009B97A9 /* TodayViewController.swift in Sources */,
 				60F45524209CF10100C532A0 /* SignInTaskViewController.swift in Sources */,
@@ -1256,13 +1267,13 @@
 				F8C58DD520AF8CCC001C7B7F /* SurveyScheduleManager.swift in Sources */,
 				0354809F20BF3B6400B757AB /* StudyBurstViewController.swift in Sources */,
 				F82AE7B62063160B00952D74 /* UIColor+mPowerTheme.swift in Sources */,
-				F832ABE720D8C8F3005A9025 /* MP2Factory.swift in Sources */,
 				F8078F4320ADFA6A00757F42 /* DataSourceManager.swift in Sources */,
 				603B7BC320913B1A00794B7C /* PhoneRegistrationViewController.swift in Sources */,
 				6076F2CB20A6680B00F6235E /* ConsentViewController.swift in Sources */,
 				603B7BAA208E90FF00794B7C /* RegistrationWaitingViewController.swift in Sources */,
 				F832ABE920D8D341005A9025 /* StudyBurstCompletionViewController.swift in Sources */,
 				608241F22093D9F70026E843 /* ExternalIDRegistrationViewController.swift in Sources */,
+				F832AC3520DA22DA005A9025 /* MP2BridgeConfiguration.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1271,6 +1282,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F89B3DA920C60F8B002EAE2D /* TodayScheduleManagerTests.swift in Sources */,
+				F832AC1A20D9A130005A9025 /* StudyBurstTests.swift in Sources */,
 				F85459A0208FA58800D37243 /* ResourceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

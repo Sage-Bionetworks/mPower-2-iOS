@@ -56,6 +56,8 @@ public struct StudySetup {
     /// The days in the past when the particpant finished all the tasks.
     var studyBurstFinishedOnDays: [Int] = [0, 2]
     
+    var studyBurstSurveyFinishedOnDays: [RSDIdentifier : Int] = [:]
+    
     /// Generated days of the study burst to mark as finished. This only applies to days that are past.
     func mapStudyBurstFinishedOn() -> [Int : Date] {
         let firstDay = createdOn.startOfDay().addingTimeInterval(8 * 60 * 60)
@@ -64,6 +66,17 @@ public struct StudySetup {
             let time = TimeInterval(arc4random_uniform(12 * 60 * 60))
             let timestamp = firstDay.addingNumberOfDays(day).addingTimeInterval(time)
             return (day, timestamp)
+        }
+    }
+    
+    /// Generated days of the study burst to mark as finished. This only applies to days that are past.
+    func mapStudyBurstSurveyFinishedOn() -> [RSDIdentifier : Date] {
+        let firstDay = createdOn.startOfDay().addingTimeInterval(8 * 60 * 60)
+        return studyBurstSurveyFinishedOnDays.rsd_filteredDictionary { (input) -> (RSDIdentifier, Date)? in
+            let day = input.value
+            let time = TimeInterval(arc4random_uniform(12 * 60 * 60))
+            let timestamp = firstDay.addingNumberOfDays(day).addingTimeInterval(time)
+            return (input.key, timestamp)
         }
     }
     
@@ -200,19 +213,10 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
     
     func buildStudyBurstTasks(_ studySetup: StudySetup) {
         
-        let activityGroup = SBAActivityGroupObject(identifier: RSDIdentifier.studyBurstTaskGroup.stringValue,
-                                                   title: "Study Burst",
-                                                   journeyTitle: nil,
-                                                   image: nil,
-                                                   activityIdentifiers: [.studyBurstCompletedTask, .tappingTask, .tremorTask, .walkAndBalanceTask],
-                                                   notificationIdentifier: nil,
-                                                   schedulePlanGuid: nil,
-                                                   activityGuidMap: nil)
-        
         // only add the study burst marker for this group, but add one for each day.
         let createdOn = studySetup.createdOn
         let studyBurstFinishedOn = studySetup.mapStudyBurstFinishedOn()
-        for day in 0..<14 {
+        for day in 0..<19 {
             
             let scheduledOn = createdOn.startOfDay().addingNumberOfDays(day)
             let schedule = createSchedule(with: .studyBurstCompletedTask,
@@ -220,12 +224,42 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
                                           expiresOn: scheduledOn.addingNumberOfDays(1),
                                           finishedOn: studyBurstFinishedOn[day],
                                           clientData: nil,
-                                          schedulePlanGuid: activityGroup.schedulePlanGuid)
+                                          schedulePlanGuid: nil)
             self.schedules.append(schedule)
         }
+        
+        let surveyMap = studySetup.mapStudyBurstSurveyFinishedOn()
+        let demographics = createSchedule(with: .demographics,
+                                          scheduledOn: studySetup.createdOn,
+                                          expiresOn: nil,
+                                          finishedOn: surveyMap[.demographics],
+                                          clientData: nil,
+                                          schedulePlanGuid: nil,
+                                          activityType: "survey")
+        demographics.persistent = NSNumber(value: false)
+        self.schedules.append(demographics)
+        
+        let engagement = createSchedule(with: .engagement,
+                                      scheduledOn: studySetup.createdOn,
+                                      expiresOn: nil,
+                                      finishedOn: surveyMap[.engagement],
+                                      clientData: nil,
+                                      schedulePlanGuid: nil,
+                                      activityType: "survey")
+        engagement.persistent = NSNumber(value: false)
+        self.schedules.append(engagement)
+        
+        let studyBurstReminder = createSchedule(with: .studyBurstReminder,
+                                        scheduledOn: studySetup.createdOn,
+                                        expiresOn: nil,
+                                        finishedOn: surveyMap[.studyBurstReminder],
+                                        clientData: nil,
+                                        schedulePlanGuid: nil)
+        studyBurstReminder.persistent = NSNumber(value: false)
+        self.schedules.append(studyBurstReminder)
     }
     
-    public func createSchedule(with identifier: RSDIdentifier, scheduledOn: Date, expiresOn: Date?, finishedOn: Date?, clientData: SBBJSONValue?, schedulePlanGuid: String?) -> SBBScheduledActivity {
+    public func createSchedule(with identifier: RSDIdentifier, scheduledOn: Date, expiresOn: Date?, finishedOn: Date?, clientData: SBBJSONValue?, schedulePlanGuid: String?, activityType: String? = nil) -> SBBScheduledActivity {
         
         let guid = activityGuidMap[identifier] ?? UUID().uuidString
         activityGuidMap[identifier] = guid
@@ -240,12 +274,23 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
         schedule.finishedOn = finishedOn
         schedule.clientData = clientData
         schedule.persistent = NSNumber(value: (expiresOn == nil))
+        let activityType = activityType ?? "task"
+
         let activity = SBBActivity(dictionaryRepresentation: [
-            "activityType" : "task",
+            "activityType" : activityType,
             "guid" : guid,
             "label" : identifier.stringValue
             ])!
-        activity.task = SBBTaskReference(dictionaryRepresentation: [ "identifier" : identifier.stringValue ])
+        if activityType == "survey" {
+            activity.survey = SBBSurveyReference(dictionaryRepresentation: [
+                "identifier" : identifier.stringValue,
+                "guid" : UUID().uuidString,
+                "href" : "http://example.org/\(identifier.stringValue)"
+                ])
+        }
+        else {
+            activity.task = SBBTaskReference(dictionaryRepresentation: [ "identifier" : identifier.stringValue ])
+        }
         schedule.activity = activity
         
         return schedule
