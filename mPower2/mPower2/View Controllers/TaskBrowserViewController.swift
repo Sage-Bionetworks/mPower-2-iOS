@@ -109,6 +109,8 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
             manager.reloadData()
             let tabView = TaskBrowserTabView(frame: .zero, taskGroupIdentifier: manager.identifier)
             tabView.title = manager.activityGroup?.title
+            tabView.accessibilityLabel = tabView.title
+            tabView.accessibilityIdentifier = tabView.title
             tabView.delegate = self
             tabView.isSelected = (manager.identifier == selectedScheduleManager.identifier)
             tabButtonStackView.addArrangedSubview(tabView)
