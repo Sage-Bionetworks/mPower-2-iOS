@@ -420,11 +420,9 @@ class StudyBurstScheduleManager : SBAScheduleManager {
             var json: [String : Any] = [ "taskOrder" : self.orderedTasks.map { $0.identifier }.joined(separator: ",")]
             finishedSchedules.forEach {
                 guard let identifier = $0.activityIdentifier, let finishedOn = $0.finishedOn else { return }
-                json[identifier] = [
-                    "startDate": ($0.startedOn ?? Date()).jsonObject(),
-                    "endDate": finishedOn.jsonObject(),
-                    "scheduleGuid": $0.guid
-                ]
+                json["\(identifier).startDate"] = ($0.startedOn ?? Date()).jsonObject()
+                json["\(identifier).endDate"] = finishedOn.jsonObject()
+                json["\(identifier).scheduleGuid"] = $0.guid
             }
             archive.insertDictionary(intoArchive: json, filename: "tasks", createdOn: finishedOn)
             
