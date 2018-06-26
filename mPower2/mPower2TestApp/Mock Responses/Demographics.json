@@ -1,0 +1,57 @@
+{
+    "guid": "f2637b2a-b473-4f84-b645-1431a3b4418e",
+    "createdOn": "2018-06-18T21:33:20.533Z",
+    "modifiedOn": "2018-06-18T21:33:26.877Z",
+    "version": 2,
+    "name": "Demographics",
+    "identifier": "Demographics",
+    "published": true,
+    "deleted": false,
+    "schemaRevision": 1,
+    "elements": [{
+                 "surveyCompoundKey": "f2637b2a-b473-4f84-b645-1431a3b4418e:1529357600533",
+                 "guid": "dab6b6dd-aa79-4ac0-9ff2-0cc2e0127ef6",
+                 "identifier": "favoriteColor",
+                 "type": "SurveyQuestion",
+                 "beforeRules": [],
+                 "afterRules": [],
+                 "prompt": "What is your favorite color?",
+                 "fireEvent": false,
+                 "constraints": {
+                 "rules": [],
+                 "dataType": "string",
+                 "enumeration": [{
+                                 "label": "Red",
+                                 "detail": "",
+                                 "value": "Red",
+                                 "type": "SurveyQuestionOption"
+                                 }, {
+                                 "label": "Green",
+                                 "detail": "",
+                                 "value": "Green",
+                                 "type": "SurveyQuestionOption"
+                                 }, {
+                                 "label": "Blue",
+                                 "detail": "",
+                                 "value": "Blue",
+                                 "type": "SurveyQuestionOption"
+                                 }, {
+                                 "label": "Yellow",
+                                 "detail": "",
+                                 "value": "Yellow",
+                                 "type": "SurveyQuestionOption"
+                                 }, {
+                                 "label": "Other",
+                                 "detail": "",
+                                 "value": "Other",
+                                 "type": "SurveyQuestionOption"
+                                 }],
+                 "allowOther": false,
+                 "allowMultiple": false,
+                 "type": "MultiValueConstraints"
+                 },
+                 "uiHint": "list"
+                 }],
+    "type": "Survey",
+    "type": "Survey"
+}

@@ -404,10 +404,14 @@ class StudyBurstScheduleManager : SBAScheduleManager {
         studyMarker.startedOn = startedOn ?? Date()
         studyMarker.finishedOn = finishedOn
         
-        guard let identifier = studyMarker.activityIdentifier,
-            let schemaInfo = studyMarker.schemaInfo else {
-                return
-        }
+        let identifier = studyMarker.activityIdentifier ?? RSDIdentifier.studyBurstCompletedTask.stringValue
+        let schemaInfo: RSDSchemaInfo = {
+            guard let info = self.schemaInfo(for: identifier) else {
+                assertionFailure("Failed to retrieve schema info for \(String(describing: studyMarker.activityIdentifier))")
+                return RSDSchemaInfoObject(identifier: identifier, revision: 1)
+            }
+            return info
+        }()
         
         do {
         
@@ -425,6 +429,7 @@ class StudyBurstScheduleManager : SBAScheduleManager {
             archive.insertDictionary(intoArchive: json, filename: "tasks", createdOn: finishedOn)
             
             try archive.completeArchive(createdOn: finishedOn, with: nil)
+            studyMarker.clientData = json as NSDictionary
             
             self.offMainQueue.async {
                 archive.encryptAndUploadArchive()

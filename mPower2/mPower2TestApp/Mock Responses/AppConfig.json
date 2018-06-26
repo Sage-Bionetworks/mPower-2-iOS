@@ -12,52 +12,47 @@
         "type": "Criteria"
     },
     "createdOn": "2018-05-09T23:01:33.996Z",
-    "modifiedOn": "2018-05-18T21:23:20.401Z",
+    "modifiedOn": "2018-06-19T18:36:05.133Z",
     "clientData": {
         "studyDuration": {
             "year": 2
         },
         "taskToSchemaIdentifierMap": {
-            "StudyBurst": "study-burst-task"
+            "study-burst-task": "StudyBurst"
         },
-        "groups": [
-                   {
+        "groups": [{
                    "identifier": "Tracking",
                    "title": "Tracking",
-                   "activityIdentifiers": [
-                                           "Symptoms",
-                                           "Medication",
-                                           "Triggers"
-                                           ],
-                    "activityGuidMap": {
-                       "Medication": "273c4518-7cb6-4496-b1dd-c0b5bf291b09",
-                       "Symptoms": "60868b71-30a4-4e04-a00b-3aca6651deb2",
-                       "Triggers": "b0f07b7e-408e-4d50-9368-8220971e570c"
-                       }
-                   },
-                   {
+                   "activityIdentifiers": ["Symptoms", "Medication", "Triggers"],
+                   "activityGuidMap": {
+                   "Medication": "273c4518-7cb6-4496-b1dd-c0b5bf291b09",
+                   "Symptoms": "60868b71-30a4-4e04-a00b-3aca6651deb2",
+                   "Triggers": "b0f07b7e-408e-4d50-9368-8220971e570c"
+                   }
+                   }, {
                    "identifier": "Measuring",
                    "title": "Measuring",
-                   "activityIdentifiers": [
-                                           "Tapping",
-                                           "WalkAndBalance",
-                                           "Tremor"
-                                           ],
+                   "activityIdentifiers": ["Tapping", "WalkAndBalance", "Tremor"],
                    "schedulePlanGuid": "3d898a6f-1ef2-4ece-9e9f-025d94bcd130"
-                   },
-                   {
+                   }, {
                    "identifier": "Study Burst",
                    "title": "Study Burst",
-                   "activityIdentifiers": [
-                                           "Tapping",
-                                           "Tremor",
-                                           "WalkAndBalance",
-                                           "study-burst-task"
-                                           ]
-                   }
-                   ]
+                   "activityIdentifiers": ["Tapping", "Tremor", "WalkAndBalance", "study-burst-task"]
+                   }]
     },
-    "surveyReferences": [],
+    "surveyReferences": [{
+                         "guid": "f2637b2a-b473-4f84-b645-1431a3b4418e",
+                         "identifier": "Demographics",
+                         "createdOn": "2018-06-18T21:33:20.533Z",
+                         "href": "https://ws.sagebridge.org/v3/surveys/f2637b2a-b473-4f84-b645-1431a3b4418e/revisions/2018-06-18T21:33:20.533Z",
+                         "type": "SurveyReference"
+                         }, {
+                         "guid": "56fbeb25-0a90-499a-a0d8-3c4935b60312",
+                         "identifier": "Engagement",
+                         "createdOn": "2018-06-18T21:46:07.803Z",
+                         "href": "https://ws.sagebridge.org/v3/surveys/56fbeb25-0a90-499a-a0d8-3c4935b60312/revisions/2018-06-18T21:46:07.803Z",
+                         "type": "SurveyReference"
+                         }],
     "schemaReferences": [{
                          "id": "StudyBurst",
                          "revision": 1,
@@ -68,21 +63,21 @@
                          "type": "SchemaReference"
                          }, {
                          "id": "Tapping",
-                         "revision": 2,
+                         "revision": 3,
                          "type": "SchemaReference"
                          }, {
                          "id": "Tremor",
-                         "revision": 1,
+                         "revision": 2,
                          "type": "SchemaReference"
                          }, {
                          "id": "Triggers",
-                         "revision": 3,
+                         "revision": 2,
                          "type": "SchemaReference"
                          }, {
                          "id": "WalkAndBalance",
                          "revision": 1,
                          "type": "SchemaReference"
                          }],
-    "version": 11,
+    "version": 29,
     "type": "AppConfig"
 }

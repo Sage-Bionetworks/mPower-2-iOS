@@ -44,7 +44,6 @@ extension RSDIdentifier {
     static let triggersTask: RSDIdentifier = "Triggers"
     static let symptomsTask: RSDIdentifier = "Symptoms"
     static let medicationTask: RSDIdentifier = "Medication"
-    static let trackingTasks: [RSDIdentifier] = [.triggersTask, .symptomsTask, .medicationTask]
     
     static let tappingTask: RSDIdentifier =  MCTTaskIdentifier.tapping.identifier
     static let tremorTask: RSDIdentifier = MCTTaskIdentifier.tremor.identifier
@@ -64,12 +63,23 @@ extension MCTTaskInfo : SBAActivityInfo {
     }
 }
 
+extension MCTTaskIdentifier {
+    
+    public var rsdIdentifier : RSDIdentifier {
+        return RSDIdentifier(rawValue: self.rawValue)
+    }
+}
+
 /// The data source manager is used to allow testing to **not** connect to the Bridge server. It uses a
 /// singleton to manage the data sources.
 ///
 /// - note: This singleton assumes that the schedule managers that are created are only instantiated
 /// for a signed-in user **or** by the mPower2TestApp.
 class DataSourceManager {
+    
+    let tabs: [RSDIdentifier : [RSDIdentifier]] =
+        [ .trackingTaskGroup : [.triggersTask, .symptomsTask, .medicationTask],
+          .measuringTaskGroup : MCTTaskIdentifier.all().map { $0.rsdIdentifier }]
     
     /// Shared singleton
     static let shared = DataSourceManager()
@@ -107,42 +117,44 @@ class DataSourceManager {
     
     // MARK: Install the task groups from either the bridge configuration or embedded resources.
     
-    private var _hasInstalledTaskGroups = false
     private func installTaskGroupsIfNeeded() {
-        guard !_hasInstalledTaskGroups else { return }
-        _hasInstalledTaskGroups = true
         
         let installedGroups = configuration.installedGroups
-        
         let rsdIdentifiers: [RSDIdentifier] = [.measuringTaskGroup, .trackingTaskGroup]
+        
         rsdIdentifiers.forEach { (groupIdentifier) in
             let installedGroup = installedGroups.first(where: { $0.identifier == groupIdentifier.stringValue })
             
             // Get the activity identifiers.
-            let activityIdentifiers: [RSDIdentifier] = {
-                if installedGroup != nil {
-                    return installedGroup!.activityIdentifiers
-                } else {
-                    switch groupIdentifier {
-                    case .trackingTaskGroup:
-                        return RSDIdentifier.trackingTasks
-                    case .measuringTaskGroup:
-                        return RSDIdentifier.measuringTasks
-                    default:
-                        assertionFailure("The list above of task groups to build does not match this one.")
-                        return []
-                    }
-                }
-            }()
+            guard let activityIdentifiers: [RSDIdentifier] = installedGroup?.activityIdentifiers ??
+                tabs[groupIdentifier]
+                else {
+                    assertionFailure("Missing identifiers for \(groupIdentifier)")
+                    return
+            }
+            
+            // Install the group if not already included.
+            if installedGroup == nil {
+                let groupId = groupIdentifier.stringValue
+                let activityGroup = SBAActivityGroupObject(identifier: groupId,
+                                                           title: Localization.localizedString(groupId),
+                                                           journeyTitle: nil,
+                                                           image: nil,
+                                                           activityIdentifiers: activityIdentifiers,
+                                                           notificationIdentifier: nil,
+                                                           schedulePlanGuid: nil,
+                                                           activityGuidMap: nil)
+                configuration.addMapping(with: activityGroup)
+            }
             
             // Check that there is a mapped task info in the bridge configuration.
             activityIdentifiers.forEach { (activityId) in
-                // Special-case the study burst completed schedule (it's never shown as a task).
-                guard activityId != .studyBurstCompletedTask else { return }
                 
                 // If the installed info has an image then it's loaded.
                 let installedInfo = configuration.activityInfo(for: activityId.stringValue)
-                if installedInfo?.imageVendor != nil { return }
+                if installedInfo?.imageVendor != nil {
+                    return
+                }
                 
                 // Install the task and task info.
                 if let mctIdentifier = MCTTaskIdentifier(rawValue: activityId.stringValue) {
@@ -163,19 +175,6 @@ class DataSourceManager {
                                                          moduleId: moduleId)
                     configuration.addMapping(with: taskInfo)
                 }
-            }
-            
-            if installedGroup == nil {
-                let groupId = groupIdentifier.stringValue
-                let activityGroup = SBAActivityGroupObject(identifier: groupId,
-                                                           title: Localization.localizedString(groupId),
-                                                           journeyTitle: nil,
-                                                           image: nil,
-                                                           activityIdentifiers: activityIdentifiers,
-                                                           notificationIdentifier: nil,
-                                                           schedulePlanGuid: nil,
-                                                           activityGuidMap: nil)
-                configuration.addMapping(with: activityGroup)
             }
         }
     }
