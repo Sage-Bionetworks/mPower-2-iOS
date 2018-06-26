@@ -97,6 +97,19 @@ public struct StudySetup {
     }
 }
 
+public struct Survey {
+    let guid: String
+    let identifier: String
+    let createdOn: String
+    
+    static let demographics = Survey(guid: "f2637b2a-b473-4f84-b645-1431a3b4418e", identifier: "Demographics", createdOn: "2018-06-18T21:33:20.533Z")
+    static let engagement = Survey(guid: "56fbeb25-0a90-499a-a0d8-3c4935b60312", identifier: "Engagement", createdOn: "2018-06-18T21:46:07.803Z")
+    
+    var href: String {
+        return "https://ws.sagebridge.org/v3/surveys/\(self.guid)/revisions/\(self.createdOn)"
+    }
+}
+
 public class ActivityManager : NSObject, SBBActivityManagerProtocol {
     
     var schedules = [SBBScheduledActivity]()
@@ -235,7 +248,7 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
                                           finishedOn: surveyMap[.demographics],
                                           clientData: nil,
                                           schedulePlanGuid: nil,
-                                          activityType: "survey")
+                                          survey: .demographics)
         demographics.persistent = NSNumber(value: false)
         self.schedules.append(demographics)
         
@@ -245,7 +258,7 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
                                       finishedOn: surveyMap[.engagement],
                                       clientData: nil,
                                       schedulePlanGuid: nil,
-                                      activityType: "survey")
+                                      survey: .engagement)
         engagement.persistent = NSNumber(value: false)
         self.schedules.append(engagement)
         
@@ -259,7 +272,7 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
         self.schedules.append(studyBurstReminder)
     }
     
-    public func createSchedule(with identifier: RSDIdentifier, scheduledOn: Date, expiresOn: Date?, finishedOn: Date?, clientData: SBBJSONValue?, schedulePlanGuid: String?, activityType: String? = nil) -> SBBScheduledActivity {
+    public func createSchedule(with identifier: RSDIdentifier, scheduledOn: Date, expiresOn: Date?, finishedOn: Date?, clientData: SBBJSONValue?, schedulePlanGuid: String?, survey: Survey? = nil) -> SBBScheduledActivity {
         
         let guid = activityGuidMap[identifier] ?? UUID().uuidString
         activityGuidMap[identifier] = guid
@@ -274,18 +287,20 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
         schedule.finishedOn = finishedOn
         schedule.clientData = clientData
         schedule.persistent = NSNumber(value: (expiresOn == nil))
-        let activityType = activityType ?? "task"
+        let activityType = (survey == nil) ? "task" : "survey"
 
         let activity = SBBActivity(dictionaryRepresentation: [
             "activityType" : activityType,
             "guid" : guid,
             "label" : identifier.stringValue
             ])!
-        if activityType == "survey" {
+        
+        if let surveyRef = survey {
             activity.survey = SBBSurveyReference(dictionaryRepresentation: [
                 "identifier" : identifier.stringValue,
-                "guid" : UUID().uuidString,
-                "href" : "http://example.org/\(identifier.stringValue)"
+                "guid" : surveyRef.guid,
+                "createdOn" : surveyRef.createdOn,
+                "href" : surveyRef.href
                 ])
         }
         else {

@@ -72,6 +72,9 @@
 		F832AC6620DC5EA5005A9025 /* StudyBurstReminder.json in Resources */ = {isa = PBXBuildFile; fileRef = F832AC5020DC5EA5005A9025 /* StudyBurstReminder.json */; };
 		F832AC6720DC5EA5005A9025 /* StudyBurstReminder.json in Resources */ = {isa = PBXBuildFile; fileRef = F832AC5020DC5EA5005A9025 /* StudyBurstReminder.json */; };
 		F8460D752097CF0C0084E197 /* MCTCountdownStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8460D742097CF0C0084E197 /* MCTCountdownStepViewController.swift */; };
+		F84E723620E1866300E5C6C3 /* Demographics.json in Resources */ = {isa = PBXBuildFile; fileRef = F84E722020E1866300E5C6C3 /* Demographics.json */; };
+		F84E723820E1866A00E5C6C3 /* Engagement.json in Resources */ = {isa = PBXBuildFile; fileRef = F84E723720E1866A00E5C6C3 /* Engagement.json */; };
+		F84E724020E2C99900E5C6C3 /* mPower2TestAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84E723F20E2C99900E5C6C3 /* mPower2TestAppUITests.swift */; };
 		F854590E208F986D00D37243 /* NSLocale+UnitTest.h in Headers */ = {isa = PBXBuildFile; fileRef = F854590D208F986D00D37243 /* NSLocale+UnitTest.h */; };
 		F854598A208FA43700D37243 /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7DE2062F28F00CD351C /* ResearchUI.framework */; };
 		F854598B208FA43700D37243 /* ResearchUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7DE2062F28F00CD351C /* ResearchUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -154,6 +157,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = F81BE77720B4951F00EE57D3;
 			remoteInfo = "BridgeSDK-Test";
+		};
+		F84E724220E2C99900E5C6C3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F8D3E76E2062F1B900CD351C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F8545973208FA2ED00D37243;
+			remoteInfo = mPower2TestApp;
 		};
 		F8545986208FA38900D37243 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -431,6 +441,11 @@
 		F832AC3720DA29E6005A9025 /* MP2Factory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MP2Factory.swift; sourceTree = "<group>"; };
 		F832AC5020DC5EA5005A9025 /* StudyBurstReminder.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = StudyBurstReminder.json; sourceTree = "<group>"; };
 		F8460D742097CF0C0084E197 /* MCTCountdownStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTCountdownStepViewController.swift; sourceTree = "<group>"; };
+		F84E722020E1866300E5C6C3 /* Demographics.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Demographics.json; sourceTree = "<group>"; };
+		F84E723720E1866A00E5C6C3 /* Engagement.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Engagement.json; sourceTree = "<group>"; };
+		F84E723D20E2C99900E5C6C3 /* mPower2TestAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = mPower2TestAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F84E723F20E2C99900E5C6C3 /* mPower2TestAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mPower2TestAppUITests.swift; sourceTree = "<group>"; };
+		F84E724120E2C99900E5C6C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F854590D208F986D00D37243 /* NSLocale+UnitTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLocale+UnitTest.h"; sourceTree = "<group>"; };
 		F8545974208FA2ED00D37243 /* mPower2TestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mPower2TestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8545982208FA2EE00D37243 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -470,6 +485,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		F84E723A20E2C99900E5C6C3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F8545971208FA2ED00D37243 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -634,6 +656,8 @@
 			isa = PBXGroup;
 			children = (
 				F81BE7BE20B4AB4B00EE57D3 /* AppConfig.json */,
+				F84E722020E1866300E5C6C3 /* Demographics.json */,
+				F84E723720E1866A00E5C6C3 /* Engagement.json */,
 			);
 			path = "Mock Responses";
 			sourceTree = "<group>";
@@ -657,6 +681,15 @@
 				603B7B352085541A00794B7C /* SignIn.json */,
 			);
 			name = "Task JSON";
+			sourceTree = "<group>";
+		};
+		F84E723E20E2C99900E5C6C3 /* mPower2TestAppUITests */ = {
+			isa = PBXGroup;
+			children = (
+				F84E724120E2C99900E5C6C3 /* Info.plist */,
+				F84E723F20E2C99900E5C6C3 /* mPower2TestAppUITests.swift */,
+			);
+			path = mPower2TestAppUITests;
 			sourceTree = "<group>";
 		};
 		F8545975208FA2ED00D37243 /* mPower2TestApp */ = {
@@ -685,6 +718,7 @@
 				F8D3E7782062F1B900CD351C /* mPower2 */,
 				F8545975208FA2ED00D37243 /* mPower2TestApp */,
 				F8D3E78D2062F1B900CD351C /* mPower2Tests */,
+				F84E723E20E2C99900E5C6C3 /* mPower2TestAppUITests */,
 				F8D3E82E2063072100CD351C /* MotorControl */,
 				F8D3E83B2063072200CD351C /* MotorControlTests */,
 				F8D3E7992062F23A00CD351C /* Frameworks */,
@@ -700,6 +734,7 @@
 				F8D3E82D2063072100CD351C /* MotorControl.framework */,
 				F8D3E8352063072200CD351C /* MotorControlTests.xctest */,
 				F8545974208FA2ED00D37243 /* mPower2TestApp.app */,
+				F84E723D20E2C99900E5C6C3 /* mPower2TestAppUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -841,6 +876,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		F84E723C20E2C99900E5C6C3 /* mPower2TestAppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F84E724420E2C99900E5C6C3 /* Build configuration list for PBXNativeTarget "mPower2TestAppUITests" */;
+			buildPhases = (
+				F84E723920E2C99900E5C6C3 /* Sources */,
+				F84E723A20E2C99900E5C6C3 /* Frameworks */,
+				F84E723B20E2C99900E5C6C3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F84E724320E2C99900E5C6C3 /* PBXTargetDependency */,
+			);
+			name = mPower2TestAppUITests;
+			productName = mPower2TestAppUITests;
+			productReference = F84E723D20E2C99900E5C6C3 /* mPower2TestAppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		F8545973208FA2ED00D37243 /* mPower2TestApp */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F8545983208FA2EE00D37243 /* Build configuration list for PBXNativeTarget "mPower2TestApp" */;
@@ -949,10 +1002,15 @@
 		F8D3E76E2062F1B900CD351C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0930;
+				LastSwiftUpdateCheck = 0940;
 				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Sage Bionetworks";
 				TargetAttributes = {
+					F84E723C20E2C99900E5C6C3 = {
+						CreatedOnToolsVersion = 9.4.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = F8545973208FA2ED00D37243;
+					};
 					F8545973208FA2ED00D37243 = {
 						CreatedOnToolsVersion = 9.3;
 						ProvisioningStyle = Automatic;
@@ -1030,6 +1088,7 @@
 				F8D3E7752062F1B900CD351C /* mPower2 */,
 				F8545973208FA2ED00D37243 /* mPower2TestApp */,
 				F8D3E7892062F1B900CD351C /* mPower2Tests */,
+				F84E723C20E2C99900E5C6C3 /* mPower2TestAppUITests */,
 				F8D3E82C2063072100CD351C /* MotorControl */,
 				F8D3E8342063072200CD351C /* MotorControlTests */,
 			);
@@ -1152,6 +1211,13 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
+		F84E723B20E2C99900E5C6C3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F8545972208FA2ED00D37243 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1163,6 +1229,8 @@
 				F832ABE220D8BB7C005A9025 /* Symptoms.json in Resources */,
 				F832ABE120D8BB7C005A9025 /* Triggers.json in Resources */,
 				F832AC6720DC5EA5005A9025 /* StudyBurstReminder.json in Resources */,
+				F84E723620E1866300E5C6C3 /* Demographics.json in Resources */,
+				F84E723820E1866A00E5C6C3 /* Engagement.json in Resources */,
 				F832ABE520D8BB7C005A9025 /* Medication.json in Resources */,
 				F88E8E0920ADEE6000117A99 /* mPower2.strings in Resources */,
 				F88E8E0A20ADEE6C00117A99 /* BridgeInfo.plist in Resources */,
@@ -1222,6 +1290,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		F84E723920E2C99900E5C6C3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F84E724020E2C99900E5C6C3 /* mPower2TestAppUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F8545970208FA2ED00D37243 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1330,6 +1406,11 @@
 			name = "BridgeSDK-Test";
 			targetProxy = F81BE7C220B4B8F700EE57D3 /* PBXContainerItemProxy */;
 		};
+		F84E724320E2C99900E5C6C3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F8545973208FA2ED00D37243 /* mPower2TestApp */;
+			targetProxy = F84E724220E2C99900E5C6C3 /* PBXContainerItemProxy */;
+		};
 		F8545987208FA38900D37243 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = F8545973208FA2ED00D37243 /* mPower2TestApp */;
@@ -1417,6 +1498,40 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		F84E724520E2C99900E5C6C3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = KA9Z8R6M6K;
+				INFOPLIST_FILE = mPower2TestAppUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.mPower2TestAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = mPower2TestApp;
+			};
+			name = Debug;
+		};
+		F84E724620E2C99900E5C6C3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = KA9Z8R6M6K;
+				INFOPLIST_FILE = mPower2TestAppUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.mPower2TestAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = mPower2TestApp;
+			};
+			name = Release;
+		};
 		F8545984208FA2EE00D37243 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1736,6 +1851,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		F84E724420E2C99900E5C6C3 /* Build configuration list for PBXNativeTarget "mPower2TestAppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F84E724520E2C99900E5C6C3 /* Debug */,
+				F84E724620E2C99900E5C6C3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		F8545983208FA2EE00D37243 /* Build configuration list for PBXNativeTarget "mPower2TestApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
