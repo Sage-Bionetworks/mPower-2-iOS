@@ -85,13 +85,7 @@ class StudyBurstTests: XCTestCase {
     
     func testStudyBurstComplete_DayOne() {
         
-        let scheduleManager = TestStudyBurstScheduleManager()
-        var studySetup = StudySetup()
-        studySetup.studyBurstDay = 0
-        studySetup.studyBurstFinishedOnDays = []
-        studySetup.finishedTodayTasks = scheduleManager.activityGroup?.activityIdentifiers ?? []
-        scheduleManager._activityManager.studySetup = studySetup
-        scheduleManager._activityManager.buildSchedules()
+        let scheduleManager = TestStudyBurstScheduleManager(.day1_tasksFinished_demographicsNotFinished)
         
         let expect = expectation(description: "Update finished called.")
         scheduleManager.updateFinishedBlock = {
@@ -127,15 +121,7 @@ class StudyBurstTests: XCTestCase {
     
     func testStudyBurstComplete_Day15_MissingOne() {
         
-        let scheduleManager = TestStudyBurstScheduleManager()
-        var studySetup = StudySetup()
-        studySetup.studyBurstDay = 14
-        var finishedDays: [Int] = Array(0...13)
-        finishedDays.remove(at: 2)
-        studySetup.studyBurstFinishedOnDays = finishedDays
-        studySetup.finishedTodayTasks = scheduleManager.activityGroup?.activityIdentifiers ?? []
-        scheduleManager._activityManager.studySetup = studySetup
-        scheduleManager._activityManager.buildSchedules()
+        let scheduleManager = TestStudyBurstScheduleManager(.day15_missing1_tasksFinished_engagementNotFinished)
         
         let expect = expectation(description: "Update finished called.")
         scheduleManager.updateFinishedBlock = {
@@ -161,17 +147,7 @@ class StudyBurstTests: XCTestCase {
     
     func testStudyBurstComplete_Day15_MissingTwo() {
         
-        let scheduleManager = TestStudyBurstScheduleManager()
-        var studySetup = StudySetup()
-        studySetup.studyBurstDay = 14
-        var finishedDays: [Int] = Array(0...13)
-        finishedDays.remove(at: 2)
-        finishedDays.remove(at: 4)
-        studySetup.studyBurstFinishedOnDays = finishedDays
-        studySetup.studyBurstSurveyFinishedOnDays = [.demographics : 0, .studyBurstReminder : 0]
-        studySetup.finishedTodayTasks = scheduleManager.activityGroup?.activityIdentifiers ?? []
-        scheduleManager._activityManager.studySetup = studySetup
-        scheduleManager._activityManager.buildSchedules()
+        let scheduleManager = TestStudyBurstScheduleManager(.day15_missing2_tasksFinished_engagementNotFinished)
         
         let expect = expectation(description: "Update finished called.")
         scheduleManager.updateFinishedBlock = {
@@ -197,16 +173,7 @@ class StudyBurstTests: XCTestCase {
     
     func testStudyBurstComplete_Day14_MissingOne() {
         
-        let scheduleManager = TestStudyBurstScheduleManager()
-        var studySetup = StudySetup()
-        studySetup.studyBurstDay = 13
-        var finishedDays: [Int] = Array(0...13)
-        finishedDays.remove(at: 2)
-        studySetup.studyBurstFinishedOnDays = finishedDays
-        studySetup.studyBurstSurveyFinishedOnDays = [.demographics : 0, .studyBurstReminder : 0]
-        studySetup.finishedTodayTasks = scheduleManager.activityGroup?.activityIdentifiers ?? []
-        scheduleManager._activityManager.studySetup = studySetup
-        scheduleManager._activityManager.buildSchedules()
+        let scheduleManager = TestStudyBurstScheduleManager(.day14_missing1_tasksFinished_engagementNotFinished)
         
         let expect = expectation(description: "Update finished called.")
         scheduleManager.updateFinishedBlock = {
@@ -232,14 +199,7 @@ class StudyBurstTests: XCTestCase {
     
     func testStudyBurstComplete_Day2_NoDemographics() {
         
-        let scheduleManager = TestStudyBurstScheduleManager()
-        var studySetup = StudySetup()
-        studySetup.studyBurstDay = 1
-        let finishedDays: [Int] = Array(0...1)
-        studySetup.studyBurstFinishedOnDays = finishedDays
-        studySetup.finishedTodayTasks = scheduleManager.activityGroup?.activityIdentifiers ?? []
-        scheduleManager._activityManager.studySetup = studySetup
-        scheduleManager._activityManager.buildSchedules()
+        let scheduleManager = TestStudyBurstScheduleManager(.day2_demographicsNotFinished)
         
         let expect = expectation(description: "Update finished called.")
         scheduleManager.updateFinishedBlock = {
@@ -255,8 +215,8 @@ class StudyBurstTests: XCTestCase {
         XCTAssertNotNil(scheduleManager.activityGroup)
         XCTAssertEqual(scheduleManager.dayCount, 2)
         XCTAssertTrue(scheduleManager.hasStudyBurst)
-        XCTAssertEqual(scheduleManager.finishedSchedules.count, 3)
-        XCTAssertTrue(scheduleManager.isCompletedForToday)
+        XCTAssertEqual(scheduleManager.finishedSchedules.count, 0)
+        XCTAssertFalse(scheduleManager.isCompletedForToday)
         XCTAssertFalse(scheduleManager.isLastDay)
         
         let completionTask = scheduleManager.completionTaskPath()
@@ -265,14 +225,7 @@ class StudyBurstTests: XCTestCase {
     
     func testStudyBurstComplete_Day15_BurstComplete_EngagementNotComplete() {
         
-        let scheduleManager = TestStudyBurstScheduleManager()
-        var studySetup = StudySetup()
-        studySetup.studyBurstDay = 14
-        let finishedDays: [Int] = Array(0...13)
-        studySetup.studyBurstFinishedOnDays = finishedDays
-        studySetup.finishedTodayTasks = scheduleManager.activityGroup?.activityIdentifiers ?? []
-        scheduleManager._activityManager.studySetup = studySetup
-        scheduleManager._activityManager.buildSchedules()
+        let scheduleManager = TestStudyBurstScheduleManager(.day15_burstCompleted_engagementNotFinished)
         
         let expect = expectation(description: "Update finished called.")
         scheduleManager.updateFinishedBlock = {
@@ -297,14 +250,7 @@ class StudyBurstTests: XCTestCase {
     
     func testStudyBurstComplete_Day15_BurstComplete_EngagementComplete() {
         
-        let scheduleManager = TestStudyBurstScheduleManager()
-        var studySetup = StudySetup()
-        studySetup.studyBurstDay = 14
-        let finishedDays: [Int] = Array(0...13)
-        studySetup.studyBurstFinishedOnDays = finishedDays
-        studySetup.finishedTodayTasks = scheduleManager.activityGroup?.activityIdentifiers ?? []
-        scheduleManager._activityManager.studySetup = studySetup
-        scheduleManager._activityManager.buildSchedules()
+        let scheduleManager = TestStudyBurstScheduleManager(.day15_burstCompleted_engagementFinished)
         
         let expect = expectation(description: "Update finished called.")
         scheduleManager.updateFinishedBlock = {
@@ -324,13 +270,19 @@ class StudyBurstTests: XCTestCase {
         XCTAssertFalse(scheduleManager.isLastDay)
         
         let completionTask = scheduleManager.completionTaskPath()
-        XCTAssertNotNil(completionTask)
+        XCTAssertNil(completionTask)
     }
 }
 
 class TestStudyBurstScheduleManager : StudyBurstScheduleManager {
     
-    var _activityManager = ActivityManager()
+    init(_ studySetup: StudySetup) {
+        super.init()
+        self._activityManager.studySetup = studySetup
+        self._activityManager.buildSchedules()
+    }
+    
+    let _activityManager = ActivityManager()
     
     override var activityManager: SBBActivityManagerProtocol {
         return _activityManager

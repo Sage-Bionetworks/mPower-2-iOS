@@ -34,9 +34,7 @@
 import Foundation
 import BridgeApp
 
-/// The study burst navigator is a work-around for including a Decodable in the `AppConfig.clientData` without
-/// having to redesign how the SBABridgeConfiguration works to include objects decoded with a factory.
-/// TODO: syoung 06/19/2018 Refactor this to use a decodable object with a type.
+/// The study burst configuration is a Decodable that can be added to the `AppConfig.clientData`.
 public struct StudyBurstConfiguration : Codable {
     
     private enum CodingKeys : String, CodingKey {
@@ -181,6 +179,8 @@ class StudyBurstScheduleManager : SBAScheduleManager {
     /// Subset of the finished schedules.
     public private(set) var finishedSchedules: [SBBScheduledActivity] = []
     
+
+    
     /// Returns an ordered set of task info objects. This will change each day, but should retain the saved
     /// order for any given day.
     public var orderedTasks: [RSDTaskInfo] {
@@ -194,13 +194,8 @@ class StudyBurstScheduleManager : SBAScheduleManager {
             return []
         }
 
-        let userDefaults = UserDefaults.standard
-        let orderKey = "StudyBurstTaskOrder"
-        let timestampKey = "StudyBurstTimestamp"
-        
-        
-        if let storedOrder = userDefaults.array(forKey: orderKey) as? [String],
-            let timestamp = userDefaults.object(forKey: timestampKey) as? Date,
+        if let storedOrder = UserDefaults.standard.array(forKey: StudyBurstScheduleManager.orderKey) as? [String],
+            let timestamp = UserDefaults.standard.object(forKey: StudyBurstScheduleManager.timestampKey) as? Date,
             Calendar.current.isDateInToday(timestamp) {
             // If the timestamp is still valid for today, then sort using the stored order.
             _orderedTasks = tasks.sorted(by: {
@@ -217,17 +212,24 @@ class StudyBurstScheduleManager : SBAScheduleManager {
             // Otherwise, shuffle the tasks and store order of the the task identifiers.
             var shuffledTasks = tasks
             shuffledTasks.shuffle()
-            _orderedTasks = shuffledTasks
-            _shuffleTimestamp = Date()
             let sortOrder = shuffledTasks.map { $0.identifier }
-            userDefaults.set(sortOrder, forKey: orderKey)
-            userDefaults.set(_shuffleTimestamp, forKey: timestampKey)
+            _shuffleTimestamp = Date()
+            _orderedTasks = shuffledTasks
+            StudyBurstScheduleManager.setOrderedTasks(sortOrder, timestamp: _shuffleTimestamp!)
         }
         
         return _orderedTasks!
     }
     private var _orderedTasks: [RSDTaskInfo]?
     private var _shuffleTimestamp: Date?
+    
+    static let orderKey = "StudyBurstTaskOrder"
+    static let timestampKey = "StudyBurstTimestamp"
+    
+    internal static func setOrderedTasks(_ sortOrder: [String], timestamp: Date = Date()) {
+        UserDefaults.standard.set(sortOrder, forKey: orderKey)
+        UserDefaults.standard.set(timestamp, forKey: timestampKey)
+    }
     
     public var isLastDay: Bool {
         guard let _ = self.dayCount, self.hasStudyBurst else { return false }
@@ -244,7 +246,7 @@ class StudyBurstScheduleManager : SBAScheduleManager {
             return ($0.firstOnly ?? false)
         }
         
-        // Only return something if the marked day is
+        // Only return something if this is during the study burst or there is a task that chases you.
         guard self.hasStudyBurst || pastTasks.count > 0
             else {
                 return nil

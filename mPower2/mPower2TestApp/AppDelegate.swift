@@ -62,7 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SBBComponentManager.registerComponent(participantManager, for: SBBParticipantManager.self)
         
         SurveyReference.all.forEach {
-            testHarness!.setJSONWithFile($0.identifier,
+            testHarness!.setJSONWithFile($0.identifier.stringValue,
                                          forEndpoint: $0.endpoint,
                                          andMethod: "GET")
         }
