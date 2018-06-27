@@ -177,49 +177,8 @@ class StudyBurstViewController: UIViewController {
         // TODO: syoung 06/20/2018 Update title/text to "congradulations" with party sprinkles.
         self.navFooterView.nextButton?.setTitle(Localization.buttonDone(), for: .normal)
         
-        // If there is a task to do today, then push it.
-        if let taskPath = studyBurstManager.completionTaskPath() {
-            let vc = RSDTaskViewController(taskPath: taskPath)
-            vc.delegate = self
-            self.navigationController!.pushViewController(vc, animated: false)
-        }
-    }
-}
-
-extension StudyBurstViewController: RSDTaskViewControllerDelegate {
-    
-    open func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
-        // dismiss the view controller
-        if let vc = taskController as? UIViewController {
-            if vc == self.navigationController?.topViewController {
-                self.navigationController?.popToRootViewController(animated: true)
-            }
-            else {
-                vc.dismiss(animated: true) {
-                    self.navigationController?.popToRootViewController(animated: false)
-                }
-            }
-        }
-        // Let the schedule manager handle the cleanup.
-        studyBurstManager.taskController(taskController, didFinishWith: reason, error: error)
-    }
-
-    func taskController(_ taskController: RSDTaskController, readyToSave taskPath: RSDTaskPath) {
-        studyBurstManager.taskController(taskController, readyToSave: taskPath)
-    }
-
-    func taskController(_ taskController: RSDTaskController, asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController? {
-        return studyBurstManager.taskController(taskController, asyncActionControllerFor:configuration)
-    }
-    
-    func taskViewController(_ taskViewController: UIViewController, viewControllerFor step: Any) -> UIViewController? {
-        guard let step = step as? RSDStep, step.identifier == RSDIdentifier.studyBurstCompletionStep
-            else {
-                return nil
-        }
-        let vc = StudyBurstCompletionViewController.instantiate()
-        vc?.step = step
-        return vc
+        // Call through to the today view to show the completion tasks.
+        (self.navigationController?.viewControllers.first as? TodayViewController)?.showStudyBurstCompletionView()
     }
 }
 

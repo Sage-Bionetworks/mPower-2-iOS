@@ -165,6 +165,10 @@ class StudyBurstScheduleManager : SBAScheduleManager {
     }
     
     public func isFinalTask(_ taskPath: RSDTaskPath) -> Bool {
+        guard let group = self.activityGroup, group.activityIdentifiers.contains(where: { $0 == taskPath.identifier })
+            else {
+                return false
+        }
         let activities = Set(finishedSchedules.compactMap { $0.activityIdentifier }).union([taskPath.identifier])
         return activities.count == totalActivitiesCount
     }
