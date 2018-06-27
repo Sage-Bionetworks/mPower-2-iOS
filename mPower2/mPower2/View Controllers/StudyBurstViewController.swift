@@ -37,6 +37,7 @@ import ResearchUI
 
 extension RSDIdentifier {
     static let studyBurstCompletionStep: RSDIdentifier = "studyBurstCompletion"
+    static let studyBurstReminderStep: RSDIdentifier = "reminder"
 }
 
 class StudyBurstViewController: UIViewController {
@@ -55,10 +56,6 @@ class StudyBurstViewController: UIViewController {
     var taskBrowserVC: StudyBurstTaskBrowserViewController?
     
     var studyBurstManager: StudyBurstScheduleManager!
-    
-    var shouldShowCompletionView: Bool {
-        return studyBurstManager?.isCompletedForToday ?? false
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -173,7 +170,7 @@ class StudyBurstViewController: UIViewController {
         }
     }
     
-    func showCompletionView() {
+    func showCompletionTask() {
         // TODO: syoung 06/20/2018 Update title/text to "congradulations" with party sprinkles.
         self.navFooterView.nextButton?.setTitle(Localization.buttonDone(), for: .normal)
         
@@ -181,7 +178,7 @@ class StudyBurstViewController: UIViewController {
         if let taskPath = studyBurstManager.completionTaskPath() {
             let vc = RSDTaskViewController(taskPath: taskPath)
             vc.delegate = self
-            self.navigationController!.pushViewController(vc, animated: false)
+            self.present(vc, animated: true, completion: nil)
         }
     }
 }
@@ -195,8 +192,8 @@ extension StudyBurstViewController: RSDTaskViewControllerDelegate {
                 self.navigationController?.popToRootViewController(animated: true)
             }
             else {
-                vc.dismiss(animated: true) {
-                    self.navigationController?.popToRootViewController(animated: false)
+                self.dismiss(animated: true) {
+                    self.navigationController?.popToRootViewController(animated: true)
                 }
             }
         }
@@ -213,13 +210,21 @@ extension StudyBurstViewController: RSDTaskViewControllerDelegate {
     }
     
     func taskViewController(_ taskViewController: UIViewController, viewControllerFor step: Any) -> UIViewController? {
-        guard let step = step as? RSDStep, step.identifier == RSDIdentifier.studyBurstCompletionStep
+        guard let step = step as? RSDStep
             else {
                 return nil
         }
-        let vc = StudyBurstCompletionViewController.instantiate()
-        vc?.step = step
-        return vc
+        
+        switch step.identifier {
+        case RSDIdentifier.studyBurstCompletionStep.rawValue:
+            let vc = StudyBurstCompletionViewController.instantiate()
+            vc?.step = step
+            return vc
+        case RSDIdentifier.studyBurstReminderStep.rawValue:
+            return ReminderTableStepViewController(step: step)
+        default:
+            return nil
+        }
     }
 }
 
@@ -233,7 +238,7 @@ extension StudyBurstViewController: TaskBrowserViewControllerDelegate {
     
     func taskBrowserDidFinish(task: RSDTaskPath, reason: RSDTaskFinishReason) {
         if reason == .completed, studyBurstManager.isFinalTask(task) {
-            showCompletionView()
+            showCompletionTask()
         }
     }
     
