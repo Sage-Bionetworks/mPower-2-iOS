@@ -13,12 +13,17 @@
                      "imageName":"remindersIcon",
                      "placementType":"iconBefore"
                  },
+                 "colorTheme": {
+                    "usesLightStyle": false
+                 },
                  "inputFields": [
                                  {
                                  "identifier": "reminderTime",
                                  "dataType": "date",
                                  "prompt": "Set reminder",
-                                 "range" : { "codingFormat" : "HH:mm" }
+                                 "range" : { "defaultDate" : "09:00",
+                                    "minuteInterval" : 15,
+                                    "codingFormat" : "HH:mm" }
                                  },
                                  {
                                  "identifier": "noReminder",
