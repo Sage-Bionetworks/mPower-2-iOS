@@ -58,6 +58,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SBBComponentManager.registerComponent(activityManager, for: SBBActivityManager.self)
         activityManager.buildSchedules()
         
+        let participantManager = ParticipantManager(studySetup: activityManager.studySetup)
+        SBBComponentManager.registerComponent(participantManager, for: SBBParticipantManager.self)
+        
         SurveyReference.all.forEach {
             testHarness!.setJSONWithFile($0.identifier,
                                          forEndpoint: $0.endpoint,
@@ -69,9 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             SBABridgeConfiguration.shared.refreshAppConfig()
         }
         
-        let participant = activityManager.studySetup.createParticipant()
-        
-        self.testHarness!.post(participant)
+        self.testHarness!.post(participantManager.participant)
         
         return true
     }

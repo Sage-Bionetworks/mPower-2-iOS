@@ -75,6 +75,7 @@
 		F84E723620E1866300E5C6C3 /* Demographics.json in Resources */ = {isa = PBXBuildFile; fileRef = F84E722020E1866300E5C6C3 /* Demographics.json */; };
 		F84E723820E1866A00E5C6C3 /* Engagement.json in Resources */ = {isa = PBXBuildFile; fileRef = F84E723720E1866A00E5C6C3 /* Engagement.json */; };
 		F84E724020E2C99900E5C6C3 /* mPower2TestAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84E723F20E2C99900E5C6C3 /* mPower2TestAppUITests.swift */; };
+		F84E72DB20E32FAC00E5C6C3 /* ParticipantManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84E72DA20E32FAC00E5C6C3 /* ParticipantManager.swift */; };
 		F854590E208F986D00D37243 /* NSLocale+UnitTest.h in Headers */ = {isa = PBXBuildFile; fileRef = F854590D208F986D00D37243 /* NSLocale+UnitTest.h */; };
 		F854598A208FA43700D37243 /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7DE2062F28F00CD351C /* ResearchUI.framework */; };
 		F854598B208FA43700D37243 /* ResearchUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7DE2062F28F00CD351C /* ResearchUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -446,6 +447,7 @@
 		F84E723D20E2C99900E5C6C3 /* mPower2TestAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = mPower2TestAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F84E723F20E2C99900E5C6C3 /* mPower2TestAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mPower2TestAppUITests.swift; sourceTree = "<group>"; };
 		F84E724120E2C99900E5C6C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F84E72DA20E32FAC00E5C6C3 /* ParticipantManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantManager.swift; sourceTree = "<group>"; };
 		F854590D208F986D00D37243 /* NSLocale+UnitTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLocale+UnitTest.h"; sourceTree = "<group>"; };
 		F8545974208FA2ED00D37243 /* mPower2TestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mPower2TestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8545982208FA2EE00D37243 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -697,6 +699,7 @@
 			children = (
 				F8078F2920ADF1DC00757F42 /* AppDelegate.swift */,
 				F8C58DFB20AFA2FD001C7B7F /* ActivityManager.swift */,
+				F84E72DA20E32FAC00E5C6C3 /* ParticipantManager.swift */,
 				F8545982208FA2EE00D37243 /* Info.plist */,
 				F81BE7A520B4AA7C00EE57D3 /* Mock Responses */,
 			);
@@ -1309,6 +1312,7 @@
 				60169BBB20AF445800D29532 /* SignInTaskViewController.swift in Sources */,
 				F88E8DFF20ADEE2600117A99 /* TodayViewController.swift in Sources */,
 				F88E8E0020ADEE2600117A99 /* TaskBrowserViewController.swift in Sources */,
+				F84E72DB20E32FAC00E5C6C3 /* ParticipantManager.swift in Sources */,
 				F85459B7208FA77900D37243 /* UIView+mPowerTheme.swift in Sources */,
 				F8C58DCB20AF5E86001C7B7F /* StudyBurstScheduleManager.swift in Sources */,
 				F8C58DB220AF4823001C7B7F /* TodayScheduleManager.swift in Sources */,
