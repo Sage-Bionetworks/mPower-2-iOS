@@ -46,7 +46,6 @@
 // Titles for the activity groups and infos.
 "Measuring" = "Measuring";
 "Tracking" = "Tracking";
-"Study Burst" = "Study Burst";
 "Triggers" = "Trigger";
 "Symptoms" = "Symptom";
 "Medication" = "Medication";
@@ -69,6 +68,7 @@
 "%@_ESTIMATED_MINUTES" = "%@ minutes";
 
 // Study Burst titles
+"STUDY_BURST_ACTION_BAR_TITLE" = "Study Burst";
 "STUDY_BURST_TITLE_DAY_1" = "This is your time!";
 "STUDY_BURST_TITLE_DAY_2" = "You are making a difference!";
 "STUDY_BURST_TITLE_DAY_3" = "Great Job!";

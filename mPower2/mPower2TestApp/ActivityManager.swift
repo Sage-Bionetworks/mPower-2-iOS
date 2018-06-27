@@ -147,6 +147,12 @@ extension StudySetup {
                    studyBurstSurveyFinishedOnDays: [:],
                    finishedTodayTasks: RSDIdentifier.measuringTasks)
     
+    static let day1_tasksFinished_surveysFinished =
+        StudySetup(studyBurstDay: 0,
+                   studyBurstFinishedOnDays: [0],
+                   studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 1),
+                   finishedTodayTasks: RSDIdentifier.measuringTasks)
+    
     static let day2_demographicsNotFinished =
         StudySetup(studyBurstDay: 1,
                    studyBurstFinishedOnDays: [0],
@@ -213,6 +219,28 @@ public struct SurveyReference : Codable {
     
     var endpoint: String {
         return "/v3/surveys/\(self.guid)/revisions/\(self.createdOn)"
+    }
+    
+    var label: String {
+        switch identifier {
+        case .demographics:
+            return "Health Survey"
+        case .engagement:
+            return "Engagement Survey"
+        default:
+            return "Additional Survey Questions"
+        }
+    }
+    
+    var detail: String? {
+        switch identifier {
+        case .demographics:
+            return "4 Minutes"
+        case .engagement:
+            return "6 Minutes"
+        default:
+            return nil
+        }
     }
 }
 
@@ -385,11 +413,13 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
         schedule.persistent = NSNumber(value: (expiresOn == nil))
         let activityType = (survey == nil) ? "task" : "survey"
 
-        let activity = SBBActivity(dictionaryRepresentation: [
+        var dictionary = [
             "activityType" : activityType,
             "guid" : guid,
-            "label" : identifier.stringValue
-            ])!
+            "label" : survey?.label ?? identifier.stringValue
+        ]
+        dictionary["labelDetail"] = survey?.detail
+        let activity = SBBActivity(dictionaryRepresentation: dictionary)!
         
         if let surveyRef = survey {
             activity.survey = SBBSurveyReference(dictionaryRepresentation: [
@@ -397,7 +427,7 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
                 "guid" : surveyRef.guid,
                 "createdOn" : surveyRef.createdOn,
                 "href" : surveyRef.href
-                ])
+            ])
         }
         else {
             activity.task = SBBTaskReference(dictionaryRepresentation: [ "identifier" : identifier.stringValue ])
