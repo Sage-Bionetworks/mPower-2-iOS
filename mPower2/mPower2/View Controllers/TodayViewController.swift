@@ -379,20 +379,33 @@ class TodayViewController: UIViewController {
             }
         }
     }
+    
+    func showStudyBurstCompletionView() {
+        // If there is a task to do today, then push it.
+        if let taskPath = studyBurstManager.completionTaskPath() {
+            let vc = RSDTaskViewController(taskPath: taskPath)
+            vc.delegate = self
+            self.navigationController!.pushViewController(vc, animated: false)
+        }
+    }
 }
 
-/// Conforming to this protocol only for presenting Survey tasks
 extension TodayViewController: RSDTaskViewControllerDelegate {
     
-    func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
+    open func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
         // dismiss the view controller
-        (taskController as? UIViewController)?.dismiss(animated: true) {
+        if let vc = taskController as? UIViewController {
+            if vc == self.navigationController?.topViewController {
+                self.navigationController?.popToRootViewController(animated: true)
+            }
+            else {
+                vc.dismiss(animated: true) {
+                    self.navigationController?.popToRootViewController(animated: false)
+                }
+            }
         }
         // Let the schedule manager handle the cleanup.
         studyBurstManager.taskController(taskController, didFinishWith: reason, error: error)
-        
-        // Update the view
-        updateActionBar()
     }
     
     func taskController(_ taskController: RSDTaskController, readyToSave taskPath: RSDTaskPath) {
@@ -402,7 +415,16 @@ extension TodayViewController: RSDTaskViewControllerDelegate {
     func taskController(_ taskController: RSDTaskController, asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController? {
         return studyBurstManager.taskController(taskController, asyncActionControllerFor:configuration)
     }
-
+    
+    func taskViewController(_ taskViewController: UIViewController, viewControllerFor step: Any) -> UIViewController? {
+        guard let step = step as? RSDStep, step.identifier == RSDIdentifier.studyBurstCompletionStep
+            else {
+                return nil
+        }
+        let vc = StudyBurstCompletionViewController.instantiate()
+        vc?.step = step
+        return vc
+    }
 }
 
 extension TodayViewController: StudyBurstProgressExpirationLabelDelegate {
@@ -519,16 +541,21 @@ extension TodayViewController: TaskBrowserViewControllerDelegate {
     func taskBrowserToggleVisibility() {
         taskBrowserVisible = !taskBrowserVisible
     }
+    
     func taskBrowserTabSelected() {
         if !taskBrowserVisible {
             taskBrowserVisible = true
         }
     }
+    
     func taskBrowserDidLayoutSubviews() {
         // nothing
     }
+    
     func taskBrowserDidFinish(task: RSDTaskPath, reason: RSDTaskFinishReason) {
-        // Nothing
+        if reason == .completed, studyBurstManager.isFinalTask(task) {
+            showStudyBurstCompletionView()
+        }
     }
 }
 

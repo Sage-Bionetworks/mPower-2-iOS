@@ -12,7 +12,7 @@
         "type": "Criteria"
     },
     "createdOn": "2018-05-09T23:01:33.996Z",
-    "modifiedOn": "2018-06-19T18:36:05.133Z",
+    "modifiedOn": "2018-06-26T22:24:04.463Z",
     "clientData": {
         "studyDuration": {
             "year": 2
@@ -42,14 +42,14 @@
     },
     "surveyReferences": [{
                          "guid": "f2637b2a-b473-4f84-b645-1431a3b4418e",
+                         "createdOn": "2018-06-26T22:08:09.868Z",
                          "identifier": "Demographics",
-                         "createdOn": "2018-06-18T21:33:20.533Z",
-                         "href": "https://ws.sagebridge.org/v3/surveys/f2637b2a-b473-4f84-b645-1431a3b4418e/revisions/2018-06-18T21:33:20.533Z",
+                         "href": "https://ws.sagebridge.org/v3/surveys/f2637b2a-b473-4f84-b645-1431a3b4418e/revisions/2018-06-26T22:08:09.868Z",
                          "type": "SurveyReference"
                          }, {
                          "guid": "56fbeb25-0a90-499a-a0d8-3c4935b60312",
-                         "identifier": "Engagement",
                          "createdOn": "2018-06-18T21:46:07.803Z",
+                         "identifier": "Engagement",
                          "href": "https://ws.sagebridge.org/v3/surveys/56fbeb25-0a90-499a-a0d8-3c4935b60312/revisions/2018-06-18T21:46:07.803Z",
                          "type": "SurveyReference"
                          }],
@@ -78,6 +78,6 @@
                          "revision": 1,
                          "type": "SchemaReference"
                          }],
-    "version": 29,
+    "version": 31,
     "type": "AppConfig"
 }
