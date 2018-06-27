@@ -97,16 +97,35 @@ public struct StudySetup {
     }
 }
 
-public struct Survey {
+public struct SurveyReference : Codable {
+    
     let guid: String
     let identifier: String
     let createdOn: String
     
-    static let demographics = Survey(guid: "f2637b2a-b473-4f84-b645-1431a3b4418e", identifier: "Demographics", createdOn: "2018-06-18T21:33:20.533Z")
-    static let engagement = Survey(guid: "56fbeb25-0a90-499a-a0d8-3c4935b60312", identifier: "Engagement", createdOn: "2018-06-18T21:46:07.803Z")
+    static var all: [SurveyReference] = {
+        let surveyIdentifiers = ["Demographics", "Engagement"]
+        let surveys: [SurveyReference] = surveyIdentifiers.compactMap {
+            do {
+                let transformer = RSDResourceTransformerObject(resourceName: $0)
+                let data = try transformer.resourceData().data
+                let decoder = RSDFactory.shared.createJSONDecoder()
+                return try decoder.decode(SurveyReference.self, from: data)
+            }
+            catch let err {
+                debugPrint("WARNING: Failed to decode \($0): \(err)")
+                return nil
+            }
+        }
+        return surveys
+    }()
     
     var href: String {
-        return "https://ws.sagebridge.org/v3/surveys/\(self.guid)/revisions/\(self.createdOn)"
+        return "https://ws.sagebridge.org\(self.endpoint)"
+    }
+    
+    var endpoint: String {
+        return "/v3/surveys/\(self.guid)/revisions/\(self.createdOn)"
     }
 }
 
@@ -242,26 +261,20 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
         }
         
         let surveyMap = studySetup.mapStudyBurstSurveyFinishedOn()
-        let demographics = createSchedule(with: .demographics,
-                                          scheduledOn: studySetup.createdOn,
-                                          expiresOn: nil,
-                                          finishedOn: surveyMap[.demographics],
-                                          clientData: nil,
-                                          schedulePlanGuid: nil,
-                                          survey: .demographics)
-        demographics.persistent = NSNumber(value: false)
-        self.schedules.append(demographics)
         
-        let engagement = createSchedule(with: .engagement,
-                                      scheduledOn: studySetup.createdOn,
-                                      expiresOn: nil,
-                                      finishedOn: surveyMap[.engagement],
-                                      clientData: nil,
-                                      schedulePlanGuid: nil,
-                                      survey: .engagement)
-        engagement.persistent = NSNumber(value: false)
-        self.schedules.append(engagement)
+        // Add all the surveys that are suppose to be from the server.
+        SurveyReference.all.forEach {
+            let survey = createSchedule(with: RSDIdentifier(rawValue: $0.identifier),
+                                              scheduledOn: studySetup.createdOn,
+                                              expiresOn: nil,
+                                              finishedOn: surveyMap[.demographics],
+                                              clientData: nil,
+                                              schedulePlanGuid: nil,
+                                              survey: $0)
+            self.schedules.append(survey)
+        }
         
+        // Add the reminders task.
         let studyBurstReminder = createSchedule(with: .studyBurstReminder,
                                         scheduledOn: studySetup.createdOn,
                                         expiresOn: nil,
@@ -272,7 +285,7 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
         self.schedules.append(studyBurstReminder)
     }
     
-    public func createSchedule(with identifier: RSDIdentifier, scheduledOn: Date, expiresOn: Date?, finishedOn: Date?, clientData: SBBJSONValue?, schedulePlanGuid: String?, survey: Survey? = nil) -> SBBScheduledActivity {
+    public func createSchedule(with identifier: RSDIdentifier, scheduledOn: Date, expiresOn: Date?, finishedOn: Date?, clientData: SBBJSONValue?, schedulePlanGuid: String?, survey: SurveyReference? = nil) -> SBBScheduledActivity {
         
         let guid = activityGuidMap[identifier] ?? UUID().uuidString
         activityGuidMap[identifier] = guid

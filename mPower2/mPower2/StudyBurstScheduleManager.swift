@@ -70,7 +70,7 @@ public struct StudyBurstConfiguration : Codable {
         self.expiresLimit = 60 * 60
         self.taskGroupIdentifier = .measuringTaskGroup
         self.completionTasks = [
-            CompletionTask(day: 1, firstOnly: true, activityIdentifiers: [.demographics, .studyBurstReminder]),
+            CompletionTask(day: 1, firstOnly: true, activityIdentifiers: [.studyBurstReminder, .demographics]),
             CompletionTask(day: 14, firstOnly: true, activityIdentifiers: [.engagement])
         ]
         self.engagementDataGroups = ["engagement_A", "engagement_B"]
