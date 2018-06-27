@@ -58,12 +58,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SBBComponentManager.registerComponent(activityManager, for: SBBActivityManager.self)
         activityManager.buildSchedules()
         
-        testHarness!.setJSONWithFile("Demographics",
-                                     forEndpoint: "/v3/surveys/f2637b2a-b473-4f84-b645-1431a3b4418e/revisions/2018-06-18T21:33:20.533Z",
-                                     andMethod: "GET")
-        testHarness!.setJSONWithFile("Engagement",
-                                     forEndpoint: "/v3/surveys/56fbeb25-0a90-499a-a0d8-3c4935b60312/revisions/2018-06-18T21:46:07.803Z",
-                                     andMethod: "GET")
+        SurveyReference.all.forEach {
+            testHarness!.setJSONWithFile($0.identifier,
+                                         forEndpoint: $0.endpoint,
+                                         andMethod: "GET")
+        }
         
         SBABridgeConfiguration.shared = MP2BridgeConfiguration()
         SBABridgeConfiguration.shared.setupBridge(with: MP2Factory()) {
