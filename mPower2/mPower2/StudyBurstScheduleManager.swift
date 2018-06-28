@@ -211,7 +211,8 @@ class StudyBurstScheduleManager : SBAScheduleManager {
     /// The action bar item to display.
     public private(set) var actionBarItem: TodayActionBarItem?
     
-    /// Does the study burst have an active study burst for today?
+    /// Is there something to do **today** for this study burst? This should return `true` if and only if
+    /// this is a "Study Burst" day (`hasStudyBurst == true`) or there is a past schedule that is unfinished.
     public var hasActiveStudyBurst : Bool {
         return self.hasStudyBurst || self.pastSurveySchedules.count > 0
     }
@@ -266,6 +267,7 @@ class StudyBurstScheduleManager : SBAScheduleManager {
         UserDefaults.standard.set(timestamp, forKey: timestampKey)
     }
     
+    /// Is this the last day of the study burst?
     public var isLastDay: Bool {
         guard let _ = self.dayCount, self.hasStudyBurst else { return false }
         let days = (self.pastDaysCount - self.missedDaysCount) + 1
