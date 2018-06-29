@@ -72,8 +72,7 @@ class ReminderTableStepViewController: RSDTableStepViewController {
         // So we set the title of that table item
         (tableData?.sections.first)?.title = "Set Reminder"
         
-        // We don't want a section label above the checkbox, so we nil the title of that table item
-        (tableData?.sections.last)?.title = nil
+        // TODO: jbruhin 6-28-18 - refactor RSDFormStepDataSourceObject to support this.
     }
 }
 
@@ -121,4 +120,13 @@ class ReminderTextFieldCell: RSDStepTextFieldCell {
         ruleView.rsd_alignBelow(view: textField, padding: 25.0)
         
     }
+}
+
+class ReminderStep : RSDFormUIStepObject, RSDStepViewControllerVendor {
+    #if !os(watchOS)
+    /// Override to return a reminder step view controller.
+    func instantiateViewController(with taskPath: RSDTaskPath) -> (UIViewController & RSDStepController)? {
+        return ReminderTableStepViewController(step: self)
+    }
+    #endif
 }

@@ -5,7 +5,7 @@
     "steps":[
              {
                 "identifier":"reminder",
-                "type":"form",
+                "type":"reminder",
                 "title":"Let’s set a Reminder for your Study Bursts",
                 "detail":"To make it easier for you to remember to do the study burst, you can do the activities during something you normally do every day, such as taking your medications.",
                  "image":{

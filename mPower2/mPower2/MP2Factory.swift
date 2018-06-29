@@ -34,7 +34,20 @@
 import Foundation
 import BridgeApp
 
-/// Stub out the factory.
+extension RSDStepType {
+    /// Defaults to a `ReminderStep`.
+    public static let reminder: RSDStepType = "reminder"
+}
+
 class MP2Factory : SBAFactory {
     
+    override func decodeStep(from decoder:Decoder, with type:RSDStepType) throws -> RSDStep? {
+        
+        switch (type) {
+        case .reminder:
+            return try ReminderStep(from: decoder)
+        default:
+            return try super.decodeStep(from: decoder, with: type)
+        }
+    }
 }
