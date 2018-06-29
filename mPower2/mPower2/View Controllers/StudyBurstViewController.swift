@@ -37,7 +37,12 @@ import ResearchUI
 
 extension RSDIdentifier {
     static let studyBurstCompletionStep: RSDIdentifier = "studyBurstCompletion"
-    static let studyBurstReminderStep: RSDIdentifier = "reminder"
+    // TODO: 6-28-18 jbruhin - Refactor to facilitate using this step from the profile without having to
+    // also implement the identifier pattern used to special case the intro step on the survey.
+}
+
+protocol StudyBurstViewControllerDelegate {
+    func studyBurstDidFinish(task: RSDTaskPath, reason: RSDTaskFinishReason)
 }
 
 class StudyBurstViewController: UIViewController {
@@ -53,8 +58,9 @@ class StudyBurstViewController: UIViewController {
     @IBOutlet weak var progressLabel: StudyBurstProgressExpirationLabel!
     @IBOutlet weak var progressContainerViewHeightConstraint: NSLayoutConstraint!
     
+    public var delegate: StudyBurstViewControllerDelegate?
+
     var taskBrowserVC: StudyBurstTaskBrowserViewController?
-    
     var studyBurstManager: StudyBurstScheduleManager!
     
     override func viewDidLoad() {
@@ -170,63 +176,56 @@ class StudyBurstViewController: UIViewController {
         }
     }
     
-    func showCompletionTask() {
-        // TODO: syoung 06/20/2018 Update title/text to "congradulations" with party sprinkles.
-        self.navFooterView.nextButton?.setTitle(Localization.buttonDone(), for: .normal)
-        
-        // If there is a task to do today, then push it.
-        if let taskPath = studyBurstManager.completionTaskPath() {
-            let vc = RSDTaskViewController(taskPath: taskPath)
-            vc.delegate = self
-            self.present(vc, animated: true, completion: nil)
-        }
-    }
+//    func showCompletionTask() {
+//        // TODO: syoung 06/20/2018 Update title/text to "congradulations" with party sprinkles.
+//        self.navFooterView.nextButton?.setTitle(Localization.buttonDone(), for: .normal)
+//
+//        // If there is a task to do today, then push it.
+//        if let taskPath = studyBurstManager.completionTaskPath() {
+//            let vc = RSDTaskViewController(taskPath: taskPath)
+//            vc.delegate = self
+//            self.navigationController!.pushViewController(vc, animated: false)
+//        }
+//    }
 }
 
-extension StudyBurstViewController: RSDTaskViewControllerDelegate {
-    
-    open func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
-        // dismiss the view controller
-        if let vc = taskController as? UIViewController {
-            if vc == self.navigationController?.topViewController {
-                self.navigationController?.popToRootViewController(animated: true)
-            }
-            else {
-                self.dismiss(animated: true) {
-                    self.navigationController?.popToRootViewController(animated: true)
-                }
-            }
-        }
-        // Let the schedule manager handle the cleanup.
-        studyBurstManager.taskController(taskController, didFinishWith: reason, error: error)
-    }
-
-    func taskController(_ taskController: RSDTaskController, readyToSave taskPath: RSDTaskPath) {
-        studyBurstManager.taskController(taskController, readyToSave: taskPath)
-    }
-
-    func taskController(_ taskController: RSDTaskController, asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController? {
-        return studyBurstManager.taskController(taskController, asyncActionControllerFor:configuration)
-    }
-    
-    func taskViewController(_ taskViewController: UIViewController, viewControllerFor step: Any) -> UIViewController? {
-        guard let step = step as? RSDStep
-            else {
-                return nil
-        }
-        
-        switch step.identifier {
-        case RSDIdentifier.studyBurstCompletionStep.rawValue:
-            let vc = StudyBurstCompletionViewController.instantiate()
-            vc?.step = step
-            return vc
-        case RSDIdentifier.studyBurstReminderStep.rawValue:
-            return ReminderTableStepViewController(step: step)
-        default:
-            return nil
-        }
-    }
-}
+//extension StudyBurstViewController: RSDTaskViewControllerDelegate {
+//
+//    open func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
+//        // dismiss the view controller
+//        if let vc = taskController as? UIViewController {
+//            if vc == self.navigationController?.topViewController {
+//                self.navigationController?.popToRootViewController(animated: true)
+//            }
+//            else {
+//                vc.dismiss(animated: true) {
+//                    self.navigationController?.popToRootViewController(animated: false)
+//                }
+//            }
+//        }
+//        // Let the schedule manager handle the cleanup.
+//        studyBurstManager.taskController(taskController, didFinishWith: reason, error: error)
+//    }
+//
+//    func taskController(_ taskController: RSDTaskController, readyToSave taskPath: RSDTaskPath) {
+//        studyBurstManager.taskController(taskController, readyToSave: taskPath)
+//    }
+//
+//    func taskController(_ taskController: RSDTaskController, asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController? {
+//        return studyBurstManager.taskController(taskController, asyncActionControllerFor:configuration)
+//    }
+//
+//    func taskViewController(_ taskViewController: UIViewController, viewControllerFor step: Any) -> UIViewController? {
+//        guard let step = step as? RSDStep, step.identifier == RSDIdentifier.studyBurstCompletionStep
+//            else {
+//                return nil
+//        }
+//
+//        let vc = StudyBurstCompletionViewController.instantiate()
+//        vc?.step = step
+//        return vc
+//    }
+//}
 
 extension StudyBurstViewController: StudyBurstProgressExpirationLabelDelegate {
     func studyBurstExpiresOn() -> Date? {
@@ -236,13 +235,10 @@ extension StudyBurstViewController: StudyBurstProgressExpirationLabelDelegate {
 
 extension StudyBurstViewController: TaskBrowserViewControllerDelegate {
     
-    func taskBrowserDidFinish(task: RSDTaskPath, reason: RSDTaskFinishReason) {
-        if reason == .completed, studyBurstManager.isFinalTask(task) {
-            showCompletionTask()
-        }
-    }
-    
     // MARK: TaskBrowserViewControllerDelegate
+    func taskBrowserDidFinish(task: RSDTaskPath, reason: RSDTaskFinishReason) {
+        delegate?.studyBurstDidFinish(task: task, reason: reason)
+    }
     func taskBrowserToggleVisibility() {
         // Nothing
     }
