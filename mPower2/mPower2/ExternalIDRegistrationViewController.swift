@@ -35,6 +35,7 @@ import UIKit
 import ResearchUI
 import Research
 import BridgeSDK
+import BridgeApp
 
 class ExternalIDRegistrationViewController: RSDTableStepViewController {
 
@@ -65,11 +66,15 @@ class ExternalIDRegistrationViewController: RSDTableStepViewController {
         
         // TODO emm 2018-05-03 if we move this code to BridgeApp, we should prolly use an RSDCohortRule
         // or some such instead of hardcoding these dataGroup names.
+        var dataGroups: Set<String> = ["test_user"]
         if credentials.preconsent {
-            signUp.dataGroups = ["test_user", "test_no_consent"]
-        } else {
-            signUp.dataGroups = ["test_user"]
+            dataGroups.insert("test_no_consent")
         }
+        /// Randomly assign one of the engagement data groups.
+        if let engagementGroup = (SBABridgeConfiguration.shared as? MP2BridgeConfiguration)?.studyBurst.engagementDataGroups?.randomFirst() {
+            dataGroups.insert(engagementGroup)
+        }
+        signUp.dataGroups = dataGroups
         
         BridgeSDK.authManager.signUpStudyParticipant(signUp, completion: { (task, result, error) in
             guard error == nil else {

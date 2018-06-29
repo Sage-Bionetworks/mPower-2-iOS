@@ -616,4 +616,10 @@ extension Array {
             last -= 1
         }
     }
+    
+    public func randomFirst() -> Element? {
+        guard self.count > 1 else { return self.first }
+        let rand = Int(arc4random_uniform(UInt32(self.count)))
+        return self[rand]
+    }
 }
