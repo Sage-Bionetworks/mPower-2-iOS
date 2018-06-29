@@ -374,13 +374,14 @@ class TodayViewController: UIViewController {
             // Instantiate a new Study Burst VC and present it
             if let vc = StudyBurstViewController.instantiate(),
                 let nc = self.navigationController {
+                vc.delegate = self
                 vc.studyBurstManager = studyBurstManager
                 nc.show(vc, sender: self)
             }
         }
     }
     
-    func showStudyBurstCompletionView() {
+    func showStudyBurstCompletionTask() {
         // If there is a task to do today, then push it.
         if let taskPath = studyBurstManager.completionTaskPath() {
             let vc = RSDTaskViewController(taskPath: taskPath)
@@ -430,6 +431,14 @@ extension TodayViewController: RSDTaskViewControllerDelegate {
 extension TodayViewController: StudyBurstProgressExpirationLabelDelegate {
     func studyBurstExpiresOn() -> Date? {
         return self.studyBurstManager.expiresOn
+    }
+}
+
+extension TodayViewController: StudyBurstViewControllerDelegate {
+    func studyBurstDidFinish(task: RSDTaskPath, reason: RSDTaskFinishReason) {
+        if reason == .completed, studyBurstManager.isFinalTask(task) {
+            showStudyBurstCompletionTask()
+        }
     }
 }
 
@@ -554,7 +563,7 @@ extension TodayViewController: TaskBrowserViewControllerDelegate {
     
     func taskBrowserDidFinish(task: RSDTaskPath, reason: RSDTaskFinishReason) {
         if reason == .completed, studyBurstManager.isFinalTask(task) {
-            showStudyBurstCompletionView()
+            showStudyBurstCompletionTask()
         }
     }
 }
