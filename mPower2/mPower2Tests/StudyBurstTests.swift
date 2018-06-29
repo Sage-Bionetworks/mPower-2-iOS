@@ -189,10 +189,14 @@ class StudyBurstTests: XCTestCase {
         XCTAssertEqual(scheduleManager.pastSurveySchedules.count, 2)
         XCTAssertNil(scheduleManager.todayCompletionTask)
 
-        let demographics = scheduleManager.scheduledActivities.filter {
+        if let demographics = scheduleManager.scheduledActivities.first(where: {
             $0.activityIdentifier == RSDIdentifier.demographics.stringValue
+        }) {
+            XCTAssertFalse(demographics.isCompleted)
         }
-        XCTAssertEqual(demographics.count, 1)
+        else {
+            XCTFail("Failed to find the survey.")
+        }
         
         let studyBurstReminder = scheduleManager.scheduledActivities.filter {
             $0.activityIdentifier == RSDIdentifier.studyBurstReminder.stringValue

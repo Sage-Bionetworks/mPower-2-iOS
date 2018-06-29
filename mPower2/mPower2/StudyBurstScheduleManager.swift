@@ -570,10 +570,11 @@ class StudyBurstScheduleManager : SBAScheduleManager {
         
         // Set up the action bar item. TODO: map the icon if there is one.
         let foundSchedule: SBBScheduledActivity? = {
-            if let schedule = self.pastSurveySchedules.first {
-                return schedule
-            }
-            guard let completeTask = self.todayCompletionTask, (completeTask.firstOnly ?? false),
+            let pastTask = pastTasks.first(where: { (task) -> Bool in
+                let predicate = task.unfinishedPredicate()
+                return self.scheduledActivities.contains(where: { predicate.evaluate(with: $0) })
+            })
+            guard let completeTask = pastTask ?? self.todayCompletionTask, (completeTask.firstOnly ?? false),
                 let scheduleIdentifer = self.studyBurst.scheduleIdentifier(for: completeTask)
                 else {
                     return nil
