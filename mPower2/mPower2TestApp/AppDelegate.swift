@@ -55,6 +55,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         testHarness = SBBBridgeTestHarness(studyIdentifier: "sage-mpower-2-test")
         
         let activityManager = ActivityManager()
+        
+        // NOTE: syoung 06/28/2018 You can set different study setup objects to test different states.
+        // activityManager.studySetup = .day1_tasksFinished_demographicsNotFinished
+        
         SBBComponentManager.registerComponent(activityManager, for: SBBActivityManager.self)
         activityManager.buildSchedules()
         
@@ -62,7 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SBBComponentManager.registerComponent(participantManager, for: SBBParticipantManager.self)
         
         SurveyReference.all.forEach {
-            testHarness!.setJSONWithFile($0.identifier,
+            testHarness!.setJSONWithFile($0.identifier.stringValue,
                                          forEndpoint: $0.endpoint,
                                          andMethod: "GET")
         }

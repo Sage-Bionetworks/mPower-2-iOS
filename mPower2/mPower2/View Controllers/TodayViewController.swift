@@ -69,16 +69,9 @@ class TodayViewController: UIViewController {
         }
     }
     
-    var hasActiveSurvey : Bool {
-        return surveyManager.hasSurvey && studyBurstManager.isCompletedForToday
-    }
-    
-    var hasActiveStudyBurst : Bool {
-        return self.studyBurstManager.hasStudyBurst && !self.studyBurstManager.isCompletedForToday
-    }
-    
     var shouldShowActionBar : Bool {
-        return hasActiveSurvey || hasActiveStudyBurst
+        return surveyManager.hasSurvey ||
+            (studyBurstManager.hasActiveStudyBurst && (!studyBurstManager.isCompletedForToday || studyBurstManager.actionBarItem != nil))
     }
     
     lazy var firstName : String? = {
@@ -246,18 +239,22 @@ class TodayViewController: UIViewController {
                 NSLayoutConstraint.deactivate([heightConstraint])
             }
             
-            if hasActiveSurvey, let schedule = surveyManager.scheduledActivities.first {
+            if let schedule = surveyManager.scheduledActivities.first {
                 actionBarTitleLabel.text = schedule.activity.title
                 actionBarDetailsLabel.text = schedule.activity.detail
             }
-            else {
-                actionBarTitleLabel.text = studyBurstManager.activityGroup!.title
+            else if !studyBurstManager.isCompletedForToday {
+                actionBarTitleLabel.text = Localization.localizedString("STUDY_BURST_ACTION_BAR_TITLE")
                 if let expiresOn = studyBurstManager.expiresOn {
                     actionBarDetailsLabel.updateStudyBurstExpirationTime(expiresOn)
                 }
                 else {
                     actionBarDetailsLabel.text = Localization.localizedStringWithFormatKey("ACTIVITIES_TO_DO_%@", NSNumber(value: studyBurstManager.totalActivitiesCount))
                 }
+            }
+            else if let actionBarItem = studyBurstManager.actionBarItem {
+                actionBarTitleLabel.text = actionBarItem.title
+                actionBarDetailsLabel.text = actionBarItem.detail
             }
         }
         else if (previousConstraint == nil) {
@@ -267,16 +264,19 @@ class TodayViewController: UIViewController {
     
     func updateProgressCircle() {
         
-        if hasActiveSurvey {
+        if self.surveyManager.hasSurvey {
             progressCircleView.isHidden = false
             progressCircleView.progress = 0.5
             // TODO: syoung 05/21/2018 Get the health survey icon from Stockard
             let healthIcon = UIImage(named: "activitiesTaskIcon")
             progressCircleView.displayIcon(image: healthIcon)
         }
-        else if hasActiveStudyBurst {
+        else if self.studyBurstManager.hasActiveStudyBurst {
             progressCircleView.isHidden = false
-            if let day = studyBurstManager.dayCount {
+            if let actionBarItem = studyBurstManager.actionBarItem, let icon = actionBarItem.icon {
+                progressCircleView.displayIcon(image: icon)
+            }
+            else if let day = studyBurstManager.dayCount {
                 progressCircleView.displayDay(count: day)
             }
             progressCircleView.progress = studyBurstManager.progress
@@ -359,34 +359,33 @@ class TodayViewController: UIViewController {
     // MARK: Actions
     @IBAction func actionBarTapped(_ sender: Any) {
 
-        if hasActiveSurvey {
-            // Get our task info for the first survey, create a task and present it
-            if let group = surveyManager.activityGroup,
-                let taskInfo = group.tasks.first {
-                
-                let (taskPath, _) = surveyManager.instantiateTaskPath(for: taskInfo)
-                let vc = RSDTaskViewController(taskPath: taskPath)
-                vc.delegate = self
-                self.present(vc, animated: true, completion: nil)
-            }
+        if let schedule = surveyManager.scheduledActivities.first {
+            let taskPath = surveyManager.instantiateTaskPath(for: schedule)
+            let vc = RSDTaskViewController(taskPath: taskPath)
+            vc.delegate = self
+            self.present(vc, animated: true, completion: nil)
         }
-        else if hasActiveStudyBurst {
+        else if studyBurstManager.pastSurveySchedules.count > 0 || studyBurstManager.isCompletedForToday {
+            self.showStudyBurstCompletionView(true)
+        }
+        else if let vc = StudyBurstViewController.instantiate(),
+            let nc = self.navigationController {
             // Instantiate a new Study Burst VC and present it
-            if let vc = StudyBurstViewController.instantiate(),
-                let nc = self.navigationController {
-                vc.studyBurstManager = studyBurstManager
-                nc.show(vc, sender: self)
-            }
+            vc.studyBurstManager = studyBurstManager
+            nc.show(vc, sender: self)
         }
     }
     
-    func showStudyBurstCompletionView() {
+    func showStudyBurstCompletionView(_ animated: Bool = false) {
         // If there is a task to do today, then push it.
-        if let taskPath = studyBurstManager.completionTaskPath() {
-            let vc = RSDTaskViewController(taskPath: taskPath)
-            vc.delegate = self
-            self.navigationController!.pushViewController(vc, animated: false)
+        guard let taskPath = studyBurstManager.completionTaskPath(),
+            let nc = self.navigationController
+            else {
+                return
         }
+        let vc = RSDTaskViewController(taskPath: taskPath)
+        vc.delegate = self
+        nc.pushViewController(vc, animated: animated)
     }
 }
 

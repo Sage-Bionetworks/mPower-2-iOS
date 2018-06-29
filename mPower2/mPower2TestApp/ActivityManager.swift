@@ -37,26 +37,48 @@ import BridgeApp
 import Research
 
 public struct StudySetup {
-    init() { }
+    
+    init(studyBurstDay: UInt = 3,
+         studyBurstFinishedOnDays: [Int] = [0, 2],
+         studyBurstSurveyFinishedOnDays: [RSDIdentifier : Int] = [:],
+         finishedTodayTasks: [RSDIdentifier] = [.tappingTask, .walkAndBalanceTask],
+         timeUntilExpires: TimeInterval = 15 * 60,
+         dataGroups: [String] = []) {
+        
+        self.studyBurstDay = studyBurstDay
+        self.studyBurstFinishedOnDays = studyBurstFinishedOnDays.filter { $0 < studyBurstDay }
+        self.studyBurstSurveyFinishedOnDays = studyBurstSurveyFinishedOnDays.filter { $0.value <= studyBurstDay }
+        self.finishedTodayTasks = finishedTodayTasks
+        self.timeUntilExpires = timeUntilExpires
+        self.dataGroups = dataGroups
+    }
     
     /// First name of the participant.
     var firstName = "Rumplestiltskin"
+
+    /// Study Burst "day" where Day 0 is the day the participant was "created".
+    let studyBurstDay: UInt
+    
+    /// The days in the past when the particpant finished all the tasks.
+    var studyBurstFinishedOnDays: [Int]
+    
+    /// The days when the study burst was finished.
+    var studyBurstSurveyFinishedOnDays: [RSDIdentifier : Int]
+    
+    /// A list of the tasks to mark as finished today for a study burst. If included, this will be used to
+    /// define the order of the tasks for display in the study burst view.
+    var finishedTodayTasks: [RSDIdentifier]
+    
+    /// The time to use as the time until today's finished tasks will expire. Default = 15 min.
+    var timeUntilExpires: TimeInterval
     
     /// The data groups to set for this participant.
-    var dataGroups: [String] = []
+    var dataGroups: [String]
     
     /// The date when the participant started the study. Hardcoded to 6:15AM local time.
     var createdOn: Date {
         return Date().startOfDay().addingNumberOfDays(-1 * Int(studyBurstDay)).addingTimeInterval(6.25 * 60 * 60)
     }
-
-    /// Study Burst "day" where Day 0 is the day the participant was "created".
-    var studyBurstDay: UInt = 3
-    
-    /// The days in the past when the particpant finished all the tasks.
-    var studyBurstFinishedOnDays: [Int] = [0, 2]
-    
-    var studyBurstSurveyFinishedOnDays: [RSDIdentifier : Int] = [:]
     
     /// Generated days of the study burst to mark as finished. This only applies to days that are past.
     func mapStudyBurstFinishedOn() -> [Int : Date] {
@@ -80,13 +102,6 @@ public struct StudySetup {
         }
     }
     
-    /// A list of the tasks to mark as finished today for a study burst. If included, this will be used to
-    /// define the order of the tasks for display in the study burst view.
-    var finishedTodayTasks: [RSDIdentifier] = [.tappingTask, .walkAndBalanceTask]
-    
-    /// The time to use as the time until today's finished tasks will expire. Default = 15 min.
-    var timeUntilExpires: TimeInterval = 15 * 60
-    
     func createParticipant() -> SBBStudyParticipant {
         return SBBStudyParticipant(dictionaryRepresentation: [
             "createdOn" : (createdOn as NSDate).iso8601String(),
@@ -97,10 +112,100 @@ public struct StudySetup {
     }
 }
 
+extension StudySetup {
+    
+    static func finishedOnDays(_ studyBurstDay: Int, _ missingCount: Int) -> [Int] {
+        if studyBurstDay == missingCount {
+            return []
+        }
+        var finishedDays: [Int] = Array(0..<studyBurstDay)
+        if missingCount > 0 {
+            let offset = finishedDays.count / (missingCount + 1)
+            for ii in 0..<missingCount {
+                finishedDays.remove(at: offset * (ii + 1))
+            }
+        }
+        return finishedDays
+    }
+    
+    static func previousFinishedSurveys(for studyBurstDay: Int) -> [RSDIdentifier : Int] {
+        var surveyMap = [RSDIdentifier : Int]()
+        if studyBurstDay > 0 {
+            surveyMap[.demographics] = 0
+            surveyMap[.studyBurstReminder] = 0
+            surveyMap[.medicationTask] = 0
+        }
+        if studyBurstDay > 13 {
+            surveyMap[.engagement] = 13
+        }
+        return surveyMap
+    }
+    
+    static let day1_tasksFinished_demographicsNotFinished =
+        StudySetup(studyBurstDay: 0,
+                   studyBurstFinishedOnDays: [],
+                   studyBurstSurveyFinishedOnDays: [:],
+                   finishedTodayTasks: RSDIdentifier.measuringTasks)
+    
+    static let day1_tasksFinished_surveysFinished =
+        StudySetup(studyBurstDay: 0,
+                   studyBurstFinishedOnDays: [0],
+                   studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 1),
+                   finishedTodayTasks: RSDIdentifier.measuringTasks)
+    
+    static let day2_demographicsNotFinished =
+        StudySetup(studyBurstDay: 1,
+                   studyBurstFinishedOnDays: [0],
+                   studyBurstSurveyFinishedOnDays: [:],
+                   finishedTodayTasks: [])
+    
+    static let day14_missing1_tasksFinished_engagementNotFinished =
+        StudySetup(studyBurstDay: 13,
+                   studyBurstFinishedOnDays: finishedOnDays(13, 1),
+                   studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 12),
+                   finishedTodayTasks: RSDIdentifier.measuringTasks)
+    
+    static let day14_missing6_tasksFinished_engagementNotFinished =
+        StudySetup(studyBurstDay: 13,
+                   studyBurstFinishedOnDays: finishedOnDays(13, 6),
+                   studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 12),
+                   finishedTodayTasks: RSDIdentifier.measuringTasks)
+    
+    static let day14_tasksFinished_engagementNotFinished =
+        StudySetup(studyBurstDay: 13,
+                   studyBurstFinishedOnDays: finishedOnDays(13, 0),
+                   studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 12),
+                   finishedTodayTasks: RSDIdentifier.measuringTasks)
+    
+    static let day15_missing1_engagementNotFinished =
+        StudySetup(studyBurstDay: 14,
+                   studyBurstFinishedOnDays: finishedOnDays(14, 1),
+                   studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 12),
+                   finishedTodayTasks: [])
+    
+    static let day15_burstCompleted_engagementNotFinished =
+        StudySetup(studyBurstDay: 14,
+                   studyBurstFinishedOnDays: finishedOnDays(14, 0),
+                   studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 12),
+                   finishedTodayTasks: [])
+    
+    static let day15_burstCompleted_engagementFinished =
+        StudySetup(studyBurstDay: 14,
+                   studyBurstFinishedOnDays: finishedOnDays(14, 0),
+                   studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 14),
+                   finishedTodayTasks: [])
+    
+    static let day21_missing6_engagementNotFinished =
+        StudySetup(studyBurstDay: 20,
+                   studyBurstFinishedOnDays: finishedOnDays(18, 6),
+                   studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 12),
+                   finishedTodayTasks: [])
+}
+
 public struct SurveyReference : Codable {
     
     let guid: String
-    let identifier: String
+    let identifier: RSDIdentifier
     let createdOn: String
     
     static var all: [SurveyReference] = {
@@ -126,6 +231,28 @@ public struct SurveyReference : Codable {
     
     var endpoint: String {
         return "/v3/surveys/\(self.guid)/revisions/\(self.createdOn)"
+    }
+    
+    var label: String {
+        switch identifier {
+        case .demographics:
+            return "Health Survey"
+        case .engagement:
+            return "Engagement Survey"
+        default:
+            return "Additional Survey Questions"
+        }
+    }
+    
+    var detail: String? {
+        switch identifier {
+        case .demographics:
+            return "4 Minutes"
+        case .engagement:
+            return "6 Minutes"
+        default:
+            return nil
+        }
     }
 }
 
@@ -198,21 +325,17 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
                                                    schedulePlanGuid: "3d898a6f-1ef2-4ece-9e9f-025d94bcd130",
                                                    activityGuidMap: nil)
     
-        // measuring tasks are persistent.
+        // set default for the sort order
         let finishedTodayTasks = studySetup.finishedTodayTasks
-        var orderedTasks = finishedTodayTasks
-        activityGroup.activityIdentifiers.forEach {
-            if !orderedTasks.contains($0) {
-                orderedTasks.append($0)
-            }
-        }
-        
-        UserDefaults.standard.set(orderedTasks.map { $0.stringValue }, forKey: "StudyBurstTaskOrder")
-        UserDefaults.standard.set(Date(), forKey: "StudyBurstTimestamp")
+        var sortOrder = finishedTodayTasks
+        var unfinished = activityGroup.activityIdentifiers.filter { !finishedTodayTasks.contains($0) }
+        unfinished.shuffle()
+        sortOrder.append(contentsOf: unfinished)
+        StudyBurstScheduleManager.setOrderedTasks(sortOrder.map { $0.stringValue })
         
         let studyBurstFinishedOn = studySetup.mapStudyBurstFinishedOn()
         let studyBurstDates = studyBurstFinishedOn.enumerated().map { $0.element.value }.sorted()
-        orderedTasks.enumerated().forEach{ (offset, identifier) in
+        sortOrder.enumerated().forEach{ (offset, identifier) in
             
             let finishedTime: TimeInterval = studySetup.timeUntilExpires - 3600 + TimeInterval(offset) * 4 * 60
             var datesToAdd = studyBurstDates
@@ -264,10 +387,10 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
         
         // Add all the surveys that are suppose to be from the server.
         SurveyReference.all.forEach {
-            let survey = createSchedule(with: RSDIdentifier(rawValue: $0.identifier),
+            let survey = createSchedule(with: $0.identifier,
                                               scheduledOn: studySetup.createdOn,
                                               expiresOn: nil,
-                                              finishedOn: surveyMap[.demographics],
+                                              finishedOn: surveyMap[$0.identifier],
                                               clientData: nil,
                                               schedulePlanGuid: nil,
                                               survey: $0)
@@ -302,11 +425,13 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
         schedule.persistent = NSNumber(value: (expiresOn == nil))
         let activityType = (survey == nil) ? "task" : "survey"
 
-        let activity = SBBActivity(dictionaryRepresentation: [
+        var dictionary = [
             "activityType" : activityType,
             "guid" : guid,
-            "label" : identifier.stringValue
-            ])!
+            "label" : survey?.label ?? identifier.stringValue
+        ]
+        dictionary["labelDetail"] = survey?.detail
+        let activity = SBBActivity(dictionaryRepresentation: dictionary)!
         
         if let surveyRef = survey {
             activity.survey = SBBSurveyReference(dictionaryRepresentation: [
@@ -314,7 +439,7 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
                 "guid" : surveyRef.guid,
                 "createdOn" : surveyRef.createdOn,
                 "href" : surveyRef.href
-                ])
+            ])
         }
         else {
             activity.task = SBBTaskReference(dictionaryRepresentation: [ "identifier" : identifier.stringValue ])
