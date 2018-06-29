@@ -34,9 +34,7 @@
 import Foundation
 import BridgeApp
 
-/// The study burst navigator is a work-around for including a Decodable in the `AppConfig.clientData` without
-/// having to redesign how the SBABridgeConfiguration works to include objects decoded with a factory.
-/// TODO: syoung 06/19/2018 Refactor this to use a decodable object with a type.
+/// The study burst configuration is a Decodable that can be added to the `AppConfig.clientData`.
 public struct StudyBurstConfiguration : Codable {
     
     private enum CodingKeys : String, CodingKey {
@@ -80,15 +78,38 @@ public struct StudyBurstConfiguration : Codable {
         let day: Int?
         let firstOnly: Bool?
         let activityIdentifiers: [RSDIdentifier]
+        
+        func unfinishedPredicate() -> NSPredicate {
+            let unfinishedPredicate = SBBScheduledActivity.notFinishedAvailableNowPredicate()
+            let activitiesPredicate = SBBScheduledActivity.includeTasksPredicate(with: activityIdentifiers.map { $0.stringValue })
+            return NSCompoundPredicate(andPredicateWithSubpredicates: [unfinishedPredicate, activitiesPredicate])
+        }
     }
 
     public var completionTaskIdentifiers: [RSDIdentifier] {
         return completionTasks.flatMap { $0.activityIdentifiers }
     }
+    
+    func scheduleIdentifier(for completionTask: CompletionTask) -> RSDIdentifier? {
+        if completionTask.day == 1, completionTask.activityIdentifiers.contains(.demographics) {
+            return .demographics
+        }
+        else if completionTask.day == self.numberOfDays, completionTask.activityIdentifiers.contains(.engagement) {
+            return .engagement
+        }
+        else {
+            return completionTask.activityIdentifiers.first
+        }
+    }
 }
 
 let kCompletionTaskIdentifier: String = "TempStudyBurstCompletionTask"
 
+struct TodayActionBarItem {
+    let title: String
+    let detail: String?
+    let icon: UIImage?
+}
 
 /// The study burst manager is accessible on the "Today" view as well as being used to manage the study burst
 /// view controller.
@@ -181,6 +202,21 @@ class StudyBurstScheduleManager : SBAScheduleManager {
     /// Subset of the finished schedules.
     public private(set) var finishedSchedules: [SBBScheduledActivity] = []
     
+    /// Subset of the past survey schedules that were not finished on the day they were scheduled.
+    public private(set) var pastSurveySchedules: [SBBScheduledActivity] = []
+    
+    /// The completion task to use for today.
+    public private(set) var todayCompletionTask: StudyBurstConfiguration.CompletionTask?
+    
+    /// The action bar item to display.
+    public private(set) var actionBarItem: TodayActionBarItem?
+    
+    /// Is there something to do **today** for this study burst? This should return `true` if and only if
+    /// this is a "Study Burst" day (`hasStudyBurst == true`) or there is a past schedule that is unfinished.
+    public var hasActiveStudyBurst : Bool {
+        return self.hasStudyBurst || self.pastSurveySchedules.count > 0
+    }
+    
     /// Returns an ordered set of task info objects. This will change each day, but should retain the saved
     /// order for any given day.
     public var orderedTasks: [RSDTaskInfo] {
@@ -194,13 +230,8 @@ class StudyBurstScheduleManager : SBAScheduleManager {
             return []
         }
 
-        let userDefaults = UserDefaults.standard
-        let orderKey = "StudyBurstTaskOrder"
-        let timestampKey = "StudyBurstTimestamp"
-        
-        
-        if let storedOrder = userDefaults.array(forKey: orderKey) as? [String],
-            let timestamp = userDefaults.object(forKey: timestampKey) as? Date,
+        if let storedOrder = UserDefaults.standard.array(forKey: StudyBurstScheduleManager.orderKey) as? [String],
+            let timestamp = UserDefaults.standard.object(forKey: StudyBurstScheduleManager.timestampKey) as? Date,
             Calendar.current.isDateInToday(timestamp) {
             // If the timestamp is still valid for today, then sort using the stored order.
             _orderedTasks = tasks.sorted(by: {
@@ -217,11 +248,10 @@ class StudyBurstScheduleManager : SBAScheduleManager {
             // Otherwise, shuffle the tasks and store order of the the task identifiers.
             var shuffledTasks = tasks
             shuffledTasks.shuffle()
-            _orderedTasks = shuffledTasks
-            _shuffleTimestamp = Date()
             let sortOrder = shuffledTasks.map { $0.identifier }
-            userDefaults.set(sortOrder, forKey: orderKey)
-            userDefaults.set(_shuffleTimestamp, forKey: timestampKey)
+            _shuffleTimestamp = Date()
+            _orderedTasks = shuffledTasks
+            StudyBurstScheduleManager.setOrderedTasks(sortOrder, timestamp: _shuffleTimestamp!)
         }
         
         return _orderedTasks!
@@ -229,33 +259,37 @@ class StudyBurstScheduleManager : SBAScheduleManager {
     private var _orderedTasks: [RSDTaskInfo]?
     private var _shuffleTimestamp: Date?
     
+    static let orderKey = "StudyBurstTaskOrder"
+    static let timestampKey = "StudyBurstTimestamp"
+    
+    internal static func setOrderedTasks(_ sortOrder: [String], timestamp: Date = Date()) {
+        UserDefaults.standard.set(sortOrder, forKey: orderKey)
+        UserDefaults.standard.set(timestamp, forKey: timestampKey)
+    }
+    
+    /// Is this the last day of the study burst?
     public var isLastDay: Bool {
-        guard let _ = self.dayCount, self.hasStudyBurst else { return false }
-        let days = (self.pastDaysCount - self.missedDaysCount) + 1
-        return (self.maxDaysCount == days) || (self.numberOfDays == days)
+        guard let dayCount = dayCount, hasStudyBurst else { return false }
+        let days = (pastDaysCount - missedDaysCount) + 1
+        return
+            (days >= maxDaysCount) ||
+            ((dayCount >= numberOfDays) && (days >= studyBurst.minimumRequiredDays)) ||
+            ((dayCount >= numberOfDays) && !shouldContinueStudyBurst)
+    }
+    
+    /// Should the user be shown more days of the study burst beyond the initial 14 days?
+    public var shouldContinueStudyBurst : Bool {
+        // TODO: syoung 06/28/2018 Implement logic to manage saving state and asking the user if they want
+        // to see more days of the study rather than just assuming that they should be shown more days.
+        return true
     }
     
     public func completionTaskPath() -> RSDTaskPath? {
-
-        // Look for the most appropriate completion tasks for today.
-        let thisDay = self.isLastDay ? self.numberOfDays : ((self.pastDaysCount - self.missedDaysCount) + 1)
-        let pastTasks = self.studyBurst.completionTasks.filter {
-            guard let day = $0.day, day < thisDay else { return false }
-            return ($0.firstOnly ?? false)
-        }
         
-        // Only return something if the marked day is
-        guard self.hasStudyBurst || pastTasks.count > 0
+        // Only return something if this is during the study burst or there is a task that chases you.
+        guard self.todayCompletionTask != nil || self.pastSurveySchedules.count > 0
             else {
                 return nil
-        }
-        
-        // If there are any past tasks, look for matching schedules where none are finished.
-        let pastSchedules: [SBBScheduledActivity] = pastTasks.flatMap { (task) -> [SBBScheduledActivity] in
-            return task.activityIdentifiers.compactMap { (identifier) -> SBBScheduledActivity? in
-                let schedules = self.scheduledActivities.filter { $0.activityIdentifier == identifier.stringValue }
-                return schedules.contains(where: { $0.isCompleted }) ? nil : schedules.first
-            }
         }
         
         func step(schedule: SBBScheduledActivity) -> RSDStep? {
@@ -284,14 +318,15 @@ class StudyBurstScheduleManager : SBAScheduleManager {
         }
         
         // Add the steps for past tasks that weren't completed and today's tasks.
-        var steps: [RSDStep] = pastSchedules.compactMap { step(schedule: $0) }
+        var steps: [RSDStep] = pastSurveySchedules.compactMap { step(schedule: $0) }
         
-        func addSteps(for task: StudyBurstConfiguration.CompletionTask) {
-            let firstOnly = task.firstOnly ?? false
-            task.activityIdentifiers.forEach { (activityIdentifier) in
+        // Add the tasks from today's schedule.
+        if let todayTask = self.todayCompletionTask {
+            let firstOnly = todayTask.firstOnly ?? false
+            todayTask.activityIdentifiers.forEach { (activityIdentifier) in
                 let schedule = self.scheduledActivities.filter {
                     $0.activityIdentifier == activityIdentifier.stringValue &&
-                    (!firstOnly || !$0.isCompleted)
+                        (!firstOnly || !$0.isCompleted)
                     }.sorted(by: { $0.scheduledOn < $1.scheduledOn }).last
                 guard !firstOnly || (schedule != nil) else { return }
                 
@@ -301,14 +336,6 @@ class StudyBurstScheduleManager : SBAScheduleManager {
                     steps.append(step)
                 }
             }
-        }
-        
-
-        if let todayOnlyTask = self.studyBurst.completionTasks.first(where: { $0.day == thisDay}) {
-            addSteps(for: todayOnlyTask)
-        }
-        else if steps.count == 0, let foundTask = self.studyBurst.completionTasks.first(where: { $0.day == nil }) {
-            addSteps(for: foundTask)
         }
 
         // If there aren't any steps then return nil.
@@ -381,6 +408,8 @@ class StudyBurstScheduleManager : SBAScheduleManager {
             self._expiresOn = nil
             self.dayCount = nil
         }
+        
+        self.updateCompletionTask()
 
         super.didUpdateScheduledActivities(from: previousActivities)
     }
@@ -462,7 +491,8 @@ class StudyBurstScheduleManager : SBAScheduleManager {
         let dayCount = pastSchedules.count + 1
         let missedDaysCount = pastSchedules.reduce(0, { $0 + ($1.finishedOn == nil ? 1 : 0) })
         let finishedCount = dayCount - missedDaysCount
-        let hasStudyBurst = (finishedCount <= self.numberOfDays)
+        let hasStudyBurst = (dayCount <= self.numberOfDays) ||
+            ((finishedCount < studyBurst.minimumRequiredDays) && shouldContinueStudyBurst)
         self.maxDaysCount = markerSchedules.count
         self.pastDaysCount = pastSchedules.count
         
@@ -514,6 +544,65 @@ class StudyBurstScheduleManager : SBAScheduleManager {
             }
         }
         return (results, startedOn, finishedOn)
+    }
+    
+    func calculateThisDay() -> Int {
+        guard hasStudyBurst else { return self.maxDaysCount + 1 }
+        return self.isLastDay ? self.numberOfDays : ((self.pastDaysCount - self.missedDaysCount) + 1)
+    }
+    
+    func updateCompletionTask() {
+        
+        // Look for the most appropriate completion tasks for today.
+        let thisDay = calculateThisDay()
+        let pastTasks = self.studyBurst.completionTasks.filter {
+            guard let day = $0.day, day < thisDay else { return false }
+            return ($0.firstOnly ?? false)
+        }
+        
+        // If there are any past tasks, look for matching schedules where none are finished.
+        self.pastSurveySchedules = pastTasks.flatMap { (task) -> [SBBScheduledActivity] in
+            let predicate = task.unfinishedPredicate()
+            return self.scheduledActivities.filter { predicate.evaluate(with: $0) }
+        }
+        
+        // Get the completion task for today.
+        self.todayCompletionTask = {
+            guard self.hasStudyBurst || self.pastSurveySchedules.count > 0 else { return nil }
+            if let todayOnlyTask = self.studyBurst.completionTasks.first(where: { $0.day == thisDay}) {
+                 return todayOnlyTask
+            }
+            else if self.pastSurveySchedules.count == 0, let foundTask = self.studyBurst.completionTasks.first(where: { $0.day == nil }) {
+                return foundTask
+            }
+            else {
+                return nil
+            }
+        }()
+        
+        // Set up the action bar item. TODO: map the icon if there is one.
+        let foundSchedule: SBBScheduledActivity? = {
+            let pastTask = pastTasks.first(where: { (task) -> Bool in
+                let predicate = task.unfinishedPredicate()
+                return self.scheduledActivities.contains(where: { predicate.evaluate(with: $0) })
+            })
+            guard let completeTask = pastTask ?? self.todayCompletionTask, (completeTask.firstOnly ?? false),
+                let scheduleIdentifer = self.studyBurst.scheduleIdentifier(for: completeTask)
+                else {
+                    return nil
+            }
+            let unfinishedPredicate = completeTask.unfinishedPredicate()
+            guard self.scheduledActivities.contains(where: { unfinishedPredicate.evaluate(with: $0) })
+                else {
+                    return nil
+            }
+  
+            return self.scheduledActivities.first(where: { $0.activityIdentifier == scheduleIdentifer.stringValue })
+        }()
+        self.actionBarItem = {
+            guard let schedule = foundSchedule else { return nil }
+            return TodayActionBarItem(title: schedule.activity.label, detail: schedule.activity.labelDetail, icon: nil)
+        }()
     }
 }
 
