@@ -35,6 +35,7 @@ import UIKit
 import Research
 import ResearchUI
 import BridgeSDK
+import BridgeApp
 
 // https://stackoverflow.com/a/27140764
 extension UIResponder {
@@ -66,6 +67,11 @@ class PhoneRegistrationViewController: RSDTableStepViewController {
         signUp.phone = SBBPhone()
         signUp.phone!.number = phoneNumber
         signUp.phone!.regionCode = regionCode
+        
+        /// Randomly assign one of the engagement data groups.
+        if let engagementGroup = (SBABridgeConfiguration.shared as? MP2BridgeConfiguration)?.studyBurst.engagementDataGroups?.randomFirst() {
+            signUp.dataGroups = [engagementGroup]
+        }
         
         BridgeSDK.authManager.signUpStudyParticipant(signUp, completion: { (task, result, error) in
             guard error == nil else {
