@@ -269,9 +269,19 @@ class StudyBurstScheduleManager : SBAScheduleManager {
     
     /// Is this the last day of the study burst?
     public var isLastDay: Bool {
-        guard let _ = self.dayCount, self.hasStudyBurst else { return false }
-        let days = (self.pastDaysCount - self.missedDaysCount) + 1
-        return (self.maxDaysCount == days) || (self.numberOfDays == days)
+        guard let dayCount = dayCount, hasStudyBurst else { return false }
+        let days = (pastDaysCount - missedDaysCount) + 1
+        return
+            (days >= maxDaysCount) ||
+            ((dayCount >= numberOfDays) && (days >= studyBurst.minimumRequiredDays)) ||
+            ((dayCount >= numberOfDays) && !shouldContinueStudyBurst)
+    }
+    
+    /// Should the user be shown more days of the study burst beyond the initial 14 days?
+    public var shouldContinueStudyBurst : Bool {
+        // TODO: syoung 06/28/2018 Implement logic to manage saving state and asking the user if they want
+        // to see more days of the study rather than just assuming that they should be shown more days.
+        return true
     }
     
     public func completionTaskPath() -> RSDTaskPath? {
@@ -481,7 +491,8 @@ class StudyBurstScheduleManager : SBAScheduleManager {
         let dayCount = pastSchedules.count + 1
         let missedDaysCount = pastSchedules.reduce(0, { $0 + ($1.finishedOn == nil ? 1 : 0) })
         let finishedCount = dayCount - missedDaysCount
-        let hasStudyBurst = (finishedCount <= self.numberOfDays)
+        let hasStudyBurst = (dayCount <= self.numberOfDays) ||
+            ((finishedCount < studyBurst.minimumRequiredDays) && shouldContinueStudyBurst)
         self.maxDaysCount = markerSchedules.count
         self.pastDaysCount = pastSchedules.count
         
@@ -536,6 +547,7 @@ class StudyBurstScheduleManager : SBAScheduleManager {
     }
     
     func calculateThisDay() -> Int {
+        guard hasStudyBurst else { return self.maxDaysCount + 1 }
         return self.isLastDay ? self.numberOfDays : ((self.pastDaysCount - self.missedDaysCount) + 1)
     }
     

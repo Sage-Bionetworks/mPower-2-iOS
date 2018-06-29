@@ -165,23 +165,23 @@ extension StudySetup {
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 12),
                    finishedTodayTasks: RSDIdentifier.measuringTasks)
     
+    static let day14_missing6_tasksFinished_engagementNotFinished =
+        StudySetup(studyBurstDay: 13,
+                   studyBurstFinishedOnDays: finishedOnDays(13, 6),
+                   studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 12),
+                   finishedTodayTasks: RSDIdentifier.measuringTasks)
+    
     static let day14_tasksFinished_engagementNotFinished =
         StudySetup(studyBurstDay: 13,
                    studyBurstFinishedOnDays: finishedOnDays(13, 0),
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 12),
                    finishedTodayTasks: RSDIdentifier.measuringTasks)
     
-    static let day15_missing1_tasksFinished_engagementNotFinished =
+    static let day15_missing1_engagementNotFinished =
         StudySetup(studyBurstDay: 14,
                    studyBurstFinishedOnDays: finishedOnDays(14, 1),
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 12),
-                   finishedTodayTasks: RSDIdentifier.measuringTasks)
-    
-    static let day15_missing2_tasksFinished_engagementNotFinished =
-        StudySetup(studyBurstDay: 14,
-                   studyBurstFinishedOnDays: finishedOnDays(14, 2),
-                   studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 12),
-                   finishedTodayTasks: RSDIdentifier.measuringTasks)
+                   finishedTodayTasks: [])
     
     static let day15_burstCompleted_engagementNotFinished =
         StudySetup(studyBurstDay: 14,
@@ -193,6 +193,12 @@ extension StudySetup {
         StudySetup(studyBurstDay: 14,
                    studyBurstFinishedOnDays: finishedOnDays(14, 0),
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 14),
+                   finishedTodayTasks: [])
+    
+    static let day21_missing6_engagementNotFinished =
+        StudySetup(studyBurstDay: 20,
+                   studyBurstFinishedOnDays: finishedOnDays(18, 6),
+                   studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 12),
                    finishedTodayTasks: [])
 }
 
