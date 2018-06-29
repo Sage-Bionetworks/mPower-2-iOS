@@ -13,6 +13,8 @@
 		0354809F20BF3B6400B757AB /* StudyBurstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0354809E20BF3B6400B757AB /* StudyBurstViewController.swift */; };
 		03C9DD0C20A4F956007074EE /* mPower2.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03C9DD0B20A4F956007074EE /* mPower2.strings */; };
 		03D3EA9F20C07B0200F9E4F7 /* StudyBurstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0354809E20BF3B6400B757AB /* StudyBurstViewController.swift */; };
+		03DD008320E2F9A4006A5794 /* ReminderTableStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DD008220E2F9A4006A5794 /* ReminderTableStepViewController.swift */; };
+		03DD008420E2F9A4006A5794 /* ReminderTableStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DD008220E2F9A4006A5794 /* ReminderTableStepViewController.swift */; };
 		60169BBB20AF445800D29532 /* SignInTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F45523209CF10100C532A0 /* SignInTaskViewController.swift */; };
 		60169BD120AF445C00D29532 /* ConsentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6076F2CA20A6680B00F6235E /* ConsentViewController.swift */; };
 		603B7B362085541A00794B7C /* SignIn.json in Resources */ = {isa = PBXBuildFile; fileRef = 603B7B352085541A00794B7C /* SignIn.json */; };
@@ -397,6 +399,7 @@
 		0349535420981C89006A05B1 /* ProgressCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProgressCircleView.swift; path = "Custom Views/ProgressCircleView.swift"; sourceTree = "<group>"; };
 		0354809E20BF3B6400B757AB /* StudyBurstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StudyBurstViewController.swift; path = "View Controllers/StudyBurstViewController.swift"; sourceTree = "<group>"; };
 		03C9DD0B20A4F956007074EE /* mPower2.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = mPower2.strings; sourceTree = "<group>"; };
+		03DD008220E2F9A4006A5794 /* ReminderTableStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReminderTableStepViewController.swift; path = "View Controllers/ReminderTableStepViewController.swift"; sourceTree = "<group>"; };
 		603B7B352085541A00794B7C /* SignIn.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SignIn.json; sourceTree = "<group>"; };
 		603B7BA9208E90FF00794B7C /* RegistrationWaitingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationWaitingViewController.swift; sourceTree = "<group>"; };
 		603B7BC220913B1A00794B7C /* PhoneRegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneRegistrationViewController.swift; sourceTree = "<group>"; };
@@ -559,6 +562,7 @@
 				6076F2CA20A6680B00F6235E /* ConsentViewController.swift */,
 				0354809E20BF3B6400B757AB /* StudyBurstViewController.swift */,
 				F832ABE820D8D341005A9025 /* StudyBurstCompletionViewController.swift */,
+				03DD008220E2F9A4006A5794 /* ReminderTableStepViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -1325,6 +1329,7 @@
 				60169BD120AF445C00D29532 /* ConsentViewController.swift in Sources */,
 				F832AC3620DA22DA005A9025 /* MP2BridgeConfiguration.swift in Sources */,
 				F88E8DFB20ADEE2600117A99 /* ExternalIDRegistrationViewController.swift in Sources */,
+				03DD008420E2F9A4006A5794 /* ReminderTableStepViewController.swift in Sources */,
 				F832ABEA20D96FEF005A9025 /* StudyBurstCompletionViewController.swift in Sources */,
 				F88E8DFC20ADEE2600117A99 /* PhoneRegistrationViewController.swift in Sources */,
 			);
@@ -1346,6 +1351,7 @@
 				F8C58DB120AF4823001C7B7F /* TodayScheduleManager.swift in Sources */,
 				F8C58DD520AF8CCC001C7B7F /* SurveyScheduleManager.swift in Sources */,
 				0354809F20BF3B6400B757AB /* StudyBurstViewController.swift in Sources */,
+				03DD008320E2F9A4006A5794 /* ReminderTableStepViewController.swift in Sources */,
 				F82AE7B62063160B00952D74 /* UIColor+mPowerTheme.swift in Sources */,
 				F8078F4320ADFA6A00757F42 /* DataSourceManager.swift in Sources */,
 				603B7BC320913B1A00794B7C /* PhoneRegistrationViewController.swift in Sources */,

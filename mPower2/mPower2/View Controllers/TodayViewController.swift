@@ -366,7 +366,7 @@ class TodayViewController: UIViewController {
             self.present(vc, animated: true, completion: nil)
         }
         else if studyBurstManager.pastSurveySchedules.count > 0 || studyBurstManager.isCompletedForToday {
-            self.showStudyBurstCompletionView(true)
+            self.showStudyBurstCompletionTask(true)
         }
         else if let vc = StudyBurstViewController.instantiate(),
             let nc = self.navigationController {
@@ -376,7 +376,7 @@ class TodayViewController: UIViewController {
         }
     }
     
-    func showStudyBurstCompletionView(_ animated: Bool = false) {
+    func showStudyBurstCompletionTask(_ animated: Bool = false) {
         // If there is a task to do today, then push it.
         guard let taskPath = studyBurstManager.completionTaskPath(),
             let nc = self.navigationController
@@ -429,6 +429,14 @@ extension TodayViewController: RSDTaskViewControllerDelegate {
 extension TodayViewController: StudyBurstProgressExpirationLabelDelegate {
     func studyBurstExpiresOn() -> Date? {
         return self.studyBurstManager.expiresOn
+    }
+}
+
+extension TodayViewController: StudyBurstViewControllerDelegate {
+    func studyBurstDidFinish(task: RSDTaskPath, reason: RSDTaskFinishReason) {
+        if reason == .completed, studyBurstManager.isFinalTask(task) {
+            showStudyBurstCompletionTask()
+        }
     }
 }
 
@@ -553,7 +561,7 @@ extension TodayViewController: TaskBrowserViewControllerDelegate {
     
     func taskBrowserDidFinish(task: RSDTaskPath, reason: RSDTaskFinishReason) {
         if reason == .completed, studyBurstManager.isFinalTask(task) {
-            showStudyBurstCompletionView()
+            showStudyBurstCompletionTask()
         }
     }
 }

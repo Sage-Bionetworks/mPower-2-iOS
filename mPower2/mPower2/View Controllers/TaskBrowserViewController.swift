@@ -150,12 +150,12 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
     
     // MARK: RSDTaskViewControllerDelegate
     open func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
+
         // Inform our delegate that we finished a task
         self.delegate?.taskBrowserDidFinish(task: taskController.taskPath, reason: reason)
-        
+
         // dismiss the view controller
-        (taskController as? UIViewController)?.dismiss(animated: true) {
-        }
+        (taskController as? UIViewController)?.dismiss(animated: true, completion: nil)
         
         // Let the schedule manager handle the cleanup.
         selectedScheduleManager.taskController(taskController, didFinishWith: reason, error: error)
