@@ -77,7 +77,10 @@
                         "identifier":"preConsent",
                         "dataType":"singleChoice.boolean",
                         "uiHint":"checkbox",
-                        "choices":[ {"text":"pre-consented", "value":true }]
+                        "choices":[
+                                   {"text":"pre-consented", "value":true },
+                                   {"text":"test consent flow", "value":false }
+                                   ]
                     }
                 ],
                 "image":{
