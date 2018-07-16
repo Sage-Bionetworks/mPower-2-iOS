@@ -46,33 +46,72 @@ class RegistrationWaitingViewController: RSDStepViewController {
     }
     
     @IBAction func didTapChangeMobileButton(_ sender: Any) {
-        // TODO emm 2018-05-03 get this working
-        presentAlertWithOk(title: "Not implemented yet.", message: "", actionHandler: nil)
-//        guard let answerFormat = formItem.answerFormat as? SBATextResultCreator else { return }
-//
-//        let alertController = UIAlertController(title: formItem.text, message: "", preferredStyle: .alert)
-//
-//        let saveAction = UIAlertAction(title: Localization.localizedString("JP_SUMBIT_BUTTON"), style: .default, handler: {
-//            alert -> Void in
-//
-//            let textField = alertController.textFields![0] as UITextField
-//            let result = answerFormat.result(with: formItem.identifier, textAnswer: textField.text)
-//            self.stepResult.addResult(result)
-//            self.reloadData()
-//        })
-//
-//        let cancelAction = UIAlertAction(title: Localization.buttonCancel(), style: .default, handler: nil)
-//
-//        alertController.addTextField { (textField : UITextField!) -> Void in
-//
-//            textField.text = currentText
-//            textField.keyboardType = answerFormat.keyboardType
-//            textField.placeholder = answerFormat.placeholder
-//        }
-//
-//        alertController.addAction(cancelAction)
-//        alertController.addAction(saveAction)
-//
-//        self.present(alertController, animated: true, completion: nil)
+        guard let taskController = self.taskController as? SignInTaskViewController else { return }
+        
+        let alertController = UIAlertController(title: "Change phone number", message: "Enter a new phone number.", preferredStyle: .alert)
+
+        let saveAction = UIAlertAction(title: Localization.localizedString("SUMBIT_BUTTON"), style: .default, handler: {
+            alert -> Void in
+
+            let textField = alertController.textFields![0] as UITextField
+            let newNumber = textField.text
+            
+            // do nothing if they entered the same number
+            guard newNumber != self.phoneLabel.text else { return }
+            
+            self.phoneLabel.text = newNumber
+            
+            taskController.showLoadingView()
+            taskController.signUpAndRequestSMSLink { (task, result, error) in
+                taskController.hideLoadingIfNeeded()
+                
+                guard let err = error as NSError?
+                    else {
+                        return
+                }
+                
+                // 400 is the response for an invalid phone number
+                if err.code == 400 {
+                    self.presentAlertWithOk(title: "Wrong Number", message: "The phone number you entered is not valid. Please enter a valid U.S. phone number.", actionHandler: { (_) in
+                        self.didTapChangeMobileButton(self)
+                    })
+                } else {
+                    self.presentAlertWithOk(title: "Error", message: "The server returned an error: \(err)", actionHandler: { (_) in
+                        self.didTapChangeMobileButton(self)
+                    })
+                }
+                debugPrint("Error attempting to sign up and request SMS link:\n\(String(describing: error))\n\nResult:\n\(String(describing: result))")
+            }
+        })
+
+        let cancelAction = UIAlertAction(title: Localization.buttonCancel(), style: .default, handler: nil)
+
+        alertController.addTextField { (textField : UITextField!) -> Void in
+
+            textField.text = self.phoneLabel.text
+            textField.keyboardType = .phonePad
+            textField.placeholder = "Phone number"
+            textField.addTarget(self, action: #selector(self.alertValidatePhoneText), for: .editingChanged)
+        }
+
+        alertController.addAction(cancelAction)
+        alertController.addAction(saveAction)
+        alertController.actions[1].isEnabled = false
+
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    @objc fileprivate func alertValidatePhoneText(_ sender: Any) {
+        let textField = sender as! UITextField
+        let newNumber = textField.text ?? ""
+        
+        // find the alert controller in the responder chain
+        var responder: UIResponder = sender as! UIResponder
+        while !(responder is UIAlertController) { responder = responder.next! }
+        let alertController = responder as! UIAlertController
+        
+        // only enable the save action if it's a 10-digit number and not the same as the previous phone number
+        let match = newNumber.range(of:"^\\d{10}$", options:.regularExpression)
+        alertController.actions[1].isEnabled = (match != nil) && (newNumber != self.phoneLabel.text)
     }
 }

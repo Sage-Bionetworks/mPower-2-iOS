@@ -34,6 +34,7 @@
 import Research
 import ResearchUI
 import BridgeSDK
+import BridgeApp
 
 protocol SignInDelegate : class {
     func signIn(token: String)
@@ -75,6 +76,48 @@ class SignInTaskViewController: RSDTaskViewController, SignInDelegate {
 
         // Do any additional setup after loading the view.
         (UIApplication.shared.delegate as? AppDelegate)?.smsSignInDelegate = self
+    }
+    
+    func signUpAndRequestSMSLink(completion: @escaping SBBNetworkManagerCompletionBlock) {
+        guard let phoneNumber = self.phoneNumber,
+            let regionCode = self.regionCode,
+            !phoneNumber.isEmpty,
+            !regionCode.isEmpty else {
+                debugPrint("Unable to sign up and request SMS link: phone number or region code is missing or empty")
+                return
+        }
+        let signUp: SBBSignUp = SBBSignUp()
+        signUp.checkForConsent = true
+        signUp.phone = SBBPhone()
+        signUp.phone!.number = phoneNumber
+        signUp.phone!.regionCode = regionCode
+        
+        /// Randomly assign one of each of the engagement data groups.
+        /// TODO: emm 2018-07-16 Should be assigning to one of each pair of engagement data groups:
+        ///         gr_SC_DB or gr_SC_CS
+        ///         gr_BR_AD or gr_BR_II
+        ///         gr_ST_T or gr_ST_F
+        ///         gr_DT_F or gr_DT_T
+        /// see https://docs.google.com/document/d/1mvhpWl6aCZiXcV0nH48vwskybk7l70PzB4RyD9ZPqsI/edit#heading=h.hec7c3kf5vom
+        if let engagementGroup = (SBABridgeConfiguration.shared as? MP2BridgeConfiguration)?.studyBurst.engagementDataGroups?.randomFirst() {
+            signUp.dataGroups = [engagementGroup]
+        }
+        
+        BridgeSDK.authManager.signUpStudyParticipant(signUp, completion: { (task, result, error) in
+            guard error == nil else {
+                DispatchQueue.main.async {
+                    completion(task, result, error)
+                }
+                return
+            }
+            
+            // we're signed up so request a sign-in link via SMS
+            BridgeSDK.authManager.textSignInToken(to: phoneNumber, regionCode: regionCode, completion: { (task, result, error) in
+                DispatchQueue.main.async {
+                    completion(task, result, error)
+                }
+            })
+        })
     }
 
     func signIn(token: String) {

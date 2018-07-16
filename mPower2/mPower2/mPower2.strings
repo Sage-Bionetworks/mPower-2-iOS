@@ -114,3 +114,5 @@
 "STUDY_BURST_MESSAGE_IN_%@_DAYS_MISSED_%@_DAYS" = "In %1$@ days you’ve only missed %2$@ Study Burst days!";
 "STUDY_BURST_MESSAGE_IN_%@_DAYS_MISSED_ONE_DAY" = "In %1$@ days you’ve only missed 1 Study Burst day!";
 
+// Button Titles
+"SUMBIT_BUTTON" = "Submit";
