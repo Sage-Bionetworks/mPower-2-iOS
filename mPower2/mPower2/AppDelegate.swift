@@ -148,7 +148,7 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
         guard self.rootViewController?.state != .consent else { return }
         let vc = ConsentViewController()
         // TODO emm 2018-05-11 put this in BridgeInfo or AppConfig?
-        vc.url = URL(string: "http://mpower.sagebridge.org/")
+        vc.url = URL(string: "http://mpower.sagebridge.org/study/intro")
         self.transition(to: vc, state: .consent, animated: true)
     }
     
