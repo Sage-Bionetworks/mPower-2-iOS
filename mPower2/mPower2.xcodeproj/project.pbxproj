@@ -25,6 +25,7 @@
 		608241F22093D9F70026E843 /* ExternalIDRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608241F12093D9F70026E843 /* ExternalIDRegistrationViewController.swift */; };
 		60A1576E209D16C50033FAB5 /* Registration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60A1576D209D16C40033FAB5 /* Registration.storyboard */; };
 		60F45524209CF10100C532A0 /* SignInTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F45523209CF10100C532A0 /* SignInTaskViewController.swift */; };
+		80F3739C20FC32D200A565E0 /* VersionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F3739B20FC32D200A565E0 /* VersionLabel.swift */; };
 		B508B31C2076ECA3001645CF /* MCTHandSelectionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B508B31B2076ECA3001645CF /* MCTHandSelectionStepObject.swift */; };
 		B508B39920772D76001645CF /* MCTSkippableSectionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B508B39820772D76001645CF /* MCTSkippableSectionStepObject.swift */; };
 		B532ACED208150C00009EAD3 /* MCTCompletionGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B532ACEC208150C00009EAD3 /* MCTCompletionGradient.swift */; };
@@ -408,6 +409,7 @@
 		608241F12093D9F70026E843 /* ExternalIDRegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalIDRegistrationViewController.swift; sourceTree = "<group>"; };
 		60A1576D209D16C40033FAB5 /* Registration.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Registration.storyboard; sourceTree = "<group>"; };
 		60F45523209CF10100C532A0 /* SignInTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInTaskViewController.swift; sourceTree = "<group>"; };
+		80F3739B20FC32D200A565E0 /* VersionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionLabel.swift; sourceTree = "<group>"; };
 		B508B31B2076ECA3001645CF /* MCTHandSelectionStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTHandSelectionStepObject.swift; sourceTree = "<group>"; };
 		B508B39820772D76001645CF /* MCTSkippableSectionStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTSkippableSectionStepObject.swift; sourceTree = "<group>"; };
 		B532ACEC208150C00009EAD3 /* MCTCompletionGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTCompletionGradient.swift; sourceTree = "<group>"; };
@@ -571,6 +573,7 @@
 			isa = PBXGroup;
 			children = (
 				0349535420981C89006A05B1 /* ProgressCircleView.swift */,
+				80F3739B20FC32D200A565E0 /* VersionLabel.swift */,
 			);
 			name = "Custom Views";
 			sourceTree = "<group>";
@@ -1352,6 +1355,7 @@
 				F8C58DD520AF8CCC001C7B7F /* SurveyScheduleManager.swift in Sources */,
 				0354809F20BF3B6400B757AB /* StudyBurstViewController.swift in Sources */,
 				03DD008320E2F9A4006A5794 /* ReminderTableStepViewController.swift in Sources */,
+				80F3739C20FC32D200A565E0 /* VersionLabel.swift in Sources */,
 				F82AE7B62063160B00952D74 /* UIColor+mPowerTheme.swift in Sources */,
 				F8078F4320ADFA6A00757F42 /* DataSourceManager.swift in Sources */,
 				603B7BC320913B1A00794B7C /* PhoneRegistrationViewController.swift in Sources */,
