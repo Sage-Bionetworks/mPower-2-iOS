@@ -35,7 +35,6 @@ import UIKit
 import Research
 import ResearchUI
 import BridgeSDK
-import BridgeApp
 
 // https://stackoverflow.com/a/27140764
 extension UIResponder {
@@ -54,43 +53,6 @@ extension UIResponder {
 
 class PhoneRegistrationViewController: RSDTableStepViewController {
 
-    func signUpAndRequestSMSLink(completion: @escaping SBBNetworkManagerCompletionBlock) {
-        guard let taskController = self.taskController as? SignInTaskViewController,
-            let phoneNumber = taskController.phoneNumber,
-            let regionCode = taskController.regionCode,
-            !phoneNumber.isEmpty,
-            !regionCode.isEmpty else {
-                return
-        }
-        let signUp: SBBSignUp = SBBSignUp()
-        signUp.checkForConsent = true
-        signUp.phone = SBBPhone()
-        signUp.phone!.number = phoneNumber
-        signUp.phone!.regionCode = regionCode
-        
-        /// Randomly assign one of the engagement data groups.
-        if let engagementGroup = (SBABridgeConfiguration.shared as? MP2BridgeConfiguration)?.studyBurst.engagementDataGroups?.randomFirst() {
-            signUp.dataGroups = [engagementGroup]
-        }
-        
-        BridgeSDK.authManager.signUpStudyParticipant(signUp, completion: { (task, result, error) in
-            guard error == nil else {
-                DispatchQueue.main.async {
-                    completion(task, result, error)
-                }
-                return
-            }
-            
-            // we're signed up so request a sign-in link via SMS
-            BridgeSDK.authManager.textSignInToken(to: phoneNumber, regionCode: regionCode, completion: { (task, result, error) in
-                DispatchQueue.main.async {
-                    completion(task, result, error)
-                }
-            })
-        })
-    }
-
-    
     override func goForward() {
         guard validateAndSave()
             else {
@@ -130,7 +92,7 @@ class PhoneRegistrationViewController: RSDTableStepViewController {
         }
 
         taskController.showLoadingView()
-        self.signUpAndRequestSMSLink { (task, result, error) in
+        taskController.signUpAndRequestSMSLink { (task, result, error) in
             taskController.hideLoadingIfNeeded()
             
             guard let err = error as NSError?
