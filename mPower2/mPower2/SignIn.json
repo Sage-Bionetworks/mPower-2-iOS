@@ -37,7 +37,11 @@
                 "identifier":"enterPhoneNumber",
                 "type":"form",
                 "dataType":"string",
-                "textFieldOptions": { "keyboardType" : "phonePad" },
+                "textFieldOptions":{
+                    "keyboardType":"phonePad",
+                    "textValidator":"^\\d{10}$",
+                    "invalidMessage":"Please enter your full 10-digit phone number."
+                },
                 "uiHint":"textfield",
                 "title":"Enter your phone number",
                 "text":"To become part of mPower, enter your phone number to get started.",
