@@ -219,7 +219,13 @@ class StudyBurstScheduleManager : SBAScheduleManager {
     public private(set) var todayCompletionTask: StudyBurstConfiguration.CompletionTask?
     
     /// The action bar item to display.
-    public private(set) var actionBarItem: TodayActionBarItem?
+    public var actionBarItem: TodayActionBarItem? {
+        guard let schedule = self.unfinishedSchedule else { return nil }
+        return TodayActionBarItem(title: schedule.activity.label, detail: schedule.activity.labelDetail, icon: nil)
+    }
+    
+    /// The unfinished schedule to point to today.
+    internal private(set) var unfinishedSchedule: SBBScheduledActivity?
     
     /// Is there something to do **today** for this study burst? This should return `true` if and only if
     /// this is a "Study Burst" day (`hasStudyBurst == true`) or there is a past schedule that is unfinished.
@@ -565,54 +571,57 @@ class StudyBurstScheduleManager : SBAScheduleManager {
         
         // Look for the most appropriate completion tasks for today.
         let thisDay = calculateThisDay()
-        let pastTasks = self.studyBurst.completionTasks.filter {
+        let pastTasks = self.getPastTasks(for: thisDay)
+        
+        self.pastSurveySchedules = getPastSurveySchedules(from: pastTasks)
+        self.todayCompletionTask = getTodayCompletionTask(for: thisDay)
+        self.unfinishedSchedule = getUnfinishedSchedule(from: pastTasks)
+    }
+    
+    func getPastTasks(for thisDay: Int) -> [StudyBurstConfiguration.CompletionTask] {
+        return self.studyBurst.completionTasks.filter {
             guard let day = $0.day, day < thisDay else { return false }
             return ($0.firstOnly ?? false)
         }
-        
-        // If there are any past tasks, look for matching schedules where none are finished.
-        self.pastSurveySchedules = pastTasks.flatMap { (task) -> [SBBScheduledActivity] in
+    }
+    
+    func getPastSurveySchedules(from pastTasks: [StudyBurstConfiguration.CompletionTask]) -> [SBBScheduledActivity] {
+        return pastTasks.flatMap { (task) -> [SBBScheduledActivity] in
             let predicate = task.unfinishedPredicate()
             return self.scheduledActivities.filter { predicate.evaluate(with: $0) }
         }
-        
-        // Get the completion task for today.
-        self.todayCompletionTask = {
-            guard self.hasStudyBurst || self.pastSurveySchedules.count > 0 else { return nil }
-            if let todayOnlyTask = self.studyBurst.completionTasks.first(where: { $0.day == thisDay}) {
-                 return todayOnlyTask
-            }
-            else if self.pastSurveySchedules.count == 0, let foundTask = self.studyBurst.completionTasks.first(where: { $0.day == nil }) {
-                return foundTask
-            }
+    }
+    
+    func getTodayCompletionTask(for thisDay: Int) -> StudyBurstConfiguration.CompletionTask? {
+        guard self.hasStudyBurst || self.pastSurveySchedules.count > 0 else { return nil }
+        if let todayOnlyTask = self.studyBurst.completionTasks.first(where: { $0.day == thisDay}) {
+            return todayOnlyTask
+        }
+        else if self.pastSurveySchedules.count == 0, let foundTask = self.studyBurst.completionTasks.first(where: { $0.day == nil }) {
+            return foundTask
+        }
+        else {
+            return nil
+        }
+    }
+    
+    func getUnfinishedSchedule(from pastTasks: [StudyBurstConfiguration.CompletionTask]) -> SBBScheduledActivity? {
+        let pastTask = pastTasks.first(where: { (task) -> Bool in
+            let predicate = task.unfinishedPredicate()
+            return self.scheduledActivities.contains(where: { predicate.evaluate(with: $0) })
+        })
+        guard let completeTask = pastTask ?? self.todayCompletionTask, (completeTask.firstOnly ?? false),
+            let scheduleIdentifer = self.studyBurst.scheduleIdentifier(for: completeTask)
             else {
                 return nil
-            }
-        }()
+        }
+        let unfinishedPredicate = completeTask.unfinishedPredicate()
+        guard self.scheduledActivities.contains(where: { unfinishedPredicate.evaluate(with: $0) })
+            else {
+                return nil
+        }
         
-        // Set up the action bar item. TODO: map the icon if there is one.
-        let foundSchedule: SBBScheduledActivity? = {
-            let pastTask = pastTasks.first(where: { (task) -> Bool in
-                let predicate = task.unfinishedPredicate()
-                return self.scheduledActivities.contains(where: { predicate.evaluate(with: $0) })
-            })
-            guard let completeTask = pastTask ?? self.todayCompletionTask, (completeTask.firstOnly ?? false),
-                let scheduleIdentifer = self.studyBurst.scheduleIdentifier(for: completeTask)
-                else {
-                    return nil
-            }
-            let unfinishedPredicate = completeTask.unfinishedPredicate()
-            guard self.scheduledActivities.contains(where: { unfinishedPredicate.evaluate(with: $0) })
-                else {
-                    return nil
-            }
-  
-            return self.scheduledActivities.first(where: { $0.activityIdentifier == scheduleIdentifer.stringValue })
-        }()
-        self.actionBarItem = {
-            guard let schedule = foundSchedule else { return nil }
-            return TodayActionBarItem(title: schedule.activity.label, detail: schedule.activity.labelDetail, icon: nil)
-        }()
+        return self.scheduledActivities.first(where: { $0.activityIdentifier == scheduleIdentifer.stringValue })
     }
 }
 
