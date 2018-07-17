@@ -141,6 +141,12 @@ extension StudySetup {
         return surveyMap
     }
     
+    static let day1_noTasksFinished =
+        StudySetup(studyBurstDay: 0,
+                   studyBurstFinishedOnDays: [],
+                   studyBurstSurveyFinishedOnDays: [:],
+                   finishedTodayTasks: [])
+    
     static let day1_tasksFinished_demographicsNotFinished =
         StudySetup(studyBurstDay: 0,
                    studyBurstFinishedOnDays: [],

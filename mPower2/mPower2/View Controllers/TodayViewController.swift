@@ -589,15 +589,20 @@ class StudyBurstProgressExpirationLabel: UILabel {
     
     var delegate: StudyBurstProgressExpirationLabelDelegate?
     
-    func updateStudyBurstExpirationTime(_ expiresOn: Date) {
+    func updateStudyBurstExpirationTime(_ expiresOn: Date?) {
+        guard expiresOn != nil else {
+            self.isHidden = true
+            return
+        }
         
+        self.isHidden = false
         let formatter = DateComponentsFormatter()
         formatter.allowedUnits = [.hour, .minute, .second]
         formatter.collapsesLargestUnit = false
         formatter.zeroFormattingBehavior = .pad
         formatter.allowsFractionalUnits = false
         formatter.unitsStyle = .positional
-        let timeString = formatter.string(from: Date(), to: expiresOn)!
+        let timeString = formatter.string(from: Date(), to: expiresOn!)!
         
         let marker = "%@"
         let format = Localization.localizedString("PROGRESS_EXPIRES_%@")
