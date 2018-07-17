@@ -59,7 +59,7 @@ public struct StudyBurstConfiguration : Codable {
     let completionTasks: [CompletionTask]
     
     /// List of the possible engagement data groups.
-    let engagementDataGroups: [String]?
+    let engagementDataGroups: [[String]]?
     
     public init() {
         self.identifier = RSDIdentifier.studyBurstCompletedTask.stringValue
@@ -71,7 +71,11 @@ public struct StudyBurstConfiguration : Codable {
             CompletionTask(day: 1, firstOnly: true, activityIdentifiers: [.studyBurstReminder, .demographics]),
             CompletionTask(day: 14, firstOnly: true, activityIdentifiers: [.engagement])
         ]
-        self.engagementDataGroups = ["engagement_A", "engagement_B"]
+        self.engagementDataGroups = [
+            ["gr_SC_DB","gr_SC_CS"],
+            ["gr_BR_AD","gr_BR_II"],
+            ["gr_ST_T","gr_ST_F"],
+            ["gr_DT_F","gr_DT_T"]]
     }
     
     struct CompletionTask : Codable {
@@ -100,6 +104,12 @@ public struct StudyBurstConfiguration : Codable {
         else {
             return completionTask.activityIdentifiers.first
         }
+    }
+    
+    /// Returns a randomized list of possible combinations of engagement groups.
+    func randomEngagementGroups() -> Set<String>? {
+        guard let groups = self.engagementDataGroups else { return nil }
+        return Set(groups.compactMap { $0.randomElement() })
     }
 }
 
@@ -617,7 +627,7 @@ extension Array {
         }
     }
     
-    public func randomFirst() -> Element? {
+    public func randomElement() -> Element? {
         guard self.count > 1 else { return self.first }
         let rand = Int(arc4random_uniform(UInt32(self.count)))
         return self[rand]

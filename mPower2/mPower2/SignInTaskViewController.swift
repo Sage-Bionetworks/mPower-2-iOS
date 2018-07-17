@@ -92,15 +92,9 @@ class SignInTaskViewController: RSDTaskViewController, SignInDelegate {
         signUp.phone!.number = phoneNumber
         signUp.phone!.regionCode = regionCode
         
-        /// Randomly assign one of each of the engagement data groups.
-        /// TODO: emm 2018-07-16 Should be assigning to one of each pair of engagement data groups:
-        ///         gr_SC_DB or gr_SC_CS
-        ///         gr_BR_AD or gr_BR_II
-        ///         gr_ST_T or gr_ST_F
-        ///         gr_DT_F or gr_DT_T
-        /// see https://docs.google.com/document/d/1mvhpWl6aCZiXcV0nH48vwskybk7l70PzB4RyD9ZPqsI/edit#heading=h.hec7c3kf5vom
-        if let engagementGroup = (SBABridgeConfiguration.shared as? MP2BridgeConfiguration)?.studyBurst.engagementDataGroups?.randomFirst() {
-            signUp.dataGroups = [engagementGroup]
+        // Assign the engagement data groups.
+        if let engagementGroups = (SBABridgeConfiguration.shared as? MP2BridgeConfiguration)?.studyBurst.randomEngagementGroups() {
+            signUp.dataGroups = engagementGroups
         }
         
         BridgeSDK.authManager.signUpStudyParticipant(signUp, completion: { (task, result, error) in

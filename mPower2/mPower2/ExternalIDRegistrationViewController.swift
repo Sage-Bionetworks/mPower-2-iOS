@@ -70,9 +70,9 @@ class ExternalIDRegistrationViewController: RSDTableStepViewController {
         if credentials.preconsent {
             dataGroups.insert("test_no_consent")
         }
-        /// Randomly assign one of the engagement data groups.
-        if let engagementGroup = (SBABridgeConfiguration.shared as? MP2BridgeConfiguration)?.studyBurst.engagementDataGroups?.randomFirst() {
-            dataGroups.insert(engagementGroup)
+        // Assign the engagement data groups.
+        if let engagementGroups = (SBABridgeConfiguration.shared as? MP2BridgeConfiguration)?.studyBurst.randomEngagementGroups() {
+            dataGroups.formUnion(engagementGroups)
         }
         signUp.dataGroups = dataGroups
         
