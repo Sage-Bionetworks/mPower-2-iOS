@@ -96,9 +96,7 @@ class StudyBurstViewController: UIViewController {
         
         // Set ourselves as delegate on our progress label so we can provide progress expiry date
         progressLabel.delegate = self
-        if let expiresOn = studyBurstManager.expiresOn {
-            progressLabel.updateStudyBurstExpirationTime(expiresOn)
-        }
+        progressLabel.updateStudyBurstExpirationTime(studyBurstManager.expiresOn)
         
         // Set the height of the progress container view
         progressContainerViewHeightConstraint.constant = kProgressContainerViewHeight
@@ -188,6 +186,7 @@ extension StudyBurstViewController: TaskBrowserViewControllerDelegate {
     // MARK: TaskBrowserViewControllerDelegate
     func taskBrowserDidFinish(task: RSDTaskPath, reason: RSDTaskFinishReason) {
         delegate?.studyBurstDidFinish(task: task, reason: reason)
+        progressLabel.updateStudyBurstExpirationTime(studyBurstManager.expiresOn)
     }
     func taskBrowserToggleVisibility() {
         // Nothing
