@@ -43,7 +43,7 @@ public struct StudySetup {
          studyBurstSurveyFinishedOnDays: [RSDIdentifier : Int] = [:],
          finishedTodayTasks: [RSDIdentifier] = [.tappingTask, .walkAndBalanceTask],
          timeUntilExpires: TimeInterval = 15 * 60,
-         dataGroups: [String] = ["engagement_A"]) {
+         dataGroups: [String] = ["gr_SC_DB","gr_BR_AD","gr_ST_T","gr_DT_F"]) {
         
         self.studyBurstDay = studyBurstDay
         self.studyBurstFinishedOnDays = studyBurstFinishedOnDays.filter { $0 < studyBurstDay }
