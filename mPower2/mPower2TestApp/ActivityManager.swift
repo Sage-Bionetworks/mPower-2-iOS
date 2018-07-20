@@ -75,9 +75,12 @@ public struct StudySetup {
     /// The data groups to set for this participant.
     var dataGroups: [String]
     
+    /// The time to set as "now".
+    var now: Date = Date()
+    
     /// The date when the participant started the study. Hardcoded to 6:15AM local time.
     var createdOn: Date {
-        return Date().startOfDay().addingNumberOfDays(-1 * Int(studyBurstDay)).addingTimeInterval(6.25 * 60 * 60)
+        return now.startOfDay().addingNumberOfDays(-1 * Int(studyBurstDay)).addingTimeInterval(6.25 * 60 * 60)
     }
     
     /// Generated days of the study burst to mark as finished. This only applies to days that are past.
@@ -297,7 +300,7 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
             case .medicationTask:
                 // TODO: syoung 05/23/2018 Add schedules for past days.
                 // Medication task is set up for a single daily task.
-                let scheduledOn = Date().startOfDay()
+                let scheduledOn = studySetup.now.startOfDay()
                 let schedule = createSchedule(with: identifier,
                                           scheduledOn: scheduledOn,
                                           expiresOn: scheduledOn.addingNumberOfDays(1),
@@ -337,7 +340,7 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
         var unfinished = activityGroup.activityIdentifiers.filter { !finishedTodayTasks.contains($0) }
         unfinished.shuffle()
         sortOrder.append(contentsOf: unfinished)
-        StudyBurstScheduleManager.setOrderedTasks(sortOrder.map { $0.stringValue })
+        StudyBurstScheduleManager.setOrderedTasks(sortOrder.map { $0.stringValue }, timestamp: studySetup.now)
         
         let studyBurstFinishedOn = studySetup.mapStudyBurstFinishedOn()
         let studyBurstDates = studyBurstFinishedOn.enumerated().map { $0.element.value }.sorted()
@@ -346,7 +349,7 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
             let finishedTime: TimeInterval = studySetup.timeUntilExpires - 3600 + TimeInterval(offset) * 4 * 60
             var datesToAdd = studyBurstDates
             if finishedTodayTasks.contains(identifier) {
-                datesToAdd.append(Date().addingTimeInterval(finishedTime))
+                datesToAdd.append(studySetup.now.addingTimeInterval(finishedTime))
             }
             
             var scheduledOn = studySetup.createdOn

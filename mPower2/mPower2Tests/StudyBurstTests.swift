@@ -382,13 +382,23 @@ class StudyBurstTests: XCTestCase {
 
 class TestStudyBurstScheduleManager : StudyBurstScheduleManager {
     
-    init(_ studySetup: StudySetup) {
+    init(_ studySetup: StudySetup, now: Date? = nil) {
         super.init()
-        self._activityManager.studySetup = studySetup
+        
+        // Default to "now" of 11:00 AM.
+        var setup = studySetup
+        setup.now = now ?? Date().startOfDay().addingTimeInterval(11 * 60 * 60)
+        
+        // build the schedules.
+        self._activityManager.studySetup = setup
         self._activityManager.buildSchedules()
     }
     
     let _activityManager = ActivityManager()
+    
+    override func now() -> Date {
+        return self._activityManager.studySetup.now
+    }
     
     override var activityManager: SBBActivityManagerProtocol {
         return _activityManager
