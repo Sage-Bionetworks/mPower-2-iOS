@@ -33,6 +33,8 @@
 
 import Foundation
 import BridgeApp
+import UserNotifications
+
 
 /// The study burst configuration is a Decodable that can be added to the `AppConfig.clientData`.
 public struct StudyBurstConfiguration : Codable {
@@ -170,7 +172,7 @@ class StudyBurstScheduleManager : SBAScheduleManager {
     /// When does the study burst expire?
     public var expiresOn : Date? {
         guard let expiresOn = _expiresOn else { return nil }
-        if expiresOn > Date() {
+        if expiresOn > now() {
             return expiresOn
         }
         else {
@@ -189,6 +191,11 @@ class StudyBurstScheduleManager : SBAScheduleManager {
     
     /// Today marker used to update the schedules.
     public private(set) var today: Date?
+    
+    /// Expose internally for testing.
+    func now() -> Date {
+        return Date()
+    }
     
     /// Is the Study burst completed for today?
     public var isCompletedForToday : Bool {
@@ -265,7 +272,7 @@ class StudyBurstScheduleManager : SBAScheduleManager {
             var shuffledTasks = tasks
             shuffledTasks.shuffle()
             let sortOrder = shuffledTasks.map { $0.identifier }
-            _shuffleTimestamp = Date()
+            _shuffleTimestamp = now()
             _orderedTasks = shuffledTasks
             StudyBurstScheduleManager.setOrderedTasks(sortOrder, timestamp: _shuffleTimestamp!)
         }
@@ -278,7 +285,7 @@ class StudyBurstScheduleManager : SBAScheduleManager {
     static let orderKey = "StudyBurstTaskOrder"
     static let timestampKey = "StudyBurstTimestamp"
     
-    internal static func setOrderedTasks(_ sortOrder: [String], timestamp: Date = Date()) {
+    internal static func setOrderedTasks(_ sortOrder: [String], timestamp: Date) {
         UserDefaults.standard.set(sortOrder, forKey: orderKey)
         UserDefaults.standard.set(timestamp, forKey: timestampKey)
     }
@@ -369,29 +376,38 @@ class StudyBurstScheduleManager : SBAScheduleManager {
             return super.fetchRequests()
         }
 
-        // Build a predicate with today's tasks and all the completion tasks available today.
-        let completionTaskIdentifiers = self.studyBurst.completionTaskIdentifiers
-        let activityIdentifiers = [group.activityIdentifiers, completionTaskIdentifiers].flatMap { $0 }
-        var predicates: [NSPredicate] = activityIdentifiers.map {
+        let startOfToday = now().startOfDay()
+        
+        // Build a predicate with today's tasks
+        var predicates: [NSPredicate] = group.activityIdentifiers.map {
             let predicate = SBBScheduledActivity.activityIdentifierPredicate(with:$0.stringValue)
-            let start = Date().startOfDay()
+            let start = startOfToday
             let end = start.addingNumberOfDays(1)
             return NSCompoundPredicate(andPredicateWithSubpredicates: [
                 SBBScheduledActivity.availablePredicate(from: start, to: end),
                 predicate])
         }
         
+        // Add the completion task identifiers and the study burst reminder
+        var taskIdentifiers = Set(self.studyBurst.completionTaskIdentifiers)
+        taskIdentifiers.insert(.studyBurstReminder)
+        taskIdentifiers.forEach {
+            predicates.append(SBBScheduledActivity.activityIdentifierPredicate(with: $0.stringValue))
+        }
+        
         // Add the study burst marker
         let predicate = SBBScheduledActivity.activityIdentifierPredicate(with: self.studyBurst.identifier)
-        let start = Date().startOfDay().addingNumberOfDays(-2 * self.numberOfDays)
-        let end = Date().startOfDay().addingNumberOfDays(2 * self.numberOfDays)
+        let start = startOfToday.addingNumberOfDays(-2 * self.numberOfDays)
+        let end = startOfToday.addingNumberOfDays(2 * self.numberOfDays)
         let studyMarkerPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
             SBBScheduledActivity.availablePredicate(from: start, to: end),
             predicate])
         predicates.append(studyMarkerPredicate)
         
         let filter = NSCompoundPredicate(orPredicateWithSubpredicates: predicates)
-        return [FetchRequest(predicate: filter, sortDescriptors: nil, fetchLimit: nil)]
+        return [FetchRequest(predicate: filter,
+                             sortDescriptors: [SBBScheduledActivity.scheduledOnSortDescriptor(ascending: true)],
+                             fetchLimit: nil)]
     }
     
     /// Override to build the new set of today history items.
@@ -401,7 +417,7 @@ class StudyBurstScheduleManager : SBAScheduleManager {
                 super.didUpdateScheduledActivities(from: previousActivities)
                 return
         }
-        today = Date()
+        today = now()
         
         if let studyMarker = self.getStudyBurst() {
             let schedules = self.scheduledActivities
@@ -426,6 +442,7 @@ class StudyBurstScheduleManager : SBAScheduleManager {
         }
         
         self.updateCompletionTask()
+        self.updateNotifications()
 
         super.didUpdateScheduledActivities(from: previousActivities)
     }
@@ -450,7 +467,7 @@ class StudyBurstScheduleManager : SBAScheduleManager {
     func markCompleted(studyMarker: SBBScheduledActivity, startedOn: Date?, finishedOn: Date, finishedSchedules: [SBBScheduledActivity]) {
         
         self._expiresOn = nil
-        studyMarker.startedOn = startedOn ?? Date()
+        studyMarker.startedOn = startedOn ?? now()
         studyMarker.finishedOn = finishedOn
         
         let identifier = studyMarker.activityIdentifier ?? RSDIdentifier.studyBurstCompletedTask.stringValue
@@ -469,7 +486,7 @@ class StudyBurstScheduleManager : SBAScheduleManager {
             var json: [String : Any] = [ "taskOrder" : self.orderedTasks.map { $0.identifier }.joined(separator: ",")]
             finishedSchedules.forEach {
                 guard let identifier = $0.activityIdentifier, let finishedOn = $0.finishedOn else { return }
-                json["\(identifier).startDate"] = ($0.startedOn ?? Date()).jsonObject()
+                json["\(identifier).startDate"] = ($0.startedOn ?? now()).jsonObject()
                 json["\(identifier).endDate"] = finishedOn.jsonObject()
                 json["\(identifier).scheduleGuid"] = $0.guid
             }
@@ -502,7 +519,7 @@ class StudyBurstScheduleManager : SBAScheduleManager {
 
         let markerSchedules = self.scheduledActivities.filter { studyMarker.activityIdentifier == $0.activityIdentifier }
         
-        let todayStart = Date().startOfDay()
+        let todayStart = now().startOfDay()
         let pastSchedules = markerSchedules.filter { $0.scheduledOn < todayStart }
         let dayCount = pastSchedules.count + 1
         let missedDaysCount = pastSchedules.reduce(0, { $0 + ($1.finishedOn == nil ? 1 : 0) })
@@ -527,7 +544,7 @@ class StudyBurstScheduleManager : SBAScheduleManager {
     
     /// What is the start of the expiration time window?
     func startTimeWindow() -> Date {
-        return Date().addingTimeInterval(-1 * expiresLimit)
+        return now().addingTimeInterval(-1 * expiresLimit)
     }
     
     /// Get the filtered list of finished schedules.
@@ -622,6 +639,182 @@ class StudyBurstScheduleManager : SBAScheduleManager {
         }
         
         return self.scheduledActivities.first(where: { $0.activityIdentifier == scheduleIdentifer.stringValue })
+    }
+    
+    // MARK: Study burst notification handling
+    
+    struct NotificationResult : Codable {
+        public enum CodingKeys: String, CodingKey {
+            case reminderTime, noReminder
+        }
+        
+        let reminderTime: Date?
+        let noReminder: Bool?
+    }
+    
+    let notificationCategory = "StudyBurst"
+
+    func updateNotifications() {
+        guard let reminderTime = self.getReminderTime()
+            else {
+                removeAllPendingNotifications()
+                return
+        }
+        
+        // use dispatch async to allow the method to return and put updating reminders on the next run loop
+        UNUserNotificationCenter.current().getNotificationSettings { (settings) in
+            DispatchQueue.main.async {
+                switch settings.authorizationStatus {
+                case .denied:
+                    break   // Do nothing. We don't want to pester the user with message.
+                case .notDetermined:
+                    // The user has not given authorization, but the app has a record of previously requested
+                    // authorization. This means that the app has been re-installed. Unfortunately, there isn't
+                    // a great UI/UX for this senario, so just show the authorization request. syoung 07/19/2018
+                    UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .alert, .sound]) { (granted, _) in
+                        if granted {
+                            self.updateNotifications(at: reminderTime)
+                        }
+                    }
+                default:
+                    self.updateNotifications(at: reminderTime)
+                }
+            }
+        }
+    }
+
+    func getReminderTime() -> DateComponents? {
+        guard let schedule = self.scheduledActivities.first(where: {
+            $0.activityIdentifier == RSDIdentifier.studyBurstReminder.stringValue }),
+            let clientData = schedule.clientData else {
+                return nil
+        }
+        
+        let notificationResult: NotificationResult
+        do {
+            notificationResult = try SBAFactory.shared.createJSONDecoder().decode(NotificationResult.self, from: clientData)
+        } catch let err {
+            debugPrint("Failed to decode the reminder result. \(err)")
+            return nil
+        }
+        
+        guard !(notificationResult.noReminder ?? false),
+            let reminderTime = notificationResult.reminderTime
+            else {
+                return nil
+        }
+        return Calendar(identifier: .iso8601).dateComponents([.hour, .minute], from: reminderTime)
+    }
+    
+    func getLocalNotifications(after reminderTime: DateComponents, with pendingRequests: [UNNotificationRequest]) -> (add: [UNNotificationRequest], removeIds: [String]) {
+        
+        let studyBurstMarkerId = self.studyBurst.identifier
+
+        // Get future schedules.
+        let date = self.now()
+        let startOfToday = date.startOfDay()
+        let timeToday = startOfToday.addingDateComponents(reminderTime)
+        let scheduleStart = (date < timeToday) ? startOfToday : startOfToday.addingNumberOfDays(1)
+        
+        // Get the schedules for which to set the reminder
+        var futureSchedules = self.scheduledActivities.filter {
+            $0.activityIdentifier == studyBurstMarkerId &&
+            $0.scheduledOn >= scheduleStart &&
+            !$0.isCompleted
+        }.sorted(by: { $0.scheduledOn < $1.scheduledOn })
+        
+        // Check if should be scheduling extra days.
+        let extraDays = self.maxDaysCount - self.studyBurst.numberOfDays
+        let completedCount = self.pastDaysCount - self.missedDaysCount
+        if completedCount >= self.studyBurst.minimumRequiredDays {
+            let toCount = futureSchedules.count - extraDays
+            futureSchedules = Array(futureSchedules[..<toCount])
+        }
+        
+        // If getting near the end, then add next cycle.
+        if futureSchedules.count <= extraDays {
+            let taskPredicate = SBBScheduledActivity.activityIdentifierPredicate(with: self.studyBurst.identifier)
+            let start = startOfToday.addingNumberOfDays(2 * extraDays)
+            let end = start.addingNumberOfYears(1)
+            let studyMarkerPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
+                SBBScheduledActivity.availablePredicate(from: start, to: end),
+                taskPredicate])
+            do {
+                let nextSchedules = try self.activityManager.getCachedSchedules(using: studyMarkerPredicate,
+                                                                            sortDescriptors: [SBBScheduledActivity.scheduledOnSortDescriptor(ascending: true)],
+                                                                            fetchLimit: UInt(self.studyBurst.numberOfDays))
+                futureSchedules.append(contentsOf: nextSchedules)
+            }
+            catch let err {
+                debugPrint("Failed to get cached schedules. \(err)")
+            }
+        }
+        
+        var pendingRequestIds = pendingRequests.map { $0.identifier }
+        let requests: [UNNotificationRequest] = futureSchedules.compactMap {
+            let identifier = getLocalNotificationIdentifier(for: $0, at: reminderTime)
+            if pendingRequestIds.remove(where: { $0 == identifier }).count > 0 {
+                // If there is an unchaged pending request, then remove it from this list
+                // and do not create a new reminder for it.
+                return nil
+            }
+            else {
+                return createLocalNotification(for: $0, at: reminderTime)
+            }
+        }
+
+        return (requests, pendingRequestIds)
+    }
+    
+    func getLocalNotificationIdentifier(for schedule: SBBScheduledActivity, at time: DateComponents) -> String {
+        let timeIdentifier = time.jsonObject()
+        return "\(schedule.guid) \(timeIdentifier)"
+    }
+    
+    func createLocalNotification(for schedule: SBBScheduledActivity, at time: DateComponents) -> UNNotificationRequest {
+        
+        // Set up the notification
+        let content = UNMutableNotificationContent()
+        // TODO: syoung 07/19/2018 Figure out what the wording of the notification should be.
+        content.body = "Time to do your mPower Study Burst activities!"
+        content.sound = UNNotificationSound.default()
+        content.badge = UIApplication.shared.applicationIconBadgeNumber + 1 as NSNumber;
+        content.categoryIdentifier = self.notificationCategory
+        content.threadIdentifier = schedule.activity.guid
+        
+        // Set up the trigger. Cannot schedule using a repeating notification b/c it doesn't repeat
+        // every day but only every three months.
+        let date = schedule.scheduledOn.startOfDay()
+        var dateComponents = Calendar(identifier: .iso8601).dateComponents([.day, .month, .year], from: date)
+        dateComponents.hour = time.hour
+        dateComponents.minute = time.minute
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+        
+        // Create the request.
+        let identifier = getLocalNotificationIdentifier(for: schedule, at: time)
+        return UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+    }
+    
+    func removeAllPendingNotifications() {
+        UNUserNotificationCenter.current().getPendingNotificationRequests { (requests) in
+            let requestIds: [String] = requests.compactMap {
+                guard $0.content.categoryIdentifier == self.notificationCategory else { return nil }
+                return $0.identifier
+            }
+            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: requestIds)
+        }
+    }
+    
+    func updateNotifications(at reminderTime: DateComponents) {
+        UNUserNotificationCenter.current().getPendingNotificationRequests { (pendingRequests) in
+            let notifications = self.getLocalNotifications(after: reminderTime, with: pendingRequests)
+            if notifications.removeIds.count > 0 {
+                UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: notifications.removeIds)
+            }
+            notifications.add.forEach {
+                UNUserNotificationCenter.current().add($0)
+            }
+        }
     }
 }
 

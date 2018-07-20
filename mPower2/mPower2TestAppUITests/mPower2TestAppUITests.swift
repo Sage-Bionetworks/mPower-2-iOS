@@ -85,7 +85,4 @@ class mPower2TestAppUITests: XCTestCase {
         XCTAssertGreaterThanOrEqual(tremorImage, 1)
     }
     
-    func testStudyBurst() {
-        
-    }
 }
