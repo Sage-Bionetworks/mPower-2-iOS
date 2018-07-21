@@ -462,12 +462,6 @@ extension TodayViewController: UITableViewDelegate, UITableViewDataSource {
         
         return cell
     }
-    
-    // MARK: UITableView Delegate
-    open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // TODO: jbruhin 5-10-18 implement??
-        presentAlertWithOk(title: "Should this do something??", message: "", actionHandler: nil)
-    }
 }
 
 extension TodayViewController: TaskBrowserViewControllerDelegate {
