@@ -416,11 +416,20 @@ extension TodayViewController: RSDTaskViewControllerDelegate {
     }
     
     func taskViewController(_ taskViewController: UIViewController, viewControllerFor step: Any) -> UIViewController? {
-        guard let step = step as? RSDStep, step.identifier == RSDIdentifier.studyBurstCompletionStep
+        guard let step = step as? RSDStep
             else {
                 return nil
         }
-        let vc = StudyBurstCompletionViewController.instantiate()
+        let vc: RSDStepViewController? = {
+            switch RSDIdentifier(rawValue: step.identifier) {
+            case .studyBurstCompletionStep:
+                return StudyBurstCompletionViewController.instantiate()
+            case .greatJobStep:
+                return GreatJobViewController.instantiate()
+            default:
+                return nil
+            }
+        }()
         vc?.step = step
         return vc
     }
