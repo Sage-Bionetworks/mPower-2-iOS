@@ -41,7 +41,6 @@ protocol SignInDelegate : class {
 }
 
 class SignInTaskViewController: RSDTaskViewController, SignInDelegate {
-    var phoneSavedNextStepIdentifier: String?
     
     var phoneNumber: String? {
         let taskResult = self.taskResult

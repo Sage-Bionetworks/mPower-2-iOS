@@ -65,10 +65,6 @@ class PhoneRegistrationViewController: RSDTableStepViewController {
                 return
         }
 
-        // start with the "original" next step identifier from json (if saved)
-        let stepObject = self.step as! RSDUIStepObject
-        stepObject.nextStepIdentifier = taskController.phoneSavedNextStepIdentifier ?? stepObject.nextStepIdentifier
-        
         // save the current first responder so we can restore it after any alerts go away
         let thingBeingEdited = UIResponder.current
         func restoreResponder() {
@@ -81,8 +77,7 @@ class PhoneRegistrationViewController: RSDTableStepViewController {
             self.presentAlertWithYesNo(title: "Tester", message: "The phone number you entered is fictional. Do you want to sign in with a test ID?") { (tester) in
                 if tester {
                     // boop them over to the externalID sign-in step
-                    taskController.phoneSavedNextStepIdentifier = stepObject.nextStepIdentifier
-                    stepObject.nextStepIdentifier = "enterExternalId"
+                    self.assignSkipToIdentifier("enterExternalId")
                     super.goForward()
                 } else {
                     restoreResponder()
