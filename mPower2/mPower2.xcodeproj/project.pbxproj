@@ -11,6 +11,8 @@
 		0334415620995CCD009B97A9 /* TaskBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0334415520995CCD009B97A9 /* TaskBrowserViewController.swift */; };
 		0349535520981C89006A05B1 /* ProgressCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0349535420981C89006A05B1 /* ProgressCircleView.swift */; };
 		0354809F20BF3B6400B757AB /* StudyBurstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0354809E20BF3B6400B757AB /* StudyBurstViewController.swift */; };
+		03A6E0022103E69900FC5A84 /* GreatJobViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A6E0012103E69900FC5A84 /* GreatJobViewController.swift */; };
+		03A6E0032103E69900FC5A84 /* GreatJobViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A6E0012103E69900FC5A84 /* GreatJobViewController.swift */; };
 		03C9DD0C20A4F956007074EE /* mPower2.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03C9DD0B20A4F956007074EE /* mPower2.strings */; };
 		03D3EA9F20C07B0200F9E4F7 /* StudyBurstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0354809E20BF3B6400B757AB /* StudyBurstViewController.swift */; };
 		03DD008320E2F9A4006A5794 /* ReminderTableStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DD008220E2F9A4006A5794 /* ReminderTableStepViewController.swift */; };
@@ -399,6 +401,7 @@
 		0334415520995CCD009B97A9 /* TaskBrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TaskBrowserViewController.swift; path = "View Controllers/TaskBrowserViewController.swift"; sourceTree = "<group>"; };
 		0349535420981C89006A05B1 /* ProgressCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProgressCircleView.swift; path = "Custom Views/ProgressCircleView.swift"; sourceTree = "<group>"; };
 		0354809E20BF3B6400B757AB /* StudyBurstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StudyBurstViewController.swift; path = "View Controllers/StudyBurstViewController.swift"; sourceTree = "<group>"; };
+		03A6E0012103E69900FC5A84 /* GreatJobViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GreatJobViewController.swift; path = "View Controllers/GreatJobViewController.swift"; sourceTree = "<group>"; };
 		03C9DD0B20A4F956007074EE /* mPower2.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = mPower2.strings; sourceTree = "<group>"; };
 		03DD008220E2F9A4006A5794 /* ReminderTableStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReminderTableStepViewController.swift; path = "View Controllers/ReminderTableStepViewController.swift"; sourceTree = "<group>"; };
 		603B7B352085541A00794B7C /* SignIn.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SignIn.json; sourceTree = "<group>"; };
@@ -565,6 +568,7 @@
 				0354809E20BF3B6400B757AB /* StudyBurstViewController.swift */,
 				F832ABE820D8D341005A9025 /* StudyBurstCompletionViewController.swift */,
 				03DD008220E2F9A4006A5794 /* ReminderTableStepViewController.swift */,
+				03A6E0012103E69900FC5A84 /* GreatJobViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -1324,6 +1328,7 @@
 				F8C58DCB20AF5E86001C7B7F /* StudyBurstScheduleManager.swift in Sources */,
 				F8C58DB220AF4823001C7B7F /* TodayScheduleManager.swift in Sources */,
 				F8C58DD620AF8CCC001C7B7F /* SurveyScheduleManager.swift in Sources */,
+				03A6E0032103E69900FC5A84 /* GreatJobViewController.swift in Sources */,
 				F85459B6208FA77400D37243 /* UIColor+mPowerTheme.swift in Sources */,
 				F8078F4420AE078A00757F42 /* DataSourceManager.swift in Sources */,
 				F8C58DFC20AFA2FD001C7B7F /* ActivityManager.swift in Sources */,
@@ -1359,6 +1364,7 @@
 				F82AE7B62063160B00952D74 /* UIColor+mPowerTheme.swift in Sources */,
 				F8078F4320ADFA6A00757F42 /* DataSourceManager.swift in Sources */,
 				603B7BC320913B1A00794B7C /* PhoneRegistrationViewController.swift in Sources */,
+				03A6E0022103E69900FC5A84 /* GreatJobViewController.swift in Sources */,
 				6076F2CB20A6680B00F6235E /* ConsentViewController.swift in Sources */,
 				603B7BAA208E90FF00794B7C /* RegistrationWaitingViewController.swift in Sources */,
 				F832ABE920D8D341005A9025 /* StudyBurstCompletionViewController.swift in Sources */,
