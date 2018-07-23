@@ -36,16 +36,19 @@
              {
                 "identifier":"enterPhoneNumber",
                 "type":"form",
-                "dataType":"string",
-                "textFieldOptions":{
-                    "keyboardType":"phonePad",
-                    "textValidator":"^\\d{10}$",
-                    "invalidMessage":"Please enter your full 10-digit phone number."
-                },
-                "uiHint":"textfield",
                 "title":"Enter your phone number",
                 "text":"To become part of mPower, enter your phone number to get started.",
-                "placeholder":"Enter your mobile number",
+                "inputFields": [{
+                                "type":"string",
+                                "textFieldOptions":{
+                                    "keyboardType":"phonePad",
+                                    "textValidator":"^\\d{10}$",
+                                    "invalidMessage":"Please enter your full 10-digit phone number."
+                                },
+                                "uiHint":"textfield",
+                                "placeholder":"Enter your mobile number"
+                                }
+                ],
                 "image":{
                     "type": "fetchable",
                     "imageName": "phonebook",
@@ -67,24 +70,24 @@
                 "inputFields": [
                     {
                         "identifier":"externalId",
-                        "dataType":"string",
+                        "type":"string",
                         "uiHint":"textfield",
-                        "prompt":"external ID"
+                        "prompt":"external ID",
+                        "optional": false
                     },
                     {
                         "identifier":"firstName",
-                        "dataType":"string",
+                        "type":"string",
                         "uiHint":"textfield",
-                        "prompt":"First name"
+                        "prompt":"First name",
+                        "optional": false
                     },
                     {
                         "identifier":"preConsent",
-                        "dataType":"singleChoice.boolean",
+                        "type":"singleChoice.boolean",
                         "uiHint":"checkbox",
-                        "choices":[
-                                   {"text":"pre-consented", "value":true },
-                                   {"text":"test consent flow", "value":false }
-                                   ]
+                        "choices":[ {"text":"pre-consented", "value":true } ],
+                        "optional": true
                     }
                 ],
                 "image":{

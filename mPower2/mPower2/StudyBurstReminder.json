@@ -19,7 +19,7 @@
                  "inputFields": [
                                  {
                                  "identifier": "reminderTime",
-                                 "dataType": "date",
+                                 "type": "date",
                                  "prompt": "Set reminder",
                                  "range" : { "defaultDate" : "09:00",
                                     "minuteInterval" : 15,
@@ -27,7 +27,7 @@
                                  },
                                  {
                                  "identifier": "noReminder",
-                                 "dataType": "boolean",
+                                 "type": "boolean",
                                  "uiHint": "checkbox",
                                  "prompt": "Do not set Reminder"
                                  }
