@@ -73,19 +73,16 @@ class mPower2TestAppUITests: XCTestCase {
         let app = XCUIApplication()
         app.otherElements["Measuring"].children(matching: .button).element.tap()
         let cellsQuery = app.collectionViews.cells
-        
+
         // Check that the icons are all there. Image count might be > 1 b/c of checkmark.
         let tappingImage = cellsQuery.otherElements.containing(.staticText, identifier:"FINGER TAPPING").images.count
         XCTAssertGreaterThanOrEqual(tappingImage, 1)
-        
+
         let walkImage = cellsQuery.otherElements.containing(.staticText, identifier:"WALK AND BALANCE").images.count
         XCTAssertGreaterThanOrEqual(walkImage, 1)
-        
+
         let tremorImage = cellsQuery.otherElements.containing(.staticText, identifier:"TREMOR TEST").images.count
         XCTAssertGreaterThanOrEqual(tremorImage, 1)
     }
     
-    func testStudyBurst() {
-        
-    }
 }

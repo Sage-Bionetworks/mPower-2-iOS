@@ -43,7 +43,7 @@ public struct StudySetup {
          studyBurstSurveyFinishedOnDays: [RSDIdentifier : Int] = [:],
          finishedTodayTasks: [RSDIdentifier] = [.tappingTask, .walkAndBalanceTask],
          timeUntilExpires: TimeInterval = 15 * 60,
-         dataGroups: [String] = ["engagement_A"]) {
+         dataGroups: [String] = ["gr_SC_DB","gr_BR_AD","gr_ST_T","gr_DT_F"]) {
         
         self.studyBurstDay = studyBurstDay
         self.studyBurstFinishedOnDays = studyBurstFinishedOnDays.filter { $0 < studyBurstDay }
@@ -75,9 +75,15 @@ public struct StudySetup {
     /// The data groups to set for this participant.
     var dataGroups: [String]
     
+    /// The time to set as "now".
+    var now: Date = Date()
+    
+    /// The sudy burst reminders
+    var reminderTime: String?
+    
     /// The date when the participant started the study. Hardcoded to 6:15AM local time.
     var createdOn: Date {
-        return Date().startOfDay().addingNumberOfDays(-1 * Int(studyBurstDay)).addingTimeInterval(6.25 * 60 * 60)
+        return now.startOfDay().addingNumberOfDays(-1 * Int(studyBurstDay)).addingTimeInterval(6.25 * 60 * 60)
     }
     
     /// Generated days of the study burst to mark as finished. This only applies to days that are past.
@@ -133,7 +139,6 @@ extension StudySetup {
         if studyBurstDay > 0 {
             surveyMap[.demographics] = 0
             surveyMap[.studyBurstReminder] = 0
-            surveyMap[.medicationTask] = 0
         }
         if studyBurstDay > 13 {
             surveyMap[.engagement] = 13
@@ -164,6 +169,19 @@ extension StudySetup {
                    studyBurstFinishedOnDays: [0],
                    studyBurstSurveyFinishedOnDays: [:],
                    finishedTodayTasks: [])
+    
+    static let day2_tasksNotFinished_surveysFinished =
+        StudySetup(studyBurstDay: 1,
+                   studyBurstFinishedOnDays: [0],
+                   studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 1),
+                   finishedTodayTasks: [])
+    
+    static let day11_tasksFinished_noMissingDays =
+        StudySetup(studyBurstDay: 10,
+                   studyBurstFinishedOnDays: finishedOnDays(10, 0),
+                   studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 10),
+                   finishedTodayTasks: RSDIdentifier.measuringTasks)
+    
     
     static let day14_missing1_tasksFinished_engagementNotFinished =
         StudySetup(studyBurstDay: 13,
@@ -205,6 +223,18 @@ extension StudySetup {
         StudySetup(studyBurstDay: 20,
                    studyBurstFinishedOnDays: finishedOnDays(18, 6),
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 12),
+                   finishedTodayTasks: [])
+    
+    static let day21_tasksFinished_noMissingDays =
+        StudySetup(studyBurstDay: 20,
+                   studyBurstFinishedOnDays: finishedOnDays(14, 0),
+                   studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 14),
+                   finishedTodayTasks: [])
+    
+    static let day89_tasksFinished_noMissingDays =
+        StudySetup(studyBurstDay: 88,
+                   studyBurstFinishedOnDays: finishedOnDays(14, 0),
+                   studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 14),
                    finishedTodayTasks: [])
 }
 
@@ -297,7 +327,7 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
             case .medicationTask:
                 // TODO: syoung 05/23/2018 Add schedules for past days.
                 // Medication task is set up for a single daily task.
-                let scheduledOn = Date().startOfDay()
+                let scheduledOn = studySetup.now.startOfDay()
                 let schedule = createSchedule(with: identifier,
                                           scheduledOn: scheduledOn,
                                           expiresOn: scheduledOn.addingNumberOfDays(1),
@@ -337,7 +367,7 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
         var unfinished = activityGroup.activityIdentifiers.filter { !finishedTodayTasks.contains($0) }
         unfinished.shuffle()
         sortOrder.append(contentsOf: unfinished)
-        StudyBurstScheduleManager.setOrderedTasks(sortOrder.map { $0.stringValue })
+        StudyBurstScheduleManager.setOrderedTasks(sortOrder.map { $0.stringValue }, timestamp: studySetup.now)
         
         let studyBurstFinishedOn = studySetup.mapStudyBurstFinishedOn()
         let studyBurstDates = studyBurstFinishedOn.enumerated().map { $0.element.value }.sorted()
@@ -346,7 +376,7 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
             let finishedTime: TimeInterval = studySetup.timeUntilExpires - 3600 + TimeInterval(offset) * 4 * 60
             var datesToAdd = studyBurstDates
             if finishedTodayTasks.contains(identifier) {
-                datesToAdd.append(Date().addingTimeInterval(finishedTime))
+                datesToAdd.append(studySetup.now.addingTimeInterval(finishedTime))
             }
             
             var scheduledOn = studySetup.createdOn
@@ -378,15 +408,17 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
         let createdOn = studySetup.createdOn
         let studyBurstFinishedOn = studySetup.mapStudyBurstFinishedOn()
         for day in 0..<19 {
-            
-            let scheduledOn = createdOn.startOfDay().addingNumberOfDays(day)
-            let schedule = createSchedule(with: .studyBurstCompletedTask,
-                                          scheduledOn: scheduledOn,
-                                          expiresOn: scheduledOn.addingNumberOfDays(1),
-                                          finishedOn: studyBurstFinishedOn[day],
-                                          clientData: nil,
-                                          schedulePlanGuid: nil)
-            self.schedules.append(schedule)
+            for burst in 0..<3 {
+                let scheduledOn = createdOn.startOfDay().addingNumberOfDays(day + burst * 90)
+                let finishedOn = (burst == 0) ? studyBurstFinishedOn[day] : nil
+                let schedule = createSchedule(with: .studyBurstCompletedTask,
+                                              scheduledOn: scheduledOn,
+                                              expiresOn: scheduledOn.addingNumberOfDays(1),
+                                              finishedOn: finishedOn,
+                                              clientData: nil,
+                                              schedulePlanGuid: nil)
+                self.schedules.append(schedule)
+            }
         }
         
         let surveyMap = studySetup.mapStudyBurstSurveyFinishedOn()
@@ -404,11 +436,17 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
         }
         
         // Add the reminders task.
+        let clientData: SBBJSONValue? = {
+            guard surveyMap[.studyBurstReminder] != nil else { return nil }
+            return [ "reminderTime" : studySetup.reminderTime ?? "09:00",
+                     "noReminder" : (studySetup.reminderTime == nil)
+            ] as NSDictionary
+        }()
         let studyBurstReminder = createSchedule(with: .studyBurstReminder,
                                         scheduledOn: studySetup.createdOn,
                                         expiresOn: nil,
                                         finishedOn: surveyMap[.studyBurstReminder],
-                                        clientData: nil,
+                                        clientData: clientData,
                                         schedulePlanGuid: nil)
         studyBurstReminder.persistent = NSNumber(value: false)
         self.schedules.append(studyBurstReminder)

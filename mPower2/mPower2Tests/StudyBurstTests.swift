@@ -35,6 +35,7 @@ import XCTest
 @testable import mPower2TestApp
 @testable import BridgeApp
 import Research
+import UserNotifications
 
 class StudyBurstTests: XCTestCase {
     
@@ -86,15 +87,7 @@ class StudyBurstTests: XCTestCase {
     func testStudyBurstComplete_Day1() {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day1_tasksFinished_demographicsNotFinished)
-        
-        let expect = expectation(description: "Update finished called.")
-        scheduleManager.updateFinishedBlock = {
-            expect.fulfill()
-        }
-        scheduleManager.loadScheduledActivities()
-        waitForExpectations(timeout: 2) { (err) in
-            print(String(describing: err))
-        }
+        XCTAssertTrue(loadSchedules(scheduleManager))
         
         XCTAssertNil(scheduleManager.updateFailed_error)
         XCTAssertNotNil(scheduleManager.update_fetchedActivities)
@@ -119,25 +112,31 @@ class StudyBurstTests: XCTestCase {
         XCTAssertEqual(studyBurstReminder.count, 1)
         
         let completionTask = scheduleManager.completionTaskPath()
-        XCTAssertNotNil(completionTask)
+        XCTAssertNotNil(completionTask, "scheduleManager.completionTaskPath()")
         
-        XCTAssertNotNil(scheduleManager.actionBarItem)
+        XCTAssertNotNil(scheduleManager.actionBarItem, "scheduleManager.actionBarItem")
         XCTAssertEqual(scheduleManager.actionBarItem?.title, "Health Survey")
         XCTAssertEqual(scheduleManager.actionBarItem?.detail, "4 Minutes")
+    
+        let thisDay = scheduleManager.calculateThisDay()
+        XCTAssertEqual(thisDay, 1)
+        
+        let pastTasks = scheduleManager.getPastTasks(for: thisDay)
+        XCTAssertEqual(pastTasks.count, 0)
+        
+        XCTAssertNotNil(scheduleManager.todayCompletionTask, "scheduleManager.todayCompletionTask")
+        let todayCompletionTask = scheduleManager.getTodayCompletionTask(for: thisDay)
+        XCTAssertNotNil(todayCompletionTask, "scheduleManager.getTodayCompletionTask(for: thisDay)")
+        
+        XCTAssertNotNil(scheduleManager.unfinishedSchedule, "scheduleManager.unfinishedSchedule")
+        let unfinishedSchedule = scheduleManager.getUnfinishedSchedule(from: pastTasks)
+        XCTAssertNotNil(unfinishedSchedule, "scheduleManager.getUnfinishedSchedule(from: pastTasks)")
     }
     
     func testStudyBurstComplete_Day1_SurveysFinished() {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day1_tasksFinished_surveysFinished)
-        
-        let expect = expectation(description: "Update finished called.")
-        scheduleManager.updateFinishedBlock = {
-            expect.fulfill()
-        }
-        scheduleManager.loadScheduledActivities()
-        waitForExpectations(timeout: 2) { (err) in
-            print(String(describing: err))
-        }
+        XCTAssertTrue(loadSchedules(scheduleManager))
         
         XCTAssertNil(scheduleManager.updateFailed_error)
         XCTAssertNotNil(scheduleManager.update_fetchedActivities)
@@ -167,15 +166,7 @@ class StudyBurstTests: XCTestCase {
     func testStudyBurstComplete_Day2_DemographicsNotFinished() {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day2_demographicsNotFinished)
-        
-        let expect = expectation(description: "Update finished called.")
-        scheduleManager.updateFinishedBlock = {
-            expect.fulfill()
-        }
-        scheduleManager.loadScheduledActivities()
-        waitForExpectations(timeout: 2) { (err) in
-            print(String(describing: err))
-        }
+        XCTAssertTrue(loadSchedules(scheduleManager))
         
         XCTAssertNil(scheduleManager.updateFailed_error)
         XCTAssertNotNil(scheduleManager.update_fetchedActivities)
@@ -214,15 +205,7 @@ class StudyBurstTests: XCTestCase {
     func testStudyBurstComplete_Day15_Missing1() {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day15_missing1_engagementNotFinished)
-        
-        let expect = expectation(description: "Update finished called.")
-        scheduleManager.updateFinishedBlock = {
-            expect.fulfill()
-        }
-        scheduleManager.loadScheduledActivities()
-        waitForExpectations(timeout: 2) { (err) in
-            print(String(describing: err))
-        }
+        XCTAssertTrue(loadSchedules(scheduleManager))
         
         XCTAssertNil(scheduleManager.updateFailed_error)
         XCTAssertNotNil(scheduleManager.update_fetchedActivities)
@@ -242,15 +225,7 @@ class StudyBurstTests: XCTestCase {
     func testStudyBurstComplete_Day14_Missing1() {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day14_missing1_tasksFinished_engagementNotFinished)
-        
-        let expect = expectation(description: "Update finished called.")
-        scheduleManager.updateFinishedBlock = {
-            expect.fulfill()
-        }
-        scheduleManager.loadScheduledActivities()
-        waitForExpectations(timeout: 2) { (err) in
-            print(String(describing: err))
-        }
+        XCTAssertTrue(loadSchedules(scheduleManager))
         
         XCTAssertNil(scheduleManager.updateFailed_error)
         XCTAssertNotNil(scheduleManager.update_fetchedActivities)
@@ -272,15 +247,7 @@ class StudyBurstTests: XCTestCase {
     func testStudyBurstComplete_Day14_Missing6() {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day14_missing6_tasksFinished_engagementNotFinished)
-        
-        let expect = expectation(description: "Update finished called.")
-        scheduleManager.updateFinishedBlock = {
-            expect.fulfill()
-        }
-        scheduleManager.loadScheduledActivities()
-        waitForExpectations(timeout: 2) { (err) in
-            print(String(describing: err))
-        }
+        XCTAssertTrue(loadSchedules(scheduleManager))
         
         XCTAssertNil(scheduleManager.updateFailed_error)
         XCTAssertNotNil(scheduleManager.update_fetchedActivities)
@@ -298,15 +265,7 @@ class StudyBurstTests: XCTestCase {
     func testStudyBurstComplete_Day21_Missing6() {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day21_missing6_engagementNotFinished)
-        
-        let expect = expectation(description: "Update finished called.")
-        scheduleManager.updateFinishedBlock = {
-            expect.fulfill()
-        }
-        scheduleManager.loadScheduledActivities()
-        waitForExpectations(timeout: 2) { (err) in
-            print(String(describing: err))
-        }
+        XCTAssertTrue(loadSchedules(scheduleManager))
         
         XCTAssertNil(scheduleManager.updateFailed_error)
         XCTAssertNotNil(scheduleManager.update_fetchedActivities)
@@ -326,15 +285,7 @@ class StudyBurstTests: XCTestCase {
     func testStudyBurstComplete_Day15_BurstComplete_EngagementNotComplete() {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day15_burstCompleted_engagementNotFinished)
-        
-        let expect = expectation(description: "Update finished called.")
-        scheduleManager.updateFinishedBlock = {
-            expect.fulfill()
-        }
-        scheduleManager.loadScheduledActivities()
-        waitForExpectations(timeout: 2) { (err) in
-            print(String(describing: err))
-        }
+        XCTAssertTrue(loadSchedules(scheduleManager))
         
         XCTAssertNil(scheduleManager.updateFailed_error)
         XCTAssertNotNil(scheduleManager.update_fetchedActivities)
@@ -355,15 +306,7 @@ class StudyBurstTests: XCTestCase {
     func testStudyBurstComplete_Day15_BurstComplete_EngagementComplete() {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day15_burstCompleted_engagementFinished)
-        
-        let expect = expectation(description: "Update finished called.")
-        scheduleManager.updateFinishedBlock = {
-            expect.fulfill()
-        }
-        scheduleManager.loadScheduledActivities()
-        waitForExpectations(timeout: 2) { (err) in
-            print(String(describing: err))
-        }
+        XCTAssertTrue(loadSchedules(scheduleManager))
         
         XCTAssertNil(scheduleManager.updateFailed_error)
         XCTAssertNotNil(scheduleManager.update_fetchedActivities)
@@ -378,17 +321,322 @@ class StudyBurstTests: XCTestCase {
         
         XCTAssertNil(scheduleManager.actionBarItem)
     }
+    
+    // MARK: Notification rules tests
+    
+    func testReminders_Day1() {
+        let calendar = Calendar(identifier: .iso8601)
+
+        var studySetup: StudySetup = .day1_tasksFinished_surveysFinished
+        studySetup.reminderTime = "09:00:00"
+        let scheduleManager = TestStudyBurstScheduleManager(studySetup)
+        XCTAssertTrue(loadSchedules(scheduleManager))
+        
+        // Test assumptions
+        let reminderSchedule = scheduleManager._activityManager.schedules.first(where: {
+            $0.activityIdentifier == RSDIdentifier.studyBurstReminder.stringValue  })
+        XCTAssertNotNil(reminderSchedule)
+        XCTAssertNotNil(reminderSchedule?.clientData)
+        
+        let studyBurstReminder = scheduleManager.scheduledActivities.filter {
+            $0.activityIdentifier == RSDIdentifier.studyBurstReminder.stringValue
+        }
+        XCTAssertEqual(studyBurstReminder.count, 1)
+        
+        let studyBurstMarker = scheduleManager.scheduledActivities.first(where: {
+            $0.activityIdentifier == scheduleManager.studyBurst.identifier &&
+            calendar.isDate($0.scheduledOn, inSameDayAs: studySetup.now)
+        })
+        XCTAssertNotNil(studyBurstMarker)
+        XCTAssertTrue(studyBurstMarker?.isCompleted ?? false)
+        
+        // Check that the scheduled reminder time is decoded correctly
+        let scheduledReminderTime = scheduleManager.getReminderTime()
+        XCTAssertNotNil(scheduledReminderTime)
+        XCTAssertEqual(scheduledReminderTime?.hour, 9)
+        XCTAssertEqual(scheduledReminderTime?.minute, 0)
+        XCTAssertNil(scheduledReminderTime?.day)
+        XCTAssertNil(scheduledReminderTime?.month)
+        XCTAssertNil(scheduledReminderTime?.year)
+        
+        guard let reminderTime = scheduledReminderTime else {
+            XCTFail("Failed to get the reminder time. Cannot continue testing.")
+            return
+        }
+
+        let requests = scheduleManager.getLocalNotifications(after: reminderTime, with: [])
+        
+        // On day 1, with a reminder time in the future but the schedule for today complete,
+        // should have day 2 - 19 reminders lined up.
+        XCTAssertEqual(requests.add.count, 18)
+        XCTAssertEqual(requests.removeIds.count, 0)
+        if let reminder = requests.add.first?.trigger as? UNCalendarNotificationTrigger,
+            let nextDate = calendar.date(from: reminder.dateComponents) {
+            let expectedDate = studySetup.now.addingNumberOfDays(1)
+            XCTAssertFalse(reminder.repeats)
+            XCTAssertTrue(calendar.isDate(nextDate, inSameDayAs: expectedDate), "\(nextDate) is not in same day as \(expectedDate)")
+            XCTAssertEqual(reminder.dateComponents.hour, 9)
+        }
+        else {
+            XCTFail("\(String(describing: requests.add.first?.trigger)) nil or not of expected type")
+        }
+        
+        if let reminder = requests.add.last?.trigger as? UNCalendarNotificationTrigger,
+            let nextDate = calendar.date(from: reminder.dateComponents) {
+            let expectedDate = studySetup.createdOn.addingNumberOfDays(18)
+            XCTAssertFalse(reminder.repeats)
+            XCTAssertTrue(calendar.isDate(nextDate, inSameDayAs: expectedDate), "\(nextDate) is not in same day as \(expectedDate)")
+            XCTAssertEqual(reminder.dateComponents.hour, 9)
+        }
+        else {
+            XCTFail("\(String(describing: requests.add.first?.trigger)) nil or not of expected type")
+        }
+
+        let noChanges = scheduleManager.getLocalNotifications(after: reminderTime, with: requests.add)
+        XCTAssertEqual(noChanges.add.count, 0)
+        XCTAssertEqual(noChanges.removeIds.count, 0)
+        
+        var dateComponents = DateComponents()
+        dateComponents.hour = 14
+        dateComponents.minute = 30
+        let timeChange = scheduleManager.getLocalNotifications(after: dateComponents, with: requests.add)
+        XCTAssertEqual(timeChange.add.count, 18)
+        XCTAssertEqual(timeChange.removeIds.count, 18)
+        
+        if let reminder = timeChange.add.first?.trigger as? UNCalendarNotificationTrigger,
+            let nextDate = calendar.date(from: reminder.dateComponents) {
+            let expectedDate = studySetup.now.addingNumberOfDays(1)
+            XCTAssertFalse(reminder.repeats)
+            XCTAssertTrue(calendar.isDate(nextDate, inSameDayAs: expectedDate), "\(nextDate) is not in same day as \(expectedDate)")
+            XCTAssertEqual(reminder.dateComponents.hour, 14)
+        }
+        else {
+            XCTFail("\(String(describing: timeChange.add.first?.trigger)) nil or not of expected type")
+        }
+    }
+    
+    func testReminders_Day2() {
+        let calendar = Calendar(identifier: .iso8601)
+        
+        var studySetup: StudySetup = .day2_tasksNotFinished_surveysFinished
+        studySetup.reminderTime = "14:00:00"
+        let scheduleManager = TestStudyBurstScheduleManager(studySetup)
+        XCTAssertTrue(loadSchedules(scheduleManager))
+        
+        // Check that the scheduled reminder time is decoded correctly
+        let scheduledReminderTime = scheduleManager.getReminderTime()
+        XCTAssertNotNil(scheduledReminderTime)
+        XCTAssertEqual(scheduledReminderTime?.hour, 14)
+        XCTAssertEqual(scheduledReminderTime?.minute, 0)
+        
+        guard let reminderTime = scheduledReminderTime else {
+            XCTFail("Failed to get the reminder time. Cannot continue testing.")
+            return
+        }
+        
+        let requests = scheduleManager.getLocalNotifications(after: reminderTime, with: [])
+        
+        // On day 2, with a reminder time in the future and the schedule for today incomplete,
+        // should have day 2 - 19 reminders lined up.
+        XCTAssertEqual(requests.add.count, 18)
+        XCTAssertEqual(requests.removeIds.count, 0)
+        if let reminder = requests.add.first?.trigger as? UNCalendarNotificationTrigger,
+            let nextDate = calendar.date(from: reminder.dateComponents) {
+            let expectedDate = studySetup.now
+            XCTAssertFalse(reminder.repeats)
+            XCTAssertTrue(calendar.isDate(nextDate, inSameDayAs: expectedDate), "\(nextDate) is not in same day as \(expectedDate)")
+            XCTAssertEqual(reminder.dateComponents.hour, 14)
+        }
+        else {
+            XCTFail("\(String(describing: requests.add.first?.trigger)) nil or not of expected type")
+        }
+        
+        if let reminder = requests.add.last?.trigger as? UNCalendarNotificationTrigger,
+            let nextDate = reminder.nextTriggerDate() {
+            let expectedDate = studySetup.createdOn.addingNumberOfDays(18)
+            XCTAssertFalse(reminder.repeats)
+            XCTAssertTrue(calendar.isDate(nextDate, inSameDayAs: expectedDate), "\(nextDate) is not in same day as \(expectedDate)")
+            XCTAssertEqual(reminder.dateComponents.hour, 14)
+        }
+        else {
+            XCTFail("\(String(describing: requests.add.first?.trigger)) nil or not of expected type")
+        }
+    }
+    
+    func testReminders_Day11_AllDaysCompleted() {
+        let calendar = Calendar(identifier: .iso8601)
+        
+        var studySetup: StudySetup = .day11_tasksFinished_noMissingDays
+        studySetup.reminderTime = "14:00:00"
+        let scheduleManager = TestStudyBurstScheduleManager(studySetup)
+        XCTAssertTrue(loadSchedules(scheduleManager))
+        
+        // Check that the scheduled reminder time is decoded correctly
+        let scheduledReminderTime = scheduleManager.getReminderTime()
+        XCTAssertNotNil(scheduledReminderTime)
+        XCTAssertEqual(scheduledReminderTime?.hour, 14)
+        XCTAssertEqual(scheduledReminderTime?.minute, 0)
+        
+        guard let reminderTime = scheduledReminderTime else {
+            XCTFail("Failed to get the reminder time. Cannot continue testing.")
+            return
+        }
+        
+        let requests = scheduleManager.getLocalNotifications(after: reminderTime, with: [])
+        
+        // On day 11, with no missed days and today's tasks finished, the schedule should be set up for
+        // day 12-14, but **not** for days 15-19 because the minimum required number of study bursts has
+        // already been completed. Additionally, the reminders should be set up for days 1-14 for the *next*
+        // study burst.
+        XCTAssertEqual(requests.add.count, 17)
+        XCTAssertEqual(requests.removeIds.count, 0)
+        if let reminder = requests.add.first?.trigger as? UNCalendarNotificationTrigger,
+            let nextDate = calendar.date(from: reminder.dateComponents) {
+            let expectedDate = studySetup.now.addingNumberOfDays(1)
+            XCTAssertFalse(reminder.repeats)
+            XCTAssertTrue(calendar.isDate(nextDate, inSameDayAs: expectedDate), "\(nextDate) is not in same day as \(expectedDate)")
+            XCTAssertEqual(reminder.dateComponents.hour, 14)
+        }
+        else {
+            XCTFail("\(String(describing: requests.add.first?.trigger)) nil or not of expected type")
+        }
+        
+        if requests.add.count >= 3,
+            let reminder = requests.add[2].trigger as? UNCalendarNotificationTrigger,
+            let nextDate = reminder.nextTriggerDate() {
+            let expectedDate = studySetup.now.addingNumberOfDays(3)
+            XCTAssertFalse(reminder.repeats)
+            XCTAssertTrue(calendar.isDate(nextDate, inSameDayAs: expectedDate), "\(nextDate) is not in same day as \(expectedDate)")
+            XCTAssertEqual(reminder.dateComponents.hour, 14)
+        }
+        else {
+            XCTFail("\(String(describing: requests.add.first?.trigger)) nil or not of expected type")
+        }
+        
+        if requests.add.count >= 4,
+            let reminder = requests.add[3].trigger as? UNCalendarNotificationTrigger,
+            let nextDate = reminder.nextTriggerDate() {
+            let expectedDate = studySetup.createdOn.addingNumberOfDays(90)
+            XCTAssertFalse(reminder.repeats)
+            XCTAssertTrue(calendar.isDate(nextDate, inSameDayAs: expectedDate), "\(nextDate) is not in same day as \(expectedDate)")
+            XCTAssertEqual(reminder.dateComponents.hour, 14)
+        }
+        else {
+            XCTFail("\(String(describing: requests.add.first?.trigger)) nil or not of expected type")
+        }
+    }
+    
+    func testReminders_Day21_AllDaysCompleted() {
+        let calendar = Calendar(identifier: .iso8601)
+        
+        var studySetup: StudySetup = .day21_tasksFinished_noMissingDays
+        studySetup.reminderTime = "14:00:00"
+        let scheduleManager = TestStudyBurstScheduleManager(studySetup)
+        XCTAssertTrue(loadSchedules(scheduleManager))
+        
+        // Check that the scheduled reminder time is decoded correctly
+        let scheduledReminderTime = scheduleManager.getReminderTime()
+        XCTAssertNotNil(scheduledReminderTime)
+        XCTAssertEqual(scheduledReminderTime?.hour, 14)
+        XCTAssertEqual(scheduledReminderTime?.minute, 0)
+        
+        guard let reminderTime = scheduledReminderTime else {
+            XCTFail("Failed to get the reminder time. Cannot continue testing.")
+            return
+        }
+        
+        let requests = scheduleManager.getLocalNotifications(after: reminderTime, with: [])
+        
+        // On day 21, with no missed days and today's tasks finished, the schedule should be set up for
+        // days 1-14 for the *next* study burst.
+        XCTAssertEqual(requests.add.count, 14)
+        XCTAssertEqual(requests.removeIds.count, 0)
+        if let reminder = requests.add.first?.trigger as? UNCalendarNotificationTrigger,
+            let nextDate = reminder.nextTriggerDate() {
+            let expectedDate = studySetup.createdOn.addingNumberOfDays(90)
+            XCTAssertFalse(reminder.repeats)
+            XCTAssertTrue(calendar.isDate(nextDate, inSameDayAs: expectedDate), "\(nextDate) is not in same day as \(expectedDate)")
+            XCTAssertEqual(reminder.dateComponents.hour, 14)
+        }
+        else {
+            XCTFail("\(String(describing: requests.add.first?.trigger)) nil or not of expected type")
+        }
+    }
+    
+    func testReminders_Day89_AllDaysCompleted() {
+        let calendar = Calendar(identifier: .iso8601)
+        
+        var studySetup: StudySetup = .day89_tasksFinished_noMissingDays
+        studySetup.reminderTime = "14:00:00"
+        let scheduleManager = TestStudyBurstScheduleManager(studySetup)
+        XCTAssertTrue(loadSchedules(scheduleManager))
+        
+        // Check that the scheduled reminder time is decoded correctly
+        let scheduledReminderTime = scheduleManager.getReminderTime()
+        XCTAssertNotNil(scheduledReminderTime)
+        XCTAssertEqual(scheduledReminderTime?.hour, 14)
+        XCTAssertEqual(scheduledReminderTime?.minute, 0)
+        
+        guard let reminderTime = scheduledReminderTime else {
+            XCTFail("Failed to get the reminder time. Cannot continue testing.")
+            return
+        }
+        
+        let requests = scheduleManager.getLocalNotifications(after: reminderTime, with: [])
+        
+        // On day 89, with no missed days and today's tasks finished, the schedule should be set up for
+        // days 1-19 for the *next* study burst.
+        XCTAssertEqual(requests.add.count, 19)
+        XCTAssertEqual(requests.removeIds.count, 0)
+        if let reminder = requests.add.first?.trigger as? UNCalendarNotificationTrigger,
+            let nextDate = reminder.nextTriggerDate() {
+            let expectedDate = studySetup.createdOn.addingNumberOfDays(90)
+            XCTAssertFalse(reminder.repeats)
+            XCTAssertTrue(calendar.isDate(nextDate, inSameDayAs: expectedDate), "\(nextDate) is not in same day as \(expectedDate)")
+            XCTAssertEqual(reminder.dateComponents.hour, 14)
+        }
+        else {
+            XCTFail("\(String(describing: requests.add.first?.trigger)) nil or not of expected type")
+        }
+    }
+    
+    
+    // MARK: helper methods
+    
+    func loadSchedules(_ scheduleManager: TestStudyBurstScheduleManager) -> Bool {
+        let expect = expectation(description: "Update finished called.")
+        scheduleManager.updateFinishedBlock = {
+            expect.fulfill()
+        }
+        scheduleManager.loadScheduledActivities()
+        var success: Bool = true
+        waitForExpectations(timeout: 2) { (err) in
+            print(String(describing: err))
+            success = (err == nil)
+        }
+        return success
+    }
 }
 
 class TestStudyBurstScheduleManager : StudyBurstScheduleManager {
     
-    init(_ studySetup: StudySetup) {
+    init(_ studySetup: StudySetup, now: Date? = nil) {
         super.init()
-        self._activityManager.studySetup = studySetup
+        
+        // Default to "now" of 11:00 AM.
+        var setup = studySetup
+        setup.now = now ?? Date().startOfDay().addingTimeInterval(11 * 60 * 60)
+        
+        // build the schedules.
+        self._activityManager.studySetup = setup
         self._activityManager.buildSchedules()
     }
     
     let _activityManager = ActivityManager()
+    
+    override func now() -> Date {
+        return self._activityManager.studySetup.now
+    }
     
     override var activityManager: SBBActivityManagerProtocol {
         return _activityManager

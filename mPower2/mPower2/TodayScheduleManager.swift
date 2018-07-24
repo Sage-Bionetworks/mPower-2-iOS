@@ -87,12 +87,16 @@ struct TodayHistoryItem : Equatable, Comparable {
 
 class TodayHistoryScheduleManager : SBAScheduleManager {
     
+    func now() -> Date {
+        return Date()
+    }
+    
     /// List of all the items in today's history.
     public private(set) var items = [TodayHistoryItem]()
     
     /// Override to fetch the schedules for all activities that were finished today.
     override func fetchRequests() -> [FetchRequest] {
-        let finishedPredicate = SBBScheduledActivity.finishedOnDatePredicate(on: Date())
+        let finishedPredicate = SBBScheduledActivity.finishedOnDatePredicate(on: now())
         let studyBurstPredicate = NSCompoundPredicate(notPredicateWithSubpredicate:
             SBBScheduledActivity.activityIdentifierPredicate(with: RSDIdentifier.studyBurstCompletedTask.stringValue))
         let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [finishedPredicate, studyBurstPredicate])

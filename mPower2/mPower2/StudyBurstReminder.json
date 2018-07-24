@@ -21,7 +21,8 @@
                                  "identifier": "reminderTime",
                                  "type": "date",
                                  "prompt": "Set reminder",
-                                 "range" : { "defaultDate" : "09:00",
+                                 "range" : {
+                                    "defaultDate" : "09:00",
                                     "minuteInterval" : 15,
                                     "codingFormat" : "HH:mm" }
                                  },

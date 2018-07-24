@@ -33,6 +33,7 @@
 
 import UIKit
 import BridgeApp
+import UserNotifications
 
 class ReminderTableStepViewController: RSDTableStepViewController {
     
@@ -73,6 +74,31 @@ class ReminderTableStepViewController: RSDTableStepViewController {
         (tableData?.sections.first)?.title = "Set Reminder"
         
         // TODO: jbruhin 6-28-18 - refactor RSDFormStepDataSourceObject to support this.
+    }
+    
+    override func goForward() {
+        
+        // Check if there is a no reminders flag to **not** set the local notification.
+        let noReminderIdentifier = StudyBurstScheduleManager.NotificationResult.CodingKeys.noReminder.stringValue
+        let noReminder = (self.taskController.taskResult.findAnswerResult(with: noReminderIdentifier)?.value as? Bool) ?? false
+        if !noReminder {
+            UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .alert, .sound]) { (granted, _) in
+                DispatchQueue.main.async {
+                    if !granted {
+                        // TODO: syoung 07/19/2018 Localize and word-smith
+                        self.presentAlertWithOk(title: nil, message: "You have turned off notifications. To allow us to remind you about your Study Bursts, you will need to change this from the Settings app.", actionHandler: { (_) in
+                            super.goForward()
+                        })
+                    }
+                    else {
+                        super.goForward()
+                    }
+                }
+            }
+        }
+        else {
+            super.goForward()
+        }
     }
 }
 
