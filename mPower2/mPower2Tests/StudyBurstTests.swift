@@ -112,9 +112,9 @@ class StudyBurstTests: XCTestCase {
         XCTAssertEqual(studyBurstReminder.count, 1)
         
         let completionTask = scheduleManager.completionTaskPath()
-        XCTAssertNotNil(completionTask)
+        XCTAssertNotNil(completionTask, "scheduleManager.completionTaskPath()")
         
-        XCTAssertNotNil(scheduleManager.actionBarItem)
+        XCTAssertNotNil(scheduleManager.actionBarItem, "scheduleManager.actionBarItem")
         XCTAssertEqual(scheduleManager.actionBarItem?.title, "Health Survey")
         XCTAssertEqual(scheduleManager.actionBarItem?.detail, "4 Minutes")
     
@@ -124,13 +124,13 @@ class StudyBurstTests: XCTestCase {
         let pastTasks = scheduleManager.getPastTasks(for: thisDay)
         XCTAssertEqual(pastTasks.count, 0)
         
-        XCTAssertNotNil(scheduleManager.todayCompletionTask)
+        XCTAssertNotNil(scheduleManager.todayCompletionTask, "scheduleManager.todayCompletionTask")
         let todayCompletionTask = scheduleManager.getTodayCompletionTask(for: thisDay)
-        XCTAssertNotNil(todayCompletionTask)
+        XCTAssertNotNil(todayCompletionTask, "scheduleManager.getTodayCompletionTask(for: thisDay)")
         
-        XCTAssertNotNil(scheduleManager.unfinishedSchedule)
+        XCTAssertNotNil(scheduleManager.unfinishedSchedule, "scheduleManager.unfinishedSchedule")
         let unfinishedSchedule = scheduleManager.getUnfinishedSchedule(from: pastTasks)
-        XCTAssertNotNil(unfinishedSchedule)
+        XCTAssertNotNil(unfinishedSchedule, "scheduleManager.getUnfinishedSchedule(from: pastTasks)")
     }
     
     func testStudyBurstComplete_Day1_SurveysFinished() {
