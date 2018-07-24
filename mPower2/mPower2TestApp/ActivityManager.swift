@@ -46,8 +46,8 @@ public struct StudySetup {
          dataGroups: [String] = ["gr_SC_DB","gr_BR_AD","gr_ST_T","gr_DT_F"]) {
         
         self.studyBurstDay = studyBurstDay
-        self.studyBurstFinishedOnDays = studyBurstFinishedOnDays.filter { $0 < studyBurstDay }
-        self.studyBurstSurveyFinishedOnDays = studyBurstSurveyFinishedOnDays.filter { $0.value <= studyBurstDay }
+        self.studyBurstFinishedOnDays = studyBurstFinishedOnDays
+        self.studyBurstSurveyFinishedOnDays = studyBurstSurveyFinishedOnDays
         self.finishedTodayTasks = finishedTodayTasks
         self.timeUntilExpires = timeUntilExpires
         self.dataGroups = dataGroups
@@ -60,14 +60,14 @@ public struct StudySetup {
     let studyBurstDay: UInt
     
     /// The days in the past when the particpant finished all the tasks.
-    var studyBurstFinishedOnDays: [Int]
+    let studyBurstFinishedOnDays: [Int]
     
     /// The days when the study burst was finished.
-    var studyBurstSurveyFinishedOnDays: [RSDIdentifier : Int]
+    let studyBurstSurveyFinishedOnDays: [RSDIdentifier : Int]
     
     /// A list of the tasks to mark as finished today for a study burst. If included, this will be used to
     /// define the order of the tasks for display in the study burst view.
-    var finishedTodayTasks: [RSDIdentifier]
+    let finishedTodayTasks: [RSDIdentifier]
     
     /// The time to use as the time until today's finished tasks will expire. Default = 15 min.
     var timeUntilExpires: TimeInterval
@@ -90,8 +90,8 @@ public struct StudySetup {
     func mapStudyBurstFinishedOn() -> [Int : Date] {
         let firstDay = createdOn.startOfDay().addingTimeInterval(8 * 60 * 60)
         return studyBurstFinishedOnDays.rsd_filteredDictionary { (day) -> (Int, Date)? in
-            guard day < self.studyBurstDay else { return nil }
-            let time = TimeInterval(arc4random_uniform(12 * 60 * 60))
+            guard day <= self.studyBurstDay else { return nil }
+            let time = TimeInterval(arc4random_uniform(30 * 60))
             let timestamp = firstDay.addingNumberOfDays(day).addingTimeInterval(time)
             return (day, timestamp)
         }
@@ -99,10 +99,11 @@ public struct StudySetup {
     
     /// Generated days of the study burst to mark as finished. This only applies to days that are past.
     func mapStudyBurstSurveyFinishedOn() -> [RSDIdentifier : Date] {
-        let firstDay = createdOn.startOfDay().addingTimeInterval(8 * 60 * 60)
+        let firstDay = createdOn.startOfDay().addingTimeInterval(8.5 * 60 * 60)
         return studyBurstSurveyFinishedOnDays.rsd_filteredDictionary { (input) -> (RSDIdentifier, Date)? in
             let day = input.value
-            let time = TimeInterval(arc4random_uniform(12 * 60 * 60))
+            guard day <= self.studyBurstDay else { return nil }
+            let time = TimeInterval(arc4random_uniform(30 * 60))
             let timestamp = firstDay.addingNumberOfDays(day).addingTimeInterval(time)
             return (input.key, timestamp)
         }
@@ -146,16 +147,22 @@ extension StudySetup {
         return surveyMap
     }
     
-    static let day1_noTasksFinished =
+    static let day1_startupState =
         StudySetup(studyBurstDay: 0,
                    studyBurstFinishedOnDays: [],
                    studyBurstSurveyFinishedOnDays: [:],
                    finishedTodayTasks: [])
     
-    static let day1_tasksFinished_demographicsNotFinished =
+    static let day1_noTasksFinished =
         StudySetup(studyBurstDay: 0,
                    studyBurstFinishedOnDays: [],
-                   studyBurstSurveyFinishedOnDays: [:],
+                   studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 0),
+                   finishedTodayTasks: [])
+    
+    static let day1_tasksFinished_surveysNotFinished =
+        StudySetup(studyBurstDay: 0,
+                   studyBurstFinishedOnDays: [],
+                   studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 0),
                    finishedTodayTasks: RSDIdentifier.measuringTasks)
     
     static let day1_tasksFinished_surveysFinished =
@@ -164,10 +171,10 @@ extension StudySetup {
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 1),
                    finishedTodayTasks: RSDIdentifier.measuringTasks)
     
-    static let day2_demographicsNotFinished =
+    static let day2_surveysNotFinished =
         StudySetup(studyBurstDay: 1,
                    studyBurstFinishedOnDays: [0],
-                   studyBurstSurveyFinishedOnDays: [:],
+                   studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 0),
                    finishedTodayTasks: [])
     
     static let day2_tasksNotFinished_surveysFinished =
@@ -245,7 +252,7 @@ public struct SurveyReference : Codable {
     let createdOn: String
     
     static var all: [SurveyReference] = {
-        let surveyIdentifiers = ["Demographics", "Engagement"]
+        let surveyIdentifiers = ["Demographics", "Engagement", "Motivation"]
         let surveys: [SurveyReference] = surveyIdentifiers.compactMap {
             do {
                 let transformer = RSDResourceTransformerObject(resourceName: $0)

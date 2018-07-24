@@ -77,6 +77,7 @@
 		F832AC6620DC5EA5005A9025 /* StudyBurstReminder.json in Resources */ = {isa = PBXBuildFile; fileRef = F832AC5020DC5EA5005A9025 /* StudyBurstReminder.json */; };
 		F832AC6720DC5EA5005A9025 /* StudyBurstReminder.json in Resources */ = {isa = PBXBuildFile; fileRef = F832AC5020DC5EA5005A9025 /* StudyBurstReminder.json */; };
 		F8460D752097CF0C0084E197 /* MCTCountdownStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8460D742097CF0C0084E197 /* MCTCountdownStepViewController.swift */; };
+		F848F4F32107C9A00001ADBF /* Motivation.json in Resources */ = {isa = PBXBuildFile; fileRef = F848F4DD2107C99F0001ADBF /* Motivation.json */; };
 		F84E723620E1866300E5C6C3 /* Demographics.json in Resources */ = {isa = PBXBuildFile; fileRef = F84E722020E1866300E5C6C3 /* Demographics.json */; };
 		F84E723820E1866A00E5C6C3 /* Engagement.json in Resources */ = {isa = PBXBuildFile; fileRef = F84E723720E1866A00E5C6C3 /* Engagement.json */; };
 		F84E724020E2C99900E5C6C3 /* mPower2TestAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84E723F20E2C99900E5C6C3 /* mPower2TestAppUITests.swift */; };
@@ -450,6 +451,7 @@
 		F832AC3720DA29E6005A9025 /* MP2Factory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MP2Factory.swift; sourceTree = "<group>"; };
 		F832AC5020DC5EA5005A9025 /* StudyBurstReminder.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = StudyBurstReminder.json; sourceTree = "<group>"; };
 		F8460D742097CF0C0084E197 /* MCTCountdownStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTCountdownStepViewController.swift; sourceTree = "<group>"; };
+		F848F4DD2107C99F0001ADBF /* Motivation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Motivation.json; sourceTree = "<group>"; };
 		F84E722020E1866300E5C6C3 /* Demographics.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Demographics.json; sourceTree = "<group>"; };
 		F84E723720E1866A00E5C6C3 /* Engagement.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Engagement.json; sourceTree = "<group>"; };
 		F84E723D20E2C99900E5C6C3 /* mPower2TestAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = mPower2TestAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -671,6 +673,7 @@
 				F81BE7BE20B4AB4B00EE57D3 /* AppConfig.json */,
 				F84E722020E1866300E5C6C3 /* Demographics.json */,
 				F84E723720E1866A00E5C6C3 /* Engagement.json */,
+				F848F4DD2107C99F0001ADBF /* Motivation.json */,
 			);
 			path = "Mock Responses";
 			sourceTree = "<group>";
@@ -1243,6 +1246,7 @@
 				F832ABE220D8BB7C005A9025 /* Symptoms.json in Resources */,
 				F832ABE120D8BB7C005A9025 /* Triggers.json in Resources */,
 				F832AC6720DC5EA5005A9025 /* StudyBurstReminder.json in Resources */,
+				F848F4F32107C9A00001ADBF /* Motivation.json in Resources */,
 				F84E723620E1866300E5C6C3 /* Demographics.json in Resources */,
 				F84E723820E1866A00E5C6C3 /* Engagement.json in Resources */,
 				F832ABE520D8BB7C005A9025 /* Medication.json in Resources */,

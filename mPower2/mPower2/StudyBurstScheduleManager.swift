@@ -244,8 +244,9 @@ class StudyBurstScheduleManager : SBAScheduleManager {
     /// order for any given day.
     public var orderedTasks: [RSDTaskInfo] {
         // Look in-memory first.
+        let today = now()
         if let orderedTasks = _orderedTasks,
-            let timestamp = _shuffleTimestamp, Calendar.current.isDateInToday(timestamp) {
+            let timestamp = _shuffleTimestamp, Calendar.current.isDate(timestamp, inSameDayAs: today) {
             return orderedTasks
         }
         
@@ -255,7 +256,7 @@ class StudyBurstScheduleManager : SBAScheduleManager {
 
         if let storedOrder = UserDefaults.standard.array(forKey: StudyBurstScheduleManager.orderKey) as? [String],
             let timestamp = UserDefaults.standard.object(forKey: StudyBurstScheduleManager.timestampKey) as? Date,
-            Calendar.current.isDateInToday(timestamp) {
+            Calendar.current.isDate(timestamp, inSameDayAs: today) {
             // If the timestamp is still valid for today, then sort using the stored order.
             _orderedTasks = tasks.sorted(by: {
                 guard let idx1 = storedOrder.index(of: $0.identifier),
@@ -444,7 +445,7 @@ class StudyBurstScheduleManager : SBAScheduleManager {
     
     /// Override isCompleted to only return true if the schedule is within the expiration window.
     override func isCompleted(for taskInfo: RSDTaskInfo, on date: Date) -> Bool {
-        guard Calendar.current.isDateInToday(date) else {
+        guard Calendar.current.isDate(date, inSameDayAs: today ?? now()) else {
             return super.isCompleted(for: taskInfo, on: date)
         }
         return self.finishedSchedules.first(where: { $0.activityIdentifier == taskInfo.identifier }) != nil
@@ -504,9 +505,10 @@ class StudyBurstScheduleManager : SBAScheduleManager {
     /// Returns the study burst completed marker for today.
     func getStudyBurst() -> SBBScheduledActivity? {
         
+        let todayStart = now().startOfDay()
         let studyBurstMarkerId = self.studyBurst.identifier
         guard let studyMarker = self.scheduledActivities.first(where: {
-            $0.activityIdentifier == studyBurstMarkerId && Calendar.current.isDateInToday($0.scheduledOn)
+            $0.activityIdentifier == studyBurstMarkerId && Calendar.current.isDate($0.scheduledOn, inSameDayAs: todayStart)
         })
             else {
                 return nil
@@ -514,7 +516,6 @@ class StudyBurstScheduleManager : SBAScheduleManager {
 
         let markerSchedules = self.scheduledActivities.filter { studyMarker.activityIdentifier == $0.activityIdentifier }
         
-        let todayStart = now().startOfDay()
         let pastSchedules = markerSchedules.filter { $0.scheduledOn < todayStart }
         let dayCount = pastSchedules.count + 1
         let missedDaysCount = pastSchedules.reduce(0, { $0 + ($1.finishedOn == nil ? 1 : 0) })

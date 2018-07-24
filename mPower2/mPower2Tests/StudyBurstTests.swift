@@ -86,7 +86,7 @@ class StudyBurstTests: XCTestCase {
     
     func testStudyBurstComplete_Day1() {
         
-        let scheduleManager = TestStudyBurstScheduleManager(.day1_tasksFinished_demographicsNotFinished)
+        let scheduleManager = TestStudyBurstScheduleManager(.day1_tasksFinished_surveysNotFinished)
         XCTAssertTrue(loadSchedules(scheduleManager))
         
         XCTAssertNil(scheduleManager.updateFailed_error)
@@ -165,7 +165,7 @@ class StudyBurstTests: XCTestCase {
     
     func testStudyBurstComplete_Day2_DemographicsNotFinished() {
         
-        let scheduleManager = TestStudyBurstScheduleManager(.day2_demographicsNotFinished)
+        let scheduleManager = TestStudyBurstScheduleManager(.day2_surveysNotFinished)
         XCTAssertTrue(loadSchedules(scheduleManager))
         
         XCTAssertNil(scheduleManager.updateFailed_error)
@@ -327,9 +327,10 @@ class StudyBurstTests: XCTestCase {
     func testReminders_Day1() {
         let calendar = Calendar(identifier: .iso8601)
 
-        var studySetup: StudySetup = .day1_tasksFinished_surveysFinished
-        studySetup.reminderTime = "09:00:00"
-        let scheduleManager = TestStudyBurstScheduleManager(studySetup)
+        var setup: StudySetup = .day1_tasksFinished_surveysFinished
+        setup.reminderTime = "09:00:00"
+        let scheduleManager = TestStudyBurstScheduleManager(setup)
+        let studySetup = scheduleManager.studySetup
         XCTAssertTrue(loadSchedules(scheduleManager))
         
         // Test assumptions
@@ -418,9 +419,10 @@ class StudyBurstTests: XCTestCase {
     func testReminders_Day2() {
         let calendar = Calendar(identifier: .iso8601)
         
-        var studySetup: StudySetup = .day2_tasksNotFinished_surveysFinished
-        studySetup.reminderTime = "14:00:00"
-        let scheduleManager = TestStudyBurstScheduleManager(studySetup)
+        var setup: StudySetup = .day2_tasksNotFinished_surveysFinished
+        setup.reminderTime = "14:00:00"
+        let scheduleManager = TestStudyBurstScheduleManager(setup)
+        let studySetup = scheduleManager.studySetup
         XCTAssertTrue(loadSchedules(scheduleManager))
         
         // Check that the scheduled reminder time is decoded correctly
@@ -452,7 +454,7 @@ class StudyBurstTests: XCTestCase {
         }
         
         if let reminder = requests.add.last?.trigger as? UNCalendarNotificationTrigger,
-            let nextDate = reminder.nextTriggerDate() {
+            let nextDate = calendar.date(from: reminder.dateComponents) {
             let expectedDate = studySetup.createdOn.addingNumberOfDays(18)
             XCTAssertFalse(reminder.repeats)
             XCTAssertTrue(calendar.isDate(nextDate, inSameDayAs: expectedDate), "\(nextDate) is not in same day as \(expectedDate)")
@@ -466,9 +468,10 @@ class StudyBurstTests: XCTestCase {
     func testReminders_Day11_AllDaysCompleted() {
         let calendar = Calendar(identifier: .iso8601)
         
-        var studySetup: StudySetup = .day11_tasksFinished_noMissingDays
-        studySetup.reminderTime = "14:00:00"
-        let scheduleManager = TestStudyBurstScheduleManager(studySetup)
+        var setup: StudySetup = .day11_tasksFinished_noMissingDays
+        setup.reminderTime = "14:00:00"
+        let scheduleManager = TestStudyBurstScheduleManager(setup)
+        let studySetup = scheduleManager.studySetup
         XCTAssertTrue(loadSchedules(scheduleManager))
         
         // Check that the scheduled reminder time is decoded correctly
@@ -503,7 +506,7 @@ class StudyBurstTests: XCTestCase {
         
         if requests.add.count >= 3,
             let reminder = requests.add[2].trigger as? UNCalendarNotificationTrigger,
-            let nextDate = reminder.nextTriggerDate() {
+            let nextDate = calendar.date(from: reminder.dateComponents) {
             let expectedDate = studySetup.now.addingNumberOfDays(3)
             XCTAssertFalse(reminder.repeats)
             XCTAssertTrue(calendar.isDate(nextDate, inSameDayAs: expectedDate), "\(nextDate) is not in same day as \(expectedDate)")
@@ -515,7 +518,7 @@ class StudyBurstTests: XCTestCase {
         
         if requests.add.count >= 4,
             let reminder = requests.add[3].trigger as? UNCalendarNotificationTrigger,
-            let nextDate = reminder.nextTriggerDate() {
+            let nextDate = calendar.date(from: reminder.dateComponents) {
             let expectedDate = studySetup.createdOn.addingNumberOfDays(90)
             XCTAssertFalse(reminder.repeats)
             XCTAssertTrue(calendar.isDate(nextDate, inSameDayAs: expectedDate), "\(nextDate) is not in same day as \(expectedDate)")
@@ -529,9 +532,10 @@ class StudyBurstTests: XCTestCase {
     func testReminders_Day21_AllDaysCompleted() {
         let calendar = Calendar(identifier: .iso8601)
         
-        var studySetup: StudySetup = .day21_tasksFinished_noMissingDays
-        studySetup.reminderTime = "14:00:00"
-        let scheduleManager = TestStudyBurstScheduleManager(studySetup)
+        var setup: StudySetup = .day21_tasksFinished_noMissingDays
+        setup.reminderTime = "14:00:00"
+        let scheduleManager = TestStudyBurstScheduleManager(setup)
+        let studySetup = scheduleManager.studySetup
         XCTAssertTrue(loadSchedules(scheduleManager))
         
         // Check that the scheduled reminder time is decoded correctly
@@ -552,7 +556,7 @@ class StudyBurstTests: XCTestCase {
         XCTAssertEqual(requests.add.count, 14)
         XCTAssertEqual(requests.removeIds.count, 0)
         if let reminder = requests.add.first?.trigger as? UNCalendarNotificationTrigger,
-            let nextDate = reminder.nextTriggerDate() {
+            let nextDate = calendar.date(from: reminder.dateComponents) {
             let expectedDate = studySetup.createdOn.addingNumberOfDays(90)
             XCTAssertFalse(reminder.repeats)
             XCTAssertTrue(calendar.isDate(nextDate, inSameDayAs: expectedDate), "\(nextDate) is not in same day as \(expectedDate)")
@@ -566,9 +570,10 @@ class StudyBurstTests: XCTestCase {
     func testReminders_Day89_AllDaysCompleted() {
         let calendar = Calendar(identifier: .iso8601)
         
-        var studySetup: StudySetup = .day89_tasksFinished_noMissingDays
-        studySetup.reminderTime = "14:00:00"
-        let scheduleManager = TestStudyBurstScheduleManager(studySetup)
+        var setup: StudySetup = .day89_tasksFinished_noMissingDays
+        setup.reminderTime = "14:00:00"
+        let scheduleManager = TestStudyBurstScheduleManager(setup)
+        let studySetup = scheduleManager.studySetup
         XCTAssertTrue(loadSchedules(scheduleManager))
         
         // Check that the scheduled reminder time is decoded correctly
@@ -589,7 +594,7 @@ class StudyBurstTests: XCTestCase {
         XCTAssertEqual(requests.add.count, 19)
         XCTAssertEqual(requests.removeIds.count, 0)
         if let reminder = requests.add.first?.trigger as? UNCalendarNotificationTrigger,
-            let nextDate = reminder.nextTriggerDate() {
+            let nextDate = calendar.date(from: reminder.dateComponents) {
             let expectedDate = studySetup.createdOn.addingNumberOfDays(90)
             XCTAssertFalse(reminder.repeats)
             XCTAssertTrue(calendar.isDate(nextDate, inSameDayAs: expectedDate), "\(nextDate) is not in same day as \(expectedDate)")
@@ -623,9 +628,9 @@ class TestStudyBurstScheduleManager : StudyBurstScheduleManager {
     init(_ studySetup: StudySetup, now: Date? = nil) {
         super.init()
         
-        // Default to "now" of 11:00 AM.
+        // Default to "now" of 11:00 AM yesterday.
         var setup = studySetup
-        setup.now = now ?? Date().startOfDay().addingTimeInterval(11 * 60 * 60)
+        setup.now = now ?? Date().addingNumberOfDays(-1).startOfDay().addingTimeInterval(11 * 60 * 60)
         
         // build the schedules.
         self._activityManager.studySetup = setup
@@ -633,6 +638,10 @@ class TestStudyBurstScheduleManager : StudyBurstScheduleManager {
     }
     
     let _activityManager = ActivityManager()
+    
+    var studySetup: StudySetup {
+        return self._activityManager.studySetup
+    }
     
     override func now() -> Date {
         return self._activityManager.studySetup.now

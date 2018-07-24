@@ -48,16 +48,6 @@
                ReferencedContainer = "container:mPower2.xcodeproj">
             </BuildableReference>
          </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F84E723C20E2C99900E5C6C3"
-               BuildableName = "mPower2TestAppUITests.xctest"
-               BlueprintName = "mPower2TestAppUITests"
-               ReferencedContainer = "container:mPower2.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
