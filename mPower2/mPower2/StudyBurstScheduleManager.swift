@@ -412,11 +412,6 @@ class StudyBurstScheduleManager : SBAScheduleManager {
     
     /// Override to build the new set of today history items.
     override func didUpdateScheduledActivities(from previousActivities: [SBBScheduledActivity]) {
-        guard (today == nil) || !Calendar.current.isDateInToday(today!) || !isCompletedForToday
-            else {
-                super.didUpdateScheduledActivities(from: previousActivities)
-                return
-        }
         today = now()
         
         if let studyMarker = self.getStudyBurst() {
