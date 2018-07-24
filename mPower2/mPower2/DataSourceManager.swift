@@ -108,7 +108,7 @@ class DataSourceManager {
     
     func studyBurstScheduleManager() -> StudyBurstScheduleManager {
         installTaskGroupsIfNeeded()
-        return StudyBurstScheduleManager()
+        return StudyBurstScheduleManager.shared
     }
     
     func surveyManager() -> SurveyScheduleManager {

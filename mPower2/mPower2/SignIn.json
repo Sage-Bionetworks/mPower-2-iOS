@@ -121,7 +121,7 @@
                      "viewIdentifier":"RegistrationVerification",
                      "storyboardIdentifier":"Registration"
                  },
-                 "nextStepIdentifier": "exit"
+                 "nextStepIdentifier": "nextSection"
              },
              {
                  "identifier":"completion",

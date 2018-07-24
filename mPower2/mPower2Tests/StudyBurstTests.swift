@@ -84,6 +84,52 @@ class StudyBurstTests: XCTestCase {
         }
     }
     
+    func testStudyBurst_Day1_StartState() {
+        
+        let scheduleManager = TestStudyBurstScheduleManager(.day1_startupState)
+        XCTAssertTrue(loadSchedules(scheduleManager))
+        
+        XCTAssertNil(scheduleManager.updateFailed_error)
+        XCTAssertNotNil(scheduleManager.update_fetchedActivities)
+        XCTAssertNotNil(scheduleManager.activityGroup)
+        XCTAssertEqual(scheduleManager.dayCount, 1)
+        XCTAssertTrue(scheduleManager.hasStudyBurst)
+        XCTAssertEqual(scheduleManager.finishedSchedules.count, 0)
+        XCTAssertFalse(scheduleManager.isCompletedForToday)
+        XCTAssertFalse(scheduleManager.isLastDay)
+        XCTAssertEqual(scheduleManager.calculateThisDay(), 1)
+        XCTAssertEqual(scheduleManager.pastSurveySchedules.count, 0)
+        XCTAssertNotNil(scheduleManager.todayCompletionTask)
+        
+        let demographics = scheduleManager.scheduledActivities.filter {
+            $0.activityIdentifier == RSDIdentifier.demographics.stringValue
+        }
+        XCTAssertEqual(demographics.count, 1)
+        
+        let studyBurstReminder = scheduleManager.scheduledActivities.filter {
+            $0.activityIdentifier == RSDIdentifier.studyBurstReminder.stringValue
+        }
+        XCTAssertEqual(studyBurstReminder.count, 1)
+        
+        let completionTask = scheduleManager.completionTaskPath()
+        XCTAssertNil(completionTask, "scheduleManager.completionTaskPath()")
+        
+        XCTAssertNil(scheduleManager.actionBarItem, "scheduleManager.actionBarItem")
+        
+        let thisDay = scheduleManager.calculateThisDay()
+        XCTAssertEqual(thisDay, 1)
+        
+        let pastTasks = scheduleManager.getPastTasks(for: thisDay)
+        XCTAssertEqual(pastTasks.count, 0)
+        
+        XCTAssertNotNil(scheduleManager.todayCompletionTask, "scheduleManager.todayCompletionTask")
+        let todayCompletionTask = scheduleManager.getTodayCompletionTask(for: thisDay)
+        XCTAssertNotNil(todayCompletionTask, "scheduleManager.getTodayCompletionTask(for: thisDay)")
+        
+        let unfinishedSchedule = scheduleManager.getUnfinishedSchedule()
+        XCTAssertNil(unfinishedSchedule, "scheduleManager.getUnfinishedSchedule(from: pastTasks)")
+    }
+    
     func testStudyBurstComplete_Day1() {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day1_tasksFinished_surveysNotFinished)
@@ -114,9 +160,16 @@ class StudyBurstTests: XCTestCase {
         let completionTask = scheduleManager.completionTaskPath()
         XCTAssertNotNil(completionTask, "scheduleManager.completionTaskPath()")
         
+        if let steps = (completionTask?.task?.stepNavigator as? RSDConditionalStepNavigator)?.steps {
+            XCTAssertEqual(steps.count, 3)
+            XCTAssertEqual(steps.first?.identifier, "Motivation")
+        }
+        else {
+            XCTFail("Failed to get the expected navigator for the completion task")
+        }
+        
         XCTAssertNotNil(scheduleManager.actionBarItem, "scheduleManager.actionBarItem")
         XCTAssertEqual(scheduleManager.actionBarItem?.title, "Health Survey")
-        XCTAssertEqual(scheduleManager.actionBarItem?.detail, "4 Minutes")
     
         let thisDay = scheduleManager.calculateThisDay()
         XCTAssertEqual(thisDay, 1)
@@ -128,8 +181,7 @@ class StudyBurstTests: XCTestCase {
         let todayCompletionTask = scheduleManager.getTodayCompletionTask(for: thisDay)
         XCTAssertNotNil(todayCompletionTask, "scheduleManager.getTodayCompletionTask(for: thisDay)")
         
-        XCTAssertNotNil(scheduleManager.unfinishedSchedule, "scheduleManager.unfinishedSchedule")
-        let unfinishedSchedule = scheduleManager.getUnfinishedSchedule(from: pastTasks)
+        let unfinishedSchedule = scheduleManager.getUnfinishedSchedule()
         XCTAssertNotNil(unfinishedSchedule, "scheduleManager.getUnfinishedSchedule(from: pastTasks)")
     }
     
@@ -163,7 +215,7 @@ class StudyBurstTests: XCTestCase {
         XCTAssertNil(scheduleManager.actionBarItem)
     }
     
-    func testStudyBurstComplete_Day2_DemographicsNotFinished() {
+    func testStudyBurstComplete_Day2_Day1SurveysNotFinished() {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day2_surveysNotFinished)
         XCTAssertTrue(loadSchedules(scheduleManager))
@@ -177,29 +229,20 @@ class StudyBurstTests: XCTestCase {
         XCTAssertFalse(scheduleManager.isCompletedForToday)
         XCTAssertFalse(scheduleManager.isLastDay)
         XCTAssertEqual(scheduleManager.calculateThisDay(), 2)
-        XCTAssertEqual(scheduleManager.pastSurveySchedules.count, 2)
         XCTAssertNil(scheduleManager.todayCompletionTask)
-
-        if let demographics = scheduleManager.scheduledActivities.first(where: {
-            $0.activityIdentifier == RSDIdentifier.demographics.stringValue
-        }) {
-            XCTAssertFalse(demographics.isCompleted)
-        }
-        else {
-            XCTFail("Failed to find the survey.")
-        }
-        
-        let studyBurstReminder = scheduleManager.scheduledActivities.filter {
-            $0.activityIdentifier == RSDIdentifier.studyBurstReminder.stringValue
-        }
-        XCTAssertEqual(studyBurstReminder.count, 1)
         
         let completionTask = scheduleManager.completionTaskPath()
         XCTAssertNotNil(completionTask)
         
+        if let steps = (completionTask?.task?.stepNavigator as? RSDConditionalStepNavigator)?.steps {
+            XCTAssertEqual(steps.count, 3)
+            XCTAssertEqual(steps.first?.identifier, "Motivation")
+        }
+        else {
+            XCTFail("Failed to get the expected navigator for the completion task")
+        }
+        
         XCTAssertNotNil(scheduleManager.actionBarItem)
-        XCTAssertEqual(scheduleManager.actionBarItem?.title, "Health Survey")
-        XCTAssertEqual(scheduleManager.actionBarItem?.detail, "4 Minutes")
     }
     
     func testStudyBurstComplete_Day15_Missing1() {
@@ -216,6 +259,14 @@ class StudyBurstTests: XCTestCase {
         
         let completionTask = scheduleManager.completionTaskPath()
         XCTAssertNotNil(completionTask)
+        
+        if let steps = (completionTask?.task?.stepNavigator as? RSDConditionalStepNavigator)?.steps {
+            XCTAssertEqual(steps.count, 1)
+            XCTAssertEqual(steps.first?.identifier, "Engagement")
+        }
+        else {
+            XCTFail("Failed to get the expected navigator for the completion task")
+        }
         
         XCTAssertNotNil(scheduleManager.actionBarItem)
         XCTAssertEqual(scheduleManager.actionBarItem?.title, "Engagement Survey")
@@ -238,6 +289,14 @@ class StudyBurstTests: XCTestCase {
         
         let completionTask = scheduleManager.completionTaskPath()
         XCTAssertNotNil(completionTask)
+        
+        if let steps = (completionTask?.task?.stepNavigator as? RSDConditionalStepNavigator)?.steps {
+            XCTAssertEqual(steps.count, 1)
+            XCTAssertEqual(steps.first?.identifier, "Engagement")
+        }
+        else {
+            XCTFail("Failed to get the expected navigator for the completion task")
+        }
         
         XCTAssertNotNil(scheduleManager.actionBarItem)
         XCTAssertEqual(scheduleManager.actionBarItem?.title, "Engagement Survey")
@@ -277,6 +336,14 @@ class StudyBurstTests: XCTestCase {
         let completionTask = scheduleManager.completionTaskPath()
         XCTAssertNotNil(completionTask)
         
+        if let steps = (completionTask?.task?.stepNavigator as? RSDConditionalStepNavigator)?.steps {
+            XCTAssertEqual(steps.count, 1)
+            XCTAssertEqual(steps.first?.identifier, "Engagement")
+        }
+        else {
+            XCTFail("Failed to get the expected navigator for the completion task")
+        }
+        
         XCTAssertNotNil(scheduleManager.actionBarItem)
         XCTAssertEqual(scheduleManager.actionBarItem?.title, "Engagement Survey")
         XCTAssertEqual(scheduleManager.actionBarItem?.detail, "6 Minutes")
@@ -297,6 +364,14 @@ class StudyBurstTests: XCTestCase {
         
         let completionTask = scheduleManager.completionTaskPath()
         XCTAssertNotNil(completionTask)
+        
+        if let steps = (completionTask?.task?.stepNavigator as? RSDConditionalStepNavigator)?.steps {
+            XCTAssertEqual(steps.count, 1)
+            XCTAssertEqual(steps.first?.identifier, "Engagement")
+        }
+        else {
+            XCTFail("Failed to get the expected navigator for the completion task")
+        }
         
         XCTAssertNotNil(scheduleManager.actionBarItem)
         XCTAssertEqual(scheduleManager.actionBarItem?.title, "Engagement Survey")

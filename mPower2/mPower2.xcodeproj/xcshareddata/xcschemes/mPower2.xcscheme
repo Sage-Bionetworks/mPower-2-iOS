@@ -48,6 +48,26 @@
                ReferencedContainer = "container:mPower2.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F84E723C20E2C99900E5C6C3"
+               BuildableName = "mPower2TestAppUITests.xctest"
+               BlueprintName = "mPower2TestAppUITests"
+               ReferencedContainer = "container:mPower2.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F83B44AD2032467D002825AE"
+               BuildableName = "BridgeAppTests.xctest"
+               BlueprintName = "BridgeAppTests"
+               ReferencedContainer = "container:../BridgeApp-Apple-SDK/BridgeApp/BridgeApp.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

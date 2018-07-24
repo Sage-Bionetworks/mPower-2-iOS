@@ -43,7 +43,7 @@ public struct StudySetup {
          studyBurstSurveyFinishedOnDays: [RSDIdentifier : Int] = [:],
          finishedTodayTasks: [RSDIdentifier] = [.tappingTask, .walkAndBalanceTask],
          timeUntilExpires: TimeInterval = 15 * 60,
-         dataGroups: [String] = ["gr_SC_DB","gr_BR_AD","gr_ST_T","gr_DT_F"]) {
+         dataGroups: [String] = ["gr_SC_DB","gr_BR_II","gr_ST_T","gr_DT_T"]) {
         
         self.studyBurstDay = studyBurstDay
         self.studyBurstFinishedOnDays = studyBurstFinishedOnDays
@@ -137,12 +137,13 @@ extension StudySetup {
     
     static func previousFinishedSurveys(for studyBurstDay: Int) -> [RSDIdentifier : Int] {
         var surveyMap = [RSDIdentifier : Int]()
-        if studyBurstDay > 0 {
-            surveyMap[.demographics] = 0
-            surveyMap[.studyBurstReminder] = 0
-        }
-        if studyBurstDay > 13 {
-            surveyMap[.engagement] = 13
+        let config = StudyBurstConfiguration()
+        config.completionTasks.forEach {
+            let day = $0.day
+            guard studyBurstDay >= day else { return }
+            $0.activityIdentifiers.forEach { (identifier) in
+                surveyMap[identifier] = max(0, day - 1)
+            }
         }
         return surveyMap
     }
@@ -158,6 +159,12 @@ extension StudySetup {
                    studyBurstFinishedOnDays: [],
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 0),
                    finishedTodayTasks: [])
+    
+    static let day1_twoTasksFinished =
+        StudySetup(studyBurstDay: 0,
+                   studyBurstFinishedOnDays: [],
+                   studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 0),
+                   finishedTodayTasks: [.tappingTask, .walkAndBalanceTask])
     
     static let day1_tasksFinished_surveysNotFinished =
         StudySetup(studyBurstDay: 0,
@@ -479,7 +486,7 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
         var dictionary = [
             "activityType" : activityType,
             "guid" : guid,
-            "label" : survey?.label ?? identifier.stringValue
+            "label" : survey?.label ?? activityLabel(for: identifier)
         ]
         dictionary["labelDetail"] = survey?.detail
         let activity = SBBActivity(dictionaryRepresentation: dictionary)!
@@ -498,6 +505,15 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
         schedule.activity = activity
         
         return schedule
+    }
+    
+    func activityLabel(for identifier: RSDIdentifier) -> String {
+        switch identifier {
+        case .studyBurstReminder:
+            return "Set Study Burst Reminder"
+        default:
+            return identifier.stringValue
+        }
     }
     
     func addFinishedPersistent(_ scheduledActivities: [SBBScheduledActivity]) {

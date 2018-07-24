@@ -34,6 +34,7 @@
 import UIKit
 import BridgeApp
 import BridgeSDK
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
@@ -58,6 +59,13 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
             self.userSessionInfo = info
         }
         
+        // Instantiate and load the scheduled activities for the study burst.
+        StudyBurstScheduleManager.shared.loadScheduledActivities()
+        
+        // Reset the badge icon on active
+        // TODO: syoung 07/25/2018 Add appropriate messaging and UI/UX for highlighting notifications.
+        UIApplication.shared.applicationIconBadgeNumber = 0
+
         return super.application(application, willFinishLaunchingWithOptions: launchOptions)
     }
     

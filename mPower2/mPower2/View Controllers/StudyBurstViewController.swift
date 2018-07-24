@@ -83,11 +83,12 @@ class StudyBurstViewController: UIViewController {
         
         // Update progress circle
         progressCircleView.progress = studyBurstManager.progress
-        progressCircleView.displayDay(count: studyBurstManager.dayCount ?? 0)
+        progressCircleView.displayDay(count: studyBurstManager.dayCount ?? 1)
         
         // Update progress view
+        headerView.progressView?.isHidden = true
         headerView.progressView?.totalSteps = studyBurstManager.numberOfDays
-        headerView.progressView?.currentStep = studyBurstManager.dayCount ?? 0
+        headerView.progressView?.currentStep = studyBurstManager.dayCount ?? 1
         
         // Update greeting and message
         let content = welcomeContent()
@@ -110,7 +111,7 @@ class StudyBurstViewController: UIViewController {
 
         let formatter = NumberFormatter()
         formatter.numberStyle = .none
-        let currentDaysStr = formatter.string(for: studyBurstManager.dayCount)!
+        let currentDaysStr = formatter.string(for: studyBurstManager.dayCount ?? 1)!
         
         // The title string is the same regardless of how many days they've missed, if any.
         // It will vary only by the current day of the study burst
@@ -187,6 +188,7 @@ extension StudyBurstViewController: TaskBrowserViewControllerDelegate {
     func taskBrowserDidFinish(task: RSDTaskPath, reason: RSDTaskFinishReason) {
         delegate?.studyBurstDidFinish(task: task, reason: reason)
         progressLabel.updateStudyBurstExpirationTime(studyBurstManager.expiresOn)
+        progressCircleView.progress = studyBurstManager.progress
     }
     func taskBrowserToggleVisibility() {
         // Nothing
