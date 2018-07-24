@@ -117,6 +117,20 @@ class StudyBurstTests: XCTestCase {
         XCTAssertNotNil(scheduleManager.actionBarItem)
         XCTAssertEqual(scheduleManager.actionBarItem?.title, "Health Survey")
         XCTAssertEqual(scheduleManager.actionBarItem?.detail, "4 Minutes")
+    
+        let thisDay = scheduleManager.calculateThisDay()
+        XCTAssertEqual(thisDay, 1)
+        
+        let pastTasks = scheduleManager.getPastTasks(for: thisDay)
+        XCTAssertEqual(pastTasks.count, 0)
+        
+        XCTAssertNotNil(scheduleManager.todayCompletionTask)
+        let todayCompletionTask = scheduleManager.getTodayCompletionTask(for: thisDay)
+        XCTAssertNotNil(todayCompletionTask)
+        
+        XCTAssertNotNil(scheduleManager.unfinishedSchedule)
+        let unfinishedSchedule = scheduleManager.getUnfinishedSchedule(from: pastTasks)
+        XCTAssertNotNil(unfinishedSchedule)
     }
     
     func testStudyBurstComplete_Day1_SurveysFinished() {
