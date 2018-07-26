@@ -27,6 +27,8 @@
 		608241F22093D9F70026E843 /* ExternalIDRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608241F12093D9F70026E843 /* ExternalIDRegistrationViewController.swift */; };
 		60A1576E209D16C50033FAB5 /* Registration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60A1576D209D16C40033FAB5 /* Registration.storyboard */; };
 		60F45524209CF10100C532A0 /* SignInTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F45523209CF10100C532A0 /* SignInTaskViewController.swift */; };
+		80A0BE3321095E1A00D31B68 /* TrackedItemsIntroductionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6196512109473900F2E3EA /* TrackedItemsIntroductionStepObject.swift */; };
+		80A0BE4921095E4F00D31B68 /* TrackedItemsIntroductionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5E16EE210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift */; };
 		80F3739C20FC32D200A565E0 /* VersionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F3739B20FC32D200A565E0 /* VersionLabel.swift */; };
 		B508B31C2076ECA3001645CF /* MCTHandSelectionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B508B31B2076ECA3001645CF /* MCTHandSelectionStepObject.swift */; };
 		B508B39920772D76001645CF /* MCTSkippableSectionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B508B39820772D76001645CF /* MCTSkippableSectionStepObject.swift */; };
@@ -51,6 +53,8 @@
 		B5FA25FC206985E600A4FF3D /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7CD2062F28500CD351C /* Research.framework */; };
 		B5FA25FD206985FE00A4FF3D /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7DE2062F28F00CD351C /* ResearchUI.framework */; };
 		B5FA25FF2069867C00A4FF3D /* Walk_And_Balance.json in Resources */ = {isa = PBXBuildFile; fileRef = B5FA25FE2069867C00A4FF3D /* Walk_And_Balance.json */; };
+		CB5E16EF210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5E16EE210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift */; };
+		CB6196522109473900F2E3EA /* TrackedItemsIntroductionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6196512109473900F2E3EA /* TrackedItemsIntroductionStepObject.swift */; };
 		F8078F3F20ADF1DC00757F42 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8078F2920ADF1DC00757F42 /* AppDelegate.swift */; };
 		F8078F4320ADFA6A00757F42 /* DataSourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8078F4220ADFA6A00757F42 /* DataSourceManager.swift */; };
 		F8078F4420AE078A00757F42 /* DataSourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8078F4220ADFA6A00757F42 /* DataSourceManager.swift */; };
@@ -435,6 +439,8 @@
 		B5D822F6207449D400C03F3C /* MCTInstructionStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTInstructionStepViewController.swift; sourceTree = "<group>"; };
 		B5DC838C2076B5FD00DEE4A2 /* Finger_Tapping.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Finger_Tapping.json; sourceTree = "<group>"; };
 		B5FA25FE2069867C00A4FF3D /* Walk_And_Balance.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Walk_And_Balance.json; sourceTree = "<group>"; };
+		CB5E16EE210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TrackedItemsIntroductionStepViewController.swift; path = "View Controllers/TrackedItemsIntroductionStepViewController.swift"; sourceTree = "<group>"; };
+		CB6196512109473900F2E3EA /* TrackedItemsIntroductionStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TrackedItemsIntroductionStepObject.swift; path = Model/TrackedItemsIntroductionStepObject.swift; sourceTree = "<group>"; };
 		F8078F2920ADF1DC00757F42 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F8078F4220ADFA6A00757F42 /* DataSourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSourceManager.swift; sourceTree = "<group>"; };
 		F80CB9EB207D2D2300B4EE5D /* MCTTappingStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTTappingStepViewController.swift; sourceTree = "<group>"; };
@@ -571,6 +577,7 @@
 				F832ABE820D8D341005A9025 /* StudyBurstCompletionViewController.swift */,
 				03DD008220E2F9A4006A5794 /* ReminderTableStepViewController.swift */,
 				03A6E0012103E69900FC5A84 /* GreatJobViewController.swift */,
+				CB5E16EE210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -631,6 +638,14 @@
 				F80CB9FC207D3AD800B4EE5D /* MotorControl.strings */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		CB5E1705210946E200AEE6A6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CB6196512109473900F2E3EA /* TrackedItemsIntroductionStepObject.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 		F8078F4120ADF9A000757F42 /* Schedule Management */ = {
@@ -759,6 +774,7 @@
 		F8D3E7782062F1B900CD351C /* mPower2 */ = {
 			isa = PBXGroup;
 			children = (
+				CB5E1705210946E200AEE6A6 /* Model */,
 				F8D3E7792062F1B900CD351C /* AppDelegate.swift */,
 				F8078F4120ADF9A000757F42 /* Schedule Management */,
 				0334415220995311009B97A9 /* View Controllers */,
@@ -1332,6 +1348,7 @@
 				F8C58DCB20AF5E86001C7B7F /* StudyBurstScheduleManager.swift in Sources */,
 				F8C58DB220AF4823001C7B7F /* TodayScheduleManager.swift in Sources */,
 				F8C58DD620AF8CCC001C7B7F /* SurveyScheduleManager.swift in Sources */,
+				80A0BE3321095E1A00D31B68 /* TrackedItemsIntroductionStepObject.swift in Sources */,
 				03A6E0032103E69900FC5A84 /* GreatJobViewController.swift in Sources */,
 				F85459B6208FA77400D37243 /* UIColor+mPowerTheme.swift in Sources */,
 				F8078F4420AE078A00757F42 /* DataSourceManager.swift in Sources */,
@@ -1341,6 +1358,7 @@
 				60169BD120AF445C00D29532 /* ConsentViewController.swift in Sources */,
 				F832AC3620DA22DA005A9025 /* MP2BridgeConfiguration.swift in Sources */,
 				F88E8DFB20ADEE2600117A99 /* ExternalIDRegistrationViewController.swift in Sources */,
+				80A0BE4921095E4F00D31B68 /* TrackedItemsIntroductionStepViewController.swift in Sources */,
 				03DD008420E2F9A4006A5794 /* ReminderTableStepViewController.swift in Sources */,
 				F832ABEA20D96FEF005A9025 /* StudyBurstCompletionViewController.swift in Sources */,
 				F88E8DFC20ADEE2600117A99 /* PhoneRegistrationViewController.swift in Sources */,
@@ -1363,11 +1381,13 @@
 				F8C58DB120AF4823001C7B7F /* TodayScheduleManager.swift in Sources */,
 				F8C58DD520AF8CCC001C7B7F /* SurveyScheduleManager.swift in Sources */,
 				0354809F20BF3B6400B757AB /* StudyBurstViewController.swift in Sources */,
+				CB6196522109473900F2E3EA /* TrackedItemsIntroductionStepObject.swift in Sources */,
 				03DD008320E2F9A4006A5794 /* ReminderTableStepViewController.swift in Sources */,
 				80F3739C20FC32D200A565E0 /* VersionLabel.swift in Sources */,
 				F82AE7B62063160B00952D74 /* UIColor+mPowerTheme.swift in Sources */,
 				F8078F4320ADFA6A00757F42 /* DataSourceManager.swift in Sources */,
 				603B7BC320913B1A00794B7C /* PhoneRegistrationViewController.swift in Sources */,
+				CB5E16EF210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift in Sources */,
 				03A6E0022103E69900FC5A84 /* GreatJobViewController.swift in Sources */,
 				6076F2CB20A6680B00F6235E /* ConsentViewController.swift in Sources */,
 				603B7BAA208E90FF00794B7C /* RegistrationWaitingViewController.swift in Sources */,

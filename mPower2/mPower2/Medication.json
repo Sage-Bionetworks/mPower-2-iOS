@@ -1,6 +1,72 @@
 {
     "identifier": "Medication",
     "type": "medicationTracking",
+    "introduction": {
+        "identifier": "introduction",
+        "type": "trackedItemsIntroduction",
+        "title": "Medication List",
+        "text": "Your custom Medication List will live here",
+        "detail":"On the next screen, select your current Parkinson’s medications. In the future, your custom list will be here–ready for tracking.",
+        "image":{
+            "type": "fetchable",
+            "imageName":"medication"
+        },
+        "colorTheme": {
+            "colorStyle": {
+                "header": "darkBackground"
+            },
+            "usesLightStyle": false
+        },
+        "actions" : { "goForward": { "type": "default", "buttonTitle": "Select Medications" }},
+        "shouldHideActions": ["skip", "goBackward"] },
+    "selection": {
+        "title": "What medications are you taking?",
+        "detail": "Select all that apply" },
+    "reminder": {
+        "identifier": "medicationReminders",
+        "type": "medicationReminders",
+        "title": "Let's set a Reminder for your Medications",
+        "detail":"When do you want us to remind you to take your Parkinson's medications? You can always change them later.",
+        "image":{
+            "type": "fetchable",
+            "imageName":"remindersIcon",
+            "placementType":"iconBefore"
+        },
+        "colorTheme": {
+            "usesLightStyle": false
+        },
+        "actions" : { "goForward": { "type": "default", "buttonTitle": "Submit" }},
+        "shouldHideActions":["skip", "goBackward"],
+        "modalTitle": "When do you want to be reminded?",
+        "noReminderSetText": "(no reminder set)",
+        "descriptionFormat": "%@ minutes before medication time",
+        "inputFields": [{
+                        "identifier": "reminderChoices",
+                        "inputPrompt": "Add reminders",
+                        "type": "multipleChoice.integer",
+                        "choices": [
+                                    {
+                                    "text": "15 minutes before",
+                                    "value": 15
+                                    },
+                                    {
+                                    "text": "30 minutes before",
+                                    "value": 30
+                                    },
+                                    {
+                                    "text": "45 minutes before",
+                                    "value": 45
+                                    },
+                                    {
+                                    "text": "60 minutes before",
+                                    "value": 60
+                                    },
+                                    {
+                                    "text": "No reminder",
+                                    "isExclusive": true
+                                    }]
+                        }]
+    },
     "items": [{
               "sectionIdentifier": "Amantadine",
               "identifier": "Immediate release amantadine",
@@ -131,56 +197,5 @@
                  {
                  "identifier": "Monoamine Oxidase B inhibitors",
                  "detail": "(MAO-B)"
-                 }
-                 ],
-    "selection": {
-        "title": "What medications are you taking?",
-        "detail": "Select all that apply"},
-    "reminder": {
-        "identifier": "medicationReminders",
-        "type": "medicationReminders",
-        "title": "Let's set a Reminder for your Medications",
-        "detail":"When do you want us to remind you to take your Parkinson's medications? You can always change them later.",
-        "image":{
-            "type": "fetchable",
-            "imageName":"remindersIcon",
-            "placementType":"iconBefore"
-        },
-        "colorTheme": {
-            "usesLightStyle": false
-        },
-        "actions" : { "goForward": { "type": "default", "buttonTitle": "Submit" }},
-        "shouldHideActions":["skip", "goBackward"],
-        "modalTitle": "When do you want to be reminded?",
-        "noReminderSetText": "(no reminder set)",
-        "descriptionFormat": "%@ minutes before medication time",
-        "inputFields": [
-                        {
-                        "identifier": "reminderChoices",
-                        "inputPrompt": "Add reminders",
-                        "type": "multipleChoice.integer",
-                        "choices": [
-                                    {
-                                    "text": "15 minutes before",
-                                    "value": 15
-                                    },
-                                    {
-                                    "text": "30 minutes before",
-                                    "value": 30
-                                    },
-                                    {
-                                    "text": "45 minutes before",
-                                    "value": 45
-                                    },
-                                    {
-                                    "text": "60 minutes before",
-                                    "value": 60
-                                    },
-                                    {
-                                    "text": "No reminder",
-                                    "isExclusive": true
-                                    },
-                                    ]
-                        }]
-    }
+                 }]
 }

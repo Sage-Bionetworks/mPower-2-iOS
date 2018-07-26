@@ -1,6 +1,25 @@
 {
     "identifier": "Symptoms",
     "type": "tracking",
+    "introduction": {
+        "identifier": "introduction",
+        "type": "trackedItemsIntroduction",
+        "title": "Symptom List",
+        "text": "Your custom Symptom List will live here",
+        "detail":"On the next screen, select your most common Parkinson’s symptoms. In the future, your custom list will be here–ready for tracking.",
+        "image":{
+            "type": "fetchable",
+            "imageName":"symptoms"
+        },
+        "colorTheme": {
+            "colorStyle": {
+                "header": "darkBackground"
+            },
+            "usesLightStyle": false
+        },
+        "actions" : { "goForward": { "type": "default", "buttonTitle": "Select Symptoms" }},
+        "shouldHideActions": ["skip", "goBackward"]
+    },
     "selection": {
         "title": "What are your Parkinson’s Disease symptoms?",
         "detail": "Select all that apply"

@@ -1,6 +1,25 @@
 {
     "identifier": "Triggers",
     "type": "tracking",
+    "introduction": {
+        "identifier": "introduction",
+        "type": "trackedItemsIntroduction",
+        "title": "Trigger List",
+        "text": "Your custom Trigger List will live here",
+        "detail":"On the next screen, select your most common Parkinson’s triggers. In the future, your custom list will be here–ready for tracking.",
+        "image":{
+            "type": "fetchable",
+            "imageName":"triggers"
+        },
+        "colorTheme": {
+            "colorStyle": {
+                "header": "darkBackground"
+            },
+            "usesLightStyle": false
+        },
+        "actions" : { "goForward": { "type": "default", "buttonTitle": "Select Triggers" }},
+        "shouldHideActions": ["skip", "goBackward"]
+    },
     "selection": {
         "title": "What triggers would you like to track?",
         "detail": "Select all that apply"
