@@ -159,6 +159,9 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
         
         // Let the schedule manager handle the cleanup.
         selectedScheduleManager.taskController(taskController, didFinishWith: reason, error: error)
+        
+        // Reload the collection view
+        self.collectionView.reloadData()
     }
     
     func taskController(_ taskController: RSDTaskController, readyToSave taskPath: RSDTaskPath) {

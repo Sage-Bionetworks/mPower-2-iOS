@@ -53,6 +53,7 @@ extension RSDIdentifier {
     static let studyBurstCompletedTask: RSDIdentifier = "study-burst-task"
     static let demographics: RSDIdentifier = "Demographics"
     static let engagement: RSDIdentifier = "Engagement"
+    static let motivation: RSDIdentifier = "Motivation"
     static let studyBurstReminder: RSDIdentifier = "StudyBurstReminder"
 }
 
@@ -107,7 +108,7 @@ class DataSourceManager {
     
     func studyBurstScheduleManager() -> StudyBurstScheduleManager {
         installTaskGroupsIfNeeded()
-        return StudyBurstScheduleManager()
+        return StudyBurstScheduleManager.shared
     }
     
     func surveyManager() -> SurveyScheduleManager {

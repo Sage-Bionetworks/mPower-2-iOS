@@ -84,9 +84,55 @@ class StudyBurstTests: XCTestCase {
         }
     }
     
+    func testStudyBurst_Day1_StartState() {
+        
+        let scheduleManager = TestStudyBurstScheduleManager(.day1_startupState)
+        XCTAssertTrue(loadSchedules(scheduleManager))
+        
+        XCTAssertNil(scheduleManager.updateFailed_error)
+        XCTAssertNotNil(scheduleManager.update_fetchedActivities)
+        XCTAssertNotNil(scheduleManager.activityGroup)
+        XCTAssertEqual(scheduleManager.dayCount, 1)
+        XCTAssertTrue(scheduleManager.hasStudyBurst)
+        XCTAssertEqual(scheduleManager.finishedSchedules.count, 0)
+        XCTAssertFalse(scheduleManager.isCompletedForToday)
+        XCTAssertFalse(scheduleManager.isLastDay)
+        XCTAssertEqual(scheduleManager.calculateThisDay(), 1)
+        XCTAssertEqual(scheduleManager.pastSurveySchedules.count, 0)
+        XCTAssertNotNil(scheduleManager.todayCompletionTask)
+        
+        let demographics = scheduleManager.scheduledActivities.filter {
+            $0.activityIdentifier == RSDIdentifier.demographics.stringValue
+        }
+        XCTAssertEqual(demographics.count, 1)
+        
+        let studyBurstReminder = scheduleManager.scheduledActivities.filter {
+            $0.activityIdentifier == RSDIdentifier.studyBurstReminder.stringValue
+        }
+        XCTAssertEqual(studyBurstReminder.count, 1)
+        
+        let completionTask = scheduleManager.completionTaskPath()
+        XCTAssertNil(completionTask, "scheduleManager.completionTaskPath()")
+        
+        XCTAssertNil(scheduleManager.actionBarItem, "scheduleManager.actionBarItem")
+        
+        let thisDay = scheduleManager.calculateThisDay()
+        XCTAssertEqual(thisDay, 1)
+        
+        let pastTasks = scheduleManager.getPastTasks(for: thisDay)
+        XCTAssertEqual(pastTasks.count, 0)
+        
+        XCTAssertNotNil(scheduleManager.todayCompletionTask, "scheduleManager.todayCompletionTask")
+        let todayCompletionTask = scheduleManager.getTodayCompletionTask(for: thisDay)
+        XCTAssertNotNil(todayCompletionTask, "scheduleManager.getTodayCompletionTask(for: thisDay)")
+        
+        let unfinishedSchedule = scheduleManager.getUnfinishedSchedule()
+        XCTAssertNil(unfinishedSchedule, "scheduleManager.getUnfinishedSchedule(from: pastTasks)")
+    }
+    
     func testStudyBurstComplete_Day1() {
         
-        let scheduleManager = TestStudyBurstScheduleManager(.day1_tasksFinished_demographicsNotFinished)
+        let scheduleManager = TestStudyBurstScheduleManager(.day1_tasksFinished_surveysNotFinished)
         XCTAssertTrue(loadSchedules(scheduleManager))
         
         XCTAssertNil(scheduleManager.updateFailed_error)
@@ -114,9 +160,16 @@ class StudyBurstTests: XCTestCase {
         let completionTask = scheduleManager.completionTaskPath()
         XCTAssertNotNil(completionTask, "scheduleManager.completionTaskPath()")
         
+        if let steps = (completionTask?.task?.stepNavigator as? RSDConditionalStepNavigator)?.steps {
+            XCTAssertEqual(steps.count, 3)
+            XCTAssertEqual(steps.first?.identifier, "Motivation")
+        }
+        else {
+            XCTFail("Failed to get the expected navigator for the completion task")
+        }
+        
         XCTAssertNotNil(scheduleManager.actionBarItem, "scheduleManager.actionBarItem")
         XCTAssertEqual(scheduleManager.actionBarItem?.title, "Health Survey")
-        XCTAssertEqual(scheduleManager.actionBarItem?.detail, "4 Minutes")
     
         let thisDay = scheduleManager.calculateThisDay()
         XCTAssertEqual(thisDay, 1)
@@ -128,8 +181,7 @@ class StudyBurstTests: XCTestCase {
         let todayCompletionTask = scheduleManager.getTodayCompletionTask(for: thisDay)
         XCTAssertNotNil(todayCompletionTask, "scheduleManager.getTodayCompletionTask(for: thisDay)")
         
-        XCTAssertNotNil(scheduleManager.unfinishedSchedule, "scheduleManager.unfinishedSchedule")
-        let unfinishedSchedule = scheduleManager.getUnfinishedSchedule(from: pastTasks)
+        let unfinishedSchedule = scheduleManager.getUnfinishedSchedule()
         XCTAssertNotNil(unfinishedSchedule, "scheduleManager.getUnfinishedSchedule(from: pastTasks)")
     }
     
@@ -163,9 +215,9 @@ class StudyBurstTests: XCTestCase {
         XCTAssertNil(scheduleManager.actionBarItem)
     }
     
-    func testStudyBurstComplete_Day2_DemographicsNotFinished() {
+    func testStudyBurstComplete_Day2_Day1SurveysNotFinished() {
         
-        let scheduleManager = TestStudyBurstScheduleManager(.day2_demographicsNotFinished)
+        let scheduleManager = TestStudyBurstScheduleManager(.day2_surveysNotFinished)
         XCTAssertTrue(loadSchedules(scheduleManager))
         
         XCTAssertNil(scheduleManager.updateFailed_error)
@@ -177,29 +229,20 @@ class StudyBurstTests: XCTestCase {
         XCTAssertFalse(scheduleManager.isCompletedForToday)
         XCTAssertFalse(scheduleManager.isLastDay)
         XCTAssertEqual(scheduleManager.calculateThisDay(), 2)
-        XCTAssertEqual(scheduleManager.pastSurveySchedules.count, 2)
         XCTAssertNil(scheduleManager.todayCompletionTask)
-
-        if let demographics = scheduleManager.scheduledActivities.first(where: {
-            $0.activityIdentifier == RSDIdentifier.demographics.stringValue
-        }) {
-            XCTAssertFalse(demographics.isCompleted)
-        }
-        else {
-            XCTFail("Failed to find the survey.")
-        }
-        
-        let studyBurstReminder = scheduleManager.scheduledActivities.filter {
-            $0.activityIdentifier == RSDIdentifier.studyBurstReminder.stringValue
-        }
-        XCTAssertEqual(studyBurstReminder.count, 1)
         
         let completionTask = scheduleManager.completionTaskPath()
         XCTAssertNotNil(completionTask)
         
+        if let steps = (completionTask?.task?.stepNavigator as? RSDConditionalStepNavigator)?.steps {
+            XCTAssertEqual(steps.count, 3)
+            XCTAssertEqual(steps.first?.identifier, "Motivation")
+        }
+        else {
+            XCTFail("Failed to get the expected navigator for the completion task")
+        }
+        
         XCTAssertNotNil(scheduleManager.actionBarItem)
-        XCTAssertEqual(scheduleManager.actionBarItem?.title, "Health Survey")
-        XCTAssertEqual(scheduleManager.actionBarItem?.detail, "4 Minutes")
     }
     
     func testStudyBurstComplete_Day15_Missing1() {
@@ -216,6 +259,14 @@ class StudyBurstTests: XCTestCase {
         
         let completionTask = scheduleManager.completionTaskPath()
         XCTAssertNotNil(completionTask)
+        
+        if let steps = (completionTask?.task?.stepNavigator as? RSDConditionalStepNavigator)?.steps {
+            XCTAssertEqual(steps.count, 1)
+            XCTAssertEqual(steps.first?.identifier, "Engagement")
+        }
+        else {
+            XCTFail("Failed to get the expected navigator for the completion task")
+        }
         
         XCTAssertNotNil(scheduleManager.actionBarItem)
         XCTAssertEqual(scheduleManager.actionBarItem?.title, "Engagement Survey")
@@ -238,6 +289,14 @@ class StudyBurstTests: XCTestCase {
         
         let completionTask = scheduleManager.completionTaskPath()
         XCTAssertNotNil(completionTask)
+        
+        if let steps = (completionTask?.task?.stepNavigator as? RSDConditionalStepNavigator)?.steps {
+            XCTAssertEqual(steps.count, 1)
+            XCTAssertEqual(steps.first?.identifier, "Engagement")
+        }
+        else {
+            XCTFail("Failed to get the expected navigator for the completion task")
+        }
         
         XCTAssertNotNil(scheduleManager.actionBarItem)
         XCTAssertEqual(scheduleManager.actionBarItem?.title, "Engagement Survey")
@@ -277,6 +336,14 @@ class StudyBurstTests: XCTestCase {
         let completionTask = scheduleManager.completionTaskPath()
         XCTAssertNotNil(completionTask)
         
+        if let steps = (completionTask?.task?.stepNavigator as? RSDConditionalStepNavigator)?.steps {
+            XCTAssertEqual(steps.count, 1)
+            XCTAssertEqual(steps.first?.identifier, "Engagement")
+        }
+        else {
+            XCTFail("Failed to get the expected navigator for the completion task")
+        }
+        
         XCTAssertNotNil(scheduleManager.actionBarItem)
         XCTAssertEqual(scheduleManager.actionBarItem?.title, "Engagement Survey")
         XCTAssertEqual(scheduleManager.actionBarItem?.detail, "6 Minutes")
@@ -297,6 +364,14 @@ class StudyBurstTests: XCTestCase {
         
         let completionTask = scheduleManager.completionTaskPath()
         XCTAssertNotNil(completionTask)
+        
+        if let steps = (completionTask?.task?.stepNavigator as? RSDConditionalStepNavigator)?.steps {
+            XCTAssertEqual(steps.count, 1)
+            XCTAssertEqual(steps.first?.identifier, "Engagement")
+        }
+        else {
+            XCTFail("Failed to get the expected navigator for the completion task")
+        }
         
         XCTAssertNotNil(scheduleManager.actionBarItem)
         XCTAssertEqual(scheduleManager.actionBarItem?.title, "Engagement Survey")
@@ -327,9 +402,10 @@ class StudyBurstTests: XCTestCase {
     func testReminders_Day1() {
         let calendar = Calendar(identifier: .iso8601)
 
-        var studySetup: StudySetup = .day1_tasksFinished_surveysFinished
-        studySetup.reminderTime = "09:00:00"
-        let scheduleManager = TestStudyBurstScheduleManager(studySetup)
+        var setup: StudySetup = .day1_tasksFinished_surveysFinished
+        setup.reminderTime = "09:00:00"
+        let scheduleManager = TestStudyBurstScheduleManager(setup)
+        let studySetup = scheduleManager.studySetup
         XCTAssertTrue(loadSchedules(scheduleManager))
         
         // Test assumptions
@@ -418,9 +494,10 @@ class StudyBurstTests: XCTestCase {
     func testReminders_Day2() {
         let calendar = Calendar(identifier: .iso8601)
         
-        var studySetup: StudySetup = .day2_tasksNotFinished_surveysFinished
-        studySetup.reminderTime = "14:00:00"
-        let scheduleManager = TestStudyBurstScheduleManager(studySetup)
+        var setup: StudySetup = .day2_tasksNotFinished_surveysFinished
+        setup.reminderTime = "14:00:00"
+        let scheduleManager = TestStudyBurstScheduleManager(setup)
+        let studySetup = scheduleManager.studySetup
         XCTAssertTrue(loadSchedules(scheduleManager))
         
         // Check that the scheduled reminder time is decoded correctly
@@ -452,7 +529,7 @@ class StudyBurstTests: XCTestCase {
         }
         
         if let reminder = requests.add.last?.trigger as? UNCalendarNotificationTrigger,
-            let nextDate = reminder.nextTriggerDate() {
+            let nextDate = calendar.date(from: reminder.dateComponents) {
             let expectedDate = studySetup.createdOn.addingNumberOfDays(18)
             XCTAssertFalse(reminder.repeats)
             XCTAssertTrue(calendar.isDate(nextDate, inSameDayAs: expectedDate), "\(nextDate) is not in same day as \(expectedDate)")
@@ -466,9 +543,10 @@ class StudyBurstTests: XCTestCase {
     func testReminders_Day11_AllDaysCompleted() {
         let calendar = Calendar(identifier: .iso8601)
         
-        var studySetup: StudySetup = .day11_tasksFinished_noMissingDays
-        studySetup.reminderTime = "14:00:00"
-        let scheduleManager = TestStudyBurstScheduleManager(studySetup)
+        var setup: StudySetup = .day11_tasksFinished_noMissingDays
+        setup.reminderTime = "14:00:00"
+        let scheduleManager = TestStudyBurstScheduleManager(setup)
+        let studySetup = scheduleManager.studySetup
         XCTAssertTrue(loadSchedules(scheduleManager))
         
         // Check that the scheduled reminder time is decoded correctly
@@ -503,7 +581,7 @@ class StudyBurstTests: XCTestCase {
         
         if requests.add.count >= 3,
             let reminder = requests.add[2].trigger as? UNCalendarNotificationTrigger,
-            let nextDate = reminder.nextTriggerDate() {
+            let nextDate = calendar.date(from: reminder.dateComponents) {
             let expectedDate = studySetup.now.addingNumberOfDays(3)
             XCTAssertFalse(reminder.repeats)
             XCTAssertTrue(calendar.isDate(nextDate, inSameDayAs: expectedDate), "\(nextDate) is not in same day as \(expectedDate)")
@@ -515,7 +593,7 @@ class StudyBurstTests: XCTestCase {
         
         if requests.add.count >= 4,
             let reminder = requests.add[3].trigger as? UNCalendarNotificationTrigger,
-            let nextDate = reminder.nextTriggerDate() {
+            let nextDate = calendar.date(from: reminder.dateComponents) {
             let expectedDate = studySetup.createdOn.addingNumberOfDays(90)
             XCTAssertFalse(reminder.repeats)
             XCTAssertTrue(calendar.isDate(nextDate, inSameDayAs: expectedDate), "\(nextDate) is not in same day as \(expectedDate)")
@@ -529,9 +607,10 @@ class StudyBurstTests: XCTestCase {
     func testReminders_Day21_AllDaysCompleted() {
         let calendar = Calendar(identifier: .iso8601)
         
-        var studySetup: StudySetup = .day21_tasksFinished_noMissingDays
-        studySetup.reminderTime = "14:00:00"
-        let scheduleManager = TestStudyBurstScheduleManager(studySetup)
+        var setup: StudySetup = .day21_tasksFinished_noMissingDays
+        setup.reminderTime = "14:00:00"
+        let scheduleManager = TestStudyBurstScheduleManager(setup)
+        let studySetup = scheduleManager.studySetup
         XCTAssertTrue(loadSchedules(scheduleManager))
         
         // Check that the scheduled reminder time is decoded correctly
@@ -552,7 +631,7 @@ class StudyBurstTests: XCTestCase {
         XCTAssertEqual(requests.add.count, 14)
         XCTAssertEqual(requests.removeIds.count, 0)
         if let reminder = requests.add.first?.trigger as? UNCalendarNotificationTrigger,
-            let nextDate = reminder.nextTriggerDate() {
+            let nextDate = calendar.date(from: reminder.dateComponents) {
             let expectedDate = studySetup.createdOn.addingNumberOfDays(90)
             XCTAssertFalse(reminder.repeats)
             XCTAssertTrue(calendar.isDate(nextDate, inSameDayAs: expectedDate), "\(nextDate) is not in same day as \(expectedDate)")
@@ -566,9 +645,10 @@ class StudyBurstTests: XCTestCase {
     func testReminders_Day89_AllDaysCompleted() {
         let calendar = Calendar(identifier: .iso8601)
         
-        var studySetup: StudySetup = .day89_tasksFinished_noMissingDays
-        studySetup.reminderTime = "14:00:00"
-        let scheduleManager = TestStudyBurstScheduleManager(studySetup)
+        var setup: StudySetup = .day89_tasksFinished_noMissingDays
+        setup.reminderTime = "14:00:00"
+        let scheduleManager = TestStudyBurstScheduleManager(setup)
+        let studySetup = scheduleManager.studySetup
         XCTAssertTrue(loadSchedules(scheduleManager))
         
         // Check that the scheduled reminder time is decoded correctly
@@ -589,7 +669,7 @@ class StudyBurstTests: XCTestCase {
         XCTAssertEqual(requests.add.count, 19)
         XCTAssertEqual(requests.removeIds.count, 0)
         if let reminder = requests.add.first?.trigger as? UNCalendarNotificationTrigger,
-            let nextDate = reminder.nextTriggerDate() {
+            let nextDate = calendar.date(from: reminder.dateComponents) {
             let expectedDate = studySetup.createdOn.addingNumberOfDays(90)
             XCTAssertFalse(reminder.repeats)
             XCTAssertTrue(calendar.isDate(nextDate, inSameDayAs: expectedDate), "\(nextDate) is not in same day as \(expectedDate)")
@@ -623,9 +703,9 @@ class TestStudyBurstScheduleManager : StudyBurstScheduleManager {
     init(_ studySetup: StudySetup, now: Date? = nil) {
         super.init()
         
-        // Default to "now" of 11:00 AM.
+        // Default to "now" of 11:00 AM yesterday.
         var setup = studySetup
-        setup.now = now ?? Date().startOfDay().addingTimeInterval(11 * 60 * 60)
+        setup.now = now ?? Date().addingNumberOfDays(-1).startOfDay().addingTimeInterval(11 * 60 * 60)
         
         // build the schedules.
         self._activityManager.studySetup = setup
@@ -633,6 +713,10 @@ class TestStudyBurstScheduleManager : StudyBurstScheduleManager {
     }
     
     let _activityManager = ActivityManager()
+    
+    var studySetup: StudySetup {
+        return self._activityManager.studySetup
+    }
     
     override func now() -> Date {
         return self._activityManager.studySetup.now

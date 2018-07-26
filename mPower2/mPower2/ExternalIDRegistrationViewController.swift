@@ -45,12 +45,11 @@ class ExternalIDRegistrationViewController: RSDTableStepViewController {
         let firstNameResultIdentifier = "firstName"
         let preConsentResultIdentifier = "preConsent"
         guard let externalId = taskResult?.findAnswerResult(with: externalIdResultIdentifier)?.value as? String,
-            let firstName = taskResult?.findAnswerResult(with: firstNameResultIdentifier)?.value as? String,
-            let preconsent = taskResult?.findAnswerResult(with: preConsentResultIdentifier)?.value as? Bool
+            let firstName = taskResult?.findAnswerResult(with: firstNameResultIdentifier)?.value as? String
             else {
                 return nil
         }
-
+        let preconsent = (taskResult?.findAnswerResult(with: preConsentResultIdentifier)?.value as? Bool ?? false)
         return (externalId, firstName, preconsent)
     }
 

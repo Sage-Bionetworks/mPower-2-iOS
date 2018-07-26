@@ -70,8 +70,7 @@ class TodayViewController: UIViewController {
     }
     
     var shouldShowActionBar : Bool {
-        return surveyManager.hasSurvey ||
-            (studyBurstManager.hasActiveStudyBurst && (!studyBurstManager.isCompletedForToday || studyBurstManager.actionBarItem != nil))
+        return surveyManager.hasSurvey || studyBurstManager.shouldShowActionBar
     }
     
     lazy var firstName : String? = {
@@ -115,6 +114,21 @@ class TodayViewController: UIViewController {
             updateTableViewIfNeeded()
         }
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if !_hasShownStudyBurst,
+            Calendar.current.isDateInToday(SBAParticipantManager.shared.startStudy),
+            studyBurstManager.finishedSchedules.count == 0 {
+            self.showActionBarFlow(false)
+            _hasShownStudyBurst = true
+        }
+    }
+    
+    // Note: state is not stored so killing the app and restarting will redisplay the finished schedules
+    // on the first day.
+    private var _hasShownStudyBurst = false
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == kTaskBrowserSegueIdentifier,
@@ -267,7 +281,6 @@ class TodayViewController: UIViewController {
         if self.surveyManager.hasSurvey {
             progressCircleView.isHidden = false
             progressCircleView.progress = 0.5
-            // TODO: syoung 05/21/2018 Get the health survey icon from Stockard
             let healthIcon = UIImage(named: "activitiesTaskIcon")
             progressCircleView.displayIcon(image: healthIcon)
         }
@@ -358,21 +371,26 @@ class TodayViewController: UIViewController {
     
     // MARK: Actions
     @IBAction func actionBarTapped(_ sender: Any) {
-
+        self.showActionBarFlow(true)
+    }
+    
+    func showActionBarFlow(_ animated: Bool) {
         if let schedule = surveyManager.scheduledActivities.first {
             let taskPath = surveyManager.instantiateTaskPath(for: schedule)
             let vc = RSDTaskViewController(taskPath: taskPath)
             vc.delegate = self
-            self.present(vc, animated: true, completion: nil)
+            self.navigationController?.pushViewController(vc, animated: animated)
         }
-        else if studyBurstManager.pastSurveySchedules.count > 0 || studyBurstManager.isCompletedForToday {
-            self.showStudyBurstCompletionTask(true)
+        else if let taskPath = studyBurstManager.completionTaskPath() {
+            let vc = RSDTaskViewController(taskPath: taskPath)
+            vc.delegate = self
+            self.navigationController?.pushViewController(vc, animated: animated)
         }
-        else if let vc = StudyBurstViewController.instantiate(),
-            let nc = self.navigationController {
-            // Instantiate a new Study Burst VC and present it
+        else {
+            let vc = StudyBurstViewController.instantiate()!
             vc.studyBurstManager = studyBurstManager
-            nc.show(vc, sender: self)
+            vc.delegate = self
+            self.navigationController?.pushViewController(vc, animated: animated)
         }
     }
     
@@ -392,8 +410,18 @@ class TodayViewController: UIViewController {
 extension TodayViewController: RSDTaskViewControllerDelegate {
     
     open func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
-        // dismiss the view controller
-        if let vc = taskController as? UIViewController {
+        
+        if taskController.taskPath.identifier == kCompletionTaskIdentifier,
+            reason == .completed,
+            !studyBurstManager.isCompletedForToday,
+            let vc = StudyBurstViewController.instantiate(),
+            let nc = self.navigationController {
+                // Instantiate a new Study Burst VC and present it
+                vc.studyBurstManager = studyBurstManager
+                nc.show(vc, sender: self)
+        }
+        else if let vc = taskController as? UIViewController {
+            // dismiss the view controller
             if vc == self.navigationController?.topViewController {
                 self.navigationController?.popToRootViewController(animated: true)
             }
@@ -403,6 +431,7 @@ extension TodayViewController: RSDTaskViewControllerDelegate {
                 }
             }
         }
+        
         // Let the schedule manager handle the cleanup.
         studyBurstManager.taskController(taskController, didFinishWith: reason, error: error)
     }
