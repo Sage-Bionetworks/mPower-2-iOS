@@ -36,8 +36,8 @@
              {
                 "identifier":"enterPhoneNumber",
                 "type":"form",
-                "title":"Enter your phone number",
-                "text":"To become part of mPower, enter your phone number to get started.",
+                "title":"Join mPower",
+                "text":"Enter your mobile number to get started.",
                 "inputFields": [{
                                 "type":"string",
                                 "textFieldOptions":{
@@ -46,7 +46,7 @@
                                     "invalidMessage":"Please enter your full 10-digit phone number."
                                 },
                                 "uiHint":"textfield",
-                                "placeholder":"Enter your mobile number"
+                                "placeholder":"Phone number"
                                 }
                 ],
                 "image":{
