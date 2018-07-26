@@ -1,5 +1,5 @@
 //
-//  MP2Factory.swift
+//  TrackedItemsIntroductionStepObject.swift
 //  mPower2
 //
 //  Copyright © 2018 Sage Bionetworks. All rights reserved.
@@ -31,27 +31,10 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
 import BridgeApp
 
-extension RSDStepType {
-    /// Defaults to a `ReminderStep`.
-    public static let reminder: RSDStepType = "reminder"
-    /// Defaults to a `TrackedItemsIntroductionStepObject`
-    public static let trackedItemsIntroduction: RSDStepType = "trackedItemsIntroduction"
-}
-
-class MP2Factory : SBAFactory {
-    
-    override func decodeStep(from decoder:Decoder, with type:RSDStepType) throws -> RSDStep? {
-        
-        switch (type) {
-        case .reminder:
-            return try ReminderStep(from: decoder)
-        case .trackedItemsIntroduction:
-            return try TrackedItemsIntroductionStepObject(from: decoder)
-        default:
-            return try super.decodeStep(from: decoder, with: type)
-        }
+open class TrackedItemsIntroductionStepObject: RSDUIStepObject, RSDStepViewControllerVendor {
+    public func instantiateViewController(with taskPath: RSDTaskPath) -> (UIViewController & RSDStepController)? {
+        return TrackedItemsIntroductionStepViewController.instantiate(with: self)
     }
 }
