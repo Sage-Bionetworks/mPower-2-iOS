@@ -2,18 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "TabInsight_unselected.png",
-      "scale" : "1x"
-    },
-    {
-      "idiom" : "universal",
-      "filename" : "Insight_unselected@2x.png",
-      "scale" : "2x"
-    },
-    {
-      "idiom" : "universal",
-      "filename" : "Insight_unselected@3x.png",
-      "scale" : "3x"
+      "filename" : "Insights.pdf"
     }
   ],
   "info" : {

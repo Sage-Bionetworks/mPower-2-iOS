@@ -84,12 +84,6 @@ class TodayViewController: UIViewController {
         
         setupView()
         
-        // TODO: jbruhin 5-1-18 find better way to handle this, including for the other 3 main VCs
-        let customTabBarItem:UITabBarItem = UITabBarItem(title: "Tracking",
-                                                         image: UIImage(named: "TabTracking _selected")?.withRenderingMode(UIImageRenderingMode.alwaysOriginal),
-                                                         selectedImage: UIImage(named: "TabTracking _selected"))
-        tabBarItem = customTabBarItem
-        
         // Add an observer for changes to the study participant.
         NotificationCenter.default.addObserver(forName: .SBAStudyParticipantUpdated, object: nil, queue: .main) { (notification) in
             self.firstName = (notification.object as? SBAParticipantManager)?.studyParticipant?.firstName
