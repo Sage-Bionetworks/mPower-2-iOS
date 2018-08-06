@@ -5,6 +5,8 @@
 	<key>com.apple.developer.associated-domains</key>
 	<array>
 		<string>applinks:ws.sagebridge.org</string>
+		<string>applinks:parkinsonmpower.org</string>
+		<string>applinks:mpower.sagebridge.org</string>
 	</array>
 	<key>com.apple.developer.default-data-protection</key>
 	<string>NSFileProtectionComplete</string>
