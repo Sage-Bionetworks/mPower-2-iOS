@@ -93,7 +93,6 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
         }
         let components = url.pathComponents
         guard components.count == 4,
-            url.host! == "ws.sagebridge.org",
             components[1] == BridgeSDK.bridgeInfo.studyIdentifier,
             components[2] == "phoneSignIn"
             else {
