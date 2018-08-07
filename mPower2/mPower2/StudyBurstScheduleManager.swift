@@ -569,29 +569,40 @@ class StudyBurstScheduleManager : SBAScheduleManager {
             else {
                 return ([], nil, nil)
         }
-        let startWindow = startTimeWindow().addingTimeInterval(-1 * gracePeriod)
+        
+        let calendar = Calendar(identifier: .iso8601)
+        let today = now()
+        var taskSchedules = [SBBScheduledActivity]()
         var finishedOn : Date?
         var startedOn : Date?
-        let results = schedules.filter { (schedule) in
-            guard let activityId = schedule.activityIdentifier, activityIdentifiers.contains(activityId)
+        schedules.forEach { (schedule) in
+            guard let activityId = schedule.activityIdentifier,
+                activityIdentifiers.contains(activityId),
+                let scheduleFinished = schedule.finishedOn,
+                calendar.isDate(scheduleFinished, inSameDayAs: today)
                 else {
-                    return false
+                    return
             }
-            if let scheduleFinished = schedule.finishedOn, scheduleFinished >= startWindow {
-                if (finishedOn == nil) || (finishedOn! < scheduleFinished) {
-                    finishedOn = scheduleFinished
-                }
-                if let scheduleStarted = schedule.startedOn,
-                    ((startedOn == nil) || (startedOn! > scheduleStarted)) {
-                    startedOn = scheduleStarted
-                }
-                return true
-            }
-            else {
-                return false
+            let isNewer = !taskSchedules.contains(where: {
+                $0.finishedOn! > schedule.finishedOn! &&
+                $0.activityIdentifier == schedule.activityIdentifier
+            })
+            guard isNewer else { return }
+            taskSchedules.remove { $0.activityIdentifier == schedule.activityIdentifier }
+            taskSchedules.append(schedule)
+            if (finishedOn == nil) || (finishedOn! < scheduleFinished) {
+                finishedOn = scheduleFinished
+                startedOn = schedule.startedOn
             }
         }
-        return (results, startedOn, finishedOn)
+        
+        // If all the tasks are not finished then remove the ones that are outside the 1 hour window.
+        if taskSchedules.count < activityIdentifiers.count {
+            let startWindow = startTimeWindow().addingTimeInterval(-1 * gracePeriod)
+            taskSchedules.remove { $0.finishedOn! < startWindow }
+        }
+        
+        return (taskSchedules, startedOn, finishedOn)
     }
     
     func calculateThisDay() -> Int {

@@ -397,6 +397,25 @@ class StudyBurstTests: XCTestCase {
         XCTAssertNil(scheduleManager.actionBarItem)
     }
     
+    func testStudyBurstComplete_Day1_AllFinished_2HoursAgo() {
+        
+        let scheduleManager = TestStudyBurstScheduleManager(.day1_allFinished_2HoursAgo)
+        XCTAssertTrue(loadSchedules(scheduleManager))
+        
+        XCTAssertNil(scheduleManager.updateFailed_error)
+        XCTAssertNotNil(scheduleManager.update_fetchedActivities)
+        XCTAssertNotNil(scheduleManager.activityGroup)
+        XCTAssertEqual(scheduleManager.dayCount, 1)
+        XCTAssertTrue(scheduleManager.hasStudyBurst)
+        XCTAssertEqual(scheduleManager.finishedSchedules.count, 3)
+        XCTAssertTrue(scheduleManager.isCompletedForToday)
+        XCTAssertFalse(scheduleManager.isLastDay)
+        XCTAssertEqual(scheduleManager.calculateThisDay(), 1)
+        XCTAssertEqual(scheduleManager.pastSurveySchedules.count, 0)
+        XCTAssertNotNil(scheduleManager.todayCompletionTask)
+        XCTAssertNil(scheduleManager.actionBarItem)
+    }
+    
     // MARK: Notification rules tests
     
     func testReminders_Day1() {
