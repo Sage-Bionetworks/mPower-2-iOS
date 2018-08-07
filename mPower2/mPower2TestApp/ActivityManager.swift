@@ -487,7 +487,7 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
         schedule.startedOn = finishedOn?.addingTimeInterval(-3 * 60)
         schedule.finishedOn = finishedOn
         schedule.clientData = clientData
-        schedule.persistent = NSNumber(value: (expiresOn == nil))
+        schedule.persistent = NSNumber(value: (expiresOn == nil) && (survey == nil))
         let activityType = (survey == nil) ? "task" : "survey"
 
         var dictionary = [

@@ -669,13 +669,16 @@ class StudyBurstScheduleManager : SBAScheduleManager {
             else {
                 return nil
         }
-        let unfinishedPredicate = completeTask.unfinishedPredicate()
-        guard self.scheduledActivities.contains(where: { unfinishedPredicate.evaluate(with: $0) })
+
+        let schedules = self.scheduledActivities.filter {
+            $0.activityIdentifier == scheduleIdentifer.stringValue
+        }
+        
+        guard schedules.count == 1, let schedule = schedules.first, !schedule.isCompleted
             else {
                 return nil
         }
-        
-        return self.scheduledActivities.first(where: { $0.activityIdentifier == scheduleIdentifer.stringValue })
+        return schedule
     }
     
     // MARK: Study burst notification handling
