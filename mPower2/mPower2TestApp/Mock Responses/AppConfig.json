@@ -1,1 +1,90 @@
-{"label":"Main","guid":"acaa0faa-a4cc-4cb1-bc0e-f2ac243decd8","criteria":{"allOfGroups":[],"noneOfGroups":[],"minAppVersions":{"iPhone OS":1,"Android":1},"maxAppVersions":{},"type":"Criteria"},"createdOn":"2018-05-09T23:01:33.996Z","modifiedOn":"2018-07-23T23:08:27.381Z","clientData":{"studyDuration":{"year":2},"taskToSchemaIdentifierMap":{"study-burst-task":"StudyBurst"},"groups":[{"identifier":"Tracking","title":"Tracking","activityIdentifiers":["Symptoms","Medication","Triggers"],"activityGuidMap":{"Medication":"273c4518-7cb6-4496-b1dd-c0b5bf291b09","Symptoms":"60868b71-30a4-4e04-a00b-3aca6651deb2","Triggers":"b0f07b7e-408e-4d50-9368-8220971e570c"}},{"identifier":"Measuring","title":"Measuring","activityIdentifiers":["Tapping","WalkAndBalance","Tremor"],"schedulePlanGuid":"3d898a6f-1ef2-4ece-9e9f-025d94bcd130"},{"identifier":"Study Burst","title":"Study Burst","activityIdentifiers":["Tapping","Tremor","WalkAndBalance","study-burst-task"]}]},"surveyReferences":[{"identifier":"Demographics","guid":"f2637b2a-b473-4f84-b645-1431a3b4418e","createdOn":"2018-07-16T21:48:11.734Z","href":"https://ws.sagebridge.org/v3/surveys/f2637b2a-b473-4f84-b645-1431a3b4418e/revisions/2018-07-16T21:48:11.734Z","type":"SurveyReference"},{"identifier":"Engagement","guid":"56fbeb25-0a90-499a-a0d8-3c4935b60312","createdOn":"2018-07-23T22:42:34.300Z","href":"https://ws.sagebridge.org/v3/surveys/56fbeb25-0a90-499a-a0d8-3c4935b60312/revisions/2018-07-23T22:42:34.300Z","type":"SurveyReference"},{"identifier":"Motivation","guid":"7beb8a71-65d0-4217-a4fb-3bb029b55258","createdOn":"2018-07-23T23:07:58.340Z","href":"https://ws.sagebridge.org/v3/surveys/7beb8a71-65d0-4217-a4fb-3bb029b55258/revisions/2018-07-23T23:07:58.340Z","type":"SurveyReference"}],"schemaReferences":[{"id":"StudyBurst","revision":1,"type":"SchemaReference"},{"id":"Symptoms","revision":2,"type":"SchemaReference"},{"id":"Tapping","revision":3,"type":"SchemaReference"},{"id":"Tremor","revision":3,"type":"SchemaReference"},{"id":"Triggers","revision":2,"type":"SchemaReference"},{"id":"WalkAndBalance","revision":1,"type":"SchemaReference"}],"version":35,"deleted":false,"type":"AppConfig"}
+{
+    "label": "Main",
+    "guid": "acaa0faa-a4cc-4cb1-bc0e-f2ac243decd8",
+    "criteria": {
+        "allOfGroups": [],
+        "noneOfGroups": [],
+        "minAppVersions": {
+            "iPhone OS": 1,
+            "Android": 1
+        },
+        "maxAppVersions": {},
+        "type": "Criteria"
+    },
+    "createdOn": "2018-05-09T23:01:33.996Z",
+    "modifiedOn": "2018-07-26T00:41:19.230Z",
+    "clientData": {
+        "studyDuration": {
+            "year": 2
+        },
+        "taskToSchemaIdentifierMap": {
+            "study-burst-task": "StudyBurst"
+        },
+        "groups": [{
+                   "identifier": "Tracking",
+                   "title": "Tracking",
+                   "activityIdentifiers": ["Symptoms", "Medication", "Triggers"],
+                   "activityGuidMap": {
+                   "Medication": "273c4518-7cb6-4496-b1dd-c0b5bf291b09",
+                   "Symptoms": "60868b71-30a4-4e04-a00b-3aca6651deb2",
+                   "Triggers": "b0f07b7e-408e-4d50-9368-8220971e570c"
+                   }
+                   }, {
+                   "identifier": "Measuring",
+                   "title": "Measuring",
+                   "activityIdentifiers": ["Tapping", "WalkAndBalance", "Tremor"],
+                   "schedulePlanGuid": "3d898a6f-1ef2-4ece-9e9f-025d94bcd130"
+                   }, {
+                   "identifier": "Study Burst",
+                   "title": "Study Burst",
+                   "activityIdentifiers": ["Tapping", "Tremor", "WalkAndBalance", "study-burst-task"]
+                   }]
+    },
+    "surveyReferences": [{
+                         "identifier": "Demographics",
+                         "guid": "f2637b2a-b473-4f84-b645-1431a3b4418e",
+                         "createdOn": "2018-07-26T00:40:57.836Z",
+                         "href": "https://ws.sagebridge.org/v3/surveys/f2637b2a-b473-4f84-b645-1431a3b4418e/revisions/2018-07-26T00:40:57.836Z",
+                         "type": "SurveyReference"
+                         }, {
+                         "identifier": "Engagement",
+                         "guid": "56fbeb25-0a90-499a-a0d8-3c4935b60312",
+                         "createdOn": "2018-07-23T22:42:34.300Z",
+                         "href": "https://ws.sagebridge.org/v3/surveys/56fbeb25-0a90-499a-a0d8-3c4935b60312/revisions/2018-07-23T22:42:34.300Z",
+                         "type": "SurveyReference"
+                         }, {
+                         "identifier": "Motivation",
+                         "guid": "7beb8a71-65d0-4217-a4fb-3bb029b55258",
+                         "createdOn": "2018-08-07T18:43:34.354Z",
+                         "href": "https://ws.sagebridge.org/v3/surveys/7beb8a71-65d0-4217-a4fb-3bb029b55258/revisions/2018-08-07T18:43:34.354Z",
+                         "type": "SurveyReference"
+                         }],
+    "schemaReferences": [{
+                         "id": "StudyBurst",
+                         "revision": 1,
+                         "type": "SchemaReference"
+                         }, {
+                         "id": "Symptoms",
+                         "revision": 2,
+                         "type": "SchemaReference"
+                         }, {
+                         "id": "Tapping",
+                         "revision": 3,
+                         "type": "SchemaReference"
+                         }, {
+                         "id": "Tremor",
+                         "revision": 3,
+                         "type": "SchemaReference"
+                         }, {
+                         "id": "Triggers",
+                         "revision": 2,
+                         "type": "SchemaReference"
+                         }, {
+                         "id": "WalkAndBalance",
+                         "revision": 1,
+                         "type": "SchemaReference"
+                         }],
+    "version": 39,
+    "deleted": false,
+    "type": "AppConfig"
+}
