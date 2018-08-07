@@ -774,8 +774,8 @@
 		F8D3E7782062F1B900CD351C /* mPower2 */ = {
 			isa = PBXGroup;
 			children = (
-				CB5E1705210946E200AEE6A6 /* Model */,
 				F8D3E7792062F1B900CD351C /* AppDelegate.swift */,
+				CB5E1705210946E200AEE6A6 /* Model */,
 				F8078F4120ADF9A000757F42 /* Schedule Management */,
 				0334415220995311009B97A9 /* View Controllers */,
 				0349535320981C25006A05B1 /* Custom Views */,
