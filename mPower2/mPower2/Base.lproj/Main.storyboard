@@ -24,6 +24,7 @@
                         <viewLayoutGuide key="safeArea" id="XzH-EK-OEN"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="History" image="TabHistory_unselected" id="yoY-fi-LHa"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sZg-7R-pCy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -44,7 +45,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="14M-Ue-hN1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="702" y="140"/>
+            <point key="canvasLocation" x="705" y="154"/>
         </scene>
         <!--Profile-->
         <scene sceneID="xes-WU-fau">
@@ -313,7 +314,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="vIu-1K-4tb"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Tracking" image="TabTracking _selected" selectedImage="TabTracking _selected" id="72E-iF-e3N"/>
+                    <tabBarItem key="tabBarItem" title="Tracking" image="TabTracking_unselected" id="72E-iF-e3N"/>
                     <navigationItem key="navigationItem" id="eOL-zV-IL5"/>
                     <connections>
                         <outlet property="actionBarDetailsLabel" destination="31u-h4-Koc" id="7q9-nI-KHq"/>
@@ -1148,10 +1149,10 @@
         <image name="GreenCheckmark" width="24" height="24"/>
         <image name="StudyBurstComplete" width="375" height="253"/>
         <image name="SymptomsTaskIcon" width="29" height="45"/>
-        <image name="TabHistory_unselected" width="25" height="24"/>
-        <image name="TabInsight_unselected" width="20" height="27"/>
-        <image name="TabProfile_unselected" width="28" height="27"/>
-        <image name="TabTracking _selected" width="26" height="26"/>
+        <image name="TabHistory_unselected" width="24" height="24"/>
+        <image name="TabInsight_unselected" width="19" height="27"/>
+        <image name="TabProfile_unselected" width="28" height="29"/>
+        <image name="TabTracking_unselected" width="26" height="26"/>
         <image name="TriggersTaskIcon" width="34" height="46"/>
         <image name="WelcomeAfternoon" width="159" height="160"/>
         <image name="closeActivity" width="32" height="32"/>
