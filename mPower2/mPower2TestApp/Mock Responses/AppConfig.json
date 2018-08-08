@@ -12,7 +12,7 @@
         "type": "Criteria"
     },
     "createdOn": "2018-05-09T23:01:33.996Z",
-    "modifiedOn": "2018-07-26T00:41:19.230Z",
+    "modifiedOn": "2018-08-08T05:20:55.662Z",
     "clientData": {
         "studyDuration": {
             "year": 2
@@ -55,12 +55,20 @@
                          }, {
                          "identifier": "Motivation",
                          "guid": "7beb8a71-65d0-4217-a4fb-3bb029b55258",
-                         "createdOn": "2018-08-07T18:43:34.354Z",
-                         "href": "https://ws.sagebridge.org/v3/surveys/7beb8a71-65d0-4217-a4fb-3bb029b55258/revisions/2018-08-07T18:43:34.354Z",
+                         "createdOn": "2018-08-07T22:41:52.186Z",
+                         "href": "https://ws.sagebridge.org/v3/surveys/7beb8a71-65d0-4217-a4fb-3bb029b55258/revisions/2018-08-07T22:41:52.186Z",
                          "type": "SurveyReference"
                          }],
     "schemaReferences": [{
+                         "id": "Medication",
+                         "revision": 2,
+                         "type": "SchemaReference"
+                         }, {
                          "id": "StudyBurst",
+                         "revision": 1,
+                         "type": "SchemaReference"
+                         }, {
+                         "id": "StudyBurstReminder",
                          "revision": 1,
                          "type": "SchemaReference"
                          }, {
@@ -84,7 +92,7 @@
                          "revision": 1,
                          "type": "SchemaReference"
                          }],
-    "version": 39,
+    "version": 49,
     "deleted": false,
     "type": "AppConfig"
 }

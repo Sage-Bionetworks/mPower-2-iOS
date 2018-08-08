@@ -89,7 +89,7 @@ class StudyBurstTests: XCTestCase {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day1_startupState)
         XCTAssertTrue(loadSchedules(scheduleManager))
-        
+
         XCTAssertNil(scheduleManager.updateFailed_error)
         XCTAssertNotNil(scheduleManager.update_fetchedActivities)
         XCTAssertNotNil(scheduleManager.activityGroup)
@@ -704,6 +704,10 @@ class StudyBurstTests: XCTestCase {
     // MARK: helper methods
     
     func loadSchedules(_ scheduleManager: TestStudyBurstScheduleManager) -> Bool {
+        
+        // reset the user defaults for the motivation survey
+        scheduleManager.hasCompletedMotivationSurvey = false
+        
         let expect = expectation(description: "Update finished called.")
         scheduleManager.updateFinishedBlock = {
             expect.fulfill()
