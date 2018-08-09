@@ -57,10 +57,10 @@ public class TaskGroupScheduleManager : SBAScheduleManager {
     
     override public func instantiateTaskPath(for taskInfo: RSDTaskInfo, in activityGroup: SBAActivityGroup? = nil) -> (taskPath: RSDTaskPath, referenceSchedule: SBBScheduledActivity?) {
         
-        let identifier = RSDIdentifier(rawValue: taskInfo.identifier)
-        guard RSDIdentifier.measuringTasks.contains(identifier),
-            let transformer = taskInfo.resourceTransformer ?? configuration.instantiateTaskTransformer(for: taskInfo) else {
-            return super.instantiateTaskPath(for: taskInfo, in: activityGroup)
+        guard isMeasurementTaskIdentifier(taskInfo.identifier),
+            let transformer = taskInfo.resourceTransformer ?? configuration.instantiateTaskTransformer(for: taskInfo)
+            else {
+                return super.instantiateTaskPath(for: taskInfo, in: activityGroup)
         }
         
         if self.shouldIncludeMedicationTiming {
@@ -95,4 +95,17 @@ public class TaskGroupScheduleManager : SBAScheduleManager {
         super.taskController(taskController, readyToSave: taskPath)
     }
     
+    public func answerKey(for resultIdentifier: String, with sectionIdentifier: String?) -> String? {
+        guard sectionIdentifier == kActivityTrackingIdentifier || isMeasurementTaskIdentifier(sectionIdentifier)
+            else {
+                return nil
+        }
+        return resultIdentifier
+    }
+    
+    func isMeasurementTaskIdentifier(_ identifier: String?) -> Bool {
+        guard identifier != nil else { return false }
+        let rsdIdentifer = RSDIdentifier(rawValue: identifier!)
+        return RSDIdentifier.measuringTasks.contains(rsdIdentifer)
+    }
 }
