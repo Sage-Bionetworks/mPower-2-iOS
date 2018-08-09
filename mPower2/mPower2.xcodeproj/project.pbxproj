@@ -19,7 +19,6 @@
 		03DD008420E2F9A4006A5794 /* ReminderTableStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DD008220E2F9A4006A5794 /* ReminderTableStepViewController.swift */; };
 		60169BBB20AF445800D29532 /* SignInTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F45523209CF10100C532A0 /* SignInTaskViewController.swift */; };
 		60169BD120AF445C00D29532 /* ConsentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6076F2CA20A6680B00F6235E /* ConsentViewController.swift */; };
-		603B7B362085541A00794B7C /* SignIn.json in Resources */ = {isa = PBXBuildFile; fileRef = 603B7B352085541A00794B7C /* SignIn.json */; };
 		603B7BAA208E90FF00794B7C /* RegistrationWaitingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603B7BA9208E90FF00794B7C /* RegistrationWaitingViewController.swift */; };
 		603B7BC320913B1A00794B7C /* PhoneRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603B7BC220913B1A00794B7C /* PhoneRegistrationViewController.swift */; };
 		6076F2CB20A6680B00F6235E /* ConsentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6076F2CA20A6680B00F6235E /* ConsentViewController.swift */; };
@@ -65,12 +64,6 @@
 		F81BE7C020B4B8F700EE57D3 /* BridgeSDK_Test.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F81BE7B520B4AA7C00EE57D3 /* BridgeSDK_Test.framework */; };
 		F81BE7C120B4B8F700EE57D3 /* BridgeSDK_Test.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F81BE7B520B4AA7C00EE57D3 /* BridgeSDK_Test.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F82AE7B62063160B00952D74 /* UIColor+mPowerTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82AE7B52063160B00952D74 /* UIColor+mPowerTheme.swift */; };
-		F832ABD820D8A908005A9025 /* Medication.json in Resources */ = {isa = PBXBuildFile; fileRef = F832ABD720D8A907005A9025 /* Medication.json */; };
-		F832ABDE20D8A928005A9025 /* Symptoms.json in Resources */ = {isa = PBXBuildFile; fileRef = F832ABDD20D8A928005A9025 /* Symptoms.json */; };
-		F832ABE020D8A933005A9025 /* Triggers.json in Resources */ = {isa = PBXBuildFile; fileRef = F832ABDF20D8A933005A9025 /* Triggers.json */; };
-		F832ABE120D8BB7C005A9025 /* Triggers.json in Resources */ = {isa = PBXBuildFile; fileRef = F832ABDF20D8A933005A9025 /* Triggers.json */; };
-		F832ABE220D8BB7C005A9025 /* Symptoms.json in Resources */ = {isa = PBXBuildFile; fileRef = F832ABDD20D8A928005A9025 /* Symptoms.json */; };
-		F832ABE520D8BB7C005A9025 /* Medication.json in Resources */ = {isa = PBXBuildFile; fileRef = F832ABD720D8A907005A9025 /* Medication.json */; };
 		F832ABE920D8D341005A9025 /* StudyBurstCompletionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F832ABE820D8D341005A9025 /* StudyBurstCompletionViewController.swift */; };
 		F832ABEA20D96FEF005A9025 /* StudyBurstCompletionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F832ABE820D8D341005A9025 /* StudyBurstCompletionViewController.swift */; };
 		F832AC1A20D9A130005A9025 /* StudyBurstTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F832AC1920D9A130005A9025 /* StudyBurstTests.swift */; };
@@ -78,8 +71,6 @@
 		F832AC3620DA22DA005A9025 /* MP2BridgeConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F832AC3420DA22DA005A9025 /* MP2BridgeConfiguration.swift */; };
 		F832AC3820DA29E6005A9025 /* MP2Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F832AC3720DA29E6005A9025 /* MP2Factory.swift */; };
 		F832AC3920DA29E6005A9025 /* MP2Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F832AC3720DA29E6005A9025 /* MP2Factory.swift */; };
-		F832AC6620DC5EA5005A9025 /* StudyBurstReminder.json in Resources */ = {isa = PBXBuildFile; fileRef = F832AC5020DC5EA5005A9025 /* StudyBurstReminder.json */; };
-		F832AC6720DC5EA5005A9025 /* StudyBurstReminder.json in Resources */ = {isa = PBXBuildFile; fileRef = F832AC5020DC5EA5005A9025 /* StudyBurstReminder.json */; };
 		F8460D752097CF0C0084E197 /* MCTCountdownStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8460D742097CF0C0084E197 /* MCTCountdownStepViewController.swift */; };
 		F848F4F32107C9A00001ADBF /* Motivation.json in Resources */ = {isa = PBXBuildFile; fileRef = F848F4DD2107C99F0001ADBF /* Motivation.json */; };
 		F84E723620E1866300E5C6C3 /* Demographics.json in Resources */ = {isa = PBXBuildFile; fileRef = F84E722020E1866300E5C6C3 /* Demographics.json */; };
@@ -88,6 +79,20 @@
 		F84E72DB20E32FAC00E5C6C3 /* ParticipantManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F84E72DA20E32FAC00E5C6C3 /* ParticipantManager.swift */; };
 		F8502064211A4E8F0094E05F /* MP2SurveyConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8502063211A4E8F0094E05F /* MP2SurveyConfiguration.swift */; };
 		F8502065211A4F870094E05F /* MP2SurveyConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8502063211A4E8F0094E05F /* MP2SurveyConfiguration.swift */; };
+		F85020B6211B96AE0094E05F /* Triggers.json in Resources */ = {isa = PBXBuildFile; fileRef = F85020B9211B96AE0094E05F /* Triggers.json */; };
+		F85020B7211B96AE0094E05F /* Triggers.json in Resources */ = {isa = PBXBuildFile; fileRef = F85020B9211B96AE0094E05F /* Triggers.json */; };
+		F85020CF211B96B40094E05F /* Symptoms.json in Resources */ = {isa = PBXBuildFile; fileRef = F85020D2211B96B40094E05F /* Symptoms.json */; };
+		F85020D0211B96B40094E05F /* Symptoms.json in Resources */ = {isa = PBXBuildFile; fileRef = F85020D2211B96B40094E05F /* Symptoms.json */; };
+		F85020D3211B96BA0094E05F /* Medication.json in Resources */ = {isa = PBXBuildFile; fileRef = F85020D6211B96BA0094E05F /* Medication.json */; };
+		F85020D4211B96BA0094E05F /* Medication.json in Resources */ = {isa = PBXBuildFile; fileRef = F85020D6211B96BA0094E05F /* Medication.json */; };
+		F85020D7211B96BF0094E05F /* StudyBurstReminder.json in Resources */ = {isa = PBXBuildFile; fileRef = F85020DA211B96BF0094E05F /* StudyBurstReminder.json */; };
+		F85020D8211B96BF0094E05F /* StudyBurstReminder.json in Resources */ = {isa = PBXBuildFile; fileRef = F85020DA211B96BF0094E05F /* StudyBurstReminder.json */; };
+		F85020DB211B96C40094E05F /* SignIn.json in Resources */ = {isa = PBXBuildFile; fileRef = F85020DE211B96C40094E05F /* SignIn.json */; };
+		F85020DC211B96C40094E05F /* SignIn.json in Resources */ = {isa = PBXBuildFile; fileRef = F85020DE211B96C40094E05F /* SignIn.json */; };
+		F85020E1211B970C0094E05F /* ActivityTracking.json in Resources */ = {isa = PBXBuildFile; fileRef = F85020DF211B970C0094E05F /* ActivityTracking.json */; };
+		F85020E2211B970C0094E05F /* ActivityTracking.json in Resources */ = {isa = PBXBuildFile; fileRef = F85020DF211B970C0094E05F /* ActivityTracking.json */; };
+		F85020F8211BA8550094E05F /* TaskGroupScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85020F7211BA8550094E05F /* TaskGroupScheduleManager.swift */; };
+		F85020F9211BA8550094E05F /* TaskGroupScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85020F7211BA8550094E05F /* TaskGroupScheduleManager.swift */; };
 		F854590E208F986D00D37243 /* NSLocale+UnitTest.h in Headers */ = {isa = PBXBuildFile; fileRef = F854590D208F986D00D37243 /* NSLocale+UnitTest.h */; };
 		F854598A208FA43700D37243 /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7DE2062F28F00CD351C /* ResearchUI.framework */; };
 		F854598B208FA43700D37243 /* ResearchUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7DE2062F28F00CD351C /* ResearchUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -114,7 +119,6 @@
 		F88E8DFF20ADEE2600117A99 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0334415320995328009B97A9 /* TodayViewController.swift */; };
 		F88E8E0020ADEE2600117A99 /* TaskBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0334415520995CCD009B97A9 /* TaskBrowserViewController.swift */; };
 		F88E8E0120ADEE2B00117A99 /* ProgressCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0349535420981C89006A05B1 /* ProgressCircleView.swift */; };
-		F88E8E0220ADEE3B00117A99 /* SignIn.json in Resources */ = {isa = PBXBuildFile; fileRef = 603B7B352085541A00794B7C /* SignIn.json */; };
 		F88E8E0520ADEE4200117A99 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E7822062F1B900CD351C /* LaunchScreen.storyboard */; };
 		F88E8E0620ADEE4700117A99 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E77D2062F1B900CD351C /* Main.storyboard */; };
 		F88E8E0920ADEE6000117A99 /* mPower2.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03C9DD0B20A4F956007074EE /* mPower2.strings */; };
@@ -411,7 +415,6 @@
 		03A6E0012103E69900FC5A84 /* GreatJobViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GreatJobViewController.swift; path = "View Controllers/GreatJobViewController.swift"; sourceTree = "<group>"; };
 		03C9DD0B20A4F956007074EE /* mPower2.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = mPower2.strings; sourceTree = "<group>"; };
 		03DD008220E2F9A4006A5794 /* ReminderTableStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReminderTableStepViewController.swift; path = "View Controllers/ReminderTableStepViewController.swift"; sourceTree = "<group>"; };
-		603B7B352085541A00794B7C /* SignIn.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SignIn.json; sourceTree = "<group>"; };
 		603B7BA9208E90FF00794B7C /* RegistrationWaitingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationWaitingViewController.swift; sourceTree = "<group>"; };
 		603B7BC220913B1A00794B7C /* PhoneRegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneRegistrationViewController.swift; sourceTree = "<group>"; };
 		6076F2CA20A6680B00F6235E /* ConsentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentViewController.swift; sourceTree = "<group>"; };
@@ -450,14 +453,10 @@
 		F80CB9FC207D3AD800B4EE5D /* MotorControl.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = MotorControl.strings; sourceTree = "<group>"; };
 		F81BE7BE20B4AB4B00EE57D3 /* AppConfig.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AppConfig.json; sourceTree = "<group>"; };
 		F82AE7B52063160B00952D74 /* UIColor+mPowerTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+mPowerTheme.swift"; sourceTree = "<group>"; };
-		F832ABD720D8A907005A9025 /* Medication.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Medication.json; sourceTree = "<group>"; };
-		F832ABDD20D8A928005A9025 /* Symptoms.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Symptoms.json; sourceTree = "<group>"; };
-		F832ABDF20D8A933005A9025 /* Triggers.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Triggers.json; sourceTree = "<group>"; };
 		F832ABE820D8D341005A9025 /* StudyBurstCompletionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StudyBurstCompletionViewController.swift; path = "View Controllers/StudyBurstCompletionViewController.swift"; sourceTree = "<group>"; };
 		F832AC1920D9A130005A9025 /* StudyBurstTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyBurstTests.swift; sourceTree = "<group>"; };
 		F832AC3420DA22DA005A9025 /* MP2BridgeConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MP2BridgeConfiguration.swift; sourceTree = "<group>"; };
 		F832AC3720DA29E6005A9025 /* MP2Factory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MP2Factory.swift; sourceTree = "<group>"; };
-		F832AC5020DC5EA5005A9025 /* StudyBurstReminder.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = StudyBurstReminder.json; sourceTree = "<group>"; };
 		F8460D742097CF0C0084E197 /* MCTCountdownStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTCountdownStepViewController.swift; sourceTree = "<group>"; };
 		F848F4DD2107C99F0001ADBF /* Motivation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Motivation.json; sourceTree = "<group>"; };
 		F84E722020E1866300E5C6C3 /* Demographics.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Demographics.json; sourceTree = "<group>"; };
@@ -467,6 +466,13 @@
 		F84E724120E2C99900E5C6C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F84E72DA20E32FAC00E5C6C3 /* ParticipantManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantManager.swift; sourceTree = "<group>"; };
 		F8502063211A4E8F0094E05F /* MP2SurveyConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MP2SurveyConfiguration.swift; sourceTree = "<group>"; };
+		F85020B8211B96AE0094E05F /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = Base; path = Base.lproj/Triggers.json; sourceTree = "<group>"; };
+		F85020D1211B96B40094E05F /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = Base; path = Base.lproj/Symptoms.json; sourceTree = "<group>"; };
+		F85020D5211B96BA0094E05F /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = Base; path = Base.lproj/Medication.json; sourceTree = "<group>"; };
+		F85020D9211B96BF0094E05F /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = Base; path = Base.lproj/StudyBurstReminder.json; sourceTree = "<group>"; };
+		F85020DD211B96C40094E05F /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = Base; path = Base.lproj/SignIn.json; sourceTree = "<group>"; };
+		F85020E0211B970C0094E05F /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = Base; path = Base.lproj/ActivityTracking.json; sourceTree = "<group>"; };
+		F85020F7211BA8550094E05F /* TaskGroupScheduleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskGroupScheduleManager.swift; sourceTree = "<group>"; };
 		F854590D208F986D00D37243 /* NSLocale+UnitTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLocale+UnitTest.h"; sourceTree = "<group>"; };
 		F8545974208FA2ED00D37243 /* mPower2TestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mPower2TestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8545982208FA2EE00D37243 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -654,6 +660,7 @@
 		F8078F4120ADF9A000757F42 /* Schedule Management */ = {
 			isa = PBXGroup;
 			children = (
+				F85020F7211BA8550094E05F /* TaskGroupScheduleManager.swift */,
 				F8078F4220ADFA6A00757F42 /* DataSourceManager.swift */,
 				F8C58DB020AF4823001C7B7F /* TodayScheduleManager.swift */,
 				F8C58DC920AF5E86001C7B7F /* StudyBurstScheduleManager.swift */,
@@ -709,11 +716,12 @@
 		F832ABC120D8A822005A9025 /* Task JSON */ = {
 			isa = PBXGroup;
 			children = (
-				F832ABDF20D8A933005A9025 /* Triggers.json */,
-				F832ABDD20D8A928005A9025 /* Symptoms.json */,
-				F832ABD720D8A907005A9025 /* Medication.json */,
-				F832AC5020DC5EA5005A9025 /* StudyBurstReminder.json */,
-				603B7B352085541A00794B7C /* SignIn.json */,
+				F85020DF211B970C0094E05F /* ActivityTracking.json */,
+				F85020B9211B96AE0094E05F /* Triggers.json */,
+				F85020D2211B96B40094E05F /* Symptoms.json */,
+				F85020D6211B96BA0094E05F /* Medication.json */,
+				F85020DA211B96BF0094E05F /* StudyBurstReminder.json */,
+				F85020DE211B96C40094E05F /* SignIn.json */,
 			);
 			name = "Task JSON";
 			sourceTree = "<group>";
@@ -1261,15 +1269,16 @@
 			files = (
 				F88E8E0620ADEE4700117A99 /* Main.storyboard in Resources */,
 				F88E8E0520ADEE4200117A99 /* LaunchScreen.storyboard in Resources */,
-				F88E8E0220ADEE3B00117A99 /* SignIn.json in Resources */,
+				F85020DC211B96C40094E05F /* SignIn.json in Resources */,
 				F85459B5208FA76D00D37243 /* Assets.xcassets in Resources */,
-				F832ABE220D8BB7C005A9025 /* Symptoms.json in Resources */,
-				F832ABE120D8BB7C005A9025 /* Triggers.json in Resources */,
-				F832AC6720DC5EA5005A9025 /* StudyBurstReminder.json in Resources */,
+				F85020D0211B96B40094E05F /* Symptoms.json in Resources */,
+				F85020E2211B970C0094E05F /* ActivityTracking.json in Resources */,
+				F85020B7211B96AE0094E05F /* Triggers.json in Resources */,
+				F85020D8211B96BF0094E05F /* StudyBurstReminder.json in Resources */,
 				F848F4F32107C9A00001ADBF /* Motivation.json in Resources */,
 				F84E723620E1866300E5C6C3 /* Demographics.json in Resources */,
 				F84E723820E1866A00E5C6C3 /* Engagement.json in Resources */,
-				F832ABE520D8BB7C005A9025 /* Medication.json in Resources */,
+				F85020D4211B96BA0094E05F /* Medication.json in Resources */,
 				F88E8E0920ADEE6000117A99 /* mPower2.strings in Resources */,
 				F88E8E0A20ADEE6C00117A99 /* BridgeInfo.plist in Resources */,
 				F81BE7BF20B4AB4B00EE57D3 /* AppConfig.json in Resources */,
@@ -1283,13 +1292,14 @@
 				F8D3E7842062F1B900CD351C /* LaunchScreen.storyboard in Resources */,
 				60A1576E209D16C50033FAB5 /* Registration.storyboard in Resources */,
 				F8D3E7812062F1B900CD351C /* Assets.xcassets in Resources */,
-				F832ABDE20D8A928005A9025 /* Symptoms.json in Resources */,
+				F85020E1211B970C0094E05F /* ActivityTracking.json in Resources */,
+				F85020CF211B96B40094E05F /* Symptoms.json in Resources */,
 				F8D3E77F2062F1B900CD351C /* Main.storyboard in Resources */,
-				F832AC6620DC5EA5005A9025 /* StudyBurstReminder.json in Resources */,
-				603B7B362085541A00794B7C /* SignIn.json in Resources */,
+				F85020D7211B96BF0094E05F /* StudyBurstReminder.json in Resources */,
+				F85020DB211B96C40094E05F /* SignIn.json in Resources */,
 				F8D3E8022063055500CD351C /* sage-mpower-2.pem in Resources */,
-				F832ABE020D8A933005A9025 /* Triggers.json in Resources */,
-				F832ABD820D8A908005A9025 /* Medication.json in Resources */,
+				F85020B6211B96AE0094E05F /* Triggers.json in Resources */,
+				F85020D3211B96BA0094E05F /* Medication.json in Resources */,
 				F8D3E7F72063039200CD351C /* BridgeInfo.plist in Resources */,
 				F8D3E8032063055500CD351C /* BridgeInfo-private.plist in Resources */,
 				03C9DD0C20A4F956007074EE /* mPower2.strings in Resources */,
@@ -1367,6 +1377,7 @@
 				03DD008420E2F9A4006A5794 /* ReminderTableStepViewController.swift in Sources */,
 				F832ABEA20D96FEF005A9025 /* StudyBurstCompletionViewController.swift in Sources */,
 				F88E8DFC20ADEE2600117A99 /* PhoneRegistrationViewController.swift in Sources */,
+				F85020F9211BA8550094E05F /* TaskGroupScheduleManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1386,6 +1397,7 @@
 				F8C58DB120AF4823001C7B7F /* TodayScheduleManager.swift in Sources */,
 				F8C58DD520AF8CCC001C7B7F /* SurveyScheduleManager.swift in Sources */,
 				0354809F20BF3B6400B757AB /* StudyBurstViewController.swift in Sources */,
+				F85020F8211BA8550094E05F /* TaskGroupScheduleManager.swift in Sources */,
 				CB6196522109473900F2E3EA /* TrackedItemsIntroductionStepObject.swift in Sources */,
 				03DD008320E2F9A4006A5794 /* ReminderTableStepViewController.swift in Sources */,
 				80F3739C20FC32D200A565E0 /* VersionLabel.swift in Sources */,
@@ -1529,6 +1541,54 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		F85020B9211B96AE0094E05F /* Triggers.json */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F85020B8211B96AE0094E05F /* Base */,
+			);
+			name = Triggers.json;
+			sourceTree = "<group>";
+		};
+		F85020D2211B96B40094E05F /* Symptoms.json */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F85020D1211B96B40094E05F /* Base */,
+			);
+			name = Symptoms.json;
+			sourceTree = "<group>";
+		};
+		F85020D6211B96BA0094E05F /* Medication.json */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F85020D5211B96BA0094E05F /* Base */,
+			);
+			name = Medication.json;
+			sourceTree = "<group>";
+		};
+		F85020DA211B96BF0094E05F /* StudyBurstReminder.json */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F85020D9211B96BF0094E05F /* Base */,
+			);
+			name = StudyBurstReminder.json;
+			sourceTree = "<group>";
+		};
+		F85020DE211B96C40094E05F /* SignIn.json */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F85020DD211B96C40094E05F /* Base */,
+			);
+			name = SignIn.json;
+			sourceTree = "<group>";
+		};
+		F85020DF211B970C0094E05F /* ActivityTracking.json */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F85020E0211B970C0094E05F /* Base */,
+			);
+			name = ActivityTracking.json;
+			sourceTree = "<group>";
+		};
 		F8D3E77D2062F1B900CD351C /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
