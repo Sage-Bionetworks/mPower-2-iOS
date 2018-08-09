@@ -96,9 +96,17 @@ class DataSourceManager {
     
     func scheduleManager(with identifier: RSDIdentifier) -> SBAScheduleManager {
         installTaskGroupsIfNeeded()
-        let scheduleManager = SBAScheduleManager()
-        scheduleManager.activityGroup = activityGroup(with: identifier)
-        return scheduleManager
+        switch identifier {
+        case .measuringTaskGroup:
+            let scheduleManager = TaskGroupScheduleManager()
+            scheduleManager.activityGroup = activityGroup(with: identifier)
+            return scheduleManager
+            
+        default:
+            let scheduleManager = SBAScheduleManager()
+            scheduleManager.activityGroup = activityGroup(with: identifier)
+            return scheduleManager
+        }
     }
     
     func todayHistoryScheduleManager() -> TodayHistoryScheduleManager {

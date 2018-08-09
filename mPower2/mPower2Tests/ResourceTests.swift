@@ -84,11 +84,36 @@ class ResourceTests: XCTestCase {
         }
     }
     
+    func testSignIn() {
+        let identifier = "SignIn"
+        do {
+            let resourceTransformer = RSDResourceTransformerObject(resourceName: identifier)
+            let factory = MP2Factory()
+            let task = try factory.decodeTask(with: resourceTransformer)
+            try task.validate()
+        } catch let err {
+            XCTFail("Failed to decode the \(identifier) task. \(err)")
+        }
+    }
+    
+    func testActivityTracking() {
+        let identifier = "ActivityTracking"
+        do {
+            let resourceTransformer = RSDResourceTransformerObject(resourceName: identifier)
+            let factory = MP2Factory()
+            let task = try factory.decodeTask(with: resourceTransformer)
+            try task.validate()
+        } catch let err {
+            XCTFail("Failed to decode the \(identifier) task. \(err)")
+        }
+    }
+    
     func testTriggers() {
         let identifier = "Triggers"
         do {
             let resourceTransformer = RSDResourceTransformerObject(resourceName: identifier)
-            let task = try RSDFactory.shared.decodeTask(with: resourceTransformer)
+            let factory = MP2Factory()
+            let task = try factory.decodeTask(with: resourceTransformer)
             try task.validate()
         } catch let err {
             XCTFail("Failed to decode the \(identifier) task. \(err)")
@@ -99,7 +124,8 @@ class ResourceTests: XCTestCase {
         let identifier = "Symptoms"
         do {
             let resourceTransformer = RSDResourceTransformerObject(resourceName: identifier)
-            let task = try RSDFactory.shared.decodeTask(with: resourceTransformer)
+            let factory = MP2Factory()
+            let task = try factory.decodeTask(with: resourceTransformer)
             try task.validate()
         } catch let err {
             XCTFail("Failed to decode the \(identifier) task. \(err)")
@@ -110,7 +136,8 @@ class ResourceTests: XCTestCase {
         let identifier = "Medication"
         do {
             let resourceTransformer = RSDResourceTransformerObject(resourceName: identifier)
-            let task = try RSDFactory.shared.decodeTask(with: resourceTransformer)
+            let factory = MP2Factory()
+            let task = try factory.decodeTask(with: resourceTransformer)
             try task.validate()
         } catch let err {
             XCTFail("Failed to decode the \(identifier) task. \(err)")
@@ -121,7 +148,8 @@ class ResourceTests: XCTestCase {
         let identifier = "StudyBurstReminder"
         do {
             let resourceTransformer = RSDResourceTransformerObject(resourceName: identifier)
-            let task = try RSDFactory.shared.decodeTask(with: resourceTransformer)
+            let factory = MP2Factory()
+            let task = try factory.decodeTask(with: resourceTransformer)
             try task.validate()
         } catch let err {
             XCTFail("Failed to decode the \(identifier) task. \(err)")

@@ -128,7 +128,7 @@ struct TodayActionBarItem {
 
 /// The study burst manager is accessible on the "Today" view as well as being used to manage the study burst
 /// view controller.
-class StudyBurstScheduleManager : SBAScheduleManager {
+class StudyBurstScheduleManager : TaskGroupScheduleManager {
     
     static let shared = StudyBurstScheduleManager()
     
