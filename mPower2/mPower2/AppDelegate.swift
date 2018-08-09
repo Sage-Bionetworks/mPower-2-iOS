@@ -59,6 +59,8 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
             self.userSessionInfo = info
         }
         
+        SBASurveyConfiguration.shared = MP2SurveyConfiguration()
+        
         // Instantiate and load the scheduled activities for the study burst.
         StudyBurstScheduleManager.shared.loadScheduledActivities()
         

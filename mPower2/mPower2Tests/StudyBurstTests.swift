@@ -59,6 +59,7 @@ class StudyBurstTests: XCTestCase {
             "minimumRequiredDays": 10,
             "expiresLimit": 120,
             "taskGroupIdentifier": "GroupTwo",
+            "motivationIdentifier": "Motivation",
             "completionTasks": [
                 { "day": 0, "firstOnly": true, "activityIdentifiers" : ["boo", "goo"] },
                 { "day": 12, "firstOnly": true, "activityIdentifiers" : ["coo"] }
@@ -88,7 +89,7 @@ class StudyBurstTests: XCTestCase {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day1_startupState)
         XCTAssertTrue(loadSchedules(scheduleManager))
-        
+
         XCTAssertNil(scheduleManager.updateFailed_error)
         XCTAssertNotNil(scheduleManager.update_fetchedActivities)
         XCTAssertNotNil(scheduleManager.activityGroup)
@@ -111,8 +112,8 @@ class StudyBurstTests: XCTestCase {
         }
         XCTAssertEqual(studyBurstReminder.count, 1)
         
-        let completionTask = scheduleManager.completionTaskPath()
-        XCTAssertNil(completionTask, "scheduleManager.completionTaskPath()")
+        let completionTask = scheduleManager.engagementTaskPath()
+        XCTAssertNotNil(completionTask, "scheduleManager.engagementTaskPath()")
         
         XCTAssertNil(scheduleManager.actionBarItem, "scheduleManager.actionBarItem")
         
@@ -157,12 +158,12 @@ class StudyBurstTests: XCTestCase {
         }
         XCTAssertEqual(studyBurstReminder.count, 1)
         
-        let completionTask = scheduleManager.completionTaskPath()
-        XCTAssertNotNil(completionTask, "scheduleManager.completionTaskPath()")
+        let completionTask = scheduleManager.engagementTaskPath()
+        XCTAssertNotNil(completionTask, "scheduleManager.engagementTaskPath()")
         
         if let steps = (completionTask?.task?.stepNavigator as? RSDConditionalStepNavigator)?.steps {
-            XCTAssertEqual(steps.count, 3)
-            XCTAssertEqual(steps.first?.identifier, "Motivation")
+            XCTAssertEqual(steps.count, 2)
+            XCTAssertEqual(steps.first?.identifier, "StudyBurstReminder")
         }
         else {
             XCTFail("Failed to get the expected navigator for the completion task")
@@ -231,12 +232,12 @@ class StudyBurstTests: XCTestCase {
         XCTAssertEqual(scheduleManager.calculateThisDay(), 2)
         XCTAssertNil(scheduleManager.todayCompletionTask)
         
-        let completionTask = scheduleManager.completionTaskPath()
+        let completionTask = scheduleManager.engagementTaskPath()
         XCTAssertNotNil(completionTask)
         
         if let steps = (completionTask?.task?.stepNavigator as? RSDConditionalStepNavigator)?.steps {
-            XCTAssertEqual(steps.count, 3)
-            XCTAssertEqual(steps.first?.identifier, "Motivation")
+            XCTAssertEqual(steps.count, 2)
+            XCTAssertEqual(steps.first?.identifier, "StudyBurstReminder")
         }
         else {
             XCTFail("Failed to get the expected navigator for the completion task")
@@ -257,7 +258,7 @@ class StudyBurstTests: XCTestCase {
         XCTAssertFalse(scheduleManager.hasStudyBurst)
         XCTAssertTrue(scheduleManager.isCompletedForToday)
         
-        let completionTask = scheduleManager.completionTaskPath()
+        let completionTask = scheduleManager.engagementTaskPath()
         XCTAssertNotNil(completionTask)
         
         if let steps = (completionTask?.task?.stepNavigator as? RSDConditionalStepNavigator)?.steps {
@@ -287,7 +288,7 @@ class StudyBurstTests: XCTestCase {
         XCTAssertTrue(scheduleManager.isCompletedForToday)
         XCTAssertTrue(scheduleManager.isLastDay)
         
-        let completionTask = scheduleManager.completionTaskPath()
+        let completionTask = scheduleManager.engagementTaskPath()
         XCTAssertNotNil(completionTask)
         
         if let steps = (completionTask?.task?.stepNavigator as? RSDConditionalStepNavigator)?.steps {
@@ -317,7 +318,7 @@ class StudyBurstTests: XCTestCase {
         XCTAssertTrue(scheduleManager.isCompletedForToday)
         XCTAssertFalse(scheduleManager.isLastDay)
         
-        let completionTask = scheduleManager.completionTaskPath()
+        let completionTask = scheduleManager.engagementTaskPath()
         XCTAssertNil(completionTask)
     }
     
@@ -333,7 +334,7 @@ class StudyBurstTests: XCTestCase {
         XCTAssertFalse(scheduleManager.hasStudyBurst)
         XCTAssertTrue(scheduleManager.isCompletedForToday)
         
-        let completionTask = scheduleManager.completionTaskPath()
+        let completionTask = scheduleManager.engagementTaskPath()
         XCTAssertNotNil(completionTask)
         
         if let steps = (completionTask?.task?.stepNavigator as? RSDConditionalStepNavigator)?.steps {
@@ -362,7 +363,7 @@ class StudyBurstTests: XCTestCase {
         XCTAssertTrue(scheduleManager.isCompletedForToday)
         XCTAssertFalse(scheduleManager.isLastDay)
         
-        let completionTask = scheduleManager.completionTaskPath()
+        let completionTask = scheduleManager.engagementTaskPath()
         XCTAssertNotNil(completionTask)
         
         if let steps = (completionTask?.task?.stepNavigator as? RSDConditionalStepNavigator)?.steps {
@@ -391,7 +392,7 @@ class StudyBurstTests: XCTestCase {
         XCTAssertTrue(scheduleManager.isCompletedForToday)
         XCTAssertFalse(scheduleManager.isLastDay)
         
-        let completionTask = scheduleManager.completionTaskPath()
+        let completionTask = scheduleManager.engagementTaskPath()
         XCTAssertNil(completionTask)
         
         XCTAssertNil(scheduleManager.actionBarItem)
@@ -703,6 +704,10 @@ class StudyBurstTests: XCTestCase {
     // MARK: helper methods
     
     func loadSchedules(_ scheduleManager: TestStudyBurstScheduleManager) -> Bool {
+        
+        // reset the user defaults for the motivation survey
+        scheduleManager.hasCompletedMotivationSurvey = false
+        
         let expect = expectation(description: "Update finished called.")
         scheduleManager.updateFinishedBlock = {
             expect.fulfill()

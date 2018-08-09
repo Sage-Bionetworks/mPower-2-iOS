@@ -40,7 +40,7 @@ import UserNotifications
 public struct StudyBurstConfiguration : Codable {
     
     private enum CodingKeys : String, CodingKey {
-        case identifier, numberOfDays, minimumRequiredDays, expiresLimit, taskGroupIdentifier, completionTasks, engagementDataGroups
+        case identifier, numberOfDays, minimumRequiredDays, expiresLimit, taskGroupIdentifier, motivationIdentifier, completionTasks, engagementDataGroups
     }
     
     /// The task identifier.
@@ -57,6 +57,9 @@ public struct StudyBurstConfiguration : Codable {
     /// The task group used to mark the active tasks included in the study burst.
     public let taskGroupIdentifier: RSDIdentifier
     
+    /// The identifier for the initial engagement survey.
+    public let motivationIdentifier: RSDIdentifier
+    
     /// The completion tasks for each day of the study burst.
     let completionTasks: [CompletionTask]
     
@@ -70,7 +73,7 @@ public struct StudyBurstConfiguration : Codable {
         self.expiresLimit = 60 * 60
         self.taskGroupIdentifier = .measuringTaskGroup
         self.completionTasks = [
-            CompletionTask(day: 1, activityIdentifiers:[.motivation, .studyBurstReminder, .demographics]),
+            CompletionTask(day: 1, activityIdentifiers:[.studyBurstReminder, .demographics]),
             CompletionTask(day: 14, activityIdentifiers: [.engagement])
         ]
         self.engagementDataGroups = [
@@ -78,6 +81,7 @@ public struct StudyBurstConfiguration : Codable {
             ["gr_BR_AD","gr_BR_II"],
             ["gr_ST_T","gr_ST_F"],
             ["gr_DT_F","gr_DT_T"]]
+        self.motivationIdentifier = .motivation
     }
     
     struct CompletionTask : Codable {
@@ -92,7 +96,9 @@ public struct StudyBurstConfiguration : Codable {
     }
 
     public var completionTaskIdentifiers: [RSDIdentifier] {
-        return completionTasks.flatMap { $0.activityIdentifiers }
+        var taskIds = completionTasks.flatMap { $0.activityIdentifiers }
+        taskIds.append(self.motivationIdentifier)
+        return taskIds
     }
     
     func scheduleIdentifier(for completionTask: CompletionTask) -> RSDIdentifier? {
@@ -188,9 +194,6 @@ class StudyBurstScheduleManager : SBAScheduleManager {
         return CGFloat(finishedSchedules.count) / CGFloat(totalActivitiesCount)
     }
     
-    /// Today marker used to update the schedules.
-    public private(set) var today: Date?
-    
     /// Expose internally for testing.
     func now() -> Date {
         return Date()
@@ -201,6 +204,25 @@ class StudyBurstScheduleManager : SBAScheduleManager {
         return !hasStudyBurst || (finishedSchedules.count == totalActivitiesCount)
     }
     
+    /// Has the user been shown the motivation survey?
+    public internal(set) var hasCompletedMotivationSurvey : Bool {
+        get {
+            guard !UserDefaults.standard.bool(forKey: "hasCompletedMotivationSurvey")
+                else {
+                    return true
+            }
+            let result = self.scheduledActivities.contains {
+                $0.activityIdentifier == self.studyBurst.motivationIdentifier.stringValue && $0.isCompleted
+            }
+            self.hasCompletedMotivationSurvey = result
+            return result
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "hasCompletedMotivationSurvey")
+        }
+    }
+    
+    /// Is this the final study burst task for today?
     public func isFinalTask(_ taskPath: RSDTaskPath) -> Bool {
         guard let group = self.activityGroup, group.activityIdentifiers.contains(where: { $0 == taskPath.identifier })
             else {
@@ -308,7 +330,17 @@ class StudyBurstScheduleManager : SBAScheduleManager {
         return true
     }
     
-    public func completionTaskPath() -> RSDTaskPath? {
+    public func isEngagement(_ taskPath: RSDTaskPath) -> Bool {
+        return taskPath.identifier == self.studyBurst.motivationIdentifier ||
+            taskPath.identifier == kCompletionTaskIdentifier
+    }
+    
+    public func engagementTaskPath() -> RSDTaskPath? {
+        
+        // Exit early if the motivation task hasn't been shown.
+        if let taskPath = self.motivationTaskPath() {
+            return taskPath
+        }
         
         // Only return something if this is during the study burst or there is a task that chases you.
         guard self.todayCompletionTask != nil || self.pastSurveySchedules.count > 0
@@ -344,7 +376,8 @@ class StudyBurstScheduleManager : SBAScheduleManager {
         guard steps.count > 0 else { return nil }
         
         // Finally, create a task to run the returned steps.
-        let navigator = RSDConditionalStepNavigatorObject(with: steps)
+        var navigator = RSDConditionalStepNavigatorObject(with: steps)
+        navigator.progressMarkers = []
         let task = RSDTaskObject(identifier: kCompletionTaskIdentifier, stepNavigator: navigator)
         
         // Hide cancel if this is for the initial surveys displayed before the first study burst.
@@ -354,6 +387,15 @@ class StudyBurstScheduleManager : SBAScheduleManager {
         
         let path = self.instantiateTaskPath(for: task)
         return path.taskPath
+    }
+    
+    func motivationTaskPath() -> RSDTaskPath? {
+        guard !self.hasCompletedMotivationSurvey,
+            let transformer = self.configuration.instantiateTaskTransformer(for: self.studyBurst.motivationIdentifier.moduleIdentifier) as? SBASurveyLoader
+            else {
+                return nil
+        }
+        return self.instantiateTaskPath(for: transformer.surveyReference as RSDTaskInfo).taskPath
     }
     
     func getTodayCompletionSchedules() -> [SBBScheduledActivity] {
@@ -413,8 +455,6 @@ class StudyBurstScheduleManager : SBAScheduleManager {
     
     /// Override to build the new set of today history items.
     override func didUpdateScheduledActivities(from previousActivities: [SBBScheduledActivity]) {
-        today = now()
-        
         if let studyMarker = self.getStudyBurst() {
             let schedules = self.scheduledActivities
             let (filtered, startedOn, finishedOn) = self.filterFinishedSchedules(schedules)
@@ -444,11 +484,18 @@ class StudyBurstScheduleManager : SBAScheduleManager {
     }
     
     override func taskController(_ taskController: RSDTaskController, readyToSave taskPath: RSDTaskPath) {
+        
+        // Mark the moviation study as completed. This will be stored for future runs to avoid a potential
+        // race condition of displaying the "Today" view before the schedules have finished loading.
+        if taskPath.identifier == self.studyBurst.motivationIdentifier {
+            self.hasCompletedMotivationSurvey = true
+        }
+        
+        // Preload the finished tasks so that the progress will update properly.
         if let schedule = self.scheduledActivity(for: taskPath.result, scheduleIdentifier: taskPath.scheduleIdentifier),
             let activityIdentifier = schedule.activityIdentifier,
             !self.finishedSchedules.contains(where: { $0.activityIdentifier == activityIdentifier}) {
             
-            // Preload the finished tasks so that the progress will update properly.
             var schedules = self.finishedSchedules
             schedule.startedOn = taskPath.result.startDate
             schedule.finishedOn = taskPath.result.endDate
@@ -464,7 +511,7 @@ class StudyBurstScheduleManager : SBAScheduleManager {
     
     /// Override isCompleted to only return true if the schedule is within the expiration window.
     override func isCompleted(for taskInfo: RSDTaskInfo, on date: Date) -> Bool {
-        guard Calendar.current.isDate(date, inSameDayAs: today ?? now()) else {
+        guard Calendar.current.isDate(date, inSameDayAs: now()) else {
             return super.isCompleted(for: taskInfo, on: date)
         }
         return self.finishedSchedules.first(where: { $0.activityIdentifier == taskInfo.identifier }) != nil
@@ -630,6 +677,7 @@ class StudyBurstScheduleManager : SBAScheduleManager {
         return pastTasks.flatMap { (task) -> [SBBScheduledActivity] in
             let predicate = task.unfinishedPredicate()
             let schedules = self.scheduledActivities.filter { predicate.evaluate(with: $0) }
+            guard schedules.count > 0 else { return [] }
             return schedules.sorted(by: { (lhs, rhs) in
                 let lIdx = task.activityIdentifiers.index(where: { lhs.activityIdentifier == $0.stringValue }) ?? Int.max
                 let rIdx = task.activityIdentifiers.index(where: { rhs.activityIdentifier == $0.stringValue }) ?? Int.max
@@ -676,7 +724,7 @@ class StudyBurstScheduleManager : SBAScheduleManager {
         
         guard schedules.count == 1, let schedule = schedules.first, !schedule.isCompleted
             else {
-                return nil
+                return self.pastSurveySchedules.first
         }
         return schedule
     }

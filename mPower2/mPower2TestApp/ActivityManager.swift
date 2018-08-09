@@ -86,6 +86,10 @@ public struct StudySetup {
         return now.startOfDay().addingNumberOfDays(-1 * Int(studyBurstDay)).addingTimeInterval(6.25 * 60 * 60)
     }
     
+    var finishedMotivation: Bool {
+        return self.finishedTodayTasks.count > 0 || self.studyBurstFinishedOnDays.count > 0
+    }
+    
     /// Generated days of the study burst to mark as finished. This only applies to days that are past.
     func mapStudyBurstFinishedOn() -> [Int : Date] {
         let firstDay = createdOn.startOfDay().addingTimeInterval(8 * 60 * 60)
@@ -100,13 +104,17 @@ public struct StudySetup {
     /// Generated days of the study burst to mark as finished. This only applies to days that are past.
     func mapStudyBurstSurveyFinishedOn() -> [RSDIdentifier : Date] {
         let firstDay = createdOn.startOfDay().addingTimeInterval(8.5 * 60 * 60)
-        return studyBurstSurveyFinishedOnDays.rsd_filteredDictionary { (input) -> (RSDIdentifier, Date)? in
+        var map = studyBurstSurveyFinishedOnDays.rsd_filteredDictionary { (input) -> (RSDIdentifier, Date)? in
             let day = input.value
             guard day <= self.studyBurstDay else { return nil }
             let time = TimeInterval(arc4random_uniform(30 * 60))
             let timestamp = firstDay.addingNumberOfDays(day).addingTimeInterval(time)
             return (input.key, timestamp)
         }
+        if self.finishedMotivation {
+            map[.motivation] = firstDay.addingTimeInterval(2 * 60)
+        }
+        return map
     }
     
     func createParticipant() -> SBBStudyParticipant {
@@ -171,6 +179,38 @@ extension StudySetup {
                    studyBurstFinishedOnDays: [],
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 0),
                    finishedTodayTasks: RSDIdentifier.measuringTasks)
+    
+    static let day1_tasksFinished_surveysNotFinished_BRII_DTT =
+        StudySetup(studyBurstDay: 0,
+                   studyBurstFinishedOnDays: [],
+                   studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 0),
+                   finishedTodayTasks: [],
+                   timeUntilExpires: 15,
+                   dataGroups: ["gr_SC_DB","gr_BR_II","gr_ST_T","gr_DT_T"])
+    
+    static let day1_tasksFinished_surveysNotFinished_BRII_DTF =
+        StudySetup(studyBurstDay: 0,
+                   studyBurstFinishedOnDays: [],
+                   studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 0),
+                   finishedTodayTasks: [],
+                   timeUntilExpires: 15,
+                   dataGroups: ["gr_SC_DB","gr_BR_II","gr_ST_T","gr_DT_F"])
+    
+    static let day1_tasksFinished_surveysNotFinished_BRAD_DTT =
+        StudySetup(studyBurstDay: 0,
+                   studyBurstFinishedOnDays: [],
+                   studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 0),
+                   finishedTodayTasks: [],
+                   timeUntilExpires: 15,
+                   dataGroups: ["gr_SC_DB","gr_BR_AD","gr_ST_T","gr_DT_T"])
+    
+    static let day1_tasksFinished_surveysNotFinished_BRAD_DTF =
+        StudySetup(studyBurstDay: 0,
+                   studyBurstFinishedOnDays: [],
+                   studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 0),
+                   finishedTodayTasks: [],
+                   timeUntilExpires: 15,
+                   dataGroups: ["gr_SC_DB","gr_BR_AD","gr_ST_T","gr_DT_F"])
     
     static let day1_tasksFinished_surveysFinished =
         StudySetup(studyBurstDay: 0,

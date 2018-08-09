@@ -112,9 +112,8 @@ class TodayViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if !_hasShownStudyBurst,
-            Calendar.current.isDateInToday(SBAParticipantManager.shared.startStudy),
-            studyBurstManager.finishedSchedules.count == 0 {
+        if !_hasShownStudyBurst &&
+            !studyBurstManager.hasCompletedMotivationSurvey {
             self.showActionBarFlow(false)
             _hasShownStudyBurst = true
         }
@@ -369,13 +368,13 @@ class TodayViewController: UIViewController {
     }
     
     func showActionBarFlow(_ animated: Bool) {
-        if let schedule = surveyManager.scheduledActivities.first {
-            let taskPath = surveyManager.instantiateTaskPath(for: schedule)
+        if let taskPath = studyBurstManager.engagementTaskPath() {
             let vc = RSDTaskViewController(taskPath: taskPath)
             vc.delegate = self
             self.navigationController?.pushViewController(vc, animated: animated)
         }
-        else if let taskPath = studyBurstManager.completionTaskPath() {
+        else if let schedule = surveyManager.scheduledActivities.first {
+            let taskPath = surveyManager.instantiateTaskPath(for: schedule)
             let vc = RSDTaskViewController(taskPath: taskPath)
             vc.delegate = self
             self.navigationController?.pushViewController(vc, animated: animated)
@@ -390,7 +389,7 @@ class TodayViewController: UIViewController {
     
     func showStudyBurstCompletionTask(_ animated: Bool = false) {
         // If there is a task to do today, then push it.
-        guard let taskPath = studyBurstManager.completionTaskPath(),
+        guard let taskPath = studyBurstManager.engagementTaskPath(),
             let nc = self.navigationController
             else {
                 return
@@ -405,13 +404,14 @@ extension TodayViewController: RSDTaskViewControllerDelegate {
     
     open func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
         
-        if taskController.taskPath.identifier == kCompletionTaskIdentifier,
+        if studyBurstManager.isEngagement(taskController.taskPath),
             reason == .completed,
             !studyBurstManager.isCompletedForToday,
             let vc = StudyBurstViewController.instantiate(),
             let nc = self.navigationController {
                 // Instantiate a new Study Burst VC and present it
                 vc.studyBurstManager = studyBurstManager
+                vc.delegate = self
                 nc.show(vc, sender: self)
         }
         else if let vc = taskController as? UIViewController {
