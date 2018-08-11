@@ -902,7 +902,8 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     
     func updateNotifications(at reminderTime: DateComponents) {
         UNUserNotificationCenter.current().getPendingNotificationRequests { (pendingRequests) in
-            let notifications = self.getLocalNotifications(after: reminderTime, with: pendingRequests)
+            let filteredRequests = pendingRequests.filter { $0.content.categoryIdentifier == self.notificationCategory }
+            let notifications = self.getLocalNotifications(after: reminderTime, with: filteredRequests)
             if notifications.removeIds.count > 0 {
                 UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: notifications.removeIds)
             }

@@ -67,6 +67,11 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
         // Reset the badge icon on active
         // TODO: syoung 07/25/2018 Add appropriate messaging and UI/UX for highlighting notifications.
         UIApplication.shared.applicationIconBadgeNumber = 0
+        
+        // Set up the notification delegate
+        SBAMedicationReminderManager.shared = MP2ReminderManager()
+        SBAMedicationReminderManager.shared.setupNotifications()
+        UNUserNotificationCenter.current().delegate = SBAMedicationReminderManager.shared
 
         return super.application(application, willFinishLaunchingWithOptions: launchOptions)
     }

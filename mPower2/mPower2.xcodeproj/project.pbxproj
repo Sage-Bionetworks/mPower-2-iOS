@@ -131,6 +131,8 @@
 		F8C58DD520AF8CCC001C7B7F /* SurveyScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C58DD420AF8CCC001C7B7F /* SurveyScheduleManager.swift */; };
 		F8C58DD620AF8CCC001C7B7F /* SurveyScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C58DD420AF8CCC001C7B7F /* SurveyScheduleManager.swift */; };
 		F8C58DFC20AFA2FD001C7B7F /* ActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C58DFB20AFA2FD001C7B7F /* ActivityManager.swift */; };
+		F8CE28AB21221362007765F1 /* MP2ReminderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8CE28AA21221362007765F1 /* MP2ReminderManager.swift */; };
+		F8CE28AC21221362007765F1 /* MP2ReminderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8CE28AA21221362007765F1 /* MP2ReminderManager.swift */; };
 		F8D3E77A2062F1B900CD351C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D3E7792062F1B900CD351C /* AppDelegate.swift */; };
 		F8D3E77F2062F1B900CD351C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E77D2062F1B900CD351C /* Main.storyboard */; };
 		F8D3E7812062F1B900CD351C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E7802062F1B900CD351C /* Assets.xcassets */; };
@@ -487,6 +489,7 @@
 		F8C58DC920AF5E86001C7B7F /* StudyBurstScheduleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyBurstScheduleManager.swift; sourceTree = "<group>"; };
 		F8C58DD420AF8CCC001C7B7F /* SurveyScheduleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyScheduleManager.swift; sourceTree = "<group>"; };
 		F8C58DFB20AFA2FD001C7B7F /* ActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityManager.swift; sourceTree = "<group>"; };
+		F8CE28AA21221362007765F1 /* MP2ReminderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MP2ReminderManager.swift; sourceTree = "<group>"; };
 		F8D3E7762062F1B900CD351C /* mPower2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mPower2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8D3E7792062F1B900CD351C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F8D3E77E2062F1B900CD351C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -668,6 +671,7 @@
 				F832AC3720DA29E6005A9025 /* MP2Factory.swift */,
 				F832AC3420DA22DA005A9025 /* MP2BridgeConfiguration.swift */,
 				F8502063211A4E8F0094E05F /* MP2SurveyConfiguration.swift */,
+				F8CE28AA21221362007765F1 /* MP2ReminderManager.swift */,
 			);
 			name = "Schedule Management";
 			sourceTree = "<group>";
@@ -1364,6 +1368,7 @@
 				F8C58DD620AF8CCC001C7B7F /* SurveyScheduleManager.swift in Sources */,
 				80A0BE3321095E1A00D31B68 /* TrackedItemsIntroductionStepObject.swift in Sources */,
 				03A6E0032103E69900FC5A84 /* GreatJobViewController.swift in Sources */,
+				F8CE28AC21221362007765F1 /* MP2ReminderManager.swift in Sources */,
 				F85459B6208FA77400D37243 /* UIColor+mPowerTheme.swift in Sources */,
 				F8078F4420AE078A00757F42 /* DataSourceManager.swift in Sources */,
 				F8C58DFC20AFA2FD001C7B7F /* ActivityManager.swift in Sources */,
@@ -1400,6 +1405,7 @@
 				F85020F8211BA8550094E05F /* TaskGroupScheduleManager.swift in Sources */,
 				CB6196522109473900F2E3EA /* TrackedItemsIntroductionStepObject.swift in Sources */,
 				03DD008320E2F9A4006A5794 /* ReminderTableStepViewController.swift in Sources */,
+				F8CE28AB21221362007765F1 /* MP2ReminderManager.swift in Sources */,
 				80F3739C20FC32D200A565E0 /* VersionLabel.swift in Sources */,
 				F82AE7B62063160B00952D74 /* UIColor+mPowerTheme.swift in Sources */,
 				F8078F4320ADFA6A00757F42 /* DataSourceManager.swift in Sources */,
