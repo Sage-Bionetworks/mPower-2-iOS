@@ -562,7 +562,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
             }
         }
         catch let err {
-            print("Failed to archive the study burst data. \(err)")
+            debugPrint("Failed to archive the study burst data. \(err)")
         }
         
         self.sendUpdated(for: [studyMarker])
@@ -842,7 +842,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         let requests: [UNNotificationRequest] = futureSchedules.compactMap {
             let identifier = getLocalNotificationIdentifier(for: $0, at: reminderTime)
             if pendingRequestIds.remove(where: { $0 == identifier }).count > 0 {
-                // If there is an unchaged pending request, then remove it from this list
+                // If there is an unchanged pending request, then remove it from this list
                 // and do not create a new reminder for it.
                 return nil
             }
