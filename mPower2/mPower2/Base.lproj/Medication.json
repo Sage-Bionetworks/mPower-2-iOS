@@ -46,6 +46,10 @@
                         "type": "multipleChoice.integer",
                         "choices": [
                                     {
+                                    "text": "At scheduled time",
+                                    "value": 0
+                                    },
+                                    {
                                     "text": "15 minutes before",
                                     "value": 15
                                     },
@@ -56,10 +60,6 @@
                                     {
                                     "text": "45 minutes before",
                                     "value": 45
-                                    },
-                                    {
-                                    "text": "60 minutes before",
-                                    "value": 60
                                     },
                                     {
                                     "text": "No reminder",

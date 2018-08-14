@@ -742,7 +742,7 @@ class TestStudyBurstScheduleManager : StudyBurstScheduleManager {
         return self._activityManager.studySetup
     }
     
-    override func now() -> Date {
+    override func today() -> Date {
         return self._activityManager.studySetup.now
     }
     
