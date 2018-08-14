@@ -177,7 +177,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     /// When does the study burst expire?
     public var expiresOn : Date? {
         guard let expiresOn = _expiresOn else { return nil }
-        if expiresOn > now() {
+        if expiresOn > today() {
             return expiresOn
         }
         else {
@@ -195,7 +195,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     }
     
     /// Expose internally for testing.
-    func now() -> Date {
+    func today() -> Date {
         return Date()
     }
     
@@ -266,9 +266,9 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     /// order for any given day.
     public var orderedTasks: [RSDTaskInfo] {
         // Look in-memory first.
-        let today = now()
+        let now = today()
         if let orderedTasks = _orderedTasks,
-            let timestamp = _shuffleTimestamp, Calendar.current.isDate(timestamp, inSameDayAs: today) {
+            let timestamp = _shuffleTimestamp, Calendar.current.isDate(timestamp, inSameDayAs: now) {
             return orderedTasks
         }
         
@@ -278,7 +278,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
 
         if let storedOrder = UserDefaults.standard.array(forKey: StudyBurstScheduleManager.orderKey) as? [String],
             let timestamp = UserDefaults.standard.object(forKey: StudyBurstScheduleManager.timestampKey) as? Date,
-            Calendar.current.isDate(timestamp, inSameDayAs: today) {
+            Calendar.current.isDate(timestamp, inSameDayAs: now) {
             // If the timestamp is still valid for today, then sort using the stored order.
             _orderedTasks = tasks.sorted(by: {
                 guard let idx1 = storedOrder.index(of: $0.identifier),
@@ -295,7 +295,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
             var shuffledTasks = tasks
             shuffledTasks.shuffle()
             let sortOrder = shuffledTasks.map { $0.identifier }
-            _shuffleTimestamp = now()
+            _shuffleTimestamp = today()
             _orderedTasks = shuffledTasks
             StudyBurstScheduleManager.setOrderedTasks(sortOrder, timestamp: _shuffleTimestamp!)
         }
@@ -419,7 +419,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
             return super.fetchRequests()
         }
 
-        let startOfToday = now().startOfDay()
+        let startOfToday = today().startOfDay()
         
         // Build a predicate with today's tasks
         var predicates: [NSPredicate] = group.activityIdentifiers.map {
@@ -511,7 +511,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     
     /// Override isCompleted to only return true if the schedule is within the expiration window.
     override func isCompleted(for taskInfo: RSDTaskInfo, on date: Date) -> Bool {
-        guard Calendar.current.isDate(date, inSameDayAs: now()) else {
+        guard Calendar.current.isDate(date, inSameDayAs: today()) else {
             return super.isCompleted(for: taskInfo, on: date)
         }
         return self.finishedSchedules.first(where: { $0.activityIdentifier == taskInfo.identifier }) != nil
@@ -529,7 +529,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     func markCompleted(studyMarker: SBBScheduledActivity, startedOn: Date?, finishedOn: Date, finishedSchedules: [SBBScheduledActivity]) {
         
         self._expiresOn = nil
-        studyMarker.startedOn = startedOn ?? now()
+        studyMarker.startedOn = startedOn ?? today()
         studyMarker.finishedOn = finishedOn
         
         let identifier = studyMarker.activityIdentifier ?? RSDIdentifier.studyBurstCompletedTask.stringValue
@@ -548,7 +548,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
             var json: [String : Any] = [ "taskOrder" : self.orderedTasks.map { $0.identifier }.joined(separator: ",")]
             finishedSchedules.forEach {
                 guard let identifier = $0.activityIdentifier, let finishedOn = $0.finishedOn else { return }
-                json["\(identifier).startDate"] = ($0.startedOn ?? now()).jsonObject()
+                json["\(identifier).startDate"] = ($0.startedOn ?? today()).jsonObject()
                 json["\(identifier).endDate"] = finishedOn.jsonObject()
                 json["\(identifier).scheduleGuid"] = $0.guid
             }
@@ -571,7 +571,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     /// Returns the study burst completed marker for today.
     func getStudyBurst() -> SBBScheduledActivity? {
         
-        let todayStart = now().startOfDay()
+        let todayStart = today().startOfDay()
         let studyBurstMarkerId = self.studyBurst.identifier
         guard let studyMarker = self.scheduledActivities.first(where: {
             $0.activityIdentifier == studyBurstMarkerId && Calendar.current.isDate($0.scheduledOn, inSameDayAs: todayStart)
@@ -606,7 +606,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     
     /// What is the start of the expiration time window?
     func startTimeWindow() -> Date {
-        return now().addingTimeInterval(-1 * expiresLimit)
+        return today().addingTimeInterval(-1 * expiresLimit)
     }
     
     /// Get the filtered list of finished schedules.
@@ -618,7 +618,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         }
         
         let calendar = Calendar(identifier: .iso8601)
-        let today = now()
+        let now = today()
         var taskSchedules = [SBBScheduledActivity]()
         var finishedOn : Date?
         var startedOn : Date?
@@ -626,7 +626,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
             guard let activityId = schedule.activityIdentifier,
                 activityIdentifiers.contains(activityId),
                 let scheduleFinished = schedule.finishedOn,
-                calendar.isDate(scheduleFinished, inSameDayAs: today)
+                calendar.isDate(scheduleFinished, inSameDayAs: now)
                 else {
                     return
             }
@@ -799,7 +799,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         let studyBurstMarkerId = self.studyBurst.identifier
 
         // Get future schedules.
-        let date = self.now()
+        let date = self.today()
         let startOfToday = date.startOfDay()
         let timeToday = startOfToday.addingDateComponents(reminderTime)
         let scheduleStart = (date < timeToday) ? startOfToday : startOfToday.addingNumberOfDays(1)
