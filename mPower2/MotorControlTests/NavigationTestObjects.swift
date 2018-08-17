@@ -43,7 +43,7 @@ struct TestStep : RSDStep, RSDNavigationRule {
     var validationError: Error?
     var nextStepIdentifier: String?
     
-    func nextStepIdentifier(with result: RSDTaskResult?, conditionalRule: RSDConditionalRule?, isPeeking: Bool) -> String? {
+    func nextStepIdentifier(with result: RSDTaskResult?, isPeeking: Bool) -> String? {
         return self.nextStepIdentifier
     }
     
@@ -83,7 +83,6 @@ struct TestConditionalNavigator: RSDConditionalStepNavigator {
     
     let steps: [RSDStep]
     var progressMarkers: [String]?
-    var conditionalRule: RSDConditionalRule?
     
     init(steps: [RSDStep]) {
         self.steps = steps
