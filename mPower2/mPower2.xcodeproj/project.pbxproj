@@ -25,6 +25,24 @@
 		608241DB2093D9A90026E843 /* RegistrationIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608241DA2093D9A90026E843 /* RegistrationIntroViewController.swift */; };
 		608241F22093D9F70026E843 /* ExternalIDRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608241F12093D9F70026E843 /* ExternalIDRegistrationViewController.swift */; };
 		60A1576E209D16C50033FAB5 /* Registration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60A1576D209D16C40033FAB5 /* Registration.storyboard */; };
+		60E86E50212B6B430073C69C /* ProfileTableItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E86E39212B6B420073C69C /* ProfileTableItems.swift */; };
+		60E86E51212B6B430073C69C /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E86E4F212B6B430073C69C /* ProfileTableViewController.swift */; };
+		60E86E52212B6B570073C69C /* ProfileTableItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E86E39212B6B420073C69C /* ProfileTableItems.swift */; };
+		60E87023212B8E940073C69C /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E86E4F212B6B430073C69C /* ProfileTableViewController.swift */; };
+		60E94118212B8FD70027432C /* ProfileTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E94111212B8FD60027432C /* ProfileTableHeaderView.swift */; };
+		60E94119212B8FD70027432C /* ProfileTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E94111212B8FD60027432C /* ProfileTableHeaderView.swift */; };
+		60E9411A212B8FD70027432C /* ProfileTableFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60E94112212B8FD60027432C /* ProfileTableFooterView.xib */; };
+		60E9411B212B8FD70027432C /* ProfileTableFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60E94112212B8FD60027432C /* ProfileTableFooterView.xib */; };
+		60E9411C212B8FD70027432C /* HealthProfileTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60E94113212B8FD60027432C /* HealthProfileTableHeaderView.xib */; };
+		60E9411D212B8FD70027432C /* HealthProfileTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60E94113212B8FD60027432C /* HealthProfileTableHeaderView.xib */; };
+		60E9411E212B8FD70027432C /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E94114212B8FD60027432C /* ProfileTableViewCell.swift */; };
+		60E9411F212B8FD70027432C /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E94114212B8FD60027432C /* ProfileTableViewCell.swift */; };
+		60E94120212B8FD70027432C /* DownloadDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E94115212B8FD60027432C /* DownloadDataViewController.swift */; };
+		60E94121212B8FD70027432C /* DownloadDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E94115212B8FD60027432C /* DownloadDataViewController.swift */; };
+		60E94122212B8FD70027432C /* ProfileTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60E94116212B8FD70027432C /* ProfileTableHeaderView.xib */; };
+		60E94123212B8FD70027432C /* ProfileTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60E94116212B8FD70027432C /* ProfileTableHeaderView.xib */; };
+		60E94124212B8FD70027432C /* ProfileTableFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E94117212B8FD70027432C /* ProfileTableFooterView.swift */; };
+		60E94125212B8FD70027432C /* ProfileTableFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E94117212B8FD70027432C /* ProfileTableFooterView.swift */; };
 		60F45524209CF10100C532A0 /* SignInTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F45523209CF10100C532A0 /* SignInTaskViewController.swift */; };
 		80A0BE3321095E1A00D31B68 /* TrackedItemsIntroductionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6196512109473900F2E3EA /* TrackedItemsIntroductionStepObject.swift */; };
 		80A0BE4921095E4F00D31B68 /* TrackedItemsIntroductionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5E16EE210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift */; };
@@ -425,6 +443,15 @@
 		608241DA2093D9A90026E843 /* RegistrationIntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationIntroViewController.swift; sourceTree = "<group>"; };
 		608241F12093D9F70026E843 /* ExternalIDRegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalIDRegistrationViewController.swift; sourceTree = "<group>"; };
 		60A1576D209D16C40033FAB5 /* Registration.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Registration.storyboard; sourceTree = "<group>"; };
+		60E86E39212B6B420073C69C /* ProfileTableItems.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableItems.swift; sourceTree = "<group>"; };
+		60E86E4F212B6B430073C69C /* ProfileTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewController.swift; sourceTree = "<group>"; };
+		60E94111212B8FD60027432C /* ProfileTableHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableHeaderView.swift; sourceTree = "<group>"; };
+		60E94112212B8FD60027432C /* ProfileTableFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileTableFooterView.xib; sourceTree = "<group>"; };
+		60E94113212B8FD60027432C /* HealthProfileTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HealthProfileTableHeaderView.xib; sourceTree = "<group>"; };
+		60E94114212B8FD60027432C /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
+		60E94115212B8FD60027432C /* DownloadDataViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadDataViewController.swift; sourceTree = "<group>"; };
+		60E94116212B8FD70027432C /* ProfileTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileTableHeaderView.xib; sourceTree = "<group>"; };
+		60E94117212B8FD70027432C /* ProfileTableFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableFooterView.swift; sourceTree = "<group>"; };
 		60F45523209CF10100C532A0 /* SignInTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInTaskViewController.swift; sourceTree = "<group>"; };
 		80F3739B20FC32D200A565E0 /* VersionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionLabel.swift; sourceTree = "<group>"; };
 		B508B31B2076ECA3001645CF /* MCTHandSelectionStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTHandSelectionStepObject.swift; sourceTree = "<group>"; };
@@ -594,6 +621,7 @@
 				03DD008220E2F9A4006A5794 /* ReminderTableStepViewController.swift */,
 				03A6E0012103E69900FC5A84 /* GreatJobViewController.swift */,
 				CB5E16EE210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift */,
+				60E86E4F212B6B430073C69C /* ProfileTableViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -601,10 +629,25 @@
 		0349535320981C25006A05B1 /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
+				60E87025212B8EFF0073C69C /* Profile */,
 				0349535420981C89006A05B1 /* ProgressCircleView.swift */,
 				80F3739B20FC32D200A565E0 /* VersionLabel.swift */,
 			);
 			name = "Custom Views";
+			sourceTree = "<group>";
+		};
+		60E87025212B8EFF0073C69C /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				60E94115212B8FD60027432C /* DownloadDataViewController.swift */,
+				60E94113212B8FD60027432C /* HealthProfileTableHeaderView.xib */,
+				60E94117212B8FD70027432C /* ProfileTableFooterView.swift */,
+				60E94112212B8FD60027432C /* ProfileTableFooterView.xib */,
+				60E94111212B8FD60027432C /* ProfileTableHeaderView.swift */,
+				60E94116212B8FD70027432C /* ProfileTableHeaderView.xib */,
+				60E94114212B8FD60027432C /* ProfileTableViewCell.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		B53FD157207EBC8F00FBCC85 /* Views */ = {
@@ -659,6 +702,7 @@
 		CB5E1705210946E200AEE6A6 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				60E86E39212B6B420073C69C /* ProfileTableItems.swift */,
 				CB6196512109473900F2E3EA /* TrackedItemsIntroductionStepObject.swift */,
 			);
 			name = Model;
@@ -1280,6 +1324,7 @@
 				F88E8E0620ADEE4700117A99 /* Main.storyboard in Resources */,
 				F88E8E0520ADEE4200117A99 /* LaunchScreen.storyboard in Resources */,
 				F8398D64212F32EE005DE6E0 /* Withdrawal.json in Resources */,
+				60E94123212B8FD70027432C /* ProfileTableHeaderView.xib in Resources */,
 				F85020DC211B96C40094E05F /* SignIn.json in Resources */,
 				F85459B5208FA76D00D37243 /* Assets.xcassets in Resources */,
 				F85020D0211B96B40094E05F /* Symptoms.json in Resources */,
@@ -1290,9 +1335,11 @@
 				F848F4F32107C9A00001ADBF /* Motivation.json in Resources */,
 				F84E723620E1866300E5C6C3 /* Demographics.json in Resources */,
 				F84E723820E1866A00E5C6C3 /* Engagement.json in Resources */,
+				60E9411D212B8FD70027432C /* HealthProfileTableHeaderView.xib in Resources */,
 				F85020D4211B96BA0094E05F /* Medication.json in Resources */,
 				F88E8E0920ADEE6000117A99 /* mPower2.strings in Resources */,
 				F88E8E0A20ADEE6C00117A99 /* BridgeInfo.plist in Resources */,
+				60E9411B212B8FD70027432C /* ProfileTableFooterView.xib in Resources */,
 				F81BE7BF20B4AB4B00EE57D3 /* AppConfig.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1309,10 +1356,13 @@
 				F8D3E77F2062F1B900CD351C /* Main.storyboard in Resources */,
 				F85020D7211B96BF0094E05F /* StudyBurstReminder.json in Resources */,
 				F85020DB211B96C40094E05F /* SignIn.json in Resources */,
+				60E9411C212B8FD70027432C /* HealthProfileTableHeaderView.xib in Resources */,
 				F8D3E8022063055500CD351C /* sage-mpower-2.pem in Resources */,
+				60E9411A212B8FD70027432C /* ProfileTableFooterView.xib in Resources */,
 				F85020B6211B96AE0094E05F /* Triggers.json in Resources */,
 				F85020D3211B96BA0094E05F /* Medication.json in Resources */,
 				F8D3E7F72063039200CD351C /* BridgeInfo.plist in Resources */,
+				60E94122212B8FD70027432C /* ProfileTableHeaderView.xib in Resources */,
 				F8D3E8032063055500CD351C /* BridgeInfo-private.plist in Resources */,
 				03C9DD0C20A4F956007074EE /* mPower2.strings in Resources */,
 			);
@@ -1365,6 +1415,8 @@
 				F8078F3F20ADF1DC00757F42 /* AppDelegate.swift in Sources */,
 				F88E8DFD20ADEE2600117A99 /* RegistrationIntroViewController.swift in Sources */,
 				F88E8E0120ADEE2B00117A99 /* ProgressCircleView.swift in Sources */,
+				60E9411F212B8FD70027432C /* ProfileTableViewCell.swift in Sources */,
+				60E94125212B8FD70027432C /* ProfileTableFooterView.swift in Sources */,
 				03D3EA9F20C07B0200F9E4F7 /* StudyBurstViewController.swift in Sources */,
 				60169BBB20AF445800D29532 /* SignInTaskViewController.swift in Sources */,
 				F88E8DFF20ADEE2600117A99 /* TodayViewController.swift in Sources */,
@@ -1377,18 +1429,22 @@
 				80A0BE3321095E1A00D31B68 /* TrackedItemsIntroductionStepObject.swift in Sources */,
 				03A6E0032103E69900FC5A84 /* GreatJobViewController.swift in Sources */,
 				F8CE28AC21221362007765F1 /* MP2ReminderManager.swift in Sources */,
+				60E87023212B8E940073C69C /* ProfileTableViewController.swift in Sources */,
 				F85459B6208FA77400D37243 /* UIColor+mPowerTheme.swift in Sources */,
 				F8078F4420AE078A00757F42 /* DataSourceManager.swift in Sources */,
 				F8C58DFC20AFA2FD001C7B7F /* ActivityManager.swift in Sources */,
 				F832AC3920DA29E6005A9025 /* MP2Factory.swift in Sources */,
+				60E94119212B8FD70027432C /* ProfileTableHeaderView.swift in Sources */,
 				F8502065211A4F870094E05F /* MP2SurveyConfiguration.swift in Sources */,
 				F88E8DFE20ADEE2600117A99 /* RegistrationWaitingViewController.swift in Sources */,
 				60169BD120AF445C00D29532 /* ConsentViewController.swift in Sources */,
 				F832AC3620DA22DA005A9025 /* MP2BridgeConfiguration.swift in Sources */,
+				60E94121212B8FD70027432C /* DownloadDataViewController.swift in Sources */,
 				F88E8DFB20ADEE2600117A99 /* ExternalIDRegistrationViewController.swift in Sources */,
 				80A0BE4921095E4F00D31B68 /* TrackedItemsIntroductionStepViewController.swift in Sources */,
 				03DD008420E2F9A4006A5794 /* ReminderTableStepViewController.swift in Sources */,
 				F832ABEA20D96FEF005A9025 /* StudyBurstCompletionViewController.swift in Sources */,
+				60E86E52212B6B570073C69C /* ProfileTableItems.swift in Sources */,
 				F88E8DFC20ADEE2600117A99 /* PhoneRegistrationViewController.swift in Sources */,
 				F85020F9211BA8550094E05F /* TaskGroupScheduleManager.swift in Sources */,
 			);
@@ -1398,12 +1454,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				60E86E50212B6B430073C69C /* ProfileTableItems.swift in Sources */,
 				B587AC08206D696800542548 /* UIView+mPowerTheme.swift in Sources */,
 				0349535520981C89006A05B1 /* ProgressCircleView.swift in Sources */,
 				F832AC3820DA29E6005A9025 /* MP2Factory.swift in Sources */,
+				60E94118212B8FD70027432C /* ProfileTableHeaderView.swift in Sources */,
 				608241DB2093D9A90026E843 /* RegistrationIntroViewController.swift in Sources */,
 				0334415420995328009B97A9 /* TodayViewController.swift in Sources */,
+				60E86E51212B6B430073C69C /* ProfileTableViewController.swift in Sources */,
 				60F45524209CF10100C532A0 /* SignInTaskViewController.swift in Sources */,
+				60E9411E212B8FD70027432C /* ProfileTableViewCell.swift in Sources */,
 				F8D3E77A2062F1B900CD351C /* AppDelegate.swift in Sources */,
 				0334415620995CCD009B97A9 /* TaskBrowserViewController.swift in Sources */,
 				F8C58DCA20AF5E86001C7B7F /* StudyBurstScheduleManager.swift in Sources */,
@@ -1412,10 +1472,12 @@
 				0354809F20BF3B6400B757AB /* StudyBurstViewController.swift in Sources */,
 				F85020F8211BA8550094E05F /* TaskGroupScheduleManager.swift in Sources */,
 				CB6196522109473900F2E3EA /* TrackedItemsIntroductionStepObject.swift in Sources */,
+				60E94124212B8FD70027432C /* ProfileTableFooterView.swift in Sources */,
 				03DD008320E2F9A4006A5794 /* ReminderTableStepViewController.swift in Sources */,
 				F8CE28AB21221362007765F1 /* MP2ReminderManager.swift in Sources */,
 				80F3739C20FC32D200A565E0 /* VersionLabel.swift in Sources */,
 				F82AE7B62063160B00952D74 /* UIColor+mPowerTheme.swift in Sources */,
+				60E94120212B8FD70027432C /* DownloadDataViewController.swift in Sources */,
 				F8078F4320ADFA6A00757F42 /* DataSourceManager.swift in Sources */,
 				603B7BC320913B1A00794B7C /* PhoneRegistrationViewController.swift in Sources */,
 				F8502064211A4E8F0094E05F /* MP2SurveyConfiguration.swift in Sources */,

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProfileTableHeaderView" customModule="JourneyPRO" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="hDj-lJ-tij" customClass="ProfileTableHeaderView" customModule="JourneyPRO" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="359" height="62"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u3G-fF-0Yr">
+                    <rect key="frame" x="18" y="12" width="341" height="26"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <imageView userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6Gf-Rz-Ptc">
+                    <rect key="frame" x="18" y="12" width="50" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="50" id="33Z-gu-fUZ"/>
+                        <constraint firstAttribute="height" constant="50" id="cGt-jj-K8I"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jzh-C6-vRT">
+                    <rect key="frame" x="72" y="12" width="271" height="20"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="u3G-fF-0Yr" firstAttribute="top" secondItem="6Gf-Rz-Ptc" secondAttribute="top" id="9BE-aM-Cv1"/>
+                <constraint firstItem="Jzh-C6-vRT" firstAttribute="leading" secondItem="hDj-lJ-tij" secondAttribute="leading" constant="72" id="A69-jY-MwS"/>
+                <constraint firstItem="u3G-fF-0Yr" firstAttribute="leading" secondItem="6Gf-Rz-Ptc" secondAttribute="leading" id="JEe-nM-DB5"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Jzh-C6-vRT" secondAttribute="bottom" constant="4" id="O8x-RY-vrX"/>
+                <constraint firstAttribute="trailing" secondItem="Jzh-C6-vRT" secondAttribute="trailing" constant="16" id="Pfh-p7-1Na"/>
+                <constraint firstAttribute="trailing" secondItem="u3G-fF-0Yr" secondAttribute="trailing" id="QdM-l2-qaw"/>
+                <constraint firstItem="u3G-fF-0Yr" firstAttribute="bottom" secondItem="Jzh-C6-vRT" secondAttribute="bottom" constant="6" id="cGx-XF-Yxt"/>
+                <constraint firstItem="6Gf-Rz-Ptc" firstAttribute="top" secondItem="hDj-lJ-tij" secondAttribute="top" constant="12" id="kZZ-5o-qgd"/>
+                <constraint firstItem="6Gf-Rz-Ptc" firstAttribute="leading" secondItem="hDj-lJ-tij" secondAttribute="leading" constant="18" id="s6K-fZ-42f"/>
+                <constraint firstItem="Jzh-C6-vRT" firstAttribute="top" secondItem="6Gf-Rz-Ptc" secondAttribute="top" id="uCX-mV-2Yx"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="iconView" destination="6Gf-Rz-Ptc" id="5Vd-y2-xcQ"/>
+                <outlet property="titleLabel" destination="Jzh-C6-vRT" id="vFq-xI-itK"/>
+            </connections>
+            <point key="canvasLocation" x="51.5" y="-238"/>
+        </view>
+    </objects>
+</document>
