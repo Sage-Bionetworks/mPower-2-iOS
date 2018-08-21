@@ -42,7 +42,7 @@ class ProfileTableViewCell: UITableViewCell {
         super.awakeFromNib()
         contentView.backgroundColor = UIColor.clear
         
-        titleLabel?.textColor = UIColor.appGunmetal
+        titleLabel?.textColor = UIColor.appTextDark
     }
     
 }
@@ -52,8 +52,8 @@ class ProfileTableViewDetailCell: ProfileTableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        titleLabel?.textColor = UIColor.appCoolGrey
-        detailLabel?.textColor = UIColor.appGunmetal
+        titleLabel?.textColor = UIColor.appTextDark
+        detailLabel?.textColor = UIColor.appTextDark
     }
     
 }

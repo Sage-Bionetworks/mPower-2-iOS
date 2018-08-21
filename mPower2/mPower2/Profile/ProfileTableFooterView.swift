@@ -43,8 +43,8 @@ class ProfileTableFooterView: UITableViewHeaderFooterView {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        upperSeparatorView?.backgroundColor = UIColor.appWhiteThree
-        lowerSeparatorView?.backgroundColor = UIColor.appGreenyBlue
+        upperSeparatorView?.backgroundColor = UIColor.white
+        lowerSeparatorView?.backgroundColor = UIColor.primaryTintColor
     }
     
 }

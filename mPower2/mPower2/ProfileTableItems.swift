@@ -39,6 +39,7 @@ let settingsProfileAction: SBAProfileOnSelectedAction = SBAProfileOnSelectedActi
 let changePasscodeAction: SBAProfileOnSelectedAction = SBAProfileOnSelectedAction("changePasscodeAction")
 let downloadDataAction: SBAProfileOnSelectedAction = SBAProfileOnSelectedAction("downloadDataAction")
 
+/* TODO: emm 2018-08-21 deal with this for v2.1
 class SettingsProfileTableItem: SBAProfileTableItemBase {
     
     lazy var permissionsManager = {
@@ -94,24 +95,26 @@ class ScheduleProfileTableItem: SBAProfileTableItemBase {
     }
 }
 
-class StudyParticipationProfileTableItem: SBAProfileTableItemBase {
+class DownloadDataProfileTableItem: SBAProfileTableItemBase {
     public required init(dictionaryRepresentation dictionary: [AnyHashable: Any]) {
         super.init(dictionaryRepresentation: dictionary)
-        defaultOnSelectedAction = .showWithdrawal
+    }
+}
+ */
+
+class StudyParticipationProfileTableItem: SBAProfileTableItemBase {
+    /// Override to return .showWithdrawal as the default onSelected action.
+    override open func defaultOnSelectedAction() -> SBAProfileOnSelectedAction {
+        return .showWithdrawal
     }
 
     override open var detail: String {
         get {
-            let enrolled = (AppDelegate.shared?.currentUser.sessionToken != nil)
-            let key = enrolled ? "JP_PARTICIPATION_ENROLLED_%@" : "JP_PARTICIPATION_REJOIN_%@"
+            let appDelegate = AppDelegate.shared as! AppDelegate
+            let enrolled = appDelegate.userSessionInfo?.consentedValue ?? false
+            let key = enrolled ? "PARTICIPATION_ENROLLED_%@" : "PARTICIPATION_REJOIN_%@"
             let format = Localization.localizedString(key)
             return String.localizedStringWithFormat(format, Localization.localizedAppName)
         }
-    }
-}
-
-class DownloadDataProfileTableItem: SBAProfileTableItemBase {
-    public required init(dictionaryRepresentation dictionary: [AnyHashable: Any]) {
-        super.init(dictionaryRepresentation: dictionary)
     }
 }

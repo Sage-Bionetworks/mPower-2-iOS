@@ -65,10 +65,6 @@ class ProfileTableViewController: UITableViewController {
     @IBOutlet weak var tableFooterView: UIView!
     @IBOutlet weak var versionLabel: UILabel!
     
-    @IBAction func leaveStudyTapped(_ sender: AnyObject) {
-        sharedUser.withdrawFromStudy()
-    }
-    
     open func registerSectionHeaderView() {
         tableView.register(UINib.init(nibName: ProfileTableHeaderView.className, bundle: nil), forHeaderFooterViewReuseIdentifier: ProfileTableHeaderView.className)
     }
@@ -82,11 +78,11 @@ class ProfileTableViewController: UITableViewController {
         
         let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString")
         versionLabel?.text = "\(Localization.localizedAppName) \(version!), build \(Bundle.main.appVersion())"
-        tableView.backgroundColor = UIColor.appWhiteTwo
-        tableHeaderView?.backgroundColor = UIColor.appGreenyBlue
-        headerTitleLabel?.textColor = UIColor.appWhite
-        tableFooterView?.backgroundColor = UIColor.appGreenyBlue
-        versionLabel?.textColor = UIColor.appWhite
+        tableView.backgroundColor = UIColor.white
+        tableHeaderView?.backgroundColor = UIColor.primaryTintColor
+        headerTitleLabel?.textColor = UIColor.white
+        tableFooterView?.backgroundColor = UIColor.primaryTintColor
+        versionLabel?.textColor = UIColor.white
         
         registerSectionHeaderView()
         registerSectionFooterView()
@@ -97,9 +93,12 @@ class ProfileTableViewController: UITableViewController {
         self.tableView.reloadData()
         
         // Register for updates from scheduling manager when user completes timing task
+/* TODO: emm 2018-08-21 deal with this for v2.1
         NotificationCenter.default.addObserver(self, selector: #selector(self.scheduleUpdated), name: MasterScheduledActivityManager.shared.scheduleUpdatedNotificationName, object: nil)
+ */
     }
     
+/* TODO: emm 2018-08-21 deal with this for v2.1
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -112,6 +111,7 @@ class ProfileTableViewController: UITableViewController {
         // Remove updates from scheduling manager when user completes timing task
         NotificationCenter.default.removeObserver(self, name: MasterScheduledActivityManager.shared.scheduleUpdatedNotificationName, object: nil)
     }
+ */
     
     // MARK: - Table view data source
     
@@ -162,6 +162,10 @@ class ProfileTableViewController: UITableViewController {
                 break
             }
 
+        case SBAProfileOnSelectedAction.showWithdrawal:
+            self.performSegue(withIdentifier: ProfileTableViewController.withdrawalViewControllerSegue, sender: self)
+            
+            /* TODO: emm 2018-08-21 deal with this for v2.1
         case SBAProfileOnSelectedAction.editProfileItem:
             guard let profileItem = item as? SBAProfileItemProfileTableItem else { break }
             let inputItem: NSDictionary = ["identifier" : profileItem.profileItemKey,
@@ -180,9 +184,6 @@ class ProfileTableViewController: UITableViewController {
             stepVC.hidesBottomBarWhenPushed = true
             stepVC.extendedLayoutIncludesOpaqueBars = false
             self.navigationController?.show(stepVC, sender: self)
-            
-        case SBAProfileOnSelectedAction.showWithdrawal:
-            self.performSegue(withIdentifier: ProfileTableViewController.withdrawalViewControllerSegue, sender: self)
             
         case scheduleProfileAction:
             guard let scheduleItem = item as? ScheduleProfileTableItem,
@@ -227,12 +228,10 @@ class ProfileTableViewController: UITableViewController {
                 })
             }
             
-        case changePasscodeAction:
-            SBAAppDelegate.shared?.passcodeViewControllerForgotPasscodeTapped(self)
-            
         case downloadDataAction:
             self.performSegue(withIdentifier: "downloadDataSegue", sender: self)
             break
+            */
             
         default:
             // do nothing
@@ -244,7 +243,7 @@ class ProfileTableViewController: UITableViewController {
         let title = Localization.localizedString("JP_SETTINGS_TITLE")
         let format = Localization.localizedString("JP_SETTINGS_MESSAGE_FORMAT")
         let message = String.localizedStringWithFormat(format, Localization.localizedAppName)
-        showAlertWithYesNo(title: title, message: message, actionHandler: { (yes) in
+        presentAlertWithYesNo(title: title, message: message, actionHandler: { (yes) in
             guard yes else { return }
             if let appSettings = URL(string: UIApplicationOpenSettingsURLString) {
                 UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
@@ -263,7 +262,7 @@ class ProfileTableViewController: UITableViewController {
         switch segueId {
         case ProfileTableViewController.webViewControllerSegue:
             guard let item = sender as? SBAHTMLProfileTableItem,
-                let webVC = segue.destination as? SBAWebViewController
+                let webVC = segue.destination as? RSDWebViewController
                 else { return }
             webVC.url = item.url
         default:
@@ -276,8 +275,8 @@ class ProfileTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let sectionHeaderView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ProfileTableHeaderView.className) as! ProfileTableHeaderView
         
-        sectionHeaderView.titleLabel?.text = profileDataSource.title?(for: section)
-        sectionHeaderView.iconView?.image = profileDataSource.image?(for: section)
+        sectionHeaderView.titleLabel?.text = profileDataSource.title(for: section)
+        sectionHeaderView.iconView?.image = profileDataSource.image(for: section)
         
         return sectionHeaderView
     }
@@ -288,6 +287,7 @@ class ProfileTableViewController: UITableViewController {
         return sectionFooterView
     }
     
+/* TODO: emm 2018-08-21 deal with this for v2.1
     // MARK: ORKStepViewControllerDelegate
     
     func stepViewController(_ stepViewController: ORKStepViewController, didFinishWith direction: ORKStepViewControllerNavigationDirection) {
@@ -331,6 +331,7 @@ class ProfileTableViewController: UITableViewController {
         self.navBarTranslucency = self.navigationController?.navigationBar.isTranslucent ?? true
         self.navigationController?.navigationBar.isTranslucent = false
     }
+ */
     
     // This method will be called when a schedule timing task is updated, so update the UI
     func scheduleUpdated() {

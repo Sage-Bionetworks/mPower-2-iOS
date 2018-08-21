@@ -19,6 +19,8 @@
 		03DD008420E2F9A4006A5794 /* ReminderTableStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DD008220E2F9A4006A5794 /* ReminderTableStepViewController.swift */; };
 		60169BBB20AF445800D29532 /* SignInTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F45523209CF10100C532A0 /* SignInTaskViewController.swift */; };
 		60169BD120AF445C00D29532 /* ConsentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6076F2CA20A6680B00F6235E /* ConsentViewController.swift */; };
+		603B1086212CA7C500E44EE9 /* WithdrawalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603B1070212CA7C500E44EE9 /* WithdrawalViewController.swift */; };
+		603B1087212CA7C500E44EE9 /* WithdrawalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603B1070212CA7C500E44EE9 /* WithdrawalViewController.swift */; };
 		603B7BAA208E90FF00794B7C /* RegistrationWaitingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603B7BA9208E90FF00794B7C /* RegistrationWaitingViewController.swift */; };
 		603B7BC320913B1A00794B7C /* PhoneRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603B7BC220913B1A00794B7C /* PhoneRegistrationViewController.swift */; };
 		6076F2CB20A6680B00F6235E /* ConsentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6076F2CA20A6680B00F6235E /* ConsentViewController.swift */; };
@@ -37,8 +39,6 @@
 		60E9411D212B8FD70027432C /* HealthProfileTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60E94113212B8FD60027432C /* HealthProfileTableHeaderView.xib */; };
 		60E9411E212B8FD70027432C /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E94114212B8FD60027432C /* ProfileTableViewCell.swift */; };
 		60E9411F212B8FD70027432C /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E94114212B8FD60027432C /* ProfileTableViewCell.swift */; };
-		60E94120212B8FD70027432C /* DownloadDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E94115212B8FD60027432C /* DownloadDataViewController.swift */; };
-		60E94121212B8FD70027432C /* DownloadDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E94115212B8FD60027432C /* DownloadDataViewController.swift */; };
 		60E94122212B8FD70027432C /* ProfileTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60E94116212B8FD70027432C /* ProfileTableHeaderView.xib */; };
 		60E94123212B8FD70027432C /* ProfileTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60E94116212B8FD70027432C /* ProfileTableHeaderView.xib */; };
 		60E94124212B8FD70027432C /* ProfileTableFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E94117212B8FD70027432C /* ProfileTableFooterView.swift */; };
@@ -437,6 +437,7 @@
 		03A6E0012103E69900FC5A84 /* GreatJobViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GreatJobViewController.swift; path = "View Controllers/GreatJobViewController.swift"; sourceTree = "<group>"; };
 		03C9DD0B20A4F956007074EE /* mPower2.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = mPower2.strings; sourceTree = "<group>"; };
 		03DD008220E2F9A4006A5794 /* ReminderTableStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReminderTableStepViewController.swift; path = "View Controllers/ReminderTableStepViewController.swift"; sourceTree = "<group>"; };
+		603B1070212CA7C500E44EE9 /* WithdrawalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WithdrawalViewController.swift; sourceTree = "<group>"; };
 		603B7BA9208E90FF00794B7C /* RegistrationWaitingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationWaitingViewController.swift; sourceTree = "<group>"; };
 		603B7BC220913B1A00794B7C /* PhoneRegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneRegistrationViewController.swift; sourceTree = "<group>"; };
 		6076F2CA20A6680B00F6235E /* ConsentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentViewController.swift; sourceTree = "<group>"; };
@@ -449,7 +450,6 @@
 		60E94112212B8FD60027432C /* ProfileTableFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileTableFooterView.xib; sourceTree = "<group>"; };
 		60E94113212B8FD60027432C /* HealthProfileTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HealthProfileTableHeaderView.xib; sourceTree = "<group>"; };
 		60E94114212B8FD60027432C /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
-		60E94115212B8FD60027432C /* DownloadDataViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadDataViewController.swift; sourceTree = "<group>"; };
 		60E94116212B8FD70027432C /* ProfileTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileTableHeaderView.xib; sourceTree = "<group>"; };
 		60E94117212B8FD70027432C /* ProfileTableFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableFooterView.swift; sourceTree = "<group>"; };
 		60F45523209CF10100C532A0 /* SignInTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInTaskViewController.swift; sourceTree = "<group>"; };
@@ -622,6 +622,7 @@
 				03A6E0012103E69900FC5A84 /* GreatJobViewController.swift */,
 				CB5E16EE210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift */,
 				60E86E4F212B6B430073C69C /* ProfileTableViewController.swift */,
+				603B1070212CA7C500E44EE9 /* WithdrawalViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -639,12 +640,8 @@
 		60E87025212B8EFF0073C69C /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				60E94115212B8FD60027432C /* DownloadDataViewController.swift */,
-				60E94113212B8FD60027432C /* HealthProfileTableHeaderView.xib */,
 				60E94117212B8FD70027432C /* ProfileTableFooterView.swift */,
-				60E94112212B8FD60027432C /* ProfileTableFooterView.xib */,
 				60E94111212B8FD60027432C /* ProfileTableHeaderView.swift */,
-				60E94116212B8FD70027432C /* ProfileTableHeaderView.xib */,
 				60E94114212B8FD60027432C /* ProfileTableViewCell.swift */,
 			);
 			path = Profile;
@@ -739,6 +736,9 @@
 				F8D3E7822062F1B900CD351C /* LaunchScreen.storyboard */,
 				F8D3E77D2062F1B900CD351C /* Main.storyboard */,
 				60A1576D209D16C40033FAB5 /* Registration.storyboard */,
+				60E94113212B8FD60027432C /* HealthProfileTableHeaderView.xib */,
+				60E94112212B8FD60027432C /* ProfileTableFooterView.xib */,
+				60E94116212B8FD70027432C /* ProfileTableHeaderView.xib */,
 				F8D3E7802062F1B900CD351C /* Assets.xcassets */,
 				03C9DD0B20A4F956007074EE /* mPower2.strings */,
 			);
@@ -1439,10 +1439,10 @@
 				F88E8DFE20ADEE2600117A99 /* RegistrationWaitingViewController.swift in Sources */,
 				60169BD120AF445C00D29532 /* ConsentViewController.swift in Sources */,
 				F832AC3620DA22DA005A9025 /* MP2BridgeConfiguration.swift in Sources */,
-				60E94121212B8FD70027432C /* DownloadDataViewController.swift in Sources */,
 				F88E8DFB20ADEE2600117A99 /* ExternalIDRegistrationViewController.swift in Sources */,
 				80A0BE4921095E4F00D31B68 /* TrackedItemsIntroductionStepViewController.swift in Sources */,
 				03DD008420E2F9A4006A5794 /* ReminderTableStepViewController.swift in Sources */,
+				603B1087212CA7C500E44EE9 /* WithdrawalViewController.swift in Sources */,
 				F832ABEA20D96FEF005A9025 /* StudyBurstCompletionViewController.swift in Sources */,
 				60E86E52212B6B570073C69C /* ProfileTableItems.swift in Sources */,
 				F88E8DFC20ADEE2600117A99 /* PhoneRegistrationViewController.swift in Sources */,
@@ -1461,6 +1461,7 @@
 				60E94118212B8FD70027432C /* ProfileTableHeaderView.swift in Sources */,
 				608241DB2093D9A90026E843 /* RegistrationIntroViewController.swift in Sources */,
 				0334415420995328009B97A9 /* TodayViewController.swift in Sources */,
+				603B1086212CA7C500E44EE9 /* WithdrawalViewController.swift in Sources */,
 				60E86E51212B6B430073C69C /* ProfileTableViewController.swift in Sources */,
 				60F45524209CF10100C532A0 /* SignInTaskViewController.swift in Sources */,
 				60E9411E212B8FD70027432C /* ProfileTableViewCell.swift in Sources */,
@@ -1477,7 +1478,6 @@
 				F8CE28AB21221362007765F1 /* MP2ReminderManager.swift in Sources */,
 				80F3739C20FC32D200A565E0 /* VersionLabel.swift in Sources */,
 				F82AE7B62063160B00952D74 /* UIColor+mPowerTheme.swift in Sources */,
-				60E94120212B8FD70027432C /* DownloadDataViewController.swift in Sources */,
 				F8078F4320ADFA6A00757F42 /* DataSourceManager.swift in Sources */,
 				603B7BC320913B1A00794B7C /* PhoneRegistrationViewController.swift in Sources */,
 				F8502064211A4E8F0094E05F /* MP2SurveyConfiguration.swift in Sources */,
