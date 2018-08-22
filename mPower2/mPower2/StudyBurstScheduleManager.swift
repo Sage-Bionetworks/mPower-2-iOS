@@ -74,6 +74,7 @@ public struct StudyBurstConfiguration : Codable {
         self.taskGroupIdentifier = .measuringTaskGroup
         self.completionTasks = [
             CompletionTask(day: 1, activityIdentifiers:[.studyBurstReminder, .demographics]),
+            CompletionTask(day: 9, activityIdentifiers:[.background]),
             CompletionTask(day: 14, activityIdentifiers: [.engagement])
         ]
         self.engagementDataGroups = [
