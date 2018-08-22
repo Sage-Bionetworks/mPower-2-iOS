@@ -52,6 +52,7 @@ extension RSDIdentifier {
     
     static let studyBurstCompletedTask: RSDIdentifier = "study-burst-task"
     static let demographics: RSDIdentifier = "Demographics"
+    static let background: RSDIdentifier = "Background"
     static let engagement: RSDIdentifier = "Engagement"
     static let motivation: RSDIdentifier = "Motivation"
     static let studyBurstReminder: RSDIdentifier = "StudyBurstReminder"
@@ -81,6 +82,15 @@ class DataSourceManager {
     let tabs: [RSDIdentifier : [RSDIdentifier]] =
         [ .trackingTaskGroup : [.triggersTask, .symptomsTask, .medicationTask],
           .measuringTaskGroup : MCTTaskIdentifier.all().map { $0.rsdIdentifier }]
+    
+    let categoryMapping : [RSDIdentifier : SBAReportCategory] = [
+        .studyBurstReminder : .singleton,
+        .motivation : .singleton,
+        .demographics : .singleton,
+        .background : .singleton,
+        .engagement : .singleton,
+        .medicationTask : .groupByDay
+    ]
     
     /// Shared singleton
     static let shared = DataSourceManager()

@@ -33,14 +33,68 @@
 
 import Foundation
 @testable import BridgeSDK
+@testable import BridgeApp
+
+struct ReportData : Hashable {
+    let identifer: String
+    let timestamp: String
+    let clientData: SBBJSONValue?
+    
+    var date: Date {
+        return NSDate(iso8601String: timestamp) as Date
+    }
+    
+    var hashValue: Int {
+        return identifer.hashValue ^ timestamp.hashValue
+    }
+    
+    static func == (lhs: ReportData, rhs: ReportData) -> Bool {
+        return lhs.identifer == rhs.identifer && lhs.timestamp == rhs.timestamp
+    }
+    
+    func reportData(for category: SBAReportCategory) -> SBBReportData {
+        let reportData = SBBReportData(dictionaryRepresentation: [:])!
+        reportData.data = self.clientData
+        switch category {
+        case .timestamp:
+            reportData.dateTime = timestamp
+        default:
+            reportData.localDate = timestamp
+        }
+        return reportData
+    }
+}
 
 public class ParticipantManager : NSObject, SBBParticipantManagerProtocol {
+
+    var participant: SBBStudyParticipant!
+    var reportDataObjects = Set<ReportData>()
     
-    var participant: SBBStudyParticipant
-    
-    public init(studySetup: StudySetup) {
+    func setup(with studySetup: StudySetup) {
         self.participant = studySetup.createParticipant()
-        super.init()
+        self.setupReports(studySetup)
+    }
+    
+    func setupReports(_ studySetup: StudySetup) {
+        
+        let surveyMap = studySetup.mapStudyBurstSurveyFinishedOn()
+        
+        // Add all the surveys that are suppose to be from the server.
+        let singletons = StudyBurstConfiguration().completionTaskIdentifiers
+        singletons.forEach {
+            guard surveyMap[$0] != nil else { return }
+            
+            let clientData: [String : Any] = ($0 == .studyBurstReminder) ?
+                [ "reminderTime" : studySetup.reminderTime ?? "09:00",
+                  "noReminder" : (studySetup.reminderTime == nil)
+            ] : [:]
+            
+            let timestamp = (SBAReportSingletonDate as NSDate).iso8601DateOnlyString()!
+            let report = ReportData(identifer: $0.stringValue,
+                                    timestamp: timestamp,
+                                    clientData: clientData as NSDictionary)
+            self.reportDataObjects.insert(report)
+        }
     }
     
     public let offMainQueue = DispatchQueue(label: "org.sagebionetworks.BridgeApp.TestParticipantManager")
@@ -113,6 +167,94 @@ public class ParticipantManager : NSObject, SBBParticipantManagerProtocol {
             completion?(self.participant, nil)
         }
         return URLSessionTask()
+    }
+    
+    public func getReport(_ identifier: String, fromTimestamp: Date, toTimestamp: Date, completion: @escaping SBBParticipantManagerGetReportCompletionBlock) -> URLSessionTask? {
+        self._getReport(identifier, fromDate: fromTimestamp, toDate: toTimestamp, completion: completion)
+        return URLSessionTask()
+    }
+    
+    public func getReport(_ identifier: String, fromDate: DateComponents, toDate: DateComponents, completion: @escaping SBBParticipantManagerGetReportCompletionBlock) -> URLSessionTask? {
+        self._getReport(identifier, fromDate: fromDate.date!, toDate: toDate.date!, completion: completion)
+        return URLSessionTask()
+    }
+    
+    func _getReport(_ identifier: String, fromDate: Date, toDate: Date, completion: @escaping SBBParticipantManagerGetReportCompletionBlock) {
+        offMainQueue.async {
+            let rsdIdentifier = RSDIdentifier(rawValue: identifier)
+            let category = DataSourceManager.shared.categoryMapping[rsdIdentifier] ?? .timestamp
+            let minDate = (category == .timestamp) ? fromDate : fromDate.startOfDay()
+            let maxDate = (category == .timestamp) ? toDate : toDate.startOfDay().addingNumberOfDays(1)
+            
+            let reports = self.reportDataObjects.compactMap { (report) -> SBBReportData? in
+                guard report.identifer == identifier else { return nil }
+                let reportDate = report.date
+                switch category {
+                case .singleton:
+                    return report.reportData(for: category)
+                    
+                case .groupByDay:
+                    guard minDate <= reportDate && reportDate < maxDate else { return nil }
+                    return report.reportData(for: category)
+                    
+                case .timestamp:
+                    guard minDate <= reportDate && reportDate <= maxDate else { return nil }
+                    return report.reportData(for: category)
+                }
+            }
+            
+            completion(reports, nil)
+        }
+    }
+    
+    public func save(_ reportData: SBBReportData, forReport identifier: String, completion: SBBParticipantManagerCompletionBlock? = nil) -> URLSessionTask? {
+        offMainQueue.async {
+
+            let rsdIdentifier = RSDIdentifier(rawValue: identifier)
+            let category = DataSourceManager.shared.categoryMapping[rsdIdentifier] ?? .timestamp
+            if let timestamp = (category == .timestamp) ? reportData.dateTime : reportData.localDate {
+                let report = ReportData(identifer: identifier,
+                                        timestamp: timestamp,
+                                        clientData: reportData.data)
+                self.reportDataObjects.insert(report)
+            }
+            else {
+                assertionFailure("Failed to correctly set the timestamp to the correct date placeholder.")
+            }
+            
+            completion?(nil, nil)
+        }
+        return URLSessionTask()
+    }
+    
+    public func saveReportJSON(_ reportJSON: SBBJSONValue, withDateTime dateTime: Date, forReport identifier: String, completion: SBBParticipantManagerCompletionBlock? = nil) -> URLSessionTask? {
+        
+        let reportData = SBBReportData(dictionaryRepresentation: [:])!
+        reportData.data = reportJSON
+        reportData.dateTime = dateTime.jsonObject() as? String
+        
+        return self.save(reportData, forReport: identifier)
+    }
+    
+    public func saveReportJSON(_ reportJSON: SBBJSONValue, withLocalDate dateComponents: DateComponents, forReport identifier: String, completion: SBBParticipantManagerCompletionBlock? = nil) -> URLSessionTask? {
+        
+        let reportData = SBBReportData(dictionaryRepresentation: [:])!
+        reportData.data = reportJSON
+        reportData.localDate = dateComponents.jsonObject() as? String
+        
+        return self.save(reportData, forReport: identifier)
+    }
+    
+    public func getLatestCachedData(forReport identifier: String) throws -> SBBReportData {
+        let reports = self.reportDataObjects.filter { $0.identifer == identifier }.sorted(by: { $0.date < $1.date })
+        if let report = reports.last {
+            let rsdIdentifier = RSDIdentifier(rawValue: identifier)
+            let category = DataSourceManager.shared.categoryMapping[rsdIdentifier] ?? .timestamp
+            return report.reportData(for: category)
+        }
+        else {
+            return SBBReportData(dictionaryRepresentation: [:])!
+        }
     }
 }
 

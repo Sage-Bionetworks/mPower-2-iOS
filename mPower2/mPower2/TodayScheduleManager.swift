@@ -136,13 +136,13 @@ class TodayHistoryScheduleManager : SBAScheduleManager {
             let count: Int = {
                 switch itemType {
                 case .triggers, .symptoms:
-                    let clientData: [NSDictionary] = filteredSchedules.flatMap {
-                        return ($0.clientData as? [NSDictionary]) ?? [NSDictionary]()
-                    }
-                    guard clientData.count > 0 else { return 0 }
+                    let startDate = now().startOfDay()
+                    let endDate = now().addingNumberOfDays(1).startOfDay()
+                    let clientData = self.allClientData(with: itemType.activityIdentifier!.stringValue, from: startDate, to: endDate)
                     let decoder = SBAFactory.shared.createJSONDecoder()
-                    return clientData.reduce(0, { (input, dictionary) -> Int in
-                        guard let result = try? decoder.decode(SBATrackedLoggingCollectionResultObject.self, from: dictionary)
+                    return clientData.reduce(0, { (input, json) -> Int in
+                        guard let dictionary = json as? NSDictionary,
+                            let result = try? decoder.decode(SBATrackedLoggingCollectionResultObject.self, from: dictionary)
                             else {
                                 return input
                         }
