@@ -44,6 +44,10 @@
 		60E94124212B8FD70027432C /* ProfileTableFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E94117212B8FD70027432C /* ProfileTableFooterView.swift */; };
 		60E94125212B8FD70027432C /* ProfileTableFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E94117212B8FD70027432C /* ProfileTableFooterView.swift */; };
 		60F45524209CF10100C532A0 /* SignInTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F45523209CF10100C532A0 /* SignInTaskViewController.swift */; };
+		60FB513B212DEB3B00D50F4D /* MP2ProfileSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60FB513A212DEB3B00D50F4D /* MP2ProfileSection.swift */; };
+		60FB513C212DEB3B00D50F4D /* MP2ProfileSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60FB513A212DEB3B00D50F4D /* MP2ProfileSection.swift */; };
+		60FB513E212DED6F00D50F4D /* MP2ProfileDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60FB513D212DED6F00D50F4D /* MP2ProfileDataSource.swift */; };
+		60FB513F212DED6F00D50F4D /* MP2ProfileDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60FB513D212DED6F00D50F4D /* MP2ProfileDataSource.swift */; };
 		80A0BE3321095E1A00D31B68 /* TrackedItemsIntroductionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6196512109473900F2E3EA /* TrackedItemsIntroductionStepObject.swift */; };
 		80A0BE4921095E4F00D31B68 /* TrackedItemsIntroductionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5E16EE210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift */; };
 		80F3739C20FC32D200A565E0 /* VersionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F3739B20FC32D200A565E0 /* VersionLabel.swift */; };
@@ -453,6 +457,8 @@
 		60E94116212B8FD70027432C /* ProfileTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileTableHeaderView.xib; sourceTree = "<group>"; };
 		60E94117212B8FD70027432C /* ProfileTableFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableFooterView.swift; sourceTree = "<group>"; };
 		60F45523209CF10100C532A0 /* SignInTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInTaskViewController.swift; sourceTree = "<group>"; };
+		60FB513A212DEB3B00D50F4D /* MP2ProfileSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MP2ProfileSection.swift; sourceTree = "<group>"; };
+		60FB513D212DED6F00D50F4D /* MP2ProfileDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MP2ProfileDataSource.swift; sourceTree = "<group>"; };
 		80F3739B20FC32D200A565E0 /* VersionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionLabel.swift; sourceTree = "<group>"; };
 		B508B31B2076ECA3001645CF /* MCTHandSelectionStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTHandSelectionStepObject.swift; sourceTree = "<group>"; };
 		B508B39820772D76001645CF /* MCTSkippableSectionStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTSkippableSectionStepObject.swift; sourceTree = "<group>"; };
@@ -647,6 +653,16 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
+		60FB5124212DEAD600D50F4D /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				60E86E39212B6B420073C69C /* ProfileTableItems.swift */,
+				60FB513A212DEB3B00D50F4D /* MP2ProfileSection.swift */,
+				60FB513D212DED6F00D50F4D /* MP2ProfileDataSource.swift */,
+			);
+			name = Profile;
+			sourceTree = "<group>";
+		};
 		B53FD157207EBC8F00FBCC85 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -699,7 +715,6 @@
 		CB5E1705210946E200AEE6A6 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				60E86E39212B6B420073C69C /* ProfileTableItems.swift */,
 				CB6196512109473900F2E3EA /* TrackedItemsIntroductionStepObject.swift */,
 			);
 			name = Model;
@@ -841,6 +856,7 @@
 			isa = PBXGroup;
 			children = (
 				F8D3E7792062F1B900CD351C /* AppDelegate.swift */,
+				60FB5124212DEAD600D50F4D /* Profile */,
 				CB5E1705210946E200AEE6A6 /* Model */,
 				F8078F4120ADF9A000757F42 /* Schedule Management */,
 				0334415220995311009B97A9 /* View Controllers */,
@@ -1438,7 +1454,9 @@
 				F8502065211A4F870094E05F /* MP2SurveyConfiguration.swift in Sources */,
 				F88E8DFE20ADEE2600117A99 /* RegistrationWaitingViewController.swift in Sources */,
 				60169BD120AF445C00D29532 /* ConsentViewController.swift in Sources */,
+				60FB513F212DED6F00D50F4D /* MP2ProfileDataSource.swift in Sources */,
 				F832AC3620DA22DA005A9025 /* MP2BridgeConfiguration.swift in Sources */,
+				60FB513C212DEB3B00D50F4D /* MP2ProfileSection.swift in Sources */,
 				F88E8DFB20ADEE2600117A99 /* ExternalIDRegistrationViewController.swift in Sources */,
 				80A0BE4921095E4F00D31B68 /* TrackedItemsIntroductionStepViewController.swift in Sources */,
 				03DD008420E2F9A4006A5794 /* ReminderTableStepViewController.swift in Sources */,
@@ -1459,6 +1477,7 @@
 				0349535520981C89006A05B1 /* ProgressCircleView.swift in Sources */,
 				F832AC3820DA29E6005A9025 /* MP2Factory.swift in Sources */,
 				60E94118212B8FD70027432C /* ProfileTableHeaderView.swift in Sources */,
+				60FB513B212DEB3B00D50F4D /* MP2ProfileSection.swift in Sources */,
 				608241DB2093D9A90026E843 /* RegistrationIntroViewController.swift in Sources */,
 				0334415420995328009B97A9 /* TodayViewController.swift in Sources */,
 				603B1086212CA7C500E44EE9 /* WithdrawalViewController.swift in Sources */,
@@ -1469,6 +1488,7 @@
 				0334415620995CCD009B97A9 /* TaskBrowserViewController.swift in Sources */,
 				F8C58DCA20AF5E86001C7B7F /* StudyBurstScheduleManager.swift in Sources */,
 				F8C58DB120AF4823001C7B7F /* TodayScheduleManager.swift in Sources */,
+				60FB513E212DED6F00D50F4D /* MP2ProfileDataSource.swift in Sources */,
 				F8C58DD520AF8CCC001C7B7F /* SurveyScheduleManager.swift in Sources */,
 				0354809F20BF3B6400B757AB /* StudyBurstViewController.swift in Sources */,
 				F85020F8211BA8550094E05F /* TaskGroupScheduleManager.swift in Sources */,
