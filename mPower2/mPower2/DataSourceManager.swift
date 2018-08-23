@@ -113,7 +113,7 @@ class DataSourceManager {
             return scheduleManager
             
         default:
-            let scheduleManager = SBAScheduleManager()
+            let scheduleManager = TrackingScheduleManager()
             scheduleManager.activityGroup = activityGroup(with: identifier)
             return scheduleManager
         }

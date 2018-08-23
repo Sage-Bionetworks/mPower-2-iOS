@@ -161,4 +161,9 @@ class TodayHistoryScheduleManager : SBAScheduleManager {
         }
         return items
     }
+    
+    override open func reportQueries() -> [ReportQuery] {
+        let tasks: [RSDIdentifier] = [.triggersTask, .symptomsTask, .medicationTask]
+        return tasks.map { ReportQuery(identifier: $0, queryType: .today, dateRange: nil) }
+    }
 }
