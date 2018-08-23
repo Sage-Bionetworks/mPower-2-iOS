@@ -328,6 +328,39 @@ class StudyBurstTests: XCTestCase {
         XCTAssertNil(completionTask)
     }
     
+    func testStudyBurstComplete_Day9_TasksFinished() {
+        
+        let scheduleManager = TestStudyBurstScheduleManager(.day9_tasksFinished)
+        guard loadSchedules(scheduleManager) else {
+            XCTFail("Failed to load the schedules and reports.")
+            return
+        }
+        
+        XCTAssertNil(scheduleManager.updateFailed_error)
+        XCTAssertNotNil(scheduleManager.update_fetchedActivities)
+        XCTAssertNotNil(scheduleManager.activityGroup)
+        XCTAssertEqual(scheduleManager.dayCount, 9)
+        XCTAssertTrue(scheduleManager.hasStudyBurst)
+        XCTAssertEqual(scheduleManager.finishedSchedules.count, 3)
+        XCTAssertTrue(scheduleManager.isCompletedForToday)
+        XCTAssertFalse(scheduleManager.isLastDay)
+        
+        XCTAssertNotNil(scheduleManager.todayCompletionTask)
+        
+        let completionTask = scheduleManager.engagementTaskPath()
+        XCTAssertNotNil(completionTask)
+        
+        if let steps = (completionTask?.task?.stepNavigator as? RSDConditionalStepNavigator)?.steps {
+            XCTAssertEqual(steps.count, 1)
+            XCTAssertEqual(steps.first?.identifier, "Background")
+        }
+        else {
+            XCTFail("Failed to get the expected navigator for the completion task")
+        }
+        
+        XCTAssertNotNil(scheduleManager.actionBarItem)
+    }
+    
     func testStudyBurstComplete_Day21_Missing6() {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day21_missing6_engagementNotFinished)
@@ -732,9 +765,6 @@ class StudyBurstTests: XCTestCase {
     
     func loadSchedules(_ scheduleManager: TestStudyBurstScheduleManager) -> Bool {
         
-        // reset the user defaults for the motivation survey
-        scheduleManager.hasCompletedMotivationSurvey = false
-        
         let expect = expectation(description: "Update finished called.")
         scheduleManager.updateFinishedBlock = {
             expect.fulfill()
@@ -822,5 +852,3 @@ class TestStudyBurstScheduleManager : StudyBurstScheduleManager {
         finishedFetchingReportsBlock = nil
     }
 }
-
-

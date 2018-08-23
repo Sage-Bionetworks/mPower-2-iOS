@@ -224,10 +224,16 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     public private(set) var finishedSchedules: [SBBScheduledActivity] = []
     
     /// Subset of the past survey schedules that were not finished on the day they were scheduled.
-    public private(set) var pastSurveys: [RSDIdentifier] = []
+    public var pastSurveys: [RSDIdentifier] {
+        let thisDay = calculateThisDay()
+        return getPastSurveys(for: thisDay)
+    }
     
     /// The completion task to use for today.
-    public private(set) var todayCompletionTask: StudyBurstConfiguration.CompletionTask?
+    public var todayCompletionTask: StudyBurstConfiguration.CompletionTask? {
+        let thisDay = calculateThisDay()
+        return getTodayCompletionTask(for: thisDay)
+    }
     
     /// The action bar item to display.
     public var actionBarItem: TodayActionBarItem? {
@@ -473,8 +479,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
             self._expiresOn = nil
             self.dayCount = nil
         }
-        
-        self.updateCompletionTask()
+
         self.updateNotifications()
         
         super.didUpdateScheduledActivities(from: previousActivities)
@@ -644,17 +649,26 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     }
     
     func calculateThisDay() -> Int {
-        guard hasStudyBurst else { return self.maxDaysCount + 1 }
-        return self.isLastDay ? self.numberOfDays : ((self.pastDaysCount - self.missedDaysCount) + 1)
+        guard hasStudyBurst, let day = self.dayCount else { return self.maxDaysCount + 1 }
+        if day < self.studyBurst.numberOfDays {
+            return day
+        }
+        else {
+            return self.isLastDay ? self.numberOfDays : ((self.pastDaysCount - self.missedDaysCount) + 1)
+        }
     }
     
-    func updateCompletionTask() {
-        
-        // Look for the most appropriate completion tasks for today.
-        let thisDay = calculateThisDay()
-        self.pastSurveys = getPastSurveys(for: thisDay)
-        self.todayCompletionTask = getTodayCompletionTask(for: thisDay)
-    }
+//    func updateCompletionTask() {
+//
+//        // Look for the most appropriate completion tasks for today.
+//        let thisDay = calculateThisDay()
+//        self.pastSurveys = getPastSurveys(for: thisDay)
+//        self.todayCompletionTask = getTodayCompletionTask(for: thisDay)
+//
+//        debugPrint("pastSurveys: \(pastSurveys)")
+//        debugPrint("todayCompletionTask: \(String(describing: todayCompletionTask))")
+//
+//    }
     
     func getPastTasks(for thisDay: Int) -> [StudyBurstConfiguration.CompletionTask] {
         return self.studyBurst.completionTasks.filter {

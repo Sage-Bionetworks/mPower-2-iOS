@@ -85,7 +85,7 @@ public class ParticipantManager : NSObject, SBBParticipantManagerProtocol {
             guard surveyMap[$0] != nil else { return }
             
             let clientData: [String : Any] = ($0 == .studyBurstReminder) ?
-                [ "reminderTime" : studySetup.reminderTime ?? "09:00",
+                [ "reminderTime" : studySetup.reminderTime ?? "09:00:00",
                   "noReminder" : (studySetup.reminderTime == nil)
             ] : [:]
             

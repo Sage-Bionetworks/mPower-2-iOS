@@ -269,6 +269,18 @@ extension StudySetup {
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 1),
                    finishedTodayTasks: [])
     
+    static let day9_twoTasksFinished =
+        StudySetup(studyBurstDay: 8,
+                   studyBurstFinishedOnDays: finishedOnDays(7, 0),
+                   studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 7),
+                   finishedTodayTasks: [.tappingTask, .walkAndBalanceTask])
+    
+    static let day9_tasksFinished =
+        StudySetup(studyBurstDay: 8,
+                   studyBurstFinishedOnDays: finishedOnDays(7, 0),
+                   studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 7),
+                   finishedTodayTasks: RSDIdentifier.measuringTasks)
+    
     static let day11_tasksFinished_noMissingDays =
         StudySetup(studyBurstDay: 10,
                    studyBurstFinishedOnDays: finishedOnDays(10, 0),
