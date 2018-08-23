@@ -658,18 +658,6 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         }
     }
     
-//    func updateCompletionTask() {
-//
-//        // Look for the most appropriate completion tasks for today.
-//        let thisDay = calculateThisDay()
-//        self.pastSurveys = getPastSurveys(for: thisDay)
-//        self.todayCompletionTask = getTodayCompletionTask(for: thisDay)
-//
-//        debugPrint("pastSurveys: \(pastSurveys)")
-//        debugPrint("todayCompletionTask: \(String(describing: todayCompletionTask))")
-//
-//    }
-    
     func getPastTasks(for thisDay: Int) -> [StudyBurstConfiguration.CompletionTask] {
         return self.studyBurst.completionTasks.filter {
             return $0.day < thisDay
