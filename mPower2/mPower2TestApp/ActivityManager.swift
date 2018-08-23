@@ -495,22 +495,6 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
                                               survey: $0)
             self.schedules.append(survey)
         }
-        
-        // Add the reminders task.
-        let clientData: SBBJSONValue? = {
-            guard surveyMap[.studyBurstReminder] != nil else { return nil }
-            return [ "reminderTime" : studySetup.reminderTime ?? "09:00",
-                     "noReminder" : (studySetup.reminderTime == nil)
-            ] as NSDictionary
-        }()
-        let studyBurstReminder = createSchedule(with: .studyBurstReminder,
-                                        scheduledOn: studySetup.createdOn,
-                                        expiresOn: nil,
-                                        finishedOn: surveyMap[.studyBurstReminder],
-                                        clientData: clientData,
-                                        schedulePlanGuid: nil)
-        studyBurstReminder.persistent = NSNumber(value: false)
-        self.schedules.append(studyBurstReminder)
     }
     
     public func createSchedule(with identifier: RSDIdentifier, scheduledOn: Date, expiresOn: Date?, finishedOn: Date?, clientData: SBBJSONValue?, schedulePlanGuid: String?, survey: SurveyReference? = nil) -> SBBScheduledActivity {

@@ -34,7 +34,7 @@
 import XCTest
 @testable import mPower2TestApp
 import Research
-import BridgeApp
+@testable import BridgeApp
 
 class TodayScheduleManagerTests: XCTestCase {
     
@@ -98,17 +98,27 @@ class TodayScheduleManagerTests: XCTestCase {
                                            scheduledOn: startOfDay,
                                            expiresOn: nil,
                                            finishedOn: run1,
-                                           clientData: [clientData1] as NSArray,
+                                           clientData: nil,
                                            schedulePlanGuid: nil)
         let schedule2 = activityManager.createSchedule(with: .triggersTask,
                                                        scheduledOn: run1.addingTimeInterval(60),
                                                        expiresOn: nil,
                                                        finishedOn: run2,
-                                                       clientData: [clientData2] as NSArray,
+                                                       clientData: nil,
                                                        schedulePlanGuid: nil)
         
         let scheduleManager = TodayHistoryScheduleManager()
         let scheduledActivities = [schedule1, schedule2]
+        
+        let report1 = SBAReport(identifier: .triggersTask,
+                                date: run1,
+                                clientData: clientData1 as NSDictionary)
+        scheduleManager.reports.insert(report1)
+        
+        let report2 = SBAReport(identifier: .triggersTask,
+                                date: run2,
+                                clientData: clientData2 as NSDictionary)
+        scheduleManager.reports.insert(report2)
         
         let items = scheduleManager.consolidateItems(scheduledActivities)
         

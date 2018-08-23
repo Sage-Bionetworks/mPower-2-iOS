@@ -62,7 +62,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SBBComponentManager.registerComponent(activityManager, for: SBBActivityManager.self)
         activityManager.buildSchedules()
         
-        let participantManager = ParticipantManager(studySetup: activityManager.studySetup)
+        let participantManager = ParticipantManager()
+        participantManager.setup(with: activityManager.studySetup)
         SBBComponentManager.registerComponent(participantManager, for: SBBParticipantManager.self)
         
         SurveyReference.all.forEach {

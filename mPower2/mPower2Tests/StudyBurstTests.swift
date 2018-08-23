@@ -88,7 +88,10 @@ class StudyBurstTests: XCTestCase {
     func testStudyBurst_Day1_StartState() {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day1_startupState)
-        XCTAssertTrue(loadSchedules(scheduleManager))
+        guard loadSchedules(scheduleManager) else {
+            XCTFail("Failed to load the schedules and reports.")
+            return
+        }
 
         XCTAssertNil(scheduleManager.updateFailed_error)
         XCTAssertNotNil(scheduleManager.update_fetchedActivities)
@@ -99,18 +102,13 @@ class StudyBurstTests: XCTestCase {
         XCTAssertFalse(scheduleManager.isCompletedForToday)
         XCTAssertFalse(scheduleManager.isLastDay)
         XCTAssertEqual(scheduleManager.calculateThisDay(), 1)
-        XCTAssertEqual(scheduleManager.pastSurveySchedules.count, 0)
+        XCTAssertEqual(scheduleManager.pastSurveys.count, 0)
         XCTAssertNotNil(scheduleManager.todayCompletionTask)
         
         let demographics = scheduleManager.scheduledActivities.filter {
             $0.activityIdentifier == RSDIdentifier.demographics.stringValue
         }
         XCTAssertEqual(demographics.count, 1)
-        
-        let studyBurstReminder = scheduleManager.scheduledActivities.filter {
-            $0.activityIdentifier == RSDIdentifier.studyBurstReminder.stringValue
-        }
-        XCTAssertEqual(studyBurstReminder.count, 1)
         
         let completionTask = scheduleManager.engagementTaskPath()
         XCTAssertNotNil(completionTask, "scheduleManager.engagementTaskPath()")
@@ -134,8 +132,11 @@ class StudyBurstTests: XCTestCase {
     func testStudyBurstComplete_Day1() {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day1_tasksFinished_surveysNotFinished)
-        XCTAssertTrue(loadSchedules(scheduleManager))
-        
+        guard loadSchedules(scheduleManager) else {
+            XCTFail("Failed to load the schedules and reports.")
+            return
+        }
+
         XCTAssertNil(scheduleManager.updateFailed_error)
         XCTAssertNotNil(scheduleManager.update_fetchedActivities)
         XCTAssertNotNil(scheduleManager.activityGroup)
@@ -145,18 +146,13 @@ class StudyBurstTests: XCTestCase {
         XCTAssertTrue(scheduleManager.isCompletedForToday)
         XCTAssertFalse(scheduleManager.isLastDay)
         XCTAssertEqual(scheduleManager.calculateThisDay(), 1)
-        XCTAssertEqual(scheduleManager.pastSurveySchedules.count, 0)
+        XCTAssertEqual(scheduleManager.pastSurveys.count, 0)
         XCTAssertNotNil(scheduleManager.todayCompletionTask)
         
         let demographics = scheduleManager.scheduledActivities.filter {
             $0.activityIdentifier == RSDIdentifier.demographics.stringValue
         }
         XCTAssertEqual(demographics.count, 1)
-        
-        let studyBurstReminder = scheduleManager.scheduledActivities.filter {
-            $0.activityIdentifier == RSDIdentifier.studyBurstReminder.stringValue
-        }
-        XCTAssertEqual(studyBurstReminder.count, 1)
         
         let completionTask = scheduleManager.engagementTaskPath()
         XCTAssertNotNil(completionTask, "scheduleManager.engagementTaskPath()")
@@ -189,8 +185,11 @@ class StudyBurstTests: XCTestCase {
     func testStudyBurstComplete_Day1_SurveysFinished() {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day1_tasksFinished_surveysFinished)
-        XCTAssertTrue(loadSchedules(scheduleManager))
-        
+        guard loadSchedules(scheduleManager) else {
+            XCTFail("Failed to load the schedules and reports.")
+            return
+        }
+
         XCTAssertNil(scheduleManager.updateFailed_error)
         XCTAssertNotNil(scheduleManager.update_fetchedActivities)
         XCTAssertNotNil(scheduleManager.activityGroup)
@@ -200,7 +199,7 @@ class StudyBurstTests: XCTestCase {
         XCTAssertTrue(scheduleManager.isCompletedForToday)
         XCTAssertFalse(scheduleManager.isLastDay)
         XCTAssertEqual(scheduleManager.calculateThisDay(), 1)
-        XCTAssertEqual(scheduleManager.pastSurveySchedules.count, 0)
+        XCTAssertEqual(scheduleManager.pastSurveys.count, 0)
         XCTAssertNotNil(scheduleManager.todayCompletionTask)
         
         let demographics = scheduleManager.scheduledActivities.filter {
@@ -208,19 +207,17 @@ class StudyBurstTests: XCTestCase {
         }
         XCTAssertEqual(demographics.count, 1)
         
-        let studyBurstReminder = scheduleManager.scheduledActivities.filter {
-            $0.activityIdentifier == RSDIdentifier.studyBurstReminder.stringValue
-        }
-        XCTAssertEqual(studyBurstReminder.count, 1)
-        
         XCTAssertNil(scheduleManager.actionBarItem)
     }
     
     func testStudyBurstComplete_Day2_Day1SurveysNotFinished() {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day2_surveysNotFinished)
-        XCTAssertTrue(loadSchedules(scheduleManager))
-        
+        guard loadSchedules(scheduleManager) else {
+            XCTFail("Failed to load the schedules and reports.")
+            return
+        }
+
         XCTAssertNil(scheduleManager.updateFailed_error)
         XCTAssertNotNil(scheduleManager.update_fetchedActivities)
         XCTAssertNotNil(scheduleManager.activityGroup)
@@ -249,8 +246,11 @@ class StudyBurstTests: XCTestCase {
     func testStudyBurstComplete_Day15_Missing1() {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day15_missing1_engagementNotFinished)
-        XCTAssertTrue(loadSchedules(scheduleManager))
-        
+        guard loadSchedules(scheduleManager) else {
+            XCTFail("Failed to load the schedules and reports.")
+            return
+        }
+
         XCTAssertNil(scheduleManager.updateFailed_error)
         XCTAssertNotNil(scheduleManager.update_fetchedActivities)
         XCTAssertNotNil(scheduleManager.activityGroup)
@@ -277,8 +277,11 @@ class StudyBurstTests: XCTestCase {
     func testStudyBurstComplete_Day14_Missing1() {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day14_missing1_tasksFinished_engagementNotFinished)
-        XCTAssertTrue(loadSchedules(scheduleManager))
-        
+        guard loadSchedules(scheduleManager) else {
+            XCTFail("Failed to load the schedules and reports.")
+            return
+        }
+
         XCTAssertNil(scheduleManager.updateFailed_error)
         XCTAssertNotNil(scheduleManager.update_fetchedActivities)
         XCTAssertNotNil(scheduleManager.activityGroup)
@@ -307,8 +310,11 @@ class StudyBurstTests: XCTestCase {
     func testStudyBurstComplete_Day14_Missing6() {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day14_missing6_tasksFinished_engagementNotFinished)
-        XCTAssertTrue(loadSchedules(scheduleManager))
-        
+        guard loadSchedules(scheduleManager) else {
+            XCTFail("Failed to load the schedules and reports.")
+            return
+        }
+
         XCTAssertNil(scheduleManager.updateFailed_error)
         XCTAssertNotNil(scheduleManager.update_fetchedActivities)
         XCTAssertNotNil(scheduleManager.activityGroup)
@@ -325,8 +331,11 @@ class StudyBurstTests: XCTestCase {
     func testStudyBurstComplete_Day21_Missing6() {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day21_missing6_engagementNotFinished)
-        XCTAssertTrue(loadSchedules(scheduleManager))
-        
+        guard loadSchedules(scheduleManager) else {
+            XCTFail("Failed to load the schedules and reports.")
+            return
+        }
+
         XCTAssertNil(scheduleManager.updateFailed_error)
         XCTAssertNotNil(scheduleManager.update_fetchedActivities)
         XCTAssertNotNil(scheduleManager.activityGroup)
@@ -353,8 +362,11 @@ class StudyBurstTests: XCTestCase {
     func testStudyBurstComplete_Day15_BurstComplete_EngagementNotComplete() {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day15_burstCompleted_engagementNotFinished)
-        XCTAssertTrue(loadSchedules(scheduleManager))
-        
+        guard loadSchedules(scheduleManager) else {
+            XCTFail("Failed to load the schedules and reports.")
+            return
+        }
+
         XCTAssertNil(scheduleManager.updateFailed_error)
         XCTAssertNotNil(scheduleManager.update_fetchedActivities)
         XCTAssertNotNil(scheduleManager.activityGroup)
@@ -382,8 +394,11 @@ class StudyBurstTests: XCTestCase {
     func testStudyBurstComplete_Day15_BurstComplete_EngagementComplete() {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day15_burstCompleted_engagementFinished)
-        XCTAssertTrue(loadSchedules(scheduleManager))
-        
+        guard loadSchedules(scheduleManager) else {
+            XCTFail("Failed to load the schedules and reports.")
+            return
+        }
+
         XCTAssertNil(scheduleManager.updateFailed_error)
         XCTAssertNotNil(scheduleManager.update_fetchedActivities)
         XCTAssertNotNil(scheduleManager.activityGroup)
@@ -401,8 +416,11 @@ class StudyBurstTests: XCTestCase {
     func testStudyBurstComplete_Day1_AllFinished_2HoursAgo() {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day1_allFinished_2HoursAgo)
-        XCTAssertTrue(loadSchedules(scheduleManager))
-        
+        guard loadSchedules(scheduleManager) else {
+            XCTFail("Failed to load the schedules and reports.")
+            return
+        }
+
         XCTAssertNil(scheduleManager.updateFailed_error)
         XCTAssertNotNil(scheduleManager.update_fetchedActivities)
         XCTAssertNotNil(scheduleManager.activityGroup)
@@ -412,7 +430,7 @@ class StudyBurstTests: XCTestCase {
         XCTAssertTrue(scheduleManager.isCompletedForToday)
         XCTAssertFalse(scheduleManager.isLastDay)
         XCTAssertEqual(scheduleManager.calculateThisDay(), 1)
-        XCTAssertEqual(scheduleManager.pastSurveySchedules.count, 0)
+        XCTAssertEqual(scheduleManager.pastSurveys.count, 0)
         XCTAssertNotNil(scheduleManager.todayCompletionTask)
         XCTAssertNil(scheduleManager.actionBarItem)
     }
@@ -426,18 +444,15 @@ class StudyBurstTests: XCTestCase {
         setup.reminderTime = "09:00:00"
         let scheduleManager = TestStudyBurstScheduleManager(setup)
         let studySetup = scheduleManager.studySetup
-        XCTAssertTrue(loadSchedules(scheduleManager))
-        
-        // Test assumptions
-        let reminderSchedule = scheduleManager._activityManager.schedules.first(where: {
-            $0.activityIdentifier == RSDIdentifier.studyBurstReminder.stringValue  })
-        XCTAssertNotNil(reminderSchedule)
-        XCTAssertNotNil(reminderSchedule?.clientData)
-        
-        let studyBurstReminder = scheduleManager.scheduledActivities.filter {
-            $0.activityIdentifier == RSDIdentifier.studyBurstReminder.stringValue
+        guard loadSchedules(scheduleManager) else {
+            XCTFail("Failed to load the schedules and reports.")
+            return
         }
-        XCTAssertEqual(studyBurstReminder.count, 1)
+
+        // Test assumptions
+        let reminderReport = scheduleManager._participantManager.reportDataObjects.first {
+            $0.identifer == RSDIdentifier.studyBurstReminder.stringValue }
+        XCTAssertNotNil(reminderReport)
         
         let studyBurstMarker = scheduleManager.scheduledActivities.first(where: {
             $0.activityIdentifier == scheduleManager.studyBurst.identifier &&
@@ -518,8 +533,11 @@ class StudyBurstTests: XCTestCase {
         setup.reminderTime = "14:00:00"
         let scheduleManager = TestStudyBurstScheduleManager(setup)
         let studySetup = scheduleManager.studySetup
-        XCTAssertTrue(loadSchedules(scheduleManager))
-        
+        guard loadSchedules(scheduleManager) else {
+            XCTFail("Failed to load the schedules and reports.")
+            return
+        }
+
         // Check that the scheduled reminder time is decoded correctly
         let scheduledReminderTime = scheduleManager.getReminderTime()
         XCTAssertNotNil(scheduledReminderTime)
@@ -567,8 +585,11 @@ class StudyBurstTests: XCTestCase {
         setup.reminderTime = "14:00:00"
         let scheduleManager = TestStudyBurstScheduleManager(setup)
         let studySetup = scheduleManager.studySetup
-        XCTAssertTrue(loadSchedules(scheduleManager))
-        
+        guard loadSchedules(scheduleManager) else {
+            XCTFail("Failed to load the schedules and reports.")
+            return
+        }
+
         // Check that the scheduled reminder time is decoded correctly
         let scheduledReminderTime = scheduleManager.getReminderTime()
         XCTAssertNotNil(scheduledReminderTime)
@@ -631,8 +652,11 @@ class StudyBurstTests: XCTestCase {
         setup.reminderTime = "14:00:00"
         let scheduleManager = TestStudyBurstScheduleManager(setup)
         let studySetup = scheduleManager.studySetup
-        XCTAssertTrue(loadSchedules(scheduleManager))
-        
+        guard loadSchedules(scheduleManager) else {
+            XCTFail("Failed to load the schedules and reports.")
+            return
+        }
+
         // Check that the scheduled reminder time is decoded correctly
         let scheduledReminderTime = scheduleManager.getReminderTime()
         XCTAssertNotNil(scheduledReminderTime)
@@ -669,8 +693,11 @@ class StudyBurstTests: XCTestCase {
         setup.reminderTime = "14:00:00"
         let scheduleManager = TestStudyBurstScheduleManager(setup)
         let studySetup = scheduleManager.studySetup
-        XCTAssertTrue(loadSchedules(scheduleManager))
-        
+        guard loadSchedules(scheduleManager) else {
+            XCTFail("Failed to load the schedules and reports.")
+            return
+        }
+
         // Check that the scheduled reminder time is decoded correctly
         let scheduledReminderTime = scheduleManager.getReminderTime()
         XCTAssertNotNil(scheduledReminderTime)
@@ -718,6 +745,18 @@ class StudyBurstTests: XCTestCase {
             print(String(describing: err))
             success = (err == nil)
         }
+        guard success else { return false }
+        
+        let expectReports = expectation(description: "Update finished called.")
+        scheduleManager.finishedFetchingReportsBlock = {
+            expectReports.fulfill()
+        }
+        scheduleManager.loadReports()
+        waitForExpectations(timeout: 2) { (err) in
+            print(String(describing: err))
+            success = (err == nil)
+        }
+
         return success
     }
 }
@@ -734,9 +773,11 @@ class TestStudyBurstScheduleManager : StudyBurstScheduleManager {
         // build the schedules.
         self._activityManager.studySetup = setup
         self._activityManager.buildSchedules()
+        self._participantManager.setup(with: setup)
     }
     
     let _activityManager = ActivityManager()
+    let _participantManager = ParticipantManager()
     
     var studySetup: StudySetup {
         return self._activityManager.studySetup
@@ -750,11 +791,17 @@ class TestStudyBurstScheduleManager : StudyBurstScheduleManager {
         return _activityManager
     }
     
+    override var participantManager: SBBParticipantManagerProtocol {
+        return _participantManager
+    }
+    
     var updateFinishedBlock: (() -> Void)?
     var updateFailed_error: Error?
     var update_fetchedActivities:[SBBScheduledActivity]?
     var sendUpdated_schedules: [SBBScheduledActivity]?
     var sendUpdated_taskPath: RSDTaskPath?
+    
+    var finishedFetchingReportsBlock: (() -> Void)?
     
     override func updateFailed(_ error: Error) {
         updateFailed_error = error
@@ -768,6 +815,11 @@ class TestStudyBurstScheduleManager : StudyBurstScheduleManager {
         super.update(fetchedActivities: fetchedActivities)
         updateFinishedBlock?()
         updateFinishedBlock = nil
+    }
+    
+    override func didFinishFetchingReports() {
+        finishedFetchingReportsBlock?()
+        finishedFetchingReportsBlock = nil
     }
 }
 
