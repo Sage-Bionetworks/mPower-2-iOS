@@ -138,6 +138,10 @@ class DataSourceManager {
     
     private func installTaskGroupsIfNeeded() {
         
+        self.categoryMapping.forEach {
+            self.configuration.addMapping(with: $0.key.stringValue, to: $0.value)
+        }
+        
         let installedGroups = configuration.installedGroups
         let rsdIdentifiers: [RSDIdentifier] = [.measuringTaskGroup, .trackingTaskGroup]
         

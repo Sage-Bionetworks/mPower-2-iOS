@@ -194,20 +194,14 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     }
     
     /// Has the user been shown the motivation survey?
-    public internal(set) var hasCompletedMotivationSurvey : Bool {
-        get {
-            guard !UserDefaults.standard.bool(forKey: "hasCompletedMotivationSurvey")
-                else {
-                    return true
-            }
-            let result = self.scheduledActivities.contains {
-                $0.activityIdentifier == self.studyBurst.motivationIdentifier.stringValue && $0.isCompleted
-            }
-            self.hasCompletedMotivationSurvey = result
-            return result
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: "hasCompletedMotivationSurvey")
+    public var hasCompletedMotivationSurvey : Bool {
+        do {
+            let reportIdentifier = self.studyBurst.motivationIdentifier.stringValue
+            let report: SBBReportData? = try self.participantManager.getLatestCachedData(forReport: reportIdentifier)
+            let isNil = (report?.localDate == nil) && (report?.dateTime == nil)
+            return !isNil
+        } catch {
+            return false
         }
     }
     
@@ -487,12 +481,6 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     }
     
     override func taskController(_ taskController: RSDTaskController, readyToSave taskPath: RSDTaskPath) {
-        
-        // Mark the moviation study as completed. This will be stored for future runs to avoid a potential
-        // race condition of displaying the "Today" view before the schedules have finished loading.
-        if taskPath.identifier == self.studyBurst.motivationIdentifier {
-            self.hasCompletedMotivationSurvey = true
-        }
         
         // Preload the finished tasks so that the progress will update properly.
         if let schedule = self.scheduledActivity(for: taskPath.result, scheduleIdentifier: taskPath.scheduleIdentifier),

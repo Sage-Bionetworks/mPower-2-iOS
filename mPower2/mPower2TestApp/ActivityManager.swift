@@ -162,6 +162,38 @@ extension StudySetup {
                    studyBurstSurveyFinishedOnDays: [:],
                    finishedTodayTasks: [])
     
+    static let day1_startupState_BRII_DTT =
+        StudySetup(studyBurstDay: 0,
+                   studyBurstFinishedOnDays: [],
+                   studyBurstSurveyFinishedOnDays: [:],
+                   finishedTodayTasks: [],
+                   timeUntilExpires: 0,
+                   dataGroups: ["gr_SC_DB","gr_BR_II","gr_ST_T","gr_DT_T"])
+    
+    static let day1_startupState_BRII_DTF =
+        StudySetup(studyBurstDay: 0,
+                   studyBurstFinishedOnDays: [],
+                   studyBurstSurveyFinishedOnDays: [:],
+                   finishedTodayTasks: [],
+                   timeUntilExpires: 0,
+                   dataGroups: ["gr_SC_DB","gr_BR_II","gr_ST_T","gr_DT_F"])
+    
+    static let day1_startupState_BRAD_DTT =
+        StudySetup(studyBurstDay: 0,
+                   studyBurstFinishedOnDays: [],
+                   studyBurstSurveyFinishedOnDays: [:],
+                   finishedTodayTasks: [],
+                   timeUntilExpires: 0,
+                   dataGroups: ["gr_SC_DB","gr_BR_AD","gr_ST_T","gr_DT_T"])
+    
+    static let day1_startupState_BRAD_DTF =
+        StudySetup(studyBurstDay: 0,
+                   studyBurstFinishedOnDays: [],
+                   studyBurstSurveyFinishedOnDays: [:],
+                   finishedTodayTasks: [],
+                   timeUntilExpires: 0,
+                   dataGroups: ["gr_SC_DB","gr_BR_AD","gr_ST_T","gr_DT_F"])
+    
     static let day1_noTasksFinished =
         StudySetup(studyBurstDay: 0,
                    studyBurstFinishedOnDays: [],
@@ -306,7 +338,7 @@ public struct SurveyReference : Codable {
     let createdOn: String
     
     static var all: [SurveyReference] = {
-        let surveyIdentifiers = ["Demographics", "Engagement", "Motivation"]
+        let surveyIdentifiers = ["Demographics", "Engagement", "Motivation", "Background", "Withdrawl"]
         let surveys: [SurveyReference] = surveyIdentifiers.compactMap {
             do {
                 let transformer = RSDResourceTransformerObject(resourceName: $0)

@@ -61,8 +61,9 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
         
         SBASurveyConfiguration.shared = MP2SurveyConfiguration()
         
-        // Instantiate and load the scheduled activities for the study burst.
+        // Instantiate and load the scheduled activities and reports for the study burst.
         StudyBurstScheduleManager.shared.loadScheduledActivities()
+        StudyBurstScheduleManager.shared.loadReports()
         
         // Reset the badge icon on active
         // TODO: syoung 07/25/2018 Add appropriate messaging and UI/UX for highlighting notifications.
