@@ -126,6 +126,7 @@ class WithdrawalViewController: UIViewController {
                                                                   actionHandler: { (_) in
                                                                     BridgeSDK.authManager.signOut(completion: { (_, _, error) in
                                                                         appDelegate.showAppropriateViewController(animated: true)
+                                                                        self.backButton.isHidden = false
                                                                         self.backButtonTapped(nil)
                                                                     })
                 })
