@@ -35,9 +35,8 @@ import UIKit
 
 class ProfileTableHeaderView: UITableViewHeaderFooterView {
     static let className = String(describing: ProfileTableHeaderView.self)
-    static let cellHeight = CGFloat(34)
+    static let cellHeight = CGFloat(67)
     
-    @IBOutlet weak var iconView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
 
     override func awakeFromNib() {

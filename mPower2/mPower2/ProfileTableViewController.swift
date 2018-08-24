@@ -276,7 +276,6 @@ class ProfileTableViewController: UITableViewController {
         let sectionHeaderView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ProfileTableHeaderView.className) as! ProfileTableHeaderView
         
         sectionHeaderView.titleLabel?.text = profileDataSource.title(for: section)
-        sectionHeaderView.iconView?.image = profileDataSource.image(for: section)
         
         return sectionHeaderView
     }

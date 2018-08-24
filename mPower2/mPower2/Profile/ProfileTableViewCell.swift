@@ -54,8 +54,8 @@ class ProfileTableViewDetailCell: ProfileTableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        titleLabel?.textColor = UIColor.appLightGray
-        detailLabel?.textColor = UIColor.appTextDark
+        titleLabel?.textColor = UIColor.appTextDark
+        detailLabel?.textColor = UIColor.appLightGray
     }
     
 }
