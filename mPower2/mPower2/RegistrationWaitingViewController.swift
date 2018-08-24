@@ -60,6 +60,9 @@ class RegistrationWaitingViewController: RSDStepViewController {
             guard newNumber != self.phoneLabel.text else { return }
             
             self.phoneLabel.text = newNumber
+            var phoneResult = taskController.resultForPhoneNumber()
+            phoneResult!.value = newNumber
+            taskController.taskPath.appendStepHistory(with: phoneResult!)
             
             taskController.showLoadingView()
             taskController.signUpAndRequestSMSLink { (task, result, error) in
