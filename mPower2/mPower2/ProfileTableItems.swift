@@ -33,11 +33,12 @@
 
 import BridgeApp
 
-let scheduleProfileAction: SBAProfileOnSelectedAction = SBAProfileOnSelectedAction("scheduleProfileAction")
-let settingsProfileAction: SBAProfileOnSelectedAction = SBAProfileOnSelectedAction("settingsProfileAction")
-
-let changePasscodeAction: SBAProfileOnSelectedAction = SBAProfileOnSelectedAction("changePasscodeAction")
-let downloadDataAction: SBAProfileOnSelectedAction = SBAProfileOnSelectedAction("downloadDataAction")
+extension SBAProfileOnSelectedAction {
+    public static let scheduleProfileAction: SBAProfileOnSelectedAction = "scheduleProfileAction"
+    public static let settingsProfileAction: SBAProfileOnSelectedAction = "settingsProfileAction"
+    public static let changePasscodeAction: SBAProfileOnSelectedAction = "changePasscodeAction"
+    public static let downloadDataAction: SBAProfileOnSelectedAction = "downloadDataAction"
+}
 
 /* TODO: emm 2018-08-21 deal with this for v2.1
 class SettingsProfileTableItem: SBAProfileTableItemBase {

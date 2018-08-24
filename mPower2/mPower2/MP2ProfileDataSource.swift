@@ -33,11 +33,16 @@
 
 import BridgeApp
 
+extension SBAProfileSectionType {
+    /// Creates a `MP2ProfileSection`.
+    public static let mp2Section: SBAProfileSectionType = "mp2Section"
+}
+
 class MP2ProfileDataSource: SBAProfileDataSourceObject {
 
     override open func decodeSection(from decoder:Decoder, with type:SBAProfileSectionType) throws -> SBAProfileSection? {
-        switch type.rawValue {
-        case "mp2Section":
+        switch type {
+        case .mp2Section:
             return try MP2ProfileSection(from: decoder)
         default:
             return try super.decodeSection(from: decoder, with: type)

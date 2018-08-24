@@ -33,11 +33,16 @@
 
 import BridgeApp
 
+extension SBAProfileTableItemType {
+    /// Creates a `StudyParticipationProfileTableItem`.
+    public static let studyParticipation: SBAProfileTableItemType = "studyParticipation"
+}
+
 class MP2ProfileSection: SBAProfileSectionObject {
 
     override open func decodeItem(from decoder:Decoder, with type:SBAProfileTableItemType) throws -> SBAProfileTableItem? {
-        switch type.rawValue {
-        case "studyParticipation":
+        switch type {
+        case .studyParticipation:
             return try StudyParticipationProfileTableItem(from: decoder)
         default:
             return try super.decodeItem(from: decoder, with: type)
