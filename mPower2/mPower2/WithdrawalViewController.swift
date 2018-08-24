@@ -116,8 +116,10 @@ class WithdrawalViewController: UIViewController {
                 self.presentAlertWithOk(title: Localization.localizedString("WITHDRAWAL_ERROR_ALERT_TITLE"),
                                                                   message: Localization.localizedString("WITHDRAWAL_ERROR_ALERT_MESSAGE_BODY"),
                                                                   actionHandler: { (_) in
-                                                                    // show the back button so they can continue
-                                                                    self.backButton.isHidden = false
+                                                                    DispatchQueue.main.async {
+                                                                        // show the back button so they can continue
+                                                                        self.backButton.isHidden = false
+                                                                    }
                                                                 
                 })
             } else {
@@ -125,9 +127,11 @@ class WithdrawalViewController: UIViewController {
                                                                   message: Localization.localizedString("WITHDRAWAL_SUCCESS_ALERT_MESSAGE_BODY"),
                                                                   actionHandler: { (_) in
                                                                     BridgeSDK.authManager.signOut(completion: { (_, _, error) in
-                                                                        appDelegate.showAppropriateViewController(animated: true)
-                                                                        self.backButton.isHidden = false
-                                                                        self.backButtonTapped(nil)
+                                                                        DispatchQueue.main.async {
+                                                                            appDelegate.showAppropriateViewController(animated: true)
+                                                                            self.backButton.isHidden = false
+                                                                            self.backButtonTapped(nil)
+                                                                        }
                                                                     })
                 })
             }
