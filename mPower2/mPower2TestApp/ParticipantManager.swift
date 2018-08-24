@@ -175,7 +175,9 @@ public class ParticipantManager : NSObject, SBBParticipantManagerProtocol {
     }
     
     public func getReport(_ identifier: String, fromDate: DateComponents, toDate: DateComponents, completion: @escaping SBBParticipantManagerGetReportCompletionBlock) -> URLSessionTask? {
-        self._getReport(identifier, fromDate: fromDate.date!, toDate: toDate.date!, completion: completion)
+        let from = Calendar.iso8601.date(from: fromDate)
+        let to = Calendar.iso8601.date(from: toDate)
+        self._getReport(identifier, fromDate: from!, toDate: to!, completion: completion)
         return URLSessionTask()
     }
     
