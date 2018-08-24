@@ -1,8 +1,8 @@
 //
-//  ProfileTableViewCell.swift
+//  ProfileHTMLViewController.swift
 //  mPower2
 //
-//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -32,30 +32,28 @@
 //
 
 import UIKit
+import ResearchUI
 
-class ProfileTableViewCell: UITableViewCell {
+class ProfileHTMLViewController: RSDWebViewController {
     
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var detailLabel: UILabel!
-    @IBOutlet weak var chevron: UIImageView!
+    @IBOutlet var backButton: UIButton!
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        contentView.backgroundColor = UIColor.clear
+    open override func viewDidLoad() {
+        super.viewDidLoad()
+        self.view.backgroundColor = UIColor.primaryTintColor
+    }
+
+    open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
-        titleLabel?.textColor = UIColor.appTextDark
-        chevron.image = chevron?.image?.rsd_applyColor(UIColor.primaryTintColor)
+        self.webView.rsd_removeSuperviewConstraints()
+        self.webView.rsd_alignBelow(view: backButton, padding: 20.0)
+        self.webView.rsd_alignToSuperview([ .leading, .bottom, .trailing ], padding: 0.0)
+        self.webView.setNeedsUpdateConstraints()
     }
     
-}
-
-class ProfileTableViewDetailCell: ProfileTableViewCell {
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        titleLabel?.textColor = UIColor.appLightGray
-        detailLabel?.textColor = UIColor.appTextDark
+    @IBAction func backButtonTapped(_ sender: Any) {
+        navigationController?.popViewController(animated: true)
     }
-    
+
 }

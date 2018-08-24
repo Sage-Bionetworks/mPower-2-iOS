@@ -37,7 +37,7 @@ class WithdrawalViewController: UIViewController {
 
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var subtitleLabel: UILabel!
-    
+    @IBOutlet var backButton: UIButton!
     @IBOutlet var withdrawalButton: RSDRoundedButton!
     
     override func viewDidLoad() {
@@ -52,25 +52,12 @@ class WithdrawalViewController: UIViewController {
         // This screen will be shown underneath the screen that actually withdraws from the study,
         // so check if we are returning to it after we have already withdrawn, or are not signed in
         if !BridgeSDK.authManager.isAuthenticated() {
-            self.dismiss(animated: true, completion: nil)
-        } else {
-            setupNavigationBar()
+            navigationController?.popViewController(animated: true)
         }
     }
     
-    func setupNavigationBar() {
-        self.navigationController?.navigationBar.isTranslucent = false
-        
-        self.navigationController?.navigationBar.topItem!.title = Localization.localizedString("WITHDRAWAL_STUDY_PARTICIPATION_TITLE")
-        
-        let leftBarButtonItem = UIBarButtonItem(title: Localization.localizedString("BUTTON_CANCEL"), style: .plain, target: self, action: #selector(cancelTapped))
-        leftBarButtonItem.tintColor = UIColor.white
-        self.navigationItem.leftBarButtonItem = leftBarButtonItem
-    }
-    
-    @objc
-    func cancelTapped() {
-        self.dismiss(animated: true, completion: nil)
+    @IBAction func backButtonTapped(_ sender: Any!) {
+        navigationController?.popViewController(animated: true)
     }
     
     func setupViews() {
@@ -105,6 +92,9 @@ class WithdrawalViewController: UIViewController {
                 return
         }
         
+        // Hide the back button so we can be sure to still be around when the response alert pops up
+        self.backButton.isHidden = true
+        
         // Withdraw them from all subpopulations whose current consent they have signed.
         let withdrawGroup = DispatchGroup()
         var errorWithdrawing: Bool = false
@@ -123,14 +113,21 @@ class WithdrawalViewController: UIViewController {
             // Note that we use the current root view controller to present these alerts because the participant may have left this view controller by the time
             // the server call(s) to withdraw consent has (have) completed.
             if errorWithdrawing {
-                appDelegate.rootViewController?.presentAlertWithOk(title: Localization.localizedString("WITHDRAWAL_ERROR_ALERT_TITLE"),
+                self.presentAlertWithOk(title: Localization.localizedString("WITHDRAWAL_ERROR_ALERT_TITLE"),
                                                                   message: Localization.localizedString("WITHDRAWAL_ERROR_ALERT_MESSAGE_BODY"),
-                                                                  actionHandler: nil)
+                                                                  actionHandler: { (_) in
+                                                                    // show the back button so they can continue
+                                                                    self.backButton.isHidden = false
+                                                                
+                })
             } else {
-                appDelegate.rootViewController?.presentAlertWithOk(title: Localization.localizedString("WITHDRAWAL_SUCCESS_ALERT_TITLE"),
+                self.presentAlertWithOk(title: Localization.localizedString("WITHDRAWAL_SUCCESS_ALERT_TITLE"),
                                                                   message: Localization.localizedString("WITHDRAWAL_SUCCESS_ALERT_MESSAGE_BODY"),
                                                                   actionHandler: { (_) in
-                                                                    appDelegate.showAppropriateViewController(animated: true)
+                                                                    BridgeSDK.authManager.signOut(completion: { (_, _, error) in
+                                                                        appDelegate.showAppropriateViewController(animated: true)
+                                                                        self.backButtonTapped(nil)
+                                                                    })
                 })
             }
         }

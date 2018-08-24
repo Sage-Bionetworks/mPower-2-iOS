@@ -48,6 +48,14 @@
 		60FB513C212DEB3B00D50F4D /* MP2ProfileSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60FB513A212DEB3B00D50F4D /* MP2ProfileSection.swift */; };
 		60FB513E212DED6F00D50F4D /* MP2ProfileDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60FB513D212DED6F00D50F4D /* MP2ProfileDataSource.swift */; };
 		60FB513F212DED6F00D50F4D /* MP2ProfileDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60FB513D212DED6F00D50F4D /* MP2ProfileDataSource.swift */; };
+		80015116212F3A71006B3C8E /* fetchBridgeResources.sh in Resources */ = {isa = PBXBuildFile; fileRef = 80015100212F3A71006B3C8E /* fetchBridgeResources.sh */; };
+		80015119212F5621006B3C8E /* ProfileHTMLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80015118212F5621006B3C8E /* ProfileHTMLViewController.swift */; };
+		80015132212F6B40006B3C8E /* consent.html in Resources */ = {isa = PBXBuildFile; fileRef = 80015130212F6B3F006B3C8E /* consent.html */; };
+		80015133212F6B46006B3C8E /* consent.html in Resources */ = {isa = PBXBuildFile; fileRef = 80015130212F6B3F006B3C8E /* consent.html */; };
+		80015135212F837A006B3C8E /* Licenses.html in Resources */ = {isa = PBXBuildFile; fileRef = 80015134212F837A006B3C8E /* Licenses.html */; };
+		80015136212F837A006B3C8E /* Licenses.html in Resources */ = {isa = PBXBuildFile; fileRef = 80015134212F837A006B3C8E /* Licenses.html */; };
+		80015138212F8504006B3C8E /* CSS_files in Resources */ = {isa = PBXBuildFile; fileRef = 80015137212F8504006B3C8E /* CSS_files */; };
+		80015139212F8504006B3C8E /* CSS_files in Resources */ = {isa = PBXBuildFile; fileRef = 80015137212F8504006B3C8E /* CSS_files */; };
 		80A0BE3321095E1A00D31B68 /* TrackedItemsIntroductionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6196512109473900F2E3EA /* TrackedItemsIntroductionStepObject.swift */; };
 		80A0BE4921095E4F00D31B68 /* TrackedItemsIntroductionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5E16EE210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift */; };
 		80F3739C20FC32D200A565E0 /* VersionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F3739B20FC32D200A565E0 /* VersionLabel.swift */; };
@@ -459,6 +467,11 @@
 		60F45523209CF10100C532A0 /* SignInTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInTaskViewController.swift; sourceTree = "<group>"; };
 		60FB513A212DEB3B00D50F4D /* MP2ProfileSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MP2ProfileSection.swift; sourceTree = "<group>"; };
 		60FB513D212DED6F00D50F4D /* MP2ProfileDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MP2ProfileDataSource.swift; sourceTree = "<group>"; };
+		80015100212F3A71006B3C8E /* fetchBridgeResources.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = fetchBridgeResources.sh; sourceTree = "<group>"; };
+		80015118212F5621006B3C8E /* ProfileHTMLViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHTMLViewController.swift; sourceTree = "<group>"; };
+		80015131212F6B3F006B3C8E /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = Base.lproj/consent.html; sourceTree = "<group>"; };
+		80015134212F837A006B3C8E /* Licenses.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Licenses.html; sourceTree = "<group>"; };
+		80015137212F8504006B3C8E /* CSS_files */ = {isa = PBXFileReference; lastKnownFileType = folder; path = CSS_files; sourceTree = "<group>"; };
 		80F3739B20FC32D200A565E0 /* VersionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionLabel.swift; sourceTree = "<group>"; };
 		B508B31B2076ECA3001645CF /* MCTHandSelectionStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTHandSelectionStepObject.swift; sourceTree = "<group>"; };
 		B508B39820772D76001645CF /* MCTSkippableSectionStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTSkippableSectionStepObject.swift; sourceTree = "<group>"; };
@@ -629,6 +642,7 @@
 				CB5E16EE210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift */,
 				60E86E4F212B6B430073C69C /* ProfileTableViewController.swift */,
 				603B1070212CA7C500E44EE9 /* WithdrawalViewController.swift */,
+				80015118212F5621006B3C8E /* ProfileHTMLViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -661,6 +675,16 @@
 				60FB513D212DED6F00D50F4D /* MP2ProfileDataSource.swift */,
 			);
 			name = Profile;
+			sourceTree = "<group>";
+		};
+		8001512F212F6B2A006B3C8E /* HTML */ = {
+			isa = PBXGroup;
+			children = (
+				80015137212F8504006B3C8E /* CSS_files */,
+				80015130212F6B3F006B3C8E /* consent.html */,
+				80015134212F837A006B3C8E /* Licenses.html */,
+			);
+			name = HTML;
 			sourceTree = "<group>";
 		};
 		B53FD157207EBC8F00FBCC85 /* Views */ = {
@@ -747,6 +771,7 @@
 		F8188F7B2072CF51009AC215 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8001512F212F6B2A006B3C8E /* HTML */,
 				F832ABC120D8A822005A9025 /* Task JSON */,
 				F8D3E7822062F1B900CD351C /* LaunchScreen.storyboard */,
 				F8D3E77D2062F1B900CD351C /* Main.storyboard */,
@@ -942,6 +967,7 @@
 				F8D3E8002063055500CD351C /* sage-mpower-2.pem */,
 				F8D3E7852062F1B900CD351C /* Info.plist */,
 				F8D3E7E32062F2D700CD351C /* mPower2.entitlements */,
+				80015100212F3A71006B3C8E /* fetchBridgeResources.sh */,
 			);
 			name = "Support Files";
 			sourceTree = "<group>";
@@ -1037,6 +1063,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F8D3E7932062F1B900CD351C /* Build configuration list for PBXNativeTarget "mPower2" */;
 			buildPhases = (
+				80015117212F3A7F006B3C8E /* ShellScript */,
 				F8D3E7722062F1B900CD351C /* Sources */,
 				F8D3E7732062F1B900CD351C /* Frameworks */,
 				F8D3E7742062F1B900CD351C /* Resources */,
@@ -1349,14 +1376,17 @@
 				F8398D62212F32E5005DE6E0 /* Background.json in Resources */,
 				F85020D8211B96BF0094E05F /* StudyBurstReminder.json in Resources */,
 				F848F4F32107C9A00001ADBF /* Motivation.json in Resources */,
+				80015136212F837A006B3C8E /* Licenses.html in Resources */,
 				F84E723620E1866300E5C6C3 /* Demographics.json in Resources */,
 				F84E723820E1866A00E5C6C3 /* Engagement.json in Resources */,
 				60E9411D212B8FD70027432C /* HealthProfileTableHeaderView.xib in Resources */,
+				80015133212F6B46006B3C8E /* consent.html in Resources */,
 				F85020D4211B96BA0094E05F /* Medication.json in Resources */,
 				F88E8E0920ADEE6000117A99 /* mPower2.strings in Resources */,
 				F88E8E0A20ADEE6C00117A99 /* BridgeInfo.plist in Resources */,
 				60E9411B212B8FD70027432C /* ProfileTableFooterView.xib in Resources */,
 				F81BE7BF20B4AB4B00EE57D3 /* AppConfig.json in Resources */,
+				80015139212F8504006B3C8E /* CSS_files in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1364,6 +1394,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80015116212F3A71006B3C8E /* fetchBridgeResources.sh in Resources */,
 				F8D3E7842062F1B900CD351C /* LaunchScreen.storyboard in Resources */,
 				60A1576E209D16C50033FAB5 /* Registration.storyboard in Resources */,
 				F8D3E7812062F1B900CD351C /* Assets.xcassets in Resources */,
@@ -1373,14 +1404,17 @@
 				F85020D7211B96BF0094E05F /* StudyBurstReminder.json in Resources */,
 				F85020DB211B96C40094E05F /* SignIn.json in Resources */,
 				60E9411C212B8FD70027432C /* HealthProfileTableHeaderView.xib in Resources */,
+				80015135212F837A006B3C8E /* Licenses.html in Resources */,
 				F8D3E8022063055500CD351C /* sage-mpower-2.pem in Resources */,
 				60E9411A212B8FD70027432C /* ProfileTableFooterView.xib in Resources */,
 				F85020B6211B96AE0094E05F /* Triggers.json in Resources */,
+				80015132212F6B40006B3C8E /* consent.html in Resources */,
 				F85020D3211B96BA0094E05F /* Medication.json in Resources */,
 				F8D3E7F72063039200CD351C /* BridgeInfo.plist in Resources */,
 				60E94122212B8FD70027432C /* ProfileTableHeaderView.xib in Resources */,
 				F8D3E8032063055500CD351C /* BridgeInfo-private.plist in Resources */,
 				03C9DD0C20A4F956007074EE /* mPower2.strings in Resources */,
+				80015138212F8504006B3C8E /* CSS_files in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1414,6 +1448,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		80015117212F3A7F006B3C8E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = mPower2/fetchBridgeResources.sh;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F84E723920E2C99900E5C6C3 /* Sources */ = {
@@ -1507,6 +1557,7 @@
 				603B7BAA208E90FF00794B7C /* RegistrationWaitingViewController.swift in Sources */,
 				F832ABE920D8D341005A9025 /* StudyBurstCompletionViewController.swift in Sources */,
 				608241F22093D9F70026E843 /* ExternalIDRegistrationViewController.swift in Sources */,
+				80015119212F5621006B3C8E /* ProfileHTMLViewController.swift in Sources */,
 				F832AC3520DA22DA005A9025 /* MP2BridgeConfiguration.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1637,6 +1688,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		80015130212F6B3F006B3C8E /* consent.html */ = {
+			isa = PBXVariantGroup;
+			children = (
+				80015131212F6B3F006B3C8E /* Base */,
+			);
+			name = consent.html;
+			sourceTree = "<group>";
+		};
 		F85020B9211B96AE0094E05F /* Triggers.json */ = {
 			isa = PBXVariantGroup;
 			children = (
