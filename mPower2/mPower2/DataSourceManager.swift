@@ -113,7 +113,7 @@ class DataSourceManager {
             return scheduleManager
             
         default:
-            let scheduleManager = SBAScheduleManager()
+            let scheduleManager = TrackingScheduleManager()
             scheduleManager.activityGroup = activityGroup(with: identifier)
             return scheduleManager
         }
@@ -137,6 +137,10 @@ class DataSourceManager {
     // MARK: Install the task groups from either the bridge configuration or embedded resources.
     
     private func installTaskGroupsIfNeeded() {
+        
+        self.categoryMapping.forEach {
+            self.configuration.addMapping(with: $0.key.stringValue, to: $0.value)
+        }
         
         let installedGroups = configuration.installedGroups
         let rsdIdentifiers: [RSDIdentifier] = [.measuringTaskGroup, .trackingTaskGroup]

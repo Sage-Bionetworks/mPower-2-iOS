@@ -85,7 +85,7 @@ public class ParticipantManager : NSObject, SBBParticipantManagerProtocol {
             guard surveyMap[$0] != nil else { return }
             
             let clientData: [String : Any] = ($0 == .studyBurstReminder) ?
-                [ "reminderTime" : studySetup.reminderTime ?? "09:00",
+                [ "reminderTime" : studySetup.reminderTime ?? "09:00:00",
                   "noReminder" : (studySetup.reminderTime == nil)
             ] : [:]
             
@@ -175,7 +175,9 @@ public class ParticipantManager : NSObject, SBBParticipantManagerProtocol {
     }
     
     public func getReport(_ identifier: String, fromDate: DateComponents, toDate: DateComponents, completion: @escaping SBBParticipantManagerGetReportCompletionBlock) -> URLSessionTask? {
-        self._getReport(identifier, fromDate: fromDate.date!, toDate: toDate.date!, completion: completion)
+        let from = Calendar.iso8601.date(from: fromDate)
+        let to = Calendar.iso8601.date(from: toDate)
+        self._getReport(identifier, fromDate: from!, toDate: to!, completion: completion)
         return URLSessionTask()
     }
     

@@ -71,6 +71,8 @@
 		F832AC3620DA22DA005A9025 /* MP2BridgeConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F832AC3420DA22DA005A9025 /* MP2BridgeConfiguration.swift */; };
 		F832AC3820DA29E6005A9025 /* MP2Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F832AC3720DA29E6005A9025 /* MP2Factory.swift */; };
 		F832AC3920DA29E6005A9025 /* MP2Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F832AC3720DA29E6005A9025 /* MP2Factory.swift */; };
+		F8398D62212F32E5005DE6E0 /* Background.json in Resources */ = {isa = PBXBuildFile; fileRef = F8398D4C212F32E5005DE6E0 /* Background.json */; };
+		F8398D64212F32EE005DE6E0 /* Withdrawal.json in Resources */ = {isa = PBXBuildFile; fileRef = F8398D63212F32EE005DE6E0 /* Withdrawal.json */; };
 		F8460D752097CF0C0084E197 /* MCTCountdownStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8460D742097CF0C0084E197 /* MCTCountdownStepViewController.swift */; };
 		F848F4F32107C9A00001ADBF /* Motivation.json in Resources */ = {isa = PBXBuildFile; fileRef = F848F4DD2107C99F0001ADBF /* Motivation.json */; };
 		F84E723620E1866300E5C6C3 /* Demographics.json in Resources */ = {isa = PBXBuildFile; fileRef = F84E722020E1866300E5C6C3 /* Demographics.json */; };
@@ -459,6 +461,8 @@
 		F832AC1920D9A130005A9025 /* StudyBurstTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyBurstTests.swift; sourceTree = "<group>"; };
 		F832AC3420DA22DA005A9025 /* MP2BridgeConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MP2BridgeConfiguration.swift; sourceTree = "<group>"; };
 		F832AC3720DA29E6005A9025 /* MP2Factory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MP2Factory.swift; sourceTree = "<group>"; };
+		F8398D4C212F32E5005DE6E0 /* Background.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Background.json; sourceTree = "<group>"; };
+		F8398D63212F32EE005DE6E0 /* Withdrawal.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Withdrawal.json; sourceTree = "<group>"; };
 		F8460D742097CF0C0084E197 /* MCTCountdownStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTCountdownStepViewController.swift; sourceTree = "<group>"; };
 		F848F4DD2107C99F0001ADBF /* Motivation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Motivation.json; sourceTree = "<group>"; };
 		F84E722020E1866300E5C6C3 /* Demographics.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Demographics.json; sourceTree = "<group>"; };
@@ -701,9 +705,11 @@
 			isa = PBXGroup;
 			children = (
 				F81BE7BE20B4AB4B00EE57D3 /* AppConfig.json */,
+				F8398D4C212F32E5005DE6E0 /* Background.json */,
 				F84E722020E1866300E5C6C3 /* Demographics.json */,
 				F84E723720E1866A00E5C6C3 /* Engagement.json */,
 				F848F4DD2107C99F0001ADBF /* Motivation.json */,
+				F8398D63212F32EE005DE6E0 /* Withdrawal.json */,
 			);
 			path = "Mock Responses";
 			sourceTree = "<group>";
@@ -1273,11 +1279,13 @@
 			files = (
 				F88E8E0620ADEE4700117A99 /* Main.storyboard in Resources */,
 				F88E8E0520ADEE4200117A99 /* LaunchScreen.storyboard in Resources */,
+				F8398D64212F32EE005DE6E0 /* Withdrawal.json in Resources */,
 				F85020DC211B96C40094E05F /* SignIn.json in Resources */,
 				F85459B5208FA76D00D37243 /* Assets.xcassets in Resources */,
 				F85020D0211B96B40094E05F /* Symptoms.json in Resources */,
 				F85020E2211B970C0094E05F /* ActivityTracking.json in Resources */,
 				F85020B7211B96AE0094E05F /* Triggers.json in Resources */,
+				F8398D62212F32E5005DE6E0 /* Background.json in Resources */,
 				F85020D8211B96BF0094E05F /* StudyBurstReminder.json in Resources */,
 				F848F4F32107C9A00001ADBF /* Motivation.json in Resources */,
 				F84E723620E1866300E5C6C3 /* Demographics.json in Resources */,

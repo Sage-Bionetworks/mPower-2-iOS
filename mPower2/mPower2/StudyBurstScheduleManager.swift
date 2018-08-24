@@ -194,20 +194,14 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     }
     
     /// Has the user been shown the motivation survey?
-    public internal(set) var hasCompletedMotivationSurvey : Bool {
-        get {
-            guard !UserDefaults.standard.bool(forKey: "hasCompletedMotivationSurvey")
-                else {
-                    return true
-            }
-            let result = self.scheduledActivities.contains {
-                $0.activityIdentifier == self.studyBurst.motivationIdentifier.stringValue && $0.isCompleted
-            }
-            self.hasCompletedMotivationSurvey = result
-            return result
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: "hasCompletedMotivationSurvey")
+    public var hasCompletedMotivationSurvey : Bool {
+        do {
+            let reportIdentifier = self.studyBurst.motivationIdentifier.stringValue
+            let report: SBBReportData? = try self.participantManager.getLatestCachedData(forReport: reportIdentifier)
+            let isNil = (report?.localDate == nil) && (report?.dateTime == nil)
+            return !isNil
+        } catch {
+            return false
         }
     }
     
@@ -230,10 +224,16 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     public private(set) var finishedSchedules: [SBBScheduledActivity] = []
     
     /// Subset of the past survey schedules that were not finished on the day they were scheduled.
-    public private(set) var pastSurveys: [RSDIdentifier] = []
+    public var pastSurveys: [RSDIdentifier] {
+        let thisDay = calculateThisDay()
+        return getPastSurveys(for: thisDay)
+    }
     
     /// The completion task to use for today.
-    public private(set) var todayCompletionTask: StudyBurstConfiguration.CompletionTask?
+    public var todayCompletionTask: StudyBurstConfiguration.CompletionTask? {
+        let thisDay = calculateThisDay()
+        return getTodayCompletionTask(for: thisDay)
+    }
     
     /// The action bar item to display.
     public var actionBarItem: TodayActionBarItem? {
@@ -479,20 +479,13 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
             self._expiresOn = nil
             self.dayCount = nil
         }
-        
-        self.updateCompletionTask()
+
         self.updateNotifications()
         
         super.didUpdateScheduledActivities(from: previousActivities)
     }
     
     override func taskController(_ taskController: RSDTaskController, readyToSave taskPath: RSDTaskPath) {
-        
-        // Mark the moviation study as completed. This will be stored for future runs to avoid a potential
-        // race condition of displaying the "Today" view before the schedules have finished loading.
-        if taskPath.identifier == self.studyBurst.motivationIdentifier {
-            self.hasCompletedMotivationSurvey = true
-        }
         
         // Preload the finished tasks so that the progress will update properly.
         if let schedule = self.scheduledActivity(for: taskPath.result, scheduleIdentifier: taskPath.scheduleIdentifier),
@@ -656,16 +649,13 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     }
     
     func calculateThisDay() -> Int {
-        guard hasStudyBurst else { return self.maxDaysCount + 1 }
-        return self.isLastDay ? self.numberOfDays : ((self.pastDaysCount - self.missedDaysCount) + 1)
-    }
-    
-    func updateCompletionTask() {
-        
-        // Look for the most appropriate completion tasks for today.
-        let thisDay = calculateThisDay()
-        self.pastSurveys = getPastSurveys(for: thisDay)
-        self.todayCompletionTask = getTodayCompletionTask(for: thisDay)
+        guard hasStudyBurst, let day = self.dayCount else { return self.maxDaysCount + 1 }
+        if day < self.studyBurst.numberOfDays {
+            return day
+        }
+        else {
+            return self.isLastDay ? self.numberOfDays : ((self.pastDaysCount - self.missedDaysCount) + 1)
+        }
     }
     
     func getPastTasks(for thisDay: Int) -> [StudyBurstConfiguration.CompletionTask] {
