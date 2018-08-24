@@ -43,9 +43,7 @@ protocol SignInDelegate : class {
 class SignInTaskViewController: RSDTaskViewController, SignInDelegate {
     
     var phoneNumber: String? {
-        let taskResult = self.taskResult
-        let phoneResultIdentifier = "enterPhoneNumber"
-        guard let phoneNumber = taskResult?.findAnswerResult(with: phoneResultIdentifier)?.value as? String
+        guard let phoneNumber = self.resultForPhoneNumber()?.value as? String
             else {
                 return nil
         }
@@ -64,6 +62,12 @@ class SignInTaskViewController: RSDTaskViewController, SignInDelegate {
         } catch let err {
             fatalError("Failed to decode the SignIn task. \(err)")
         }
+    }
+    
+    func resultForPhoneNumber() -> RSDAnswerResultObject? {
+        let taskResult = self.taskResult
+        let phoneResultIdentifier = "enterPhoneNumber"
+        return taskResult?.findAnswerResult(with: phoneResultIdentifier) as? RSDAnswerResultObject
     }
     
     required init?(coder aDecoder: NSCoder) {
