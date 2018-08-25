@@ -40,8 +40,14 @@ import BridgeSDK_Test
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
+    final class var shared: AppDelegate? {
+        return UIApplication.shared.delegate as? AppDelegate
+    }
+
     weak var smsSignInDelegate: SignInDelegate? = nil
     
+    var userSessionInfo: SBBUserSessionInfo? = nil
+
     var testHarness: SBBBridgeTestHarness?
 
     var window: UIWindow?
