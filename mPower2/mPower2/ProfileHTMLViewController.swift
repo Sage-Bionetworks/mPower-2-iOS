@@ -1,5 +1,5 @@
 //
-//  MP2BridgeConfiguration.swift
+//  ProfileHTMLViewController.swift
 //  mPower2
 //
 //  Copyright © 2018 Sage Bionetworks. All rights reserved.
@@ -31,34 +31,29 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
-import BridgeApp
+import UIKit
+import ResearchUI
 
-class MP2BridgeConfiguration : SBABridgeConfiguration {
+class ProfileHTMLViewController: RSDWebViewController {
     
-    var studyBurst: StudyBurstConfiguration = StudyBurstConfiguration()
+    @IBOutlet var backButton: UIButton!
     
-    /// Decode the `clientData.studyBurst` configuration object, if present.
-    override func setup(with appConfig: SBBAppConfig) {
-        super.setup(with: appConfig)
-        if let clientData = appConfig.clientData as? [String : Any],
-            let studyBurstData = clientData["studyBurst"] as? NSDictionary {
-            do {
-                let decoder = RSDFactory.shared.createJSONDecoder()
-                self.studyBurst = try decoder.decode(StudyBurstConfiguration.self, from: studyBurstData)
-            } catch let err {
-                debugPrint("Failed to decode the studyBurst object: \(err)")
-            }
-        }
+    open override func viewDidLoad() {
+        super.viewDidLoad()
+        self.view.backgroundColor = UIColor.primaryTintColor
+    }
+
+    open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        self.webView.rsd_removeSuperviewConstraints()
+        self.webView.rsd_alignBelow(view: backButton, padding: 20.0)
+        self.webView.rsd_alignToSuperview([ .leading, .bottom, .trailing ], padding: 0.0)
+        self.webView.setNeedsUpdateConstraints()
     }
     
-    /// Support the MP2ProfileDataSource subclass
-    override open func profileDataSourceClass(from type: SBAProfileDataSourceType) -> Decodable.Type? {
-        switch type.rawValue {
-        case "mp2ProfileDatasource":
-            return MP2ProfileDataSource.self
-        default:
-            return super.profileDataSourceClass(from: type)
-        }
+    @IBAction func backButtonTapped(_ sender: Any) {
+        navigationController?.popViewController(animated: true)
     }
+
 }

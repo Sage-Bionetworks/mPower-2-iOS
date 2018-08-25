@@ -1,0 +1,41 @@
+"profile": {
+	"manager": {
+		"type": "profileManager"
+	},
+	"dataSource": {
+		"type": "mp2ProfileDatasource"
+		"sections": [
+			{
+				"type": "mp2Section",
+				"title": "Settings",
+				"items": [
+					{
+						"type": "studyParticipation",
+						"title": "Study participation",
+						"notInCohorts": [
+							"clinical_consent"
+						]
+					},
+					{
+						"type": "html",
+						"title": "View consent document",
+						"htmlResource": "consent",
+						"notInCohorts": [
+							"clinical_consent"
+						]
+					},
+					{
+						"type": "html",
+						"title": "Licenses",
+						"htmlResource": "Licenses"
+					},
+					{
+						"type": "html",
+						"title": "Copyrights",
+						"htmlResource": "Copyrights"
+					}
+				]
+			}
+		]
+	}
+}

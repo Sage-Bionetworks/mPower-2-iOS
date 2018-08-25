@@ -116,3 +116,17 @@
 
 // Button Titles
 "SUMBIT_BUTTON" = "Submit";
+
+// Profile
+"PARTICIPATION_ENROLLED_%@" = "Enrolled in %@ study";            // Participation title when enrolled
+"PARTICIPATION_REJOIN_%@" = "Rejoin %@ study";                   // Participation title when not enrolled
+
+// Study Withdrawal
+"WITHDRAWAL_FROM_STUDY_BTN_TITLE" = "Withdraw from study";      // Withdrawal from Study button action
+"WITHDRAWAL_TITLE_%@_%@" = "Hi %@, \nYou have been enrolled in the mPower 2 Study since %@.";      // The title for withdrawal screen, the first %@ is user's name, second %@ is the date
+"WITHDRAWAL_SUBTITLE" = "You can withdraw from the study if you no longer want to be involved.  Please note that you will be logged out of your account and no further data will be collected."; // The subtitle for the withdrawal screen
+"WITHDRAWAL_STUDY_PARTICIPATION_TITLE" = "Study Participation";      // Study Participation title
+"WITHDRAWAL_ERROR_ALERT_TITLE" = "Error withdrawing";    // Title for alert that pops up if there's an error attempting to withdraw from the study
+"WITHDRAWAL_ERROR_ALERT_MESSAGE_BODY" = "An error occurred while trying to withdraw you from the study. Check your Internet connection and try again later."; // Message for alert that pops up if there's an error attempting to withdraw from the study
+"WITHDRAWAL_SUCCESS_ALERT_TITLE" = "Consent Withdrawn"; // Title for alert that pops up after successfully withdrawing from the study
+"WITHDRAWAL_SUCCESS_ALERT_MESSAGE_BODY" = "You have withdrawn your consent to participate in this study. No more data collected by this app will be transmitted to the study. You may rejoin the study at any time by giving informed consent again."; // Message for alert that pops up after successfully withdrawing from the study

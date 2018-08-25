@@ -1,5 +1,5 @@
 //
-//  MP2BridgeConfiguration.swift
+//  MP2ProfileDataSource.swift
 //  mPower2
 //
 //  Copyright © 2018 Sage Bionetworks. All rights reserved.
@@ -31,34 +31,22 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
 import BridgeApp
 
-class MP2BridgeConfiguration : SBABridgeConfiguration {
-    
-    var studyBurst: StudyBurstConfiguration = StudyBurstConfiguration()
-    
-    /// Decode the `clientData.studyBurst` configuration object, if present.
-    override func setup(with appConfig: SBBAppConfig) {
-        super.setup(with: appConfig)
-        if let clientData = appConfig.clientData as? [String : Any],
-            let studyBurstData = clientData["studyBurst"] as? NSDictionary {
-            do {
-                let decoder = RSDFactory.shared.createJSONDecoder()
-                self.studyBurst = try decoder.decode(StudyBurstConfiguration.self, from: studyBurstData)
-            } catch let err {
-                debugPrint("Failed to decode the studyBurst object: \(err)")
-            }
-        }
-    }
-    
-    /// Support the MP2ProfileDataSource subclass
-    override open func profileDataSourceClass(from type: SBAProfileDataSourceType) -> Decodable.Type? {
-        switch type.rawValue {
-        case "mp2ProfileDatasource":
-            return MP2ProfileDataSource.self
+extension SBAProfileSectionType {
+    /// Creates a `MP2ProfileSection`.
+    public static let mp2Section: SBAProfileSectionType = "mp2Section"
+}
+
+class MP2ProfileDataSource: SBAProfileDataSourceObject {
+
+    override open func decodeSection(from decoder:Decoder, with type:SBAProfileSectionType) throws -> SBAProfileSection? {
+        switch type {
+        case .mp2Section:
+            return try MP2ProfileSection(from: decoder)
         default:
-            return super.profileDataSourceClass(from: type)
+            return try super.decodeSection(from: decoder, with: type)
         }
     }
+
 }

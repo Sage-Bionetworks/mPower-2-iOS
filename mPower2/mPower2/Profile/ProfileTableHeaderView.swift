@@ -1,8 +1,8 @@
 //
-//  MP2BridgeConfiguration.swift
+//  ProfileTableHeaderView.swift
 //  mPower2
 //
-//  Copyright © 2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -31,34 +31,20 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
-import BridgeApp
+import UIKit
 
-class MP2BridgeConfiguration : SBABridgeConfiguration {
+class ProfileTableHeaderView: UITableViewHeaderFooterView {
+    static let className = String(describing: ProfileTableHeaderView.self)
+    static let cellHeight = CGFloat(67)
     
-    var studyBurst: StudyBurstConfiguration = StudyBurstConfiguration()
-    
-    /// Decode the `clientData.studyBurst` configuration object, if present.
-    override func setup(with appConfig: SBBAppConfig) {
-        super.setup(with: appConfig)
-        if let clientData = appConfig.clientData as? [String : Any],
-            let studyBurstData = clientData["studyBurst"] as? NSDictionary {
-            do {
-                let decoder = RSDFactory.shared.createJSONDecoder()
-                self.studyBurst = try decoder.decode(StudyBurstConfiguration.self, from: studyBurstData)
-            } catch let err {
-                debugPrint("Failed to decode the studyBurst object: \(err)")
-            }
-        }
+    @IBOutlet weak var titleLabel: UILabel!
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+
+        contentView.backgroundColor = UIColor.white
+        
+        titleLabel.textColor = UIColor.appTextDark
     }
     
-    /// Support the MP2ProfileDataSource subclass
-    override open func profileDataSourceClass(from type: SBAProfileDataSourceType) -> Decodable.Type? {
-        switch type.rawValue {
-        case "mp2ProfileDatasource":
-            return MP2ProfileDataSource.self
-        default:
-            return super.profileDataSourceClass(from: type)
-        }
-    }
 }
