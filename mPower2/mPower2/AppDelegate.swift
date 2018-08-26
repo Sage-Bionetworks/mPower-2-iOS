@@ -94,17 +94,13 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
         self.showAppropriateViewController(animated: true)
     }
     
-    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
-        guard let url = userActivity.webpageURL else {
-            debugPrint("Unrecognized userActivity passed to app delegate:\(String(describing: userActivity))")
-            return false
-        }
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         let components = url.pathComponents
         guard components.count == 4,
             components[1] == BridgeSDK.bridgeInfo.studyIdentifier,
             components[2] == "phoneSignIn"
             else {
-                debugPrint("Asked to open an unsupported URL, punting to Safari: \(String(describing:userActivity.webpageURL))")
+                debugPrint("Asked to open an unsupported URL, punting to Safari: \(String(describing:url))")
                 UIApplication.shared.open(url)
                 return true
         }
@@ -140,6 +136,14 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
         }
         
         return true
+    }
+    
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+        guard let url = userActivity.webpageURL else {
+            debugPrint("Unrecognized userActivity passed to app delegate:\(String(describing: userActivity))")
+            return false
+        }
+        return self.application(application, open: url)
     }
 
     func showMainViewController(animated: Bool) {
