@@ -88,7 +88,7 @@ class ConsentViewController: RSDWebViewController, WKScriptMessageHandler {
             
             self.activityIndicator.startAnimating()
             BridgeSDK.consentManager.consentSignature(name, forSubpopulationGuid: BridgeSDK.bridgeInfo.studyIdentifier, birthdate: nil, signatureImage: nil, dataSharing: scope) { (response, error) in
-                // TODO emm 2018-05-18 in case of error, throw up a dialog and then stay on the page so they can try again
+                // TODO: emm 2018-05-18 in case of error, throw up a dialog and then stay on the page so they can try again
                 // transition to whatever the correct app state is at this point
                 DispatchQueue.main.async {
                     self.activityIndicator.stopAnimating()

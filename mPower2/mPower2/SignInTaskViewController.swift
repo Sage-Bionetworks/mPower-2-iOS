@@ -123,18 +123,18 @@ class SignInTaskViewController: RSDTaskViewController, SignInDelegate {
             let regionCode = self.regionCode,
             !regionCode.isEmpty else {
                 debugPrint("Unable to sign in: phone number or region code is missing or empty")
+                (AppDelegate.shared as! AppDelegate).showSignInViewController(animated: true)
                 return
         }
         
         BridgeSDK.authManager.signIn(withPhoneNumber:phoneNumber, regionCode:regionCode, token:token, completion: { (task, result, error) in
-            if error == nil || (error! as NSError).code == SBBErrorCode.serverPreconditionNotMet.rawValue {
-                DispatchQueue.main.async {
-                    // TODO emm 2018-05-04 handle navigation for consented vs not consented
+            DispatchQueue.main.async {
+                if error == nil || (error! as NSError).code == SBBErrorCode.serverPreconditionNotMet.rawValue {
                     self.currentStepController?.goForward()
+                } else {
+                    debugPrint("Error attempting to sign in with SMS link:\n\(String(describing: error))\n\nResult:\n\(String(describing: result))")
+                    (AppDelegate.shared as! AppDelegate).showSignInViewController(animated: true)
                 }
-            } else {
-                // TODO emm 2018-05-04 handle error from Bridge
-                debugPrint("Error attempting to sign in with SMS link:\n\(String(describing: error))\n\nResult:\n\(String(describing: result))")
             }
         })
     }

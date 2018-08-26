@@ -123,13 +123,13 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
                 }
                 
                 BridgeSDK.authManager.signIn(withPhoneNumber:phoneNumber, regionCode:regionCode, token:token, completion: { (task, result, error) in
-                    if (error as NSError?)?.code == SBBErrorCode.serverPreconditionNotMet.rawValue {
-                        DispatchQueue.main.async {
-                            // TODO emm 2018-05-04 signed in but not consented -- go to consent flow
+                    DispatchQueue.main.async {
+                        if (error as NSError?)?.code == SBBErrorCode.serverPreconditionNotMet.rawValue {
+                            self.showConsentViewController(animated: true)
+                        } else if error != nil {
+                            debugPrint("Error attempting to sign in with SMS link while not in registration flow:\n\(String(describing: error))\n\nResult:\n\(String(describing: result))")
+                            self.showSignInViewController(animated: true)
                         }
-                    } else if error != nil {
-                        // TODO emm 2018-05-04 handle error from Bridge
-                        debugPrint("Error attempting to sign in with SMS link while not in registration flow:\n\(String(describing: error))\n\nResult:\n\(String(describing: result))")
                     }
                 })
             }
@@ -166,8 +166,8 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
     func showConsentViewController(animated: Bool) {
         guard self.rootViewController?.state != .consent else { return }
         let vc = ConsentViewController()
-        // TODO emm 2018-05-11 put this in BridgeInfo or AppConfig?
-        vc.url = URL(string: "http://mpower.sagebridge.org/study/intro")
+        // TODO: emm 2018-05-11 put this in BridgeInfo or AppConfig?
+        vc.url = URL(string: "https://parkinsonmpower.org/study/intro")
         self.transition(to: vc, state: .consent, animated: true)
     }
     

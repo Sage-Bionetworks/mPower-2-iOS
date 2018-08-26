@@ -63,7 +63,7 @@ class ExternalIDRegistrationViewController: RSDTableStepViewController {
         signUp.firstName = credentials.firstName
         signUp.password = credentials.externalId
         
-        // TODO emm 2018-05-03 if we move this code to BridgeApp, we should prolly use an RSDCohortRule
+        // TODO: emm 2018-05-03 if we move this code to BridgeApp, we should prolly use an RSDCohortRule
         // or some such instead of hardcoding these dataGroup names.
         var dataGroups: Set<String> = ["test_user"]
         if credentials.preconsent {
@@ -101,7 +101,7 @@ class ExternalIDRegistrationViewController: RSDTableStepViewController {
                 }
             } else {
                 self.presentAlertWithOk(title: "Error attempting sign in", message: error!.localizedDescription, actionHandler: nil)
-                // TODO emm 2018-04-25 handle error from Bridge
+                // TODO: emm 2018-04-25 handle error from Bridge
                 // 400 is the response for an invalid external ID
                 debugPrint("Error attempting to sign up and sign in:\n\(String(describing: error))\n\nResult:\n\(String(describing: result))")
             }
