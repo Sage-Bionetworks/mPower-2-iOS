@@ -127,8 +127,17 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
                         if (error as NSError?)?.code == SBBErrorCode.serverPreconditionNotMet.rawValue {
                             self.showConsentViewController(animated: true)
                         } else if error != nil {
-                            debugPrint("Error attempting to sign in with SMS link while not in registration flow:\n\(String(describing: error))\n\nResult:\n\(String(describing: result))")
-                            self.showSignInViewController(animated: true)
+                            #if DEBUG
+                            print("Error attempting to sign in with SMS link while not in registration flow:\n\(String(describing: error))\n\nResult:\n\(String(describing: result))")
+                            #endif
+                            let title = Localization.localizedString("SIGN_IN_ERROR_TITLE")
+                            var message = Localization.localizedString("SIGN_IN_ERROR_BODY_GENERIC_ERROR")
+                            if (error! as NSError).code == SBBErrorCode.serverNotAuthenticated.rawValue {
+                                message = Localization.localizedString("SIGN_IN_ERROR_BODY_USED_TOKEN")
+                            }
+                            self.presentAlertWithOk(title: title, message: message, actionHandler: { (_) in
+                                self.showSignInViewController(animated: true)
+                            })
                         }
                     }
                 })

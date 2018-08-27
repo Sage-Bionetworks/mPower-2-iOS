@@ -130,3 +130,8 @@
 "WITHDRAWAL_ERROR_ALERT_MESSAGE_BODY" = "An error occurred while trying to withdraw you from the study. Check your Internet connection and try again later."; // Message for alert that pops up if there's an error attempting to withdraw from the study
 "WITHDRAWAL_SUCCESS_ALERT_TITLE" = "Consent Withdrawn"; // Title for alert that pops up after successfully withdrawing from the study
 "WITHDRAWAL_SUCCESS_ALERT_MESSAGE_BODY" = "You have withdrawn your consent to participate in this study. No more data collected by this app will be transmitted to the study. You may rejoin the study at any time by giving informed consent again."; // Message for alert that pops up after successfully withdrawing from the study
+
+// Sign-in error alerts
+"SIGN_IN_ERROR_TITLE" = "Oops";     // Title for alert that pops up when there's an error signing in
+"SIGN_IN_ERROR_BODY_GENERIC_ERROR" = "There was some kind of problem contacting the server to sign you in. Please try again later."; // Body for sign-in error alert in general case
+"SIGN_IN_ERROR_BODY_USED_TOKEN" = "Sign-in links can only be used once. Please wait at least one minute since the last link was sent, then enter your phone number again to get a new sign-in link to use.";  // Body for sign-in error alert when user taps an already-used sign-in link

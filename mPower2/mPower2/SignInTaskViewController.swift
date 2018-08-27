@@ -118,12 +118,15 @@ class SignInTaskViewController: RSDTaskViewController, SignInDelegate {
     }
 
     func signIn(token: String) {
+        // Should never happen in production since we don't allow them to get this far without entering a phone number, and the regionCode is hardcoded
         guard let phoneNumber = self.phoneNumber,
             !phoneNumber.isEmpty,
             let regionCode = self.regionCode,
             !regionCode.isEmpty else {
-                debugPrint("Unable to sign in: phone number or region code is missing or empty")
-                (AppDelegate.shared as! AppDelegate).showSignInViewController(animated: true)
+                #if DEBUG
+                print("Unable to sign in: phone number: \(String(describing: self.phoneNumber)) and/or region code: \(String(describing: self.regionCode)) is missing or empty.")
+                #endif
+                self.currentStepController?.goBack()
                 return
         }
         
@@ -132,8 +135,17 @@ class SignInTaskViewController: RSDTaskViewController, SignInDelegate {
                 if error == nil || (error! as NSError).code == SBBErrorCode.serverPreconditionNotMet.rawValue {
                     self.currentStepController?.goForward()
                 } else {
-                    debugPrint("Error attempting to sign in with SMS link:\n\(String(describing: error))\n\nResult:\n\(String(describing: result))")
-                    (AppDelegate.shared as! AppDelegate).showSignInViewController(animated: true)
+                    #if DEBUG
+                    print("Error attempting to sign in with SMS link token \(String(describing: token)) for phone number \(String(describing: phoneNumber)) and region code \(String(describing: regionCode)):\n\(String(describing: error))\n\nResult:\n\(String(describing: result))")
+                    #endif
+                    let title = Localization.localizedString("SIGN_IN_ERROR_TITLE")
+                    var message = Localization.localizedString("SIGN_IN_ERROR_BODY_GENERIC_ERROR")
+                    if (error! as NSError).code == SBBErrorCode.serverNotAuthenticated.rawValue {
+                        message = Localization.localizedString("SIGN_IN_ERROR_BODY_USED_TOKEN")
+                    }
+                    self.presentAlertWithOk(title: title, message: message, actionHandler: { (_) in
+                        self.currentStepController?.goBack()
+                    })
                 }
             }
         })
