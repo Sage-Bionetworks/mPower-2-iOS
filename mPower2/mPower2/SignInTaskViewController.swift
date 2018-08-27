@@ -118,23 +118,35 @@ class SignInTaskViewController: RSDTaskViewController, SignInDelegate {
     }
 
     func signIn(token: String) {
+        // Should never happen in production since we don't allow them to get this far without entering a phone number, and the regionCode is hardcoded
         guard let phoneNumber = self.phoneNumber,
             !phoneNumber.isEmpty,
             let regionCode = self.regionCode,
             !regionCode.isEmpty else {
-                debugPrint("Unable to sign in: phone number or region code is missing or empty")
+                #if DEBUG
+                print("Unable to sign in: phone number: \(String(describing: self.phoneNumber)) and/or region code: \(String(describing: self.regionCode)) is missing or empty.")
+                #endif
+                self.currentStepController?.goBack()
                 return
         }
         
         BridgeSDK.authManager.signIn(withPhoneNumber:phoneNumber, regionCode:regionCode, token:token, completion: { (task, result, error) in
-            if error == nil || (error! as NSError).code == SBBErrorCode.serverPreconditionNotMet.rawValue {
-                DispatchQueue.main.async {
-                    // TODO emm 2018-05-04 handle navigation for consented vs not consented
+            DispatchQueue.main.async {
+                if error == nil || (error! as NSError).code == SBBErrorCode.serverPreconditionNotMet.rawValue {
                     self.currentStepController?.goForward()
+                } else {
+                    #if DEBUG
+                    print("Error attempting to sign in with SMS link token \(String(describing: token)) for phone number \(String(describing: phoneNumber)) and region code \(String(describing: regionCode)):\n\(String(describing: error))\n\nResult:\n\(String(describing: result))")
+                    #endif
+                    let title = Localization.localizedString("SIGN_IN_ERROR_TITLE")
+                    var message = Localization.localizedString("SIGN_IN_ERROR_BODY_GENERIC_ERROR")
+                    if (error! as NSError).code == SBBErrorCode.serverNotAuthenticated.rawValue {
+                        message = Localization.localizedString("SIGN_IN_ERROR_BODY_USED_TOKEN")
+                    }
+                    self.presentAlertWithOk(title: title, message: message, actionHandler: { (_) in
+                        self.currentStepController?.goBack()
+                    })
                 }
-            } else {
-                // TODO emm 2018-05-04 handle error from Bridge
-                debugPrint("Error attempting to sign in with SMS link:\n\(String(describing: error))\n\nResult:\n\(String(describing: result))")
             }
         })
     }

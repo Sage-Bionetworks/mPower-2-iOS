@@ -96,5 +96,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func showAppropriateViewController(animated: Bool) {
     }
+    
+    func showSignInViewController(animated: Bool) {
+    }
 }
 

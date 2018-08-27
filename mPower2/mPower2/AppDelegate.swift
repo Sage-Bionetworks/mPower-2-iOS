@@ -94,17 +94,13 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
         self.showAppropriateViewController(animated: true)
     }
     
-    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
-        guard let url = userActivity.webpageURL else {
-            debugPrint("Unrecognized userActivity passed to app delegate:\(String(describing: userActivity))")
-            return false
-        }
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         let components = url.pathComponents
         guard components.count == 4,
             components[1] == BridgeSDK.bridgeInfo.studyIdentifier,
             components[2] == "phoneSignIn"
             else {
-                debugPrint("Asked to open an unsupported URL, punting to Safari: \(String(describing:userActivity.webpageURL))")
+                debugPrint("Asked to open an unsupported URL, punting to Safari: \(String(describing:url))")
                 UIApplication.shared.open(url)
                 return true
         }
@@ -127,19 +123,36 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
                 }
                 
                 BridgeSDK.authManager.signIn(withPhoneNumber:phoneNumber, regionCode:regionCode, token:token, completion: { (task, result, error) in
-                    if (error as NSError?)?.code == SBBErrorCode.serverPreconditionNotMet.rawValue {
-                        DispatchQueue.main.async {
-                            // TODO emm 2018-05-04 signed in but not consented -- go to consent flow
+                    DispatchQueue.main.async {
+                        if (error as NSError?)?.code == SBBErrorCode.serverPreconditionNotMet.rawValue {
+                            self.showConsentViewController(animated: true)
+                        } else if error != nil {
+                            #if DEBUG
+                            print("Error attempting to sign in with SMS link while not in registration flow:\n\(String(describing: error))\n\nResult:\n\(String(describing: result))")
+                            #endif
+                            let title = Localization.localizedString("SIGN_IN_ERROR_TITLE")
+                            var message = Localization.localizedString("SIGN_IN_ERROR_BODY_GENERIC_ERROR")
+                            if (error! as NSError).code == SBBErrorCode.serverNotAuthenticated.rawValue {
+                                message = Localization.localizedString("SIGN_IN_ERROR_BODY_USED_TOKEN")
+                            }
+                            self.presentAlertWithOk(title: title, message: message, actionHandler: { (_) in
+                                self.showSignInViewController(animated: true)
+                            })
                         }
-                    } else if error != nil {
-                        // TODO emm 2018-05-04 handle error from Bridge
-                        debugPrint("Error attempting to sign in with SMS link while not in registration flow:\n\(String(describing: error))\n\nResult:\n\(String(describing: result))")
                     }
                 })
             }
         }
         
         return true
+    }
+    
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+        guard let url = userActivity.webpageURL else {
+            debugPrint("Unrecognized userActivity passed to app delegate:\(String(describing: userActivity))")
+            return false
+        }
+        return self.application(application, open: url)
     }
 
     func showMainViewController(animated: Bool) {
@@ -162,8 +175,8 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
     func showConsentViewController(animated: Bool) {
         guard self.rootViewController?.state != .consent else { return }
         let vc = ConsentViewController()
-        // TODO emm 2018-05-11 put this in BridgeInfo or AppConfig?
-        vc.url = URL(string: "http://mpower.sagebridge.org/study/intro")
+        // TODO: emm 2018-05-11 put this in BridgeInfo or AppConfig?
+        vc.url = URL(string: "https://parkinsonmpower.org/study/intro")
         self.transition(to: vc, state: .consent, animated: true)
     }
     
