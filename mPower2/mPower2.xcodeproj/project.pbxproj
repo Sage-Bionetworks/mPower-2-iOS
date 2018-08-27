@@ -140,6 +140,10 @@
 		F85459B5208FA76D00D37243 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E7802062F1B900CD351C /* Assets.xcassets */; };
 		F85459B6208FA77400D37243 /* UIColor+mPowerTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82AE7B52063160B00952D74 /* UIColor+mPowerTheme.swift */; };
 		F85459B7208FA77900D37243 /* UIView+mPowerTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B587AC07206D696800542548 /* UIView+mPowerTheme.swift */; };
+		F861B6892134ADF00077D43A /* SurveyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F861B6882134ADF00077D43A /* SurveyViewController.swift */; };
+		F861B68A2134ADF00077D43A /* SurveyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F861B6882134ADF00077D43A /* SurveyViewController.swift */; };
+		F861B6A22134B3440077D43A /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F861B6A12134B3440077D43A /* TabBarViewController.swift */; };
+		F861B6A32134B3440077D43A /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F861B6A12134B3440077D43A /* TabBarViewController.swift */; };
 		F884198F207EB4E400028A2B /* TappingSectionStep.json in Resources */ = {isa = PBXBuildFile; fileRef = F8841979207EB4E400028A2B /* TappingSectionStep.json */; };
 		F8841993207EB77000028A2B /* TremorSectionStep.json in Resources */ = {isa = PBXBuildFile; fileRef = F8841992207EB77000028A2B /* TremorSectionStep.json */; };
 		F88419B5207EC14400028A2B /* ResourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88419B4207EC14400028A2B /* ResourceTests.swift */; };
@@ -529,6 +533,8 @@
 		F8545974208FA2ED00D37243 /* mPower2TestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mPower2TestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8545982208FA2EE00D37243 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F854599F208FA58800D37243 /* ResourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceTests.swift; sourceTree = "<group>"; };
+		F861B6882134ADF00077D43A /* SurveyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyViewController.swift; sourceTree = "<group>"; };
+		F861B6A12134B3440077D43A /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		F8841979207EB4E400028A2B /* TappingSectionStep.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TappingSectionStep.json; sourceTree = "<group>"; };
 		F8841992207EB77000028A2B /* TremorSectionStep.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TremorSectionStep.json; sourceTree = "<group>"; };
 		F88419B4207EC14400028A2B /* ResourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceTests.swift; sourceTree = "<group>"; };
@@ -633,10 +639,12 @@
 				608241DA2093D9A90026E843 /* RegistrationIntroViewController.swift */,
 				603B7BA9208E90FF00794B7C /* RegistrationWaitingViewController.swift */,
 				0334415320995328009B97A9 /* TodayViewController.swift */,
+				F861B6A12134B3440077D43A /* TabBarViewController.swift */,
 				0334415520995CCD009B97A9 /* TaskBrowserViewController.swift */,
 				6076F2CA20A6680B00F6235E /* ConsentViewController.swift */,
 				0354809E20BF3B6400B757AB /* StudyBurstViewController.swift */,
 				F832ABE820D8D341005A9025 /* StudyBurstCompletionViewController.swift */,
+				F861B6882134ADF00077D43A /* SurveyViewController.swift */,
 				03DD008220E2F9A4006A5794 /* ReminderTableStepViewController.swift */,
 				03A6E0012103E69900FC5A84 /* GreatJobViewController.swift */,
 				CB5E16EE210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift */,
@@ -1480,6 +1488,7 @@
 			files = (
 				F8078F3F20ADF1DC00757F42 /* AppDelegate.swift in Sources */,
 				F88E8DFD20ADEE2600117A99 /* RegistrationIntroViewController.swift in Sources */,
+				F861B68A2134ADF00077D43A /* SurveyViewController.swift in Sources */,
 				F88E8E0120ADEE2B00117A99 /* ProgressCircleView.swift in Sources */,
 				60E9411F212B8FD70027432C /* ProfileTableViewCell.swift in Sources */,
 				60E94125212B8FD70027432C /* ProfileTableFooterView.swift in Sources */,
@@ -1487,6 +1496,7 @@
 				60169BBB20AF445800D29532 /* SignInTaskViewController.swift in Sources */,
 				F88E8DFF20ADEE2600117A99 /* TodayViewController.swift in Sources */,
 				F88E8E0020ADEE2600117A99 /* TaskBrowserViewController.swift in Sources */,
+				F861B6A32134B3440077D43A /* TabBarViewController.swift in Sources */,
 				F84E72DB20E32FAC00E5C6C3 /* ParticipantManager.swift in Sources */,
 				F85459B7208FA77900D37243 /* UIView+mPowerTheme.swift in Sources */,
 				F8C58DCB20AF5E86001C7B7F /* StudyBurstScheduleManager.swift in Sources */,
@@ -1524,6 +1534,7 @@
 			files = (
 				60E86E50212B6B430073C69C /* ProfileTableItems.swift in Sources */,
 				B587AC08206D696800542548 /* UIView+mPowerTheme.swift in Sources */,
+				F861B6892134ADF00077D43A /* SurveyViewController.swift in Sources */,
 				0349535520981C89006A05B1 /* ProgressCircleView.swift in Sources */,
 				F832AC3820DA29E6005A9025 /* MP2Factory.swift in Sources */,
 				60E94118212B8FD70027432C /* ProfileTableHeaderView.swift in Sources */,
@@ -1531,6 +1542,7 @@
 				608241DB2093D9A90026E843 /* RegistrationIntroViewController.swift in Sources */,
 				0334415420995328009B97A9 /* TodayViewController.swift in Sources */,
 				603B1086212CA7C500E44EE9 /* WithdrawalViewController.swift in Sources */,
+				F861B6A22134B3440077D43A /* TabBarViewController.swift in Sources */,
 				60E86E51212B6B430073C69C /* ProfileTableViewController.swift in Sources */,
 				60F45524209CF10100C532A0 /* SignInTaskViewController.swift in Sources */,
 				60E9411E212B8FD70027432C /* ProfileTableViewCell.swift in Sources */,
