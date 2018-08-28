@@ -127,7 +127,9 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
                         DispatchQueue.main.async {
                             if (error as NSError?)?.code == SBBErrorCode.serverPreconditionNotMet.rawValue {
                                 self.showConsentViewController(animated: true)
-                            } else if error != nil {
+                            } else if error == nil {
+                                self.showAppropriateViewController(animated: true)
+                            } else {
                                 #if DEBUG
                                 print("Error attempting to sign in with SMS link while not in registration flow:\n\(String(describing: error))\n\nResult:\n\(String(describing: result))")
                                 #endif
@@ -145,11 +147,13 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
                 }
             }
         } else if components[2] == "study-burst" {
-            // TODO: emm 2018-08-27 take them to the study burst flow
+            // TODO: emm 2018-08-27 take them to the study burst flow instead
+            self.showAppropriateViewController(animated: true)
+        } else {
+            // if we don't specifically handle the URL, but the path starts with the study identifier, just bring them into the app
+            // wherever it would normally open to from closed.
+            self.showAppropriateViewController(animated: true)
         }
-        
-        // if we don't specifically handle the URL, but the path starts with the study identifier, just bring them into the app
-        // wherever it would normally open to.
         
         return true
     }

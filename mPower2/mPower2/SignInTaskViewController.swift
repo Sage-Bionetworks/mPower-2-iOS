@@ -116,6 +116,20 @@ class SignInTaskViewController: RSDTaskViewController, SignInDelegate {
             })
         })
     }
+    
+    func afterSignIn(succeeded: Bool) {
+        guard self.currentStepController?.step.identifier == "waiting"
+            else {
+                (AppDelegate.shared as! AppDelegate).showAppropriateViewController(animated: true)
+                return
+        }
+        
+        if succeeded {
+            self.goForward()
+        } else {
+            self.goBack()
+        }
+    }
 
     func signIn(token: String) {
         // Should never happen in production since we don't allow them to get this far without entering a phone number, and the regionCode is hardcoded
@@ -126,14 +140,14 @@ class SignInTaskViewController: RSDTaskViewController, SignInDelegate {
                 #if DEBUG
                 print("Unable to sign in: phone number: \(String(describing: self.phoneNumber)) and/or region code: \(String(describing: self.regionCode)) is missing or empty.")
                 #endif
-                self.currentStepController?.goBack()
+                self.afterSignIn(succeeded: false)
                 return
         }
         
         BridgeSDK.authManager.signIn(withPhoneNumber:phoneNumber, regionCode:regionCode, token:token, completion: { (task, result, error) in
             DispatchQueue.main.async {
                 if error == nil || (error! as NSError).code == SBBErrorCode.serverPreconditionNotMet.rawValue {
-                    self.currentStepController?.goForward()
+                    self.afterSignIn(succeeded: true)
                 } else {
                     #if DEBUG
                     print("Error attempting to sign in with SMS link token \(String(describing: token)) for phone number \(String(describing: phoneNumber)) and region code \(String(describing: regionCode)):\n\(String(describing: error))\n\nResult:\n\(String(describing: result))")
@@ -144,7 +158,7 @@ class SignInTaskViewController: RSDTaskViewController, SignInDelegate {
                         message = Localization.localizedString("SIGN_IN_ERROR_BODY_USED_TOKEN")
                     }
                     self.presentAlertWithOk(title: title, message: message, actionHandler: { (_) in
-                        self.currentStepController?.goBack()
+                        self.afterSignIn(succeeded: false)
                     })
                 }
             }
