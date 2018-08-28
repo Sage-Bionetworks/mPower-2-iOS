@@ -96,53 +96,60 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         let components = url.pathComponents
-        guard components.count == 4,
-            components[1] == BridgeSDK.bridgeInfo.studyIdentifier,
-            components[2] == "phoneSignIn"
+        guard components.count >= 2,
+            components[1] == BridgeSDK.bridgeInfo.studyIdentifier
             else {
                 debugPrint("Asked to open an unsupported URL, punting to Safari: \(String(describing:url))")
                 UIApplication.shared.open(url)
                 return true
         }
         
-        let token = components[3]
-        
-        // pass the token to the SMS sign-in delegate, if any
-        if smsSignInDelegate != nil {
-            smsSignInDelegate?.signIn(token: token)
-            return true
-        } else {
-            // there's no SMS sign-in delegate so try to get the phone info from the participant record.
-            BridgeSDK.participantManager.getParticipantRecord { (record, error) in
-                guard let participant = record as? SBBStudyParticipant, error == nil else { return }
-                guard let phoneNumber = participant.phone?.number,
-                    let regionCode = participant.phone?.regionCode,
-                    !phoneNumber.isEmpty,
-                    !regionCode.isEmpty else {
-                        return
-                }
-                
-                BridgeSDK.authManager.signIn(withPhoneNumber:phoneNumber, regionCode:regionCode, token:token, completion: { (task, result, error) in
-                    DispatchQueue.main.async {
-                        if (error as NSError?)?.code == SBBErrorCode.serverPreconditionNotMet.rawValue {
-                            self.showConsentViewController(animated: true)
-                        } else if error != nil {
-                            #if DEBUG
-                            print("Error attempting to sign in with SMS link while not in registration flow:\n\(String(describing: error))\n\nResult:\n\(String(describing: result))")
-                            #endif
-                            let title = Localization.localizedString("SIGN_IN_ERROR_TITLE")
-                            var message = Localization.localizedString("SIGN_IN_ERROR_BODY_GENERIC_ERROR")
-                            if (error! as NSError).code == SBBErrorCode.serverNotAuthenticated.rawValue {
-                                message = Localization.localizedString("SIGN_IN_ERROR_BODY_USED_TOKEN")
-                            }
-                            self.presentAlertWithOk(title: title, message: message, actionHandler: { (_) in
-                                self.showSignInViewController(animated: true)
-                            })
-                        }
+        if components.count == 4,
+            components[2] == "phoneSignIn" {
+            let token = components[3]
+            
+            // pass the token to the SMS sign-in delegate, if any
+            if smsSignInDelegate != nil {
+                smsSignInDelegate?.signIn(token: token)
+                return true
+            } else {
+                // there's no SMS sign-in delegate so try to get the phone info from the participant record.
+                BridgeSDK.participantManager.getParticipantRecord { (record, error) in
+                    guard let participant = record as? SBBStudyParticipant, error == nil else { return }
+                    guard let phoneNumber = participant.phone?.number,
+                        let regionCode = participant.phone?.regionCode,
+                        !phoneNumber.isEmpty,
+                        !regionCode.isEmpty else {
+                            return
                     }
-                })
+                    
+                    BridgeSDK.authManager.signIn(withPhoneNumber:phoneNumber, regionCode:regionCode, token:token, completion: { (task, result, error) in
+                        DispatchQueue.main.async {
+                            if (error as NSError?)?.code == SBBErrorCode.serverPreconditionNotMet.rawValue {
+                                self.showConsentViewController(animated: true)
+                            } else if error != nil {
+                                #if DEBUG
+                                print("Error attempting to sign in with SMS link while not in registration flow:\n\(String(describing: error))\n\nResult:\n\(String(describing: result))")
+                                #endif
+                                let title = Localization.localizedString("SIGN_IN_ERROR_TITLE")
+                                var message = Localization.localizedString("SIGN_IN_ERROR_BODY_GENERIC_ERROR")
+                                if (error! as NSError).code == SBBErrorCode.serverNotAuthenticated.rawValue {
+                                    message = Localization.localizedString("SIGN_IN_ERROR_BODY_USED_TOKEN")
+                                }
+                                self.presentAlertWithOk(title: title, message: message, actionHandler: { (_) in
+                                    self.showSignInViewController(animated: true)
+                                })
+                            }
+                        }
+                    })
+                }
             }
+        } else if components[2] == "study-burst" {
+            // TODO: emm 2018-08-27 take them to the study burst flow
         }
+        
+        // if we don't specifically handle the URL, but the path starts with the study identifier, just bring them into the app
+        // wherever it would normally open to.
         
         return true
     }
