@@ -105,41 +105,43 @@ class WithdrawalViewController: UIViewController, RSDTaskViewControllerDelegate 
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let reasonsAnswer = taskController.taskResult.findAnswerResult(with: "withdrawalReason")
         (taskController as! UIViewController).dismiss(animated: true) {
-            if reason == .completed {
-                let reasonsGiven = (reasonsAnswer?.value as? [String])?.joined(separator: ", ") ?? "(No reason given)"
-                
-                // Withdraw all consents to research for this participant, whether currently applicable or not.
-                BridgeSDK.consentManager.withdrawConsent(withReason: reasonsGiven) { (response, error) in
-                    if error != nil {
-                        #if DEBUG
-                        print("Error attempting to withdraw consent:\n\(String(describing: error))\nresponse body:\n\(String(describing: response))")
-                        #endif
-                        self.presentAlertWithOk(title: Localization.localizedString("WITHDRAWAL_ERROR_ALERT_TITLE"),
-                                                message: Localization.localizedString("WITHDRAWAL_ERROR_ALERT_MESSAGE_BODY"),
-                                                actionHandler: { (_) in
+            guard reason == .completed
+                else {
+                    // They canceled or whatnot, so turn the back button back on so they can get outta here and back to the rest of the app
+                    self.backButton.isHidden = false
+                    return
+            }
+            
+            let reasonsGiven = (reasonsAnswer?.value as? [String])?.joined(separator: ", ") ?? "(No reason given)"
+            
+            // Withdraw all consents to research for this participant, whether currently applicable or not.
+            BridgeSDK.consentManager.withdrawConsent(withReason: reasonsGiven) { (response, error) in
+                if error != nil {
+                    #if DEBUG
+                    print("Error attempting to withdraw consent:\n\(String(describing: error))\nresponse body:\n\(String(describing: response))")
+                    #endif
+                    self.presentAlertWithOk(title: Localization.localizedString("WITHDRAWAL_ERROR_ALERT_TITLE"),
+                                            message: Localization.localizedString("WITHDRAWAL_ERROR_ALERT_MESSAGE_BODY"),
+                                            actionHandler: { (_) in
+                                                DispatchQueue.main.async {
+                                                    // show the back button so they can continue
+                                                    self.backButton.isHidden = false
+                                                }
+                                                
+                    })
+                } else {
+                    self.presentAlertWithOk(title: Localization.localizedString("WITHDRAWAL_SUCCESS_ALERT_TITLE"),
+                                            message: Localization.localizedString("WITHDRAWAL_SUCCESS_ALERT_MESSAGE_BODY"),
+                                            actionHandler: { (_) in
+                                                BridgeSDK.authManager.signOut(completion: { (_, _, error) in
                                                     DispatchQueue.main.async {
-                                                        // show the back button so they can continue
+                                                        appDelegate.showAppropriateViewController(animated: true)
                                                         self.backButton.isHidden = false
+                                                        self.backButtonTapped(nil)
                                                     }
-                                                    
-                        })
-                    } else {
-                        self.presentAlertWithOk(title: Localization.localizedString("WITHDRAWAL_SUCCESS_ALERT_TITLE"),
-                                                message: Localization.localizedString("WITHDRAWAL_SUCCESS_ALERT_MESSAGE_BODY"),
-                                                actionHandler: { (_) in
-                                                    BridgeSDK.authManager.signOut(completion: { (_, _, error) in
-                                                        DispatchQueue.main.async {
-                                                            appDelegate.showAppropriateViewController(animated: true)
-                                                            self.backButton.isHidden = false
-                                                            self.backButtonTapped(nil)
-                                                        }
-                                                    })
-                        })
-                    }
+                                                })
+                    })
                 }
-            } else {
-                // They canceled or whatnot, so turn the back button back on so they can get outta here and back to the rest of the app
-                self.backButton.isHidden = false
             }
         }
     }
