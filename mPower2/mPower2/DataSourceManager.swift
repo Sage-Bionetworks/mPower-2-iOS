@@ -55,6 +55,7 @@ extension RSDIdentifier {
     static let background: RSDIdentifier = "Background"
     static let engagement: RSDIdentifier = "Engagement"
     static let motivation: RSDIdentifier = "Motivation"
+    static let withdrawal: RSDIdentifier = "Withdrawal"
     static let studyBurstReminder: RSDIdentifier = "StudyBurstReminder"
 }
 
