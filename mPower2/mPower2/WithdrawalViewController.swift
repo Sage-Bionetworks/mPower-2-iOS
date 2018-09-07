@@ -86,9 +86,7 @@ class WithdrawalViewController: UIViewController, RSDTaskViewControllerDelegate 
     
     @objc
     func withdrawalTapped() {
-        guard let withdrawalSurvey : SBBSurveyReference = SBABridgeConfiguration.shared.allSurveys().first(where: { (ref) -> Bool in
-                return ref.identifier == .withdrawal
-            })
+        guard let withdrawalSurvey = SBABridgeConfiguration.shared.allSurveys().first (where: { $0.identifier == .withdrawal })
             else {
                 return
         }
@@ -139,6 +137,9 @@ class WithdrawalViewController: UIViewController, RSDTaskViewControllerDelegate 
                         })
                     }
                 }
+            } else {
+                // They canceled or whatnot, so turn the back button back on so they can get outta here and back to the rest of the app
+                self.backButton.isHidden = false
             }
         }
     }
