@@ -111,8 +111,7 @@ class StudyParticipationProfileTableItem: SBAProfileTableItemBase {
 
     override open var detail: String {
         get {
-            let appDelegate = AppDelegate.shared as! AppDelegate
-            let enrolled = appDelegate.userSessionInfo?.consentedValue ?? false
+            let enrolled = SBAParticipantManager.shared.isConsented
             let key = enrolled ? "PARTICIPATION_ENROLLED_%@" : "PARTICIPATION_REJOIN_%@"
             let format = Localization.localizedString(key)
             return String.localizedStringWithFormat(format, Localization.localizedAppName)

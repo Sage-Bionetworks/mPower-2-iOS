@@ -41,8 +41,6 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
     
     weak var smsSignInDelegate: SignInDelegate? = nil
     
-    var userSessionInfo: SBBUserSessionInfo?
-    
     override func instantiateFactory() -> RSDFactory {
         return MP2Factory()
     }
@@ -52,13 +50,6 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
     }
     
     override func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]?) -> Bool {
-        NotificationCenter.default.addObserver(forName: .sbbUserSessionUpdated, object: nil, queue: .main) { (notification) in
-            guard let info = notification.userInfo?[kSBBUserSessionInfoKey] as? SBBUserSessionInfo else {
-                fatalError("Expected notification userInfo to contain a user session info object")
-            }
-            self.userSessionInfo = info
-        }
-        
         SBASurveyConfiguration.shared = MP2SurveyConfiguration()
         
         // Instantiate and load the scheduled activities and reports for the study burst.
@@ -79,7 +70,7 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
     
     func showAppropriateViewController(animated: Bool) {
         if BridgeSDK.authManager.isAuthenticated() {
-            if userSessionInfo?.consentedValue ?? false {
+            if SBAParticipantManager.shared.isConsented {
                 showMainViewController(animated: animated)
             } else {
                 showConsentViewController(animated: animated)
@@ -208,6 +199,13 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
     
     func taskController(_ taskController: RSDTaskController, asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController? {
         return nil
+    }
+    
+    // MARK: SBBBridgeErrorUIDelegate
+    
+    override func handleUserNotConsentedError(_ error: Error, sessionInfo: Any, networkManager: SBBNetworkManagerProtocol?) -> Bool {
+        self.showConsentViewController(animated: true);
+        return true;
     }
     
 }
