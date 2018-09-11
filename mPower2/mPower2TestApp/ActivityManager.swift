@@ -350,7 +350,7 @@ public struct SurveyReference : Codable {
     let createdOn: String
     
     static var all: [SurveyReference] = {
-        let surveyIdentifiers = ["Demographics", "Engagement", "Motivation", "Background", "Withdrawl"]
+        let surveyIdentifiers = ["Demographics", "Engagement", "Motivation", "Background", "Withdrawal"]
         let surveys: [SurveyReference] = surveyIdentifiers.compactMap {
             do {
                 let transformer = RSDResourceTransformerObject(resourceName: $0)
