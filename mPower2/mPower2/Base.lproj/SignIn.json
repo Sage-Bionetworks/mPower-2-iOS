@@ -36,8 +36,8 @@
              {
                 "identifier":"enterPhoneNumber",
                 "type":"form",
-                "title":"Join mPower",
-                "text":"Enter your mobile number to get started.",
+                "title":"Let's get started",
+                "text":"Please take a moment to enter your phone number so we can verify if you have an existing account and sign you in securely.\n\nWe will not use your phone number for anything else until you have completed the Consent step of this study.",
                 "inputFields": [{
                                 "type":"string",
                                 "textFieldOptions":{
@@ -60,6 +60,13 @@
                 "viewTheme":{
                     "viewIdentifier":"PhoneRegistration",
                     "storyboardIdentifier":"Registration"
+                },
+                "actions":{
+                    "learnMore":{
+                        "type": "webView",
+                        "buttonTitle": "Learn more",
+                        "url" : "PhoneLearnMore.html"
+                    }
                 },
                 "nextStepIdentifier": "waiting"
              },
