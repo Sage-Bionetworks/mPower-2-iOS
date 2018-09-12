@@ -93,23 +93,23 @@ public struct StudySetup {
     /// Generated days of the study burst to mark as finished. This only applies to days that are past.
     func mapStudyBurstFinishedOn() -> [Int : Date] {
         let firstDay = createdOn.startOfDay().addingTimeInterval(8 * 60 * 60)
-        return studyBurstFinishedOnDays.rsd_filteredDictionary { (day) -> (Int, Date)? in
-            guard day <= self.studyBurstDay else { return nil }
+        return studyBurstFinishedOnDays.reduce(into: [Int : Date]()) { (hashtable, day) in
+            guard day <= self.studyBurstDay else { return }
             let time = TimeInterval(arc4random_uniform(30 * 60))
             let timestamp = firstDay.addingNumberOfDays(day).addingTimeInterval(time)
-            return (day, timestamp)
+            hashtable[day] = timestamp
         }
     }
     
     /// Generated days of the study burst to mark as finished. This only applies to days that are past.
     func mapStudyBurstSurveyFinishedOn() -> [RSDIdentifier : Date] {
         let firstDay = createdOn.startOfDay().addingTimeInterval(8.5 * 60 * 60)
-        var map = studyBurstSurveyFinishedOnDays.rsd_filteredDictionary { (input) -> (RSDIdentifier, Date)? in
+        var map = studyBurstSurveyFinishedOnDays.reduce(into: [RSDIdentifier : Date]()) { (hashtable, input) in
             let day = input.value
-            guard day <= self.studyBurstDay else { return nil }
+            guard day <= self.studyBurstDay else { return }
             let time = TimeInterval(arc4random_uniform(30 * 60))
             let timestamp = firstDay.addingNumberOfDays(day).addingTimeInterval(time)
-            return (input.key, timestamp)
+            hashtable[input.key] = timestamp
         }
         if self.finishedMotivation {
             map[.motivation] = firstDay.addingTimeInterval(2 * 60)
