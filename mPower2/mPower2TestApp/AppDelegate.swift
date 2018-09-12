@@ -40,8 +40,8 @@ import BridgeSDK_Test
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    final class var shared: AppDelegate? {
-        return UIApplication.shared.delegate as? AppDelegate
+    final class var shared: UIApplicationDelegate? {
+        return UIApplication.shared.delegate
     }
 
     weak var smsSignInDelegate: SignInDelegate? = nil
