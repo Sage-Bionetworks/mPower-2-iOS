@@ -103,7 +103,7 @@ class WithdrawalViewController: UIViewController, RSDTaskViewControllerDelegate 
     // MARK: RSDTaskViewControllerDelegate
     func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let reasonsAnswer = taskController.taskResult.findAnswerResult(with: "withdrawalReason")
+        let reasonsAnswer = taskController.taskViewModel.taskResult.findAnswerResult(with: "withdrawalReason")
         (taskController as! UIViewController).dismiss(animated: true) {
             guard reason == .completed
                 else {
@@ -146,12 +146,8 @@ class WithdrawalViewController: UIViewController, RSDTaskViewControllerDelegate 
         }
     }
     
-    func taskController(_ taskController: RSDTaskController, readyToSave taskPath: RSDTaskPath) {
+    func taskController(_ taskController: RSDTaskController, readyToSave taskViewModel: RSDTaskViewModel) {
         // do nothing - do not store the results
-    }
-    
-    func taskController(_ taskController: RSDTaskController, asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController? {
-        return nil
     }
     
 }

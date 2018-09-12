@@ -34,10 +34,36 @@
 @testable import MotorControl
 import XCTest
 
+class TestHandStepController: NSObject, MCTHandStepController {
+    
+    var stepViewModel: RSDStepViewPathComponent!
+    
+    init(step: RSDStep, parent: RSDPathComponent) {
+        stepViewModel = RSDStepViewModel(step: step, parent: parent)
+    }
+    
+    var isFirstAppearance: Bool = true
+    
+    var imageView: UIImageView?
+    
+    var stepTitleLabel: UILabel?
+    
+    var stepTextLabel: UILabel?
+    
+    var stepDetailLabel: UILabel?
+    
+    var uiStep: RSDUIStep?
+
+    func didFinishLoading() {
+        //
+    }
+}
+
 class NavigationTests: XCTestCase {
     
     var taskController : TestTaskController!
     var steps : [RSDStep]!
+    var handSelection : [String]!
     
     
     override func setUp() {
@@ -60,7 +86,7 @@ class NavigationTests: XCTestCase {
         let task = TestTask(identifier: "test", stepNavigator: navigator)
         
         self.taskController = TestTaskController()
-        self.taskController.topLevelTask = task
+        self.taskController.task = task
         super.setUp()
     }
     
@@ -73,24 +99,24 @@ class NavigationTests: XCTestCase {
     private func _insertHandSelectionResult(for taskController: TestTaskController) {
         var collectionResult = RSDCollectionResultObject(identifier: "handSelection")
         var answerResult = RSDAnswerResultObject(identifier: "handSelection", answerType: .string)
-        if self.taskController.handSelection!.count == 2 {
+        if self.handSelection.count == 2 {
             answerResult.value = "both"
         } else {
-            answerResult.value = self.taskController.handSelection!.first!
+            answerResult.value = self.handSelection.first!
         }
         
         collectionResult.appendInputResults(with: answerResult)
         let answerType = RSDAnswerResultType(baseType: .string, sequenceType: .array)
         var handOrderResult = RSDAnswerResultObject(identifier: MCTHandSelectionDataSource.handOrderKey, answerType: answerType)
-        handOrderResult.value = self.taskController.handSelection
+        handOrderResult.value = self.handSelection
         collectionResult.appendInputResults(with: handOrderResult)
-        self.taskController.taskPath.appendStepHistory(with: collectionResult)
+        self.taskController.taskViewModel.taskResult.appendStepHistory(with: collectionResult)
     }
     
     private func _insertIsFirstRunResult(for taskController: TestTaskController, isFirstRun: Bool) {
         var answerResult = RSDAnswerResultObject(identifier: "isFirstRun", answerType: .boolean)
         answerResult.value = isFirstRun
-        self.taskController.taskPath.topLevelTaskPath.appendAsyncResult(with: answerResult)
+        self.taskController.taskViewModel.taskResult.appendAsyncResult(with: answerResult)
     }
     
     private func _setupInstructionStepTest() {
@@ -111,126 +137,126 @@ class NavigationTests: XCTestCase {
         let task = TestTask(identifier: "test", stepNavigator: navigator)
         
         self.taskController = TestTaskController()
-        self.taskController.topLevelTask = task
+        self.taskController.task = task
         super.setUp()
     }
     
     private func _whichHand(step: RSDStep) -> String? {
-        return TestStepController(taskController: self.taskController, step: step).whichHand()?.rawValue
+        return TestHandStepController(step: step, parent: self.taskController.taskViewModel.currentTaskPath).whichHand()?.rawValue
     }
     
     public func testSkippableSection_Left() {
-        self.taskController.handSelection = ["left"]
+        self.handSelection = ["left"]
         _insertHandSelectionResult(for: self.taskController)
         let _ = self.taskController.test_stepTo("instruction")
         // Go forward to the leftInstruction step
         self.taskController.goForward()
-        var stepTo = self.taskController.navigate_calledTo
+        var stepTo = self.taskController.show_calledTo?.stepViewModel.step
         XCTAssertNotNil(stepTo)
         XCTAssertEqual(stepTo!.identifier, "leftInstruction")
         XCTAssertEqual(_whichHand(step: stepTo!), "left")
         // Go forward into the leftActive step
         self.taskController.goForward()
-        stepTo = self.taskController.navigate_calledTo
+        stepTo = self.taskController.show_calledTo?.stepViewModel.step
         XCTAssertNotNil(stepTo)
         XCTAssertEqual(stepTo!.identifier, "leftActive")
         XCTAssertEqual(_whichHand(step: stepTo!), "left")
         // Go forward to the completion step
         self.taskController.goForward()
-        stepTo = self.taskController.navigate_calledTo
+        stepTo = self.taskController.show_calledTo?.stepViewModel.step
         XCTAssertNotNil(stepTo)
         XCTAssertEqual(stepTo!.identifier, "completion")
     }
     
     public func testSkippableSection_Right() {
-        self.taskController.handSelection = ["right"]
+        self.handSelection = ["right"]
         _insertHandSelectionResult(for: self.taskController)
         let _ = self.taskController.test_stepTo("instruction")
         // Go forward to the rightInstruction step
         self.taskController.goForward()
-        var stepTo = self.taskController.navigate_calledTo
+        var stepTo = self.taskController.show_calledTo?.stepViewModel.step
         XCTAssertNotNil(stepTo)
         XCTAssertEqual(stepTo!.identifier, "rightInstruction")
         XCTAssertEqual(_whichHand(step: stepTo!), "right")
         // Go forward into the rightActive step
         self.taskController.goForward()
-        stepTo = self.taskController.navigate_calledTo
+        stepTo = self.taskController.show_calledTo?.stepViewModel.step
         XCTAssertNotNil(stepTo)
         XCTAssertEqual(stepTo!.identifier, "rightActive")
         XCTAssertEqual(_whichHand(step: stepTo!), "right")
         // Go forward to the completion step
         self.taskController.goForward()
-        stepTo = self.taskController.navigate_calledTo
+        stepTo = self.taskController.show_calledTo?.stepViewModel.step
         XCTAssertNotNil(stepTo)
         XCTAssertEqual(stepTo!.identifier, "completion")
     }
 
     public func testSkippableSection_LeftThenRight() {
-        self.taskController.handSelection = ["left", "right"]
+        self.handSelection = ["left", "right"]
         _insertHandSelectionResult(for: self.taskController)
         let _ = self.taskController.test_stepTo("instruction")
         // Go forward to the leftInstruction step
         self.taskController.goForward()
-        var stepTo = self.taskController.navigate_calledTo
+        var stepTo = self.taskController.show_calledTo?.stepViewModel.step
         XCTAssertNotNil(stepTo)
         XCTAssertEqual(stepTo!.identifier, "leftInstruction")
         XCTAssertEqual(_whichHand(step: stepTo!), "left")
         // Go forward into the leftActive step
         self.taskController.goForward()
-        stepTo = self.taskController.navigate_calledTo
+        stepTo = self.taskController.show_calledTo?.stepViewModel.step
         XCTAssertNotNil(stepTo)
         XCTAssertEqual(stepTo!.identifier, "leftActive")
         XCTAssertEqual(_whichHand(step: stepTo!), "left")
         // Go forward to the rightInstruction step
         self.taskController.goForward()
-        stepTo = self.taskController.navigate_calledTo
+        stepTo = self.taskController.show_calledTo?.stepViewModel.step
         XCTAssertNotNil(stepTo)
         XCTAssertEqual(stepTo!.identifier, "rightInstruction")
         XCTAssertEqual(_whichHand(step: stepTo!), "right")
         // Go forward into the rightActive step
         self.taskController.goForward()
-        stepTo = self.taskController.navigate_calledTo
+        stepTo = self.taskController.show_calledTo?.stepViewModel.step
         XCTAssertNotNil(stepTo)
         XCTAssertEqual(stepTo!.identifier, "rightActive")
         XCTAssertEqual(_whichHand(step: stepTo!), "right")
         // Go forward to the completion step
         self.taskController.goForward()
-        stepTo = self.taskController.navigate_calledTo
+        stepTo = self.taskController.show_calledTo?.stepViewModel.step
         XCTAssertNotNil(stepTo)
         XCTAssertEqual(stepTo!.identifier, "completion")
     }
     
     public func testSkippableSection_RightThenLeft() {
-        self.taskController.handSelection = ["right", "left"]
+        self.handSelection = ["right", "left"]
         _insertHandSelectionResult(for: self.taskController)
         let _ = self.taskController.test_stepTo("instruction")
         // Go forward to the rightInstruction step
         self.taskController.goForward()
-        var stepTo = self.taskController.navigate_calledTo
+        var stepTo = self.taskController.show_calledTo?.stepViewModel.step
         XCTAssertNotNil(stepTo)
         XCTAssertEqual(stepTo!.identifier, "rightInstruction")
         XCTAssertEqual(_whichHand(step: stepTo!), "right")
         // Go forward into the rightActive step
         self.taskController.goForward()
-        stepTo = self.taskController.navigate_calledTo
+        stepTo = self.taskController.show_calledTo?.stepViewModel.step
         XCTAssertNotNil(stepTo)
         XCTAssertEqual(stepTo!.identifier, "rightActive")
         XCTAssertEqual(_whichHand(step: stepTo!), "right")
         // Go forward to the leftInstruction step
         self.taskController.goForward()
-        stepTo = self.taskController.navigate_calledTo
+        stepTo = self.taskController.show_calledTo?.stepViewModel.step
         XCTAssertNotNil(stepTo)
         XCTAssertEqual(stepTo!.identifier, "leftInstruction")
         XCTAssertEqual(_whichHand(step: stepTo!), "left")
         // Go forward into the leftActive step
         self.taskController.goForward()
-        stepTo = self.taskController.navigate_calledTo
+        stepTo = self.taskController.show_calledTo?.stepViewModel.step
         XCTAssertNotNil(stepTo)
         XCTAssertEqual(stepTo!.identifier, "leftActive")
         XCTAssertEqual(_whichHand(step: stepTo!), "left")
         // Go forward to the completion step
         self.taskController.goForward()
-        stepTo = self.taskController.navigate_calledTo
+        stepTo = self.taskController.show_calledTo?.stepViewModel.step
         XCTAssertNotNil(stepTo)
         XCTAssertEqual(stepTo!.identifier, "completion")
     }
@@ -241,17 +267,17 @@ class NavigationTests: XCTestCase {
         let _ = self.taskController.test_stepTo("first")
         // Go forward, shouldn't skip the instructionFirstRunOnly
         self.taskController.goForward()
-        var stepTo = self.taskController.navigate_calledTo
+        var stepTo = self.taskController.show_calledTo?.stepViewModel.step
         XCTAssertNotNil(stepTo)
         XCTAssertEqual(stepTo!.identifier, "instructionFirstRunOnly")
         // Go forward, shouldn't skip the instructionNotFirstRunOnly step either
         self.taskController.goForward()
-        stepTo = self.taskController.navigate_calledTo
+        stepTo = self.taskController.show_calledTo?.stepViewModel.step
         XCTAssertNotNil(stepTo)
         XCTAssertEqual(stepTo!.identifier, "instructionNotFirstRunOnly")
         // Go forward should proceed from instructionNotFirstRunOnly to completion
         self.taskController.goForward()
-        stepTo = self.taskController.navigate_calledTo
+        stepTo = self.taskController.show_calledTo?.stepViewModel.step
         XCTAssertNotNil(stepTo)
         XCTAssertEqual(stepTo!.identifier, "completion")
     }
@@ -262,12 +288,12 @@ class NavigationTests: XCTestCase {
         let _ = self.taskController.test_stepTo("first")
         // Go forward, should skip the instructionFirstRunOnly
         self.taskController.goForward()
-        var stepTo = self.taskController.navigate_calledTo
+        var stepTo = self.taskController.show_calledTo?.stepViewModel.step
         XCTAssertNotNil(stepTo)
         XCTAssertEqual(stepTo!.identifier, "instructionNotFirstRunOnly")
         // Go forward should proceed from instructionNotFirstRunOnly to completion
         self.taskController.goForward()
-        stepTo = self.taskController.navigate_calledTo
+        stepTo = self.taskController.show_calledTo?.stepViewModel.step
         XCTAssertNotNil(stepTo)
         XCTAssertEqual(stepTo!.identifier, "completion")
     }

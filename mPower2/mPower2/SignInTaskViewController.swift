@@ -57,17 +57,17 @@ class SignInTaskViewController: RSDTaskViewController, SignInDelegate {
         do {
             let resourceTransformer = RSDResourceTransformerObject(resourceName: "SignIn")
             let task = try RSDFactory.shared.decodeTask(with: resourceTransformer)
-            let taskPath = RSDTaskPath(task: task)
-            super.init(taskPath: taskPath)
+            let taskViewModel = RSDTaskViewModel(task: task)
+            super.init(taskViewModel: taskViewModel)
         } catch let err {
             fatalError("Failed to decode the SignIn task. \(err)")
         }
     }
     
     func resultForPhoneNumber() -> RSDAnswerResultObject? {
-        let taskResult = self.taskResult
+        guard let taskResult = self.taskViewModel?.taskResult else { return nil }
         let phoneResultIdentifier = "enterPhoneNumber"
-        return taskResult?.findAnswerResult(with: phoneResultIdentifier) as? RSDAnswerResultObject
+        return taskResult.findAnswerResult(with: phoneResultIdentifier) as? RSDAnswerResultObject
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -118,16 +118,16 @@ class SignInTaskViewController: RSDTaskViewController, SignInDelegate {
     }
     
     func afterSignIn(succeeded: Bool) {
-        guard self.currentStepController?.step.identifier == "waiting"
+        guard self.taskViewModel.currentStep?.identifier == "waiting"
             else {
                 (AppDelegate.shared as! AppDelegate).showAppropriateViewController(animated: true)
                 return
         }
         
         if succeeded {
-            self.goForward()
+            self.taskViewModel.goForward()
         } else {
-            self.goBack()
+            self.taskViewModel.goBack()
         }
     }
 

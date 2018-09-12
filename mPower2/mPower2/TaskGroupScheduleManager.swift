@@ -63,44 +63,42 @@ public class TaskGroupScheduleManager : SBAScheduleManager {
         }
     }
     
-    override public func instantiateTaskPath(for taskInfo: RSDTaskInfo, in activityGroup: SBAActivityGroup? = nil) -> (taskPath: RSDTaskPath, referenceSchedule: SBBScheduledActivity?) {
+    override public func instantiateTaskViewModel(for taskInfo: RSDTaskInfo, in activityGroup: SBAActivityGroup? = nil) -> (taskViewModel: RSDTaskViewModel, referenceSchedule: SBBScheduledActivity?) {
         
-        guard isMeasurementTaskIdentifier(taskInfo.identifier),
-            let transformer = taskInfo.resourceTransformer ?? configuration.instantiateTaskTransformer(for: taskInfo)
+        guard isMeasurementTaskIdentifier(taskInfo.identifier)
             else {
-                return super.instantiateTaskPath(for: taskInfo, in: activityGroup)
+                return super.instantiateTaskViewModel(for: taskInfo, in: activityGroup)
         }
         
         if self.shouldIncludeMedicationTiming {
             // Override the base implementation to insert the tracking step.
-            let taskInfoStep = RSDTaskInfoStepObject(with: taskInfo, taskTransformer: transformer)
-            let trackingTransformer = RSDResourceTransformerObject(resourceName: kActivityTrackingIdentifier)
+            let taskInfoStep = RSDTaskInfoStepObject(with: taskInfo)
             let trackingInfo = RSDTaskInfoObject(with: kActivityTrackingIdentifier)
-            let trackingStep = RSDTaskInfoStepObject(with: trackingInfo, taskTransformer: trackingTransformer)
+            let trackingStep = RSDTaskInfoStepObject(with: trackingInfo)
             var navigator = RSDConditionalStepNavigatorObject(with: [trackingStep, taskInfoStep])
             navigator.progressMarkers = []
             let task = RSDTaskObject(identifier: taskInfo.identifier, stepNavigator: navigator)
             
             // Return a task path that includes both.
-            return self.instantiateTaskPath(for: task)
+            return self.instantiateTaskViewModel(for: task)
         }
         else {
             // Add the medication timing result to the async results.
-            let ret = super.instantiateTaskPath(for: taskInfo, in: activityGroup)
+            let ret = super.instantiateTaskViewModel(for: taskInfo, in: activityGroup)
             if let medResult = _medicationTimingResult {
-                ret.taskPath.appendAsyncResult(with: medResult)
+                ret.taskViewModel.taskResult.appendAsyncResult(with: medResult)
             }
             return ret
         }
     }
     
-    override public func taskController(_ taskController: RSDTaskController, readyToSave taskPath: RSDTaskPath) {
+    override public func taskController(_ taskController: RSDTaskController, readyToSave taskViewModel: RSDTaskViewModel) {
         
         // Look for the medication timing question and store in memory.
-        if let result = taskPath.result.findAnswerResult(with: "medicationTiming") {
+        if let result = taskViewModel.taskResult.findAnswerResult(with: "medicationTiming") {
             _medicationTimingResult = result
         }
-        super.taskController(taskController, readyToSave: taskPath)
+        super.taskController(taskController, readyToSave: taskViewModel)
     }
     
     public func answerKey(for resultIdentifier: String, with sectionIdentifier: String?) -> String? {

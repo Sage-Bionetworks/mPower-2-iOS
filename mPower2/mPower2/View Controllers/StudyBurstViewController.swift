@@ -42,7 +42,7 @@ extension RSDIdentifier {
 }
 
 protocol StudyBurstViewControllerDelegate {
-    func studyBurstDidFinish(task: RSDTaskPath, reason: RSDTaskFinishReason)
+    func studyBurstDidFinish(task: RSDTaskViewModel, reason: RSDTaskFinishReason)
 }
 
 class StudyBurstViewController: UIViewController {
@@ -185,7 +185,7 @@ extension StudyBurstViewController: StudyBurstProgressExpirationLabelDelegate {
 extension StudyBurstViewController: TaskBrowserViewControllerDelegate {
     
     // MARK: TaskBrowserViewControllerDelegate
-    func taskBrowserDidFinish(task: RSDTaskPath, reason: RSDTaskFinishReason) {
+    func taskBrowserDidFinish(task: RSDTaskViewModel, reason: RSDTaskFinishReason) {
         delegate?.studyBurstDidFinish(task: task, reason: reason)
         progressLabel.updateStudyBurstExpirationTime(studyBurstManager.expiresOn)
         progressCircleView.progress = studyBurstManager.progress

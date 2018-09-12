@@ -80,7 +80,7 @@ class ReminderTableStepViewController: RSDTableStepViewController {
         
         // Check if there is a no reminders flag to **not** set the local notification.
         let noReminderIdentifier = StudyBurstScheduleManager.NotificationResult.CodingKeys.noReminder.stringValue
-        let noReminder = (self.taskController.taskResult.findAnswerResult(with: noReminderIdentifier)?.value as? Bool) ?? false
+        let noReminder = (self.stepViewModel.taskResult.findAnswerResult(with: noReminderIdentifier)?.value as? Bool) ?? false
         if !noReminder {
             UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .alert, .sound]) { (granted, _) in
                 DispatchQueue.main.async {
@@ -151,8 +151,8 @@ class ReminderTextFieldCell: RSDStepTextFieldCell {
 class ReminderStep : RSDFormUIStepObject, RSDStepViewControllerVendor {
     #if !os(watchOS)
     /// Override to return a reminder step view controller.
-    func instantiateViewController(with taskPath: RSDTaskPath) -> (UIViewController & RSDStepController)? {
-        return ReminderTableStepViewController(step: self)
+    func instantiateViewController(with parent: RSDPathComponent?) -> (UIViewController & RSDStepController)? {
+        return ReminderTableStepViewController(step: self, parent: parent)
     }
     #endif
 }

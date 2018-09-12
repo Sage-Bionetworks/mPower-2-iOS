@@ -35,10 +35,11 @@ import UIKit
 import BridgeApp
 
 class TrackedItemsIntroductionStepViewController : RSDStepViewController {
-    static func instantiate(with step: RSDStep) -> TrackedItemsIntroductionStepViewController? {
+    
+    static func instantiate(with step: RSDStep, parent: RSDPathComponent?) -> TrackedItemsIntroductionStepViewController? {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "TrackedItemsIntroductionStepViewController") as? TrackedItemsIntroductionStepViewController
-        vc?.step = step
+        vc?.stepViewModel = vc?.instantiateStepViewModel(for: step, with: parent)
         return vc
     }
 }

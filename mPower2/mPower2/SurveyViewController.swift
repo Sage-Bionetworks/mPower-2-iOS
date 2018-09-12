@@ -35,7 +35,28 @@ import UIKit
 import BridgeApp
 import BridgeSDK
 
-class SurveyViewController : UITableViewController, RSDTaskViewControllerDelegate {
+protocol BridgeSurveyDelegate : RSDTaskViewControllerDelegate {
+}
+
+extension BridgeSurveyDelegate {
+    
+    func stepViewController(for stepModel: RSDStepViewModel) -> RSDStepViewController? {
+        let vc: RSDStepViewController? = {
+            switch RSDIdentifier(rawValue: stepModel.identifier) {
+            case .studyBurstCompletionStep:
+                return StudyBurstCompletionViewController.instantiate()
+            case .greatJobStep:
+                return GreatJobViewController.instantiate()
+            default:
+                return nil
+            }
+        }()
+        vc?.stepViewModel = stepModel
+        return vc
+    }
+}
+
+class SurveyViewController : UITableViewController, BridgeSurveyDelegate {
     
     lazy var surveys : [SBBSurveyReference] = SBABridgeConfiguration.shared.allSurveys()
     
@@ -69,30 +90,12 @@ class SurveyViewController : UITableViewController, RSDTaskViewControllerDelegat
         (taskController as! UIViewController).dismiss(animated: true, completion: nil)
     }
     
-    func taskController(_ taskController: RSDTaskController, readyToSave taskPath: RSDTaskPath) {
+    func taskController(_ taskController: RSDTaskController, readyToSave taskViewModel: RSDTaskViewModel) {
         // do nothing - do not store the results
     }
     
-    func taskController(_ taskController: RSDTaskController, asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController? {
-        return nil
+    func taskViewController(_ taskViewController: UIViewController, viewControllerForStep stepModel: RSDStepViewModel) -> UIViewController? {
+        return self.stepViewController(for: stepModel)
     }
-    
-    func taskViewController(_ taskViewController: UIViewController, viewControllerFor step: Any) -> UIViewController? {
-        guard let step = step as? RSDStep
-            else {
-                return nil
-        }
-        let vc: RSDStepViewController? = {
-            switch RSDIdentifier(rawValue: step.identifier) {
-            case .studyBurstCompletionStep:
-                return StudyBurstCompletionViewController.instantiate()
-            case .greatJobStep:
-                return GreatJobViewController.instantiate()
-            default:
-                return nil
-            }
-        }()
-        vc?.step = step
-        return vc
-    }
+
 }

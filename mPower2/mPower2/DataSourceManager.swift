@@ -143,7 +143,7 @@ class DataSourceManager {
             self.configuration.addMapping(with: $0.key.stringValue, to: $0.value)
         }
         
-        let installedGroups = configuration.installedGroups
+        let installedGroups = configuration.allActivityGroups()
         let rsdIdentifiers: [RSDIdentifier] = [.measuringTaskGroup, .trackingTaskGroup]
         
         rsdIdentifiers.forEach { (groupIdentifier) in

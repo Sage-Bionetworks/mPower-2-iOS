@@ -34,7 +34,7 @@
 import BridgeApp
 
 open class TrackedItemsIntroductionStepObject: RSDUIStepObject, RSDStepViewControllerVendor {
-    public func instantiateViewController(with taskPath: RSDTaskPath) -> (UIViewController & RSDStepController)? {
-        return TrackedItemsIntroductionStepViewController.instantiate(with: self)
+    open func instantiateViewController(with parent: RSDPathComponent?) -> (UIViewController & RSDStepController)? {
+        return TrackedItemsIntroductionStepViewController.instantiate(with: self, parent: parent)
     }
 }

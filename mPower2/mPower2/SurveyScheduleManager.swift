@@ -51,7 +51,7 @@ class SurveyScheduleManager : SBAScheduleManager {
         // TODO: syoung 05/18/2018 Unit test this for accuracy.
         
         var excludeTaskGroupIdentifiers = Set<String>()
-        self.configuration.installedGroups.forEach {
+        self.configuration.allActivityGroups().forEach {
             guard $0.identifier != self.identifier else { return }
             excludeTaskGroupIdentifiers.formUnion($0.activityIdentifiers.map { $0.stringValue })
         }
