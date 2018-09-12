@@ -157,7 +157,7 @@ class TodayViewController: UIViewController {
         self.updateTaskBrowserPosition(animated: false)
         
         // Update the welcome whenever the user is returning to the app.
-        NotificationCenter.default.addObserver(forName: .UIApplicationWillEnterForeground, object: nil, queue: OperationQueue.main) { (_) in
+        NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: OperationQueue.main) { (_) in
             self.updateWelcomeContent()
         }
         

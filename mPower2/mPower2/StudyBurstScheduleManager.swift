@@ -853,7 +853,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         let content = UNMutableNotificationContent()
         // TODO: syoung 07/19/2018 Figure out what the wording of the notification should be.
         content.body = "Time to do your mPower Study Burst activities!"
-        content.sound = UNNotificationSound.default()
+        content.sound = UNNotificationSound.default
         content.badge = UIApplication.shared.applicationIconBadgeNumber + 1 as NSNumber;
         content.categoryIdentifier = self.notificationCategory
         content.threadIdentifier = schedule.activity.guid

@@ -286,7 +286,7 @@ extension TaskBrowserViewController: UICollectionViewDelegate, UICollectionViewD
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(verticalSpacing(), horizontalSpacing(), verticalSpacing(), horizontalSpacing())
+        return UIEdgeInsets.init(top: verticalSpacing(), left: horizontalSpacing(), bottom: verticalSpacing(), right: horizontalSpacing())
     }
     
     open func horizontalSpacing() -> CGFloat {
