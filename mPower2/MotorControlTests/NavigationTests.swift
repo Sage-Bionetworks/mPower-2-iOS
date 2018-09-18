@@ -35,7 +35,7 @@
 import XCTest
 
 class TestHandStepController: NSObject, MCTHandStepController {
-    
+
     var stepViewModel: RSDStepViewPathComponent!
     
     init(step: RSDStep, parent: RSDPathComponent) {
@@ -56,6 +56,14 @@ class TestHandStepController: NSObject, MCTHandStepController {
 
     func didFinishLoading() {
         //
+    }
+    
+    func goForward() {
+        self.stepViewModel.perform(actionType: .navigation(.goForward))
+    }
+    
+    func goBack() {
+        self.stepViewModel.perform(actionType: .navigation(.goBackward))
     }
 }
 
