@@ -40,16 +40,16 @@ import BridgeApp
 class ExternalIDRegistrationViewController: RSDTableStepViewController {
 
     func credentials() -> (externalId: String, firstName: String, preconsent: Bool)? {
-        let taskResult = self.taskController.taskResult
         let externalIdResultIdentifier = "externalId"
         let firstNameResultIdentifier = "firstName"
         let preConsentResultIdentifier = "preConsent"
-        guard let externalId = taskResult?.findAnswerResult(with: externalIdResultIdentifier)?.value as? String,
-            let firstName = taskResult?.findAnswerResult(with: firstNameResultIdentifier)?.value as? String
+        guard let taskResult = self.stepViewModel?.taskResult,
+            let externalId = taskResult.findAnswerResult(with: externalIdResultIdentifier)?.value as? String,
+            let firstName = taskResult.findAnswerResult(with: firstNameResultIdentifier)?.value as? String
             else {
                 return nil
         }
-        let preconsent = (taskResult?.findAnswerResult(with: preConsentResultIdentifier)?.value as? Bool ?? false)
+        let preconsent = (taskResult.findAnswerResult(with: preConsentResultIdentifier)?.value as? Bool ?? false)
         return (externalId, firstName, preconsent)
     }
 

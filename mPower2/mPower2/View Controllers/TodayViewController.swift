@@ -368,14 +368,14 @@ class TodayViewController: UIViewController {
     }
     
     func showActionBarFlow(_ animated: Bool) {
-        if let taskPath = studyBurstManager.engagementTaskPath() {
-            let vc = RSDTaskViewController(taskPath: taskPath)
+        if let taskViewModel = studyBurstManager.engagementTaskViewModel() {
+            let vc = RSDTaskViewController(taskViewModel: taskViewModel)
             vc.delegate = self
             self.navigationController?.pushViewController(vc, animated: animated)
         }
         else if let schedule = surveyManager.scheduledActivities.first {
-            let taskPath = surveyManager.instantiateTaskPath(for: schedule)
-            let vc = RSDTaskViewController(taskPath: taskPath)
+            let taskViewModel = surveyManager.instantiateTaskViewModel(for: schedule)
+            let vc = RSDTaskViewController(taskViewModel: taskViewModel)
             vc.delegate = self
             self.navigationController?.pushViewController(vc, animated: animated)
         }
@@ -389,22 +389,22 @@ class TodayViewController: UIViewController {
     
     func showStudyBurstCompletionTask(_ animated: Bool = false) {
         // If there is a task to do today, then push it.
-        guard let taskPath = studyBurstManager.engagementTaskPath(),
+        guard let taskViewModel = studyBurstManager.engagementTaskViewModel(),
             let nc = self.navigationController
             else {
                 return
         }
-        let vc = RSDTaskViewController(taskPath: taskPath)
+        let vc = RSDTaskViewController(taskViewModel: taskViewModel)
         vc.delegate = self
         nc.pushViewController(vc, animated: animated)
     }
 }
 
-extension TodayViewController: RSDTaskViewControllerDelegate {
+extension TodayViewController: BridgeSurveyDelegate {
     
     open func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
         
-        if studyBurstManager.isEngagement(taskController.taskPath),
+        if studyBurstManager.isEngagement(taskController.taskViewModel),
             reason == .completed,
             !studyBurstManager.isCompletedForToday,
             let vc = StudyBurstViewController.instantiate(),
@@ -430,31 +430,12 @@ extension TodayViewController: RSDTaskViewControllerDelegate {
         studyBurstManager.taskController(taskController, didFinishWith: reason, error: error)
     }
     
-    func taskController(_ taskController: RSDTaskController, readyToSave taskPath: RSDTaskPath) {
-        studyBurstManager.taskController(taskController, readyToSave: taskPath)
+    func taskController(_ taskController: RSDTaskController, readyToSave taskViewModel: RSDTaskViewModel) {
+        studyBurstManager.taskController(taskController, readyToSave: taskViewModel)
     }
     
-    func taskController(_ taskController: RSDTaskController, asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController? {
-        return studyBurstManager.taskController(taskController, asyncActionControllerFor:configuration)
-    }
-    
-    func taskViewController(_ taskViewController: UIViewController, viewControllerFor step: Any) -> UIViewController? {
-        guard let step = step as? RSDStep
-            else {
-                return nil
-        }
-        let vc: RSDStepViewController? = {
-            switch RSDIdentifier(rawValue: step.identifier) {
-            case .studyBurstCompletionStep:
-                return StudyBurstCompletionViewController.instantiate()
-            case .greatJobStep:
-                return GreatJobViewController.instantiate()
-            default:
-                return nil
-            }
-        }()
-        vc?.step = step
-        return vc
+    func taskViewController(_ taskViewController: UIViewController, viewControllerForStep stepModel: RSDStepViewModel) -> UIViewController? {
+        return self.stepViewController(for: stepModel)
     }
 }
 
@@ -465,7 +446,7 @@ extension TodayViewController: StudyBurstProgressExpirationLabelDelegate {
 }
 
 extension TodayViewController: StudyBurstViewControllerDelegate {
-    func studyBurstDidFinish(task: RSDTaskPath, reason: RSDTaskFinishReason) {
+    func studyBurstDidFinish(task: RSDTaskViewModel, reason: RSDTaskFinishReason) {
         if reason == .completed, studyBurstManager.isFinalTask(task) {
             showStudyBurstCompletionTask()
         }
@@ -585,7 +566,7 @@ extension TodayViewController: TaskBrowserViewControllerDelegate {
         // nothing
     }
     
-    func taskBrowserDidFinish(task: RSDTaskPath, reason: RSDTaskFinishReason) {
+    func taskBrowserDidFinish(task: RSDTaskViewModel, reason: RSDTaskFinishReason) {
         if reason == .completed, studyBurstManager.isFinalTask(task) {
             showStudyBurstCompletionTask()
         }

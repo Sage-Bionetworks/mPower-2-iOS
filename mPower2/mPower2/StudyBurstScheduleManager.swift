@@ -206,12 +206,12 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     }
     
     /// Is this the final study burst task for today?
-    public func isFinalTask(_ taskPath: RSDTaskPath) -> Bool {
-        guard let group = self.activityGroup, group.activityIdentifiers.contains(where: { $0 == taskPath.identifier })
+    public func isFinalTask(_ taskViewModel: RSDTaskViewModel) -> Bool {
+        guard let group = self.activityGroup, group.activityIdentifiers.contains(where: { $0 == taskViewModel.identifier })
             else {
                 return false
         }
-        let activities = Set(finishedSchedules.compactMap { $0.activityIdentifier }).union([taskPath.identifier])
+        let activities = Set(finishedSchedules.compactMap { $0.activityIdentifier }).union([taskViewModel.identifier])
         return activities.count == totalActivitiesCount
     }
     
@@ -319,16 +319,16 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         return true
     }
     
-    public func isEngagement(_ taskPath: RSDTaskPath) -> Bool {
-        return taskPath.identifier == self.studyBurst.motivationIdentifier ||
-            taskPath.identifier == kCompletionTaskIdentifier
+    public func isEngagement(_ taskViewModel: RSDTaskViewModel) -> Bool {
+        return taskViewModel.identifier == self.studyBurst.motivationIdentifier ||
+            taskViewModel.identifier == kCompletionTaskIdentifier
     }
     
-    public func engagementTaskPath() -> RSDTaskPath? {
+    public func engagementTaskViewModel() -> RSDTaskViewModel? {
         
         // Exit early if the motivation task hasn't been shown.
-        if let taskPath = self.motivationTaskPath() {
-            return taskPath
+        if let taskViewModel = self.motivationTaskViewModel() {
+            return taskViewModel
         }
         
         // Only return something if this is during the study burst or there is a task that chases you.
@@ -343,11 +343,11 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
                     return step
                 }
                 else {
-                    return self.configuration.taskStep(for: activityReference.identifier)
+                    return RSDTaskInfoStepObject(with: activityReference)
                 }
             }
-            else if let identifier = (schedule as? RSDIdentifier)?.identifier {
-                return self.configuration.taskStep(for: identifier)
+            else if let identifier = (schedule as? RSDIdentifier)?.identifier ?? (schedule as? String) {
+                return RSDTaskInfoStepObject(with: RSDTaskInfoObject(with: identifier))
             }
             else {
                 return nil
@@ -356,7 +356,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         
         // Add the steps for past tasks that weren't completed and today's tasks.
         var steps: [RSDStep] = pastSurveys.compactMap {
-            return self.configuration.taskStep(for: $0.stringValue)
+            return step(schedule: $0)
         }
         
         // Add the tasks from today's schedule.
@@ -380,17 +380,17 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
             task.shouldHideActions = [.navigation(.cancel)]
         }
         
-        let path = self.instantiateTaskPath(for: task)
-        return path.taskPath
+        let path = self.instantiateTaskViewModel(for: task)
+        return path.taskViewModel
     }
     
-    func motivationTaskPath() -> RSDTaskPath? {
+    func motivationTaskViewModel() -> RSDTaskViewModel? {
         guard !self.hasCompletedMotivationSurvey,
-            let transformer = self.configuration.instantiateTaskTransformer(for: self.studyBurst.motivationIdentifier.moduleIdentifier) as? SBASurveyLoader
+            let survey = self.configuration.survey(for: self.studyBurst.motivationIdentifier.moduleIdentifier.stringValue)
             else {
                 return nil
         }
-        return self.instantiateTaskPath(for: transformer.surveyReference as RSDTaskInfo).taskPath
+        return self.instantiateTaskViewModel(for: survey).taskViewModel
     }
     
     func getTodayCompletionSchedules() -> [Any] {
@@ -485,16 +485,16 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         super.didUpdateScheduledActivities(from: previousActivities)
     }
     
-    override func taskController(_ taskController: RSDTaskController, readyToSave taskPath: RSDTaskPath) {
+    override func taskController(_ taskController: RSDTaskController, readyToSave taskViewModel: RSDTaskViewModel) {
         
         // Preload the finished tasks so that the progress will update properly.
-        if let schedule = self.scheduledActivity(for: taskPath.result, scheduleIdentifier: taskPath.scheduleIdentifier),
+        if let schedule = self.scheduledActivity(for: taskViewModel.taskResult, scheduleIdentifier: taskViewModel.scheduleIdentifier),
             let activityIdentifier = schedule.activityIdentifier,
             !self.finishedSchedules.contains(where: { $0.activityIdentifier == activityIdentifier}) {
             
             var schedules = self.finishedSchedules
-            schedule.startedOn = taskPath.result.startDate
-            schedule.finishedOn = taskPath.result.endDate
+            schedule.startedOn = taskViewModel.taskResult.startDate
+            schedule.finishedOn = taskViewModel.taskResult.endDate
             schedules.append(schedule)
             let (filtered, _, finishedOn) = self.filterFinishedSchedules(schedules)
             if filtered.count != self.finishedSchedules.count {
@@ -502,7 +502,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
                 self._expiresOn = finishedOn?.addingTimeInterval(self.expiresLimit)
             }
         }
-        super.taskController(taskController, readyToSave: taskPath)
+        super.taskController(taskController, readyToSave: taskViewModel)
     }
     
     /// Override isCompleted to only return true if the schedule is within the expiration window.

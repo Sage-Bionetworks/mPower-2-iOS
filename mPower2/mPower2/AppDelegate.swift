@@ -194,11 +194,7 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
         showAppropriateViewController(animated: true)
     }
     
-    func taskController(_ taskController: RSDTaskController, readyToSave taskPath: RSDTaskPath) {
-    }
-    
-    func taskController(_ taskController: RSDTaskController, asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController? {
-        return nil
+    func taskController(_ taskController: RSDTaskController, readyToSave taskViewModel: RSDTaskViewModel) {
     }
     
     // MARK: SBBBridgeErrorUIDelegate

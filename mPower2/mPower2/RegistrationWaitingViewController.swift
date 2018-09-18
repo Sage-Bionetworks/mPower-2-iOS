@@ -42,11 +42,13 @@ class RegistrationWaitingViewController: RSDStepViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.phoneLabel.text = (self.taskController as? SignInTaskViewController)?.phoneNumber
+        if let taskController = self.stepViewModel.rootPathComponent.taskController as? SignInTaskViewController {
+            self.phoneLabel.text = taskController.phoneNumber
+        }
     }
     
     @IBAction func didTapChangeMobileButton(_ sender: Any) {
-        guard let taskController = self.taskController as? SignInTaskViewController else { return }
+        guard let taskController = self.stepViewModel.rootPathComponent.taskController as? SignInTaskViewController else { return }
         
         let alertController = UIAlertController(title: "Change phone number", message: "Enter a new phone number.", preferredStyle: .alert)
 
@@ -62,7 +64,7 @@ class RegistrationWaitingViewController: RSDStepViewController {
             self.phoneLabel.text = newNumber
             var phoneResult = taskController.resultForPhoneNumber()
             phoneResult!.value = newNumber
-            taskController.taskPath.appendStepHistory(with: phoneResult!)
+            taskController.taskViewModel.taskResult.appendStepHistory(with: phoneResult!)
             
             taskController.showLoadingView()
             taskController.signUpAndRequestSMSLink { (task, result, error) in

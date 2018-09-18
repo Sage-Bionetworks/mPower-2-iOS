@@ -40,7 +40,7 @@ protocol TaskBrowserViewControllerDelegate {
     func taskBrowserToggleVisibility()
     func taskBrowserTabSelected()
     func taskBrowserDidLayoutSubviews()
-    func taskBrowserDidFinish(task: RSDTaskPath, reason: RSDTaskFinishReason)
+    func taskBrowserDidFinish(task: RSDTaskViewModel, reason: RSDTaskFinishReason)
 }
 
 class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate, TaskBrowserTabViewDelegate {
@@ -132,8 +132,8 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
     }
     
     func startTask(for taskInfo: RSDTaskInfo) {
-        let (taskPath, _) = selectedScheduleManager.instantiateTaskPath(for: taskInfo)
-        let vc = RSDTaskViewController(taskPath: taskPath)
+        let (taskViewModel, _) = selectedScheduleManager.instantiateTaskViewModel(for: taskInfo)
+        let vc = RSDTaskViewController(taskViewModel: taskViewModel)
         vc.delegate = self
         self.present(vc, animated: true, completion: nil)
     }
@@ -152,7 +152,7 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
     open func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
 
         // Inform our delegate that we finished a task
-        self.delegate?.taskBrowserDidFinish(task: taskController.taskPath, reason: reason)
+        self.delegate?.taskBrowserDidFinish(task: taskController.taskViewModel, reason: reason)
 
         // dismiss the view controller
         (taskController as? UIViewController)?.dismiss(animated: true, completion: nil)
@@ -164,12 +164,8 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
         self.collectionView.reloadData()
     }
     
-    func taskController(_ taskController: RSDTaskController, readyToSave taskPath: RSDTaskPath) {
-        selectedScheduleManager.taskController(taskController, readyToSave: taskPath)
-    }
-    
-    func taskController(_ taskController: RSDTaskController, asyncActionControllerFor configuration: RSDAsyncActionConfiguration) -> RSDAsyncActionController? {
-        return selectedScheduleManager.taskController(taskController, asyncActionControllerFor:configuration)
+    func taskController(_ taskController: RSDTaskController, readyToSave taskViewModel: RSDTaskViewModel) {
+        selectedScheduleManager.taskController(taskController, readyToSave: taskViewModel)
     }
 
     // MARK: TaskBrowserTabViewDelegate

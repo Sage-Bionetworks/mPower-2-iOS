@@ -110,8 +110,8 @@ class StudyBurstTests: XCTestCase {
         }
         XCTAssertEqual(demographics.count, 1)
         
-        let completionTask = scheduleManager.engagementTaskPath()
-        XCTAssertNotNil(completionTask, "scheduleManager.engagementTaskPath()")
+        let completionTask = scheduleManager.engagementTaskViewModel()
+        XCTAssertNotNil(completionTask, "scheduleManager.engagementTaskViewModel()")
         
         XCTAssertNil(scheduleManager.actionBarItem, "scheduleManager.actionBarItem")
         
@@ -154,8 +154,8 @@ class StudyBurstTests: XCTestCase {
         }
         XCTAssertEqual(demographics.count, 1)
         
-        let completionTask = scheduleManager.engagementTaskPath()
-        XCTAssertNotNil(completionTask, "scheduleManager.engagementTaskPath()")
+        let completionTask = scheduleManager.engagementTaskViewModel()
+        XCTAssertNotNil(completionTask, "scheduleManager.engagementTaskViewModel()")
         
         if let steps = (completionTask?.task?.stepNavigator as? RSDConditionalStepNavigator)?.steps {
             XCTAssertEqual(steps.count, 2)
@@ -229,7 +229,7 @@ class StudyBurstTests: XCTestCase {
         XCTAssertEqual(scheduleManager.calculateThisDay(), 2)
         XCTAssertNil(scheduleManager.todayCompletionTask)
         
-        let completionTask = scheduleManager.engagementTaskPath()
+        let completionTask = scheduleManager.engagementTaskViewModel()
         XCTAssertNotNil(completionTask)
         
         if let steps = (completionTask?.task?.stepNavigator as? RSDConditionalStepNavigator)?.steps {
@@ -258,7 +258,7 @@ class StudyBurstTests: XCTestCase {
         XCTAssertFalse(scheduleManager.hasStudyBurst)
         XCTAssertTrue(scheduleManager.isCompletedForToday)
         
-        let completionTask = scheduleManager.engagementTaskPath()
+        let completionTask = scheduleManager.engagementTaskViewModel()
         XCTAssertNotNil(completionTask)
         
         if let steps = (completionTask?.task?.stepNavigator as? RSDConditionalStepNavigator)?.steps {
@@ -291,7 +291,7 @@ class StudyBurstTests: XCTestCase {
         XCTAssertTrue(scheduleManager.isCompletedForToday)
         XCTAssertTrue(scheduleManager.isLastDay)
         
-        let completionTask = scheduleManager.engagementTaskPath()
+        let completionTask = scheduleManager.engagementTaskViewModel()
         XCTAssertNotNil(completionTask)
         
         if let steps = (completionTask?.task?.stepNavigator as? RSDConditionalStepNavigator)?.steps {
@@ -324,7 +324,7 @@ class StudyBurstTests: XCTestCase {
         XCTAssertTrue(scheduleManager.isCompletedForToday)
         XCTAssertFalse(scheduleManager.isLastDay)
         
-        let completionTask = scheduleManager.engagementTaskPath()
+        let completionTask = scheduleManager.engagementTaskViewModel()
         XCTAssertNil(completionTask)
     }
     
@@ -347,7 +347,7 @@ class StudyBurstTests: XCTestCase {
         
         XCTAssertNotNil(scheduleManager.todayCompletionTask)
         
-        let completionTask = scheduleManager.engagementTaskPath()
+        let completionTask = scheduleManager.engagementTaskViewModel()
         XCTAssertNotNil(completionTask)
         
         if let steps = (completionTask?.task?.stepNavigator as? RSDConditionalStepNavigator)?.steps {
@@ -376,7 +376,7 @@ class StudyBurstTests: XCTestCase {
         XCTAssertFalse(scheduleManager.hasStudyBurst)
         XCTAssertTrue(scheduleManager.isCompletedForToday)
         
-        let completionTask = scheduleManager.engagementTaskPath()
+        let completionTask = scheduleManager.engagementTaskViewModel()
         XCTAssertNotNil(completionTask)
         
         if let steps = (completionTask?.task?.stepNavigator as? RSDConditionalStepNavigator)?.steps {
@@ -408,7 +408,7 @@ class StudyBurstTests: XCTestCase {
         XCTAssertTrue(scheduleManager.isCompletedForToday)
         XCTAssertFalse(scheduleManager.isLastDay)
         
-        let completionTask = scheduleManager.engagementTaskPath()
+        let completionTask = scheduleManager.engagementTaskViewModel()
         XCTAssertNotNil(completionTask)
         
         if let steps = (completionTask?.task?.stepNavigator as? RSDConditionalStepNavigator)?.steps {
@@ -440,7 +440,7 @@ class StudyBurstTests: XCTestCase {
         XCTAssertTrue(scheduleManager.isCompletedForToday)
         XCTAssertFalse(scheduleManager.isLastDay)
         
-        let completionTask = scheduleManager.engagementTaskPath()
+        let completionTask = scheduleManager.engagementTaskViewModel()
         XCTAssertNil(completionTask)
         
         XCTAssertNil(scheduleManager.actionBarItem)
@@ -829,7 +829,7 @@ class TestStudyBurstScheduleManager : StudyBurstScheduleManager {
     var updateFailed_error: Error?
     var update_fetchedActivities:[SBBScheduledActivity]?
     var sendUpdated_schedules: [SBBScheduledActivity]?
-    var sendUpdated_taskPath: RSDTaskPath?
+    var sendUpdated_taskPath: RSDTaskViewModel?
     
     var finishedFetchingReportsBlock: (() -> Void)?
     

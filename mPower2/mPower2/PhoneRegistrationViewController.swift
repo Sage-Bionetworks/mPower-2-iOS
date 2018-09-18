@@ -59,7 +59,7 @@ class PhoneRegistrationViewController: RSDTableStepViewController {
                 return
         }
         
-        guard let taskController = self.taskController as? SignInTaskViewController,
+        guard let taskController = self.stepViewModel.rootPathComponent.taskController as? SignInTaskViewController,
                 let phoneNumber = taskController.phoneNumber
             else {
                 return

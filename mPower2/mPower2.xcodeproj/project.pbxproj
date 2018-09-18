@@ -72,7 +72,6 @@
 		B53FD159207EBCFC00FBCC85 /* MCTTapButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53FD158207EBCFC00FBCC85 /* MCTTapButton.swift */; };
 		B5581F0A20754A7D00F224C6 /* Tremor.json in Resources */ = {isa = PBXBuildFile; fileRef = B5581EF420754A7D00F224C6 /* Tremor.json */; };
 		B56E4D0620781A640009C489 /* NavigationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56E4D0520781A640009C489 /* NavigationTests.swift */; };
-		B56E4D0820781AB50009C489 /* NavigationTestObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56E4D0720781AB50009C489 /* NavigationTestObjects.swift */; };
 		B56E4D0A207BCA110009C489 /* MCTInstructionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56E4D09207BCA110009C489 /* MCTInstructionStepObject.swift */; };
 		B587ABE2206C57DB00542548 /* ActiveTaskSteps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B587ABE1206C57DB00542548 /* ActiveTaskSteps.storyboard */; };
 		B587AC08206D696800542548 /* UIView+mPowerTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B587AC07206D696800542548 /* UIView+mPowerTheme.swift */; };
@@ -127,7 +126,6 @@
 		F85020E2211B970C0094E05F /* ActivityTracking.json in Resources */ = {isa = PBXBuildFile; fileRef = F85020DF211B970C0094E05F /* ActivityTracking.json */; };
 		F85020F8211BA8550094E05F /* TaskGroupScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85020F7211BA8550094E05F /* TaskGroupScheduleManager.swift */; };
 		F85020F9211BA8550094E05F /* TaskGroupScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85020F7211BA8550094E05F /* TaskGroupScheduleManager.swift */; };
-		F854590E208F986D00D37243 /* NSLocale+UnitTest.h in Headers */ = {isa = PBXBuildFile; fileRef = F854590D208F986D00D37243 /* NSLocale+UnitTest.h */; };
 		F854598A208FA43700D37243 /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7DE2062F28F00CD351C /* ResearchUI.framework */; };
 		F854598B208FA43700D37243 /* ResearchUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7DE2062F28F00CD351C /* ResearchUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F854598F208FA43D00D37243 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7CD2062F28500CD351C /* Research.framework */; };
@@ -149,7 +147,6 @@
 		F884198F207EB4E400028A2B /* TappingSectionStep.json in Resources */ = {isa = PBXBuildFile; fileRef = F8841979207EB4E400028A2B /* TappingSectionStep.json */; };
 		F8841993207EB77000028A2B /* TremorSectionStep.json in Resources */ = {isa = PBXBuildFile; fileRef = F8841992207EB77000028A2B /* TremorSectionStep.json */; };
 		F88419B5207EC14400028A2B /* ResourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88419B4207EC14400028A2B /* ResourceTests.swift */; };
-		F88419CF207EC22B00028A2B /* NSLocale+UnitTest.m in Sources */ = {isa = PBXBuildFile; fileRef = F88419CE207EC22B00028A2B /* NSLocale+UnitTest.m */; };
 		F88E8DFB20ADEE2600117A99 /* ExternalIDRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608241F12093D9F70026E843 /* ExternalIDRegistrationViewController.swift */; };
 		F88E8DFC20ADEE2600117A99 /* PhoneRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603B7BC220913B1A00794B7C /* PhoneRegistrationViewController.swift */; };
 		F88E8DFD20ADEE2600117A99 /* RegistrationIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608241DA2093D9A90026E843 /* RegistrationIntroViewController.swift */; };
@@ -162,6 +159,7 @@
 		F88E8E0920ADEE6000117A99 /* mPower2.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03C9DD0B20A4F956007074EE /* mPower2.strings */; };
 		F88E8E0A20ADEE6C00117A99 /* BridgeInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E7F62063039200CD351C /* BridgeInfo.plist */; };
 		F89B3DA920C60F8B002EAE2D /* TodayScheduleManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89B3DA820C60F8B002EAE2D /* TodayScheduleManagerTests.swift */; };
+		F8AA3E46214873C0006612F8 /* Research_UnitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5D56CC8208131770080AE38 /* Research_UnitTest.framework */; };
 		F8C58DB120AF4823001C7B7F /* TodayScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C58DB020AF4823001C7B7F /* TodayScheduleManager.swift */; };
 		F8C58DB220AF4823001C7B7F /* TodayScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C58DB020AF4823001C7B7F /* TodayScheduleManager.swift */; };
 		F8C58DCA20AF5E86001C7B7F /* StudyBurstScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C58DC920AF5E86001C7B7F /* StudyBurstScheduleManager.swift */; };
@@ -187,7 +185,6 @@
 		F8D3E8022063055500CD351C /* sage-mpower-2.pem in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E8002063055500CD351C /* sage-mpower-2.pem */; };
 		F8D3E8032063055500CD351C /* BridgeInfo-private.plist in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E8012063055500CD351C /* BridgeInfo-private.plist */; };
 		F8D3E8362063072200CD351C /* MotorControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E82D2063072100CD351C /* MotorControl.framework */; };
-		F8D3E83D2063072200CD351C /* MotorControlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8D3E83C2063072200CD351C /* MotorControlTests.swift */; };
 		F8D3E83F2063072200CD351C /* MotorControl.h in Headers */ = {isa = PBXBuildFile; fileRef = F8D3E82F2063072100CD351C /* MotorControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F8D3E8422063072200CD351C /* MotorControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E82D2063072100CD351C /* MotorControl.framework */; };
 		F8D3E8432063072200CD351C /* MotorControl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E82D2063072100CD351C /* MotorControl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -277,6 +274,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = F8D3E82C2063072100CD351C;
 			remoteInfo = MotorControl;
+		};
+		F8AA3E4121487380006612F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F8D3E7C32062F28500CD351C /* Research.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F8BE123521370931000AAB1E;
+			remoteInfo = "Research (macOS)";
 		};
 		F8D3E7A62062F26D00CD351C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -498,7 +502,6 @@
 		B53FD158207EBCFC00FBCC85 /* MCTTapButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTTapButton.swift; sourceTree = "<group>"; };
 		B5581EF420754A7D00F224C6 /* Tremor.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Tremor.json; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.javascript; };
 		B56E4D0520781A640009C489 /* NavigationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTests.swift; sourceTree = "<group>"; };
-		B56E4D0720781AB50009C489 /* NavigationTestObjects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationTestObjects.swift; sourceTree = "<group>"; };
 		B56E4D09207BCA110009C489 /* MCTInstructionStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTInstructionStepObject.swift; sourceTree = "<group>"; };
 		B587ABE1206C57DB00542548 /* ActiveTaskSteps.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ActiveTaskSteps.storyboard; sourceTree = "<group>"; };
 		B587AC07206D696800542548 /* UIView+mPowerTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+mPowerTheme.swift"; sourceTree = "<group>"; };
@@ -539,7 +542,6 @@
 		F85020DD211B96C40094E05F /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = Base; path = Base.lproj/SignIn.json; sourceTree = "<group>"; };
 		F85020E0211B970C0094E05F /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = Base; path = Base.lproj/ActivityTracking.json; sourceTree = "<group>"; };
 		F85020F7211BA8550094E05F /* TaskGroupScheduleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskGroupScheduleManager.swift; sourceTree = "<group>"; };
-		F854590D208F986D00D37243 /* NSLocale+UnitTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLocale+UnitTest.h"; sourceTree = "<group>"; };
 		F8545974208FA2ED00D37243 /* mPower2TestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mPower2TestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8545982208FA2EE00D37243 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F854599F208FA58800D37243 /* ResourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceTests.swift; sourceTree = "<group>"; };
@@ -549,7 +551,6 @@
 		F8841992207EB77000028A2B /* TremorSectionStep.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TremorSectionStep.json; sourceTree = "<group>"; };
 		F88419B4207EC14400028A2B /* ResourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceTests.swift; sourceTree = "<group>"; };
 		F88419CC207EC22A00028A2B /* MotorControlTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MotorControlTests-Bridging-Header.h"; sourceTree = "<group>"; };
-		F88419CE207EC22B00028A2B /* NSLocale+UnitTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLocale+UnitTest.m"; sourceTree = "<group>"; };
 		F89B3DA820C60F8B002EAE2D /* TodayScheduleManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayScheduleManagerTests.swift; sourceTree = "<group>"; };
 		F8C58DB020AF4823001C7B7F /* TodayScheduleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayScheduleManager.swift; sourceTree = "<group>"; };
 		F8C58DC920AF5E86001C7B7F /* StudyBurstScheduleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyBurstScheduleManager.swift; sourceTree = "<group>"; };
@@ -576,7 +577,6 @@
 		F8D3E82F2063072100CD351C /* MotorControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MotorControl.h; sourceTree = "<group>"; };
 		F8D3E8302063072100CD351C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F8D3E8352063072200CD351C /* MotorControlTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MotorControlTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F8D3E83C2063072200CD351C /* MotorControlTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotorControlTests.swift; sourceTree = "<group>"; };
 		F8D3E83E2063072200CD351C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -633,6 +633,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F8AA3E46214873C0006612F8 /* Research_UnitTest.framework in Frameworks */,
 				F8D3E8362063072200CD351C /* MotorControl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -860,15 +861,6 @@
 			path = mPower2TestApp;
 			sourceTree = "<group>";
 		};
-		F88419CB207EC15800028A2B /* Mock Objects */ = {
-			isa = PBXGroup;
-			children = (
-				F854590D208F986D00D37243 /* NSLocale+UnitTest.h */,
-				F88419CE207EC22B00028A2B /* NSLocale+UnitTest.m */,
-			);
-			path = "Mock Objects";
-			sourceTree = "<group>";
-		};
 		F8D3E76D2062F1B900CD351C = {
 			isa = PBXGroup;
 			children = (
@@ -962,7 +954,7 @@
 				F8D3E7CD2062F28500CD351C /* Research.framework */,
 				F8D3E7D12062F28500CD351C /* Research.framework */,
 				F8D3E7D32062F28500CD351C /* Research.framework */,
-				801E8EC8214896EF00AF6701 /* Research.framework */,
+				F8AA3E4221487380006612F8 /* Research.framework */,
 				F8D3E7CF2062F28500CD351C /* ResearchTests_iOS.xctest */,
 				B5D56CC8208131770080AE38 /* Research_UnitTest.framework */,
 			);
@@ -1012,9 +1004,6 @@
 			isa = PBXGroup;
 			children = (
 				F88419CC207EC22A00028A2B /* MotorControlTests-Bridging-Header.h */,
-				F88419CB207EC15800028A2B /* Mock Objects */,
-				F8D3E83C2063072200CD351C /* MotorControlTests.swift */,
-				B56E4D0720781AB50009C489 /* NavigationTestObjects.swift */,
 				B56E4D0520781A640009C489 /* NavigationTests.swift */,
 				F88419B4207EC14400028A2B /* ResourceTests.swift */,
 				F8D3E83E2063072200CD351C /* Info.plist */,
@@ -1030,7 +1019,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F8D3E83F2063072200CD351C /* MotorControl.h in Headers */,
-				F854590E208F986D00D37243 /* NSLocale+UnitTest.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1277,6 +1265,13 @@
 			fileType = wrapper.framework;
 			path = BridgeSDK_Test.framework;
 			remoteRef = F81BE7B420B4AA7C00EE57D3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F8AA3E4221487380006612F8 /* Research.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Research.framework;
+			remoteRef = F8AA3E4121487380006612F8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		F8D3E7A72062F26D00CD351C /* BridgeApp.framework */ = {
@@ -1632,11 +1627,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F8D3E83D2063072200CD351C /* MotorControlTests.swift in Sources */,
 				F88419B5207EC14400028A2B /* ResourceTests.swift in Sources */,
-				F88419CF207EC22B00028A2B /* NSLocale+UnitTest.m in Sources */,
 				B56E4D0620781A640009C489 /* NavigationTests.swift in Sources */,
-				B56E4D0820781AB50009C489 /* NavigationTestObjects.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
