@@ -35,7 +35,7 @@ import UIKit
 import ResearchUI
 import Research
 
-class RegistrationIntroViewController: RSDStepViewController {
+class RegistrationStepViewModel: RSDStepViewModel {
 
     override func shouldHideAction(for actionType: RSDUIActionType) -> Bool {
         #if !DEBUG
@@ -45,5 +45,17 @@ class RegistrationIntroViewController: RSDStepViewController {
         #endif
         return super.shouldHideAction(for: actionType)
     }
+}
 
+class RegistrationIntroViewController: RSDStepViewController {
+    
+    override var stepViewModel: RSDStepViewPathComponent! {
+        get {
+            return _stepViewModel
+        }
+        set {
+            _stepViewModel = RegistrationStepViewModel(step: newValue.step, parent: newValue.parent)
+        }
+    }
+    var _stepViewModel: RegistrationStepViewModel!
 }
