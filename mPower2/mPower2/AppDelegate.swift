@@ -49,7 +49,7 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
         return MP2BridgeConfiguration()
     }
     
-    override func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]?) -> Bool {
+    override func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]?) -> Bool {
         SBASurveyConfiguration.shared = MP2SurveyConfiguration()
         
         // Instantiate and load the scheduled activities and reports for the study burst.
@@ -85,7 +85,7 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
         self.showAppropriateViewController(animated: true)
     }
     
-    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         let components = url.pathComponents
         guard components.count >= 2,
             components[1] == BridgeSDK.bridgeInfo.studyIdentifier

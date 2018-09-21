@@ -40,8 +40,8 @@ import BridgeSDK_Test
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    final class var shared: AppDelegate? {
-        return UIApplication.shared.delegate as? AppDelegate
+    final class var shared: UIApplicationDelegate? {
+        return UIApplication.shared.delegate
     }
 
     weak var smsSignInDelegate: SignInDelegate? = nil
@@ -52,7 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         
         // Set up localization.
         let mainBundle = LocalizationBundle(bundle: Bundle.main, tableName: "mPower2")

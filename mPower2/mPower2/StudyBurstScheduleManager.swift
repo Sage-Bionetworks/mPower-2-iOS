@@ -281,8 +281,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         }
         else {
             // Otherwise, shuffle the tasks and store order of the the task identifiers.
-            var shuffledTasks = tasks
-            shuffledTasks.shuffle()
+            let shuffledTasks = tasks.shuffled()
             let sortOrder = shuffledTasks.map { $0.identifier }
             _shuffleTimestamp = today()
             _orderedTasks = shuffledTasks
@@ -853,7 +852,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         let content = UNMutableNotificationContent()
         // TODO: syoung 07/19/2018 Figure out what the wording of the notification should be.
         content.body = "Time to do your mPower Study Burst activities!"
-        content.sound = UNNotificationSound.default()
+        content.sound = UNNotificationSound.default
         content.badge = UIApplication.shared.applicationIconBadgeNumber + 1 as NSNumber;
         content.categoryIdentifier = self.notificationCategory
         content.threadIdentifier = schedule.activity.guid
@@ -892,23 +891,5 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
                 UNUserNotificationCenter.current().add($0)
             }
         }
-    }
-}
-
-extension Array {
-    
-    mutating public func shuffle() {
-        var last = self.count - 1
-        while last > 0 {
-            let rand = Int(arc4random_uniform(UInt32(last)))
-            self.swapAt(last, rand)
-            last -= 1
-        }
-    }
-    
-    public func randomElement() -> Element? {
-        guard self.count > 1 else { return self.first }
-        let rand = Int(arc4random_uniform(UInt32(self.count)))
-        return self[rand]
     }
 }

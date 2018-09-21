@@ -245,8 +245,8 @@ class ProfileTableViewController: UITableViewController {
         let message = String.localizedStringWithFormat(format, Localization.localizedAppName)
         presentAlertWithYesNo(title: title, message: message, actionHandler: { (yes) in
             guard yes else { return }
-            if let appSettings = URL(string: UIApplicationOpenSettingsURLString) {
-                UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
+            if let appSettings = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(appSettings, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
             }
         })
     }
@@ -336,4 +336,9 @@ class ProfileTableViewController: UITableViewController {
     func scheduleUpdated() {
         self.tableView.reloadData()
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }
