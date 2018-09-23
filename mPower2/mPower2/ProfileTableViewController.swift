@@ -144,13 +144,18 @@ class ProfileTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        guard let item = itemForRow(at: indexPath) else { return }
+        guard let item = itemForRow(at: indexPath),
+                let onSelected = item.onSelected
+            else {
+                return
+        }
         
-        switch item.onSelected {
+        switch onSelected {
         case SBAProfileOnSelectedAction.showHTML:
             guard let htmlItem = itemForRow(at: indexPath) as? SBAHTMLProfileTableItem else { break }
             self.performSegue(withIdentifier: ProfileTableViewController.webViewControllerSegue, sender: htmlItem)
 
+            /* TODO: emm 2018-09-23 deal with this for v2.1
         case SBAProfileOnSelectedAction.showResource:
             guard let resourceItem = itemForRow(at: indexPath) as? SBAResourceProfileTableItem else { break }
             switch resourceItem.resource {
@@ -161,6 +166,7 @@ class ProfileTableViewController: UITableViewController {
                 // TODO: emm 2017-06-06 implement
                 break
             }
+             */
 
         case SBAProfileOnSelectedAction.showWithdrawal:
             self.performSegue(withIdentifier: ProfileTableViewController.withdrawalViewControllerSegue, sender: self)
@@ -254,7 +260,7 @@ class ProfileTableViewController: UITableViewController {
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         guard let tableItem = itemForRow(at: indexPath) else { return false }
-        return tableItem.isEditable
+        return tableItem.isEditable ?? false
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -103,18 +103,34 @@ class DownloadDataProfileTableItem: SBAProfileTableItemBase {
 }
  */
 
-class StudyParticipationProfileTableItem: SBAProfileTableItemBase {
-    /// Override to return .showWithdrawal as the default onSelected action.
-    override open func defaultOnSelectedAction() -> SBAProfileOnSelectedAction {
-        return .showWithdrawal
-    }
-
-    override open var detail: String {
+struct StudyParticipationProfileTableItem: SBAProfileTableItem, Decodable {
+    
+    /// The title text to show for the item.
+    var title: String?
+    
+    /// For the detail text, show their current participation status.
+    var detail: String? {
         get {
             let enrolled = SBAParticipantManager.shared.isConsented
             let key = enrolled ? "PARTICIPATION_ENROLLED_%@" : "PARTICIPATION_REJOIN_%@"
             let format = Localization.localizedString(key)
             return String.localizedStringWithFormat(format, Localization.localizedAppName)
         }
+    }
+    
+    /// The StudyParticipationProfileTableItem is not editable.
+    var isEditable: Bool? {
+        return false
+    }
+    
+    /// A set of cohorts (data groups) the participant must be in, in order to show this item in its containing profile section.
+    var inCohorts: Set<String>?
+    
+    /// A set of cohorts (data groups) the participant must **not** be in, in order to show this item in its containing profile section.
+    var notInCohorts: Set<String>?
+    
+    /// The action when this item is selected is to show the participation/withdrawal screen.
+    var onSelected: SBAProfileOnSelectedAction? {
+        return .showWithdrawal
     }
 }

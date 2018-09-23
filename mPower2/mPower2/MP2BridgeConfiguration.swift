@@ -51,14 +51,4 @@ class MP2BridgeConfiguration : SBABridgeConfiguration {
             }
         }
     }
-    
-    /// Support the MP2ProfileDataSource subclass
-    override open func profileDataSourceClass(from type: SBAProfileDataSourceType) -> Decodable.Type? {
-        switch type.rawValue {
-        case "mp2ProfileDatasource":
-            return MP2ProfileDataSource.self
-        default:
-            return super.profileDataSourceClass(from: type)
-        }
-    }
 }
