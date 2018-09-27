@@ -54,4 +54,9 @@ class MP2Factory : SBAFactory {
             return try super.decodeStep(from: decoder, with: type)
         }
     }
+    
+    override func decodeProfileDataSource(from decoder: Decoder) throws -> SBAProfileDataSource {
+        return try MP2ProfileDataSource(from: decoder)
+    }
+
 }
