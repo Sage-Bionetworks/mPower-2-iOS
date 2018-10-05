@@ -110,15 +110,15 @@ class PassiveDisplacementCollector : NSObject, PassiveCollector, CLLocationManag
     /// Check location authorization status, and request permission if not yet determined.
     private func setupLocationManager() throws {
         // If it's already set up, just return
-        guard locationManager == nil else { return }
+        guard self.locationManager == nil else { return }
         
         // Create a location manager instance and set ourselves as the delegate. We do this here so
         // even if authorization is currently not adequate for our needs, if that changes we'll get
         // a callback letting us know, and we can start monitoring then.
-        locationManager = CLLocationManager()
-        locationManager!.delegate = self
-        locationManager!.allowsBackgroundLocationUpdates = true
-        locationManager!.pausesLocationUpdatesAutomatically = false
+        self.locationManager = CLLocationManager()
+        self.locationManager!.delegate = self
+        self.locationManager!.allowsBackgroundLocationUpdates = true
+        self.locationManager!.pausesLocationUpdatesAutomatically = false
         
         func authorizationError(for status: CLAuthorizationStatus) -> Error {
             let rsd_status: RSDAuthorizationStatus = (status == .restricted) ? .restricted : .denied
@@ -139,7 +139,7 @@ class PassiveDisplacementCollector : NSObject, PassiveCollector, CLLocationManag
         guard status == .notDetermined else { return }
 
         // Authorization had not yet been given or denied, so we need to do that now and check again.
-        locationManager!.requestAlwaysAuthorization()
+        self.locationManager!.requestAlwaysAuthorization()
         
         let newStatus = CLLocationManager.authorizationStatus()
         if newStatus != .authorizedAlways {
@@ -170,10 +170,9 @@ class PassiveDisplacementCollector : NSObject, PassiveCollector, CLLocationManag
     /// Stop the passive displacement collector.
     /// - parameter discarding: Ignored by this collector; it gets data infrequently enough to just upload as it goes.
     func stop(discarding: Bool) {
-        // if there's no locationManager, there's nothing to do
-        guard locationManager != nil else { return }
-        
-        self.locationManager!.stopMonitoringSignificantLocationChanges()
+        DispatchQueue.main.async {
+            self.locationManager?.stopMonitoringSignificantLocationChanges()
+        }
     }
     
     /// Given a current and previous location reading, generate a displacement data point.
