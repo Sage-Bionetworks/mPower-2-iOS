@@ -43,6 +43,8 @@
 		60E94123212B8FD70027432C /* ProfileTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60E94116212B8FD70027432C /* ProfileTableHeaderView.xib */; };
 		60E94124212B8FD70027432C /* ProfileTableFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E94117212B8FD70027432C /* ProfileTableFooterView.swift */; };
 		60E94125212B8FD70027432C /* ProfileTableFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E94117212B8FD70027432C /* ProfileTableFooterView.swift */; };
+		60EFE15B215AE89B00D1D1C5 /* PassiveCollectors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60EFE15A215AE89B00D1D1C5 /* PassiveCollectors.swift */; };
+		60EFE15C215AE89B00D1D1C5 /* PassiveCollectors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60EFE15A215AE89B00D1D1C5 /* PassiveCollectors.swift */; };
 		60F45524209CF10100C532A0 /* SignInTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F45523209CF10100C532A0 /* SignInTaskViewController.swift */; };
 		60FB513B212DEB3B00D50F4D /* MP2ProfileSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60FB513A212DEB3B00D50F4D /* MP2ProfileSection.swift */; };
 		60FB513C212DEB3B00D50F4D /* MP2ProfileSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60FB513A212DEB3B00D50F4D /* MP2ProfileSection.swift */; };
@@ -474,6 +476,7 @@
 		60E94114212B8FD60027432C /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		60E94116212B8FD70027432C /* ProfileTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileTableHeaderView.xib; sourceTree = "<group>"; };
 		60E94117212B8FD70027432C /* ProfileTableFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableFooterView.swift; sourceTree = "<group>"; };
+		60EFE15A215AE89B00D1D1C5 /* PassiveCollectors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassiveCollectors.swift; sourceTree = "<group>"; };
 		60F45523209CF10100C532A0 /* SignInTaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInTaskViewController.swift; sourceTree = "<group>"; };
 		60FB513A212DEB3B00D50F4D /* MP2ProfileSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MP2ProfileSection.swift; sourceTree = "<group>"; };
 		60FB513D212DED6F00D50F4D /* MP2ProfileDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MP2ProfileDataSource.swift; sourceTree = "<group>"; };
@@ -885,6 +888,7 @@
 			isa = PBXGroup;
 			children = (
 				F8D3E7792062F1B900CD351C /* AppDelegate.swift */,
+				60EFE15A215AE89B00D1D1C5 /* PassiveCollectors.swift */,
 				60FB5124212DEAD600D50F4D /* Profile */,
 				CB5E1705210946E200AEE6A6 /* Model */,
 				F8078F4120ADF9A000757F42 /* Schedule Management */,
@@ -1523,6 +1527,7 @@
 				60FB513F212DED6F00D50F4D /* MP2ProfileDataSource.swift in Sources */,
 				F832AC3620DA22DA005A9025 /* MP2BridgeConfiguration.swift in Sources */,
 				60FB513C212DEB3B00D50F4D /* MP2ProfileSection.swift in Sources */,
+				60EFE15C215AE89B00D1D1C5 /* PassiveCollectors.swift in Sources */,
 				F88E8DFB20ADEE2600117A99 /* ExternalIDRegistrationViewController.swift in Sources */,
 				80A0BE4921095E4F00D31B68 /* TrackedItemsIntroductionStepViewController.swift in Sources */,
 				03DD008420E2F9A4006A5794 /* ReminderTableStepViewController.swift in Sources */,
@@ -1569,6 +1574,7 @@
 				F8078F4320ADFA6A00757F42 /* DataSourceManager.swift in Sources */,
 				603B7BC320913B1A00794B7C /* PhoneRegistrationViewController.swift in Sources */,
 				F8502064211A4E8F0094E05F /* MP2SurveyConfiguration.swift in Sources */,
+				60EFE15B215AE89B00D1D1C5 /* PassiveCollectors.swift in Sources */,
 				CB5E16EF210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift in Sources */,
 				03A6E0022103E69900FC5A84 /* GreatJobViewController.swift in Sources */,
 				6076F2CB20A6680B00F6235E /* ConsentViewController.swift in Sources */,

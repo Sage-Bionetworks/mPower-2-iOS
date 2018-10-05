@@ -65,6 +65,9 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
         SBAMedicationReminderManager.shared.setupNotifications()
         UNUserNotificationCenter.current().delegate = SBAMedicationReminderManager.shared
 
+        // Start passive data collectors
+        PassiveDisplacementCollector.shared.start()
+        
         return super.application(application, willFinishLaunchingWithOptions: launchOptions)
     }
     
