@@ -148,7 +148,7 @@ class PassiveDisplacementCollector : NSObject, PassiveCollector, CLLocationManag
         }
     }
 
-    /// Start the passive mobility collector.
+    /// Start the passive displacement collector.
     func start() {
         // ...if we can.
         guard CLLocationManager.significantLocationChangeMonitoringAvailable() else { return }
@@ -167,15 +167,11 @@ class PassiveDisplacementCollector : NSObject, PassiveCollector, CLLocationManag
         }
     }
     
-    /// Stop the passive mobility collector.
-    /// - parameter discarding: true if pending mobility data since the last upload should be discarded, false if it should be uploaded.
+    /// Stop the passive displacement collector.
+    /// - parameter discarding: Ignored by this collector; it gets data infrequently enough to just upload as it goes.
     func stop(discarding: Bool) {
         // if there's no locationManager, there's nothing to do
         guard locationManager != nil else { return }
-        
-        if !discarding {
-            // TODO: emm 2018-10-02 check if there's data and upload it
-        }
         
         self.locationManager!.stopMonitoringSignificantLocationChanges()
     }
