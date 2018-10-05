@@ -152,14 +152,14 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
         return true
     }
     
-    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         guard let url = userActivity.webpageURL else {
             debugPrint("Unrecognized userActivity passed to app delegate:\(String(describing: userActivity))")
             return false
         }
         return self.application(application, open: url)
     }
-
+    
     func showMainViewController(animated: Bool) {
         guard self.rootViewController?.state != .main else { return }
         guard let storyboard = openStoryboard("Main"),
