@@ -78,7 +78,10 @@ class PassiveDisplacementCollector : NSObject, PassiveCollector, CLLocationManag
     /// The CLLocationManager instance associated with this collector instance.
     var locationManager: CLLocationManager? = nil
     
-    /// The last known location (stored in UserDefaults)
+    /// Should we only collect relative distance and bearing (no actual latitude/longitude coordinates)? Defaults to true.
+    var relativeDistanceOnly: Bool = true
+    
+    /// The last known location (stored in UserDefaults).
     var previousLocation: CLLocation? {
         get {
             guard let lastLocDict = UserDefaults.standard.dictionary(forKey: kLastLocationKey) else { return nil }
@@ -175,43 +178,17 @@ class PassiveDisplacementCollector : NSObject, PassiveCollector, CLLocationManag
         }
     }
     
-    /// Given a current and previous location reading, generate a displacement data point.
-    func displacementData(for location: CLLocation, previousLocation: CLLocation) -> [String: RSDJSONValue] {
-        let timestamp = (location.timestamp as NSDate).iso8601String()!
-        let distance = location.distance(from: previousLocation)
-        let bearing = previousLocation.bearingInRadians(to: location)
-        let speed = (location.speed >= 0) ? location.speed : nil
-        let floor = location.floor?.level
-        let altitude = (location.verticalAccuracy >= 0) ? location.altitude : nil
-        let horizontalAccuracy = location.horizontalAccuracy
-        let verticalAccuracy = (location.verticalAccuracy >= 0) ? location.verticalAccuracy : nil
-        
-        // initialize dataPoint dict with the non-optional values
-        var dataPoint: [String: RSDJSONValue] = [
-            kTimestampKey: timestamp,
-            kDistanceKey: distance,
-            kBearingKey: bearing,
-            kHorizontalAccuracyKey: horizontalAccuracy
-        ]
-        
-        // now set the optional ones that are not nil
-        dataPoint[kSpeedKey] = speed
-        dataPoint[kFloorKey] = floor
-        dataPoint[kAltitudeKey] = altitude
-        dataPoint[kVerticalAccuracyKey] = verticalAccuracy
-        
-        return dataPoint
-    }
-    
-    func uploadDisplacement(_ displacementData: [String: RSDJSONValue]) {
+    /// Upload a PassiveDisplacementRecord
+    func uploadDisplacement(_ displacementData: RSDDistanceRecord) {
         let archiveFilename = kPassiveDisplacementArchiveFilename
         let archive = SBBDataArchive(reference: schemaIdentifier, jsonValidationMapping: nil)
         if let schemaRevision = MP2BridgeConfiguration.shared.schemaInfo(for: schemaIdentifier)?.schemaVersion {
             archive.setArchiveInfoObject(schemaRevision, forKey: kSchemaRevisionKey)
         }
-        archive.insertDictionary(intoArchive: displacementData, filename: archiveFilename, createdOn: Date())
         
         do {
+            let data = try displacementData.rsd_jsonEncodedData()
+            archive.insertData(intoArchive: data, filename: archiveFilename, createdOn: Date())
             try archive.complete()
             archive.encryptAndUploadArchive()
         }
@@ -234,7 +211,13 @@ class PassiveDisplacementCollector : NSObject, PassiveCollector, CLLocationManag
         let validLocations = locations.filter({$0.horizontalAccuracy >= 0.0})
         for location in validLocations {
             if let lastLocation = previousLocation {
-                let dataPoint = displacementData(for: location, previousLocation: lastLocation)
+                let dataPoint = RSDDistanceRecord(uptime: ProcessInfo.processInfo.systemUptime,
+                                                  timestamp: 0,
+                                                  stepPath: "Passive",
+                                                  location: location,
+                                                  previousLocation: lastLocation,
+                                                  totalDistance: nil,
+                                                  relativeDistanceOnly: self.relativeDistanceOnly)
                 uploadDisplacement(dataPoint)
             }
             previousLocation = location
@@ -262,29 +245,5 @@ class PassiveGaitCollector : PassiveCollector {
     /// - parameter discarding: true if pending gait data since the last upload should be discarded, false if it should be uploaded.
     func stop(discarding: Bool) {
         
-    }
-}
-
-
-extension CLLocation {
-    static func toRadians(from degrees: CLLocationDegrees) -> Double {
-        return (degrees / 180.0) * .pi
-    }
-    
-    static func toDegrees(from radians: Double) -> CLLocationDegrees {
-        return (radians / .pi) * 180.0
-    }
-    
-    func bearingInRadians(to endLocation: CLLocation) -> Double {
-        // https://www.igismap.com/formula-to-find-bearing-or-heading-angle-between-two-points-latitude-longitude/
-        let theta_a = CLLocation.toRadians(from: self.coordinate.latitude)
-        let La = CLLocation.toRadians(from: self.coordinate.longitude)
-        let theta_b = CLLocation.toRadians(from: endLocation.coordinate.latitude)
-        let Lb = CLLocation.toRadians(from: endLocation.coordinate.longitude)
-        let delta_L = Lb - La
-        let X = cos(theta_b) * sin(delta_L)
-        let Y = cos(theta_a) * sin(theta_b) - sin(theta_a) * cos(theta_b) * cos(delta_L)
-        
-        return atan2(X, Y)
     }
 }
