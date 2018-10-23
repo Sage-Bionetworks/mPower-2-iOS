@@ -617,6 +617,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         var taskSchedules = [SBBScheduledActivity]()
         var finishedOn : Date?
         var startedOn : Date?
+        
         schedules.forEach { (schedule) in
             guard let activityId = schedule.activityIdentifier,
                 activityIdentifiers.contains(activityId),
@@ -632,7 +633,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
             guard isNewer else { return }
             taskSchedules.remove { $0.activityIdentifier == schedule.activityIdentifier }
             taskSchedules.append(schedule)
-            if (finishedOn == nil) || (finishedOn! < scheduleFinished) {
+            if (finishedOn == nil) || (finishedOn! > scheduleFinished) {
                 finishedOn = scheduleFinished
                 startedOn = schedule.startedOn
             }

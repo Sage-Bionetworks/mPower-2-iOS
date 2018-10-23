@@ -182,6 +182,37 @@ class StudyBurstTests: XCTestCase {
         XCTAssertNotNil(unfinishedSchedule, "scheduleManager.getUnfinishedSchedule(from: pastTasks)")
     }
     
+    func testStudyBurstComplete_Day1_twoTasksFinished() {
+        
+        let scheduleManager = TestStudyBurstScheduleManager(.day1_twoTasksFinished)
+        guard loadSchedules(scheduleManager) else {
+            XCTFail("Failed to load the schedules and reports.")
+            return
+        }
+        
+        XCTAssertNil(scheduleManager.updateFailed_error)
+        XCTAssertNotNil(scheduleManager.update_fetchedActivities)
+        XCTAssertNotNil(scheduleManager.activityGroup)
+        XCTAssertEqual(scheduleManager.dayCount, 1)
+        XCTAssertTrue(scheduleManager.hasStudyBurst)
+        XCTAssertEqual(scheduleManager.finishedSchedules.count, 2)
+        XCTAssertFalse(scheduleManager.isCompletedForToday)
+        XCTAssertFalse(scheduleManager.isLastDay)
+        XCTAssertEqual(scheduleManager.calculateThisDay(), 1)
+        XCTAssertEqual(scheduleManager.pastSurveys.count, 0)
+        
+        let finishedSchedules = scheduleManager.finishedSchedules.filter { $0.finishedOn != nil }
+        guard let expiresOn = scheduleManager.expiresOn,
+            let earliestSchedule = finishedSchedules.sorted(by: { $0.finishedOn! < $1.finishedOn! }).first
+            else {
+                XCTFail("Failed to get expires on and earliest schedule.")
+                return
+        }
+        
+        let expectedExpiresOn = earliestSchedule.finishedOn!.addingTimeInterval(60 * 60)
+        XCTAssertEqual(expectedExpiresOn, expiresOn)
+    }
+    
     func testStudyBurstComplete_Day1_SurveysFinished() {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day1_tasksFinished_surveysFinished)
