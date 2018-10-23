@@ -204,7 +204,7 @@ extension StudySetup {
         StudySetup(studyBurstDay: 0,
                    studyBurstFinishedOnDays: [],
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 0),
-                   finishedTodayTasks: [.tappingTask, .walkAndBalanceTask])
+                   finishedTodayTasks: [.walkAndBalanceTask, .tappingTask])
     
     static let day1_tasksFinished_surveysNotFinished =
         StudySetup(studyBurstDay: 0,
@@ -257,6 +257,12 @@ extension StudySetup {
                    finishedTodayTasks: RSDIdentifier.measuringTasks,
                    timeUntilExpires: -2 * 60 * 60)
     
+    static let day2_nothingFinished =
+        StudySetup(studyBurstDay: 1,
+                   studyBurstFinishedOnDays: [],
+                   studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 0),
+                   finishedTodayTasks: [])
+    
     static let day2_surveysNotFinished =
         StudySetup(studyBurstDay: 1,
                    studyBurstFinishedOnDays: [0],
@@ -273,7 +279,7 @@ extension StudySetup {
         StudySetup(studyBurstDay: 8,
                    studyBurstFinishedOnDays: finishedOnDays(7, 0),
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 7),
-                   finishedTodayTasks: [.tappingTask, .walkAndBalanceTask])
+                   finishedTodayTasks: [.walkAndBalanceTask, .tappingTask])
     
     static let day9_tasksFinished =
         StudySetup(studyBurstDay: 8,
@@ -476,9 +482,11 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
         
         let studyBurstFinishedOn = studySetup.mapStudyBurstFinishedOn()
         let studyBurstDates = studyBurstFinishedOn.enumerated().map { $0.element.value }.sorted()
+        
+        var schedules = [SBBScheduledActivity]()
         sortOrder.enumerated().forEach{ (offset, identifier) in
             
-            let finishedTime: TimeInterval = studySetup.timeUntilExpires - 3600 + TimeInterval(offset) * 4 * 60
+            let finishedTime: TimeInterval = studySetup.timeUntilExpires - 3600
             var datesToAdd = studyBurstDates
             if finishedTodayTasks.contains(identifier) {
                 datesToAdd.append(studySetup.now.addingTimeInterval(finishedTime))
@@ -486,14 +494,14 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
             
             var scheduledOn = studySetup.createdOn
             datesToAdd.forEach {
-                let finishedOn = $0.addingTimeInterval(-1 * TimeInterval(offset) * 4 * 60)
+                let finishedOn = $0.addingTimeInterval(TimeInterval(offset) * 4 * 60)
                 let schedule = self.createSchedule(with: identifier,
                                                    scheduledOn: scheduledOn,
                                                    expiresOn: nil,
                                                    finishedOn: finishedOn,
                                                    clientData: nil,
                                                    schedulePlanGuid: activityGroup.schedulePlanGuid)
-                self.schedules.append(schedule)
+                schedules.append(schedule)
                 scheduledOn = finishedOn
             }
 
@@ -503,8 +511,11 @@ public class ActivityManager : NSObject, SBBActivityManagerProtocol {
                                           finishedOn: nil,
                                           clientData: nil,
                                           schedulePlanGuid: activityGroup.schedulePlanGuid)
-            self.schedules.append(schedule)
+            schedules.append(schedule)
         }
+        
+        let sortedSchedules = schedules.sorted(by: { $0.activityIdentifier!.compare($1.activityIdentifier!) == .orderedAscending })
+        self.schedules.append(contentsOf: sortedSchedules)
     }
     
     func buildStudyBurstTasks(_ studySetup: StudySetup) {
