@@ -64,9 +64,6 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
         SBAMedicationReminderManager.shared = MP2ReminderManager()
         SBAMedicationReminderManager.shared.setupNotifications()
         UNUserNotificationCenter.current().delegate = SBAMedicationReminderManager.shared
-
-        // Start passive data collectors
-        PassiveDisplacementCollector.shared.start()
         
         return super.application(application, willFinishLaunchingWithOptions: launchOptions)
     }
@@ -168,6 +165,11 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
             fatalError("Failed to instantiate initial view controller in the main storyboard.")
         }
         self.transition(to: vc, state: .main, animated: true)
+        
+        // Start passive data collectors *only* after the user has signed in and consented.
+        // Otherwise, this will ask for permission to use location without any explanation on first launch
+        // of the app.
+        PassiveDisplacementCollector.shared.start()
     }
     
     func showSignInViewController(animated: Bool) {
