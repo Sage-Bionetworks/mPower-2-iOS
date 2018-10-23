@@ -37,7 +37,7 @@
                 "identifier":"enterPhoneNumber",
                 "type":"form",
                 "title":"Let's get started",
-                "text":"Please take a moment to enter your phone number so we can verify if you have an existing account and sign you in securely.\n\nWe will not use your phone number for anything else until you have completed the Consent step of this study.",
+                "text":"Please enter your phone number so we can see if you have an existing account.\n\nWe will not use your phone number for anything else until you have completed the Consent step of this study.",
                 "inputFields": [{
                                 "type":"string",
                                 "textFieldOptions":{
@@ -55,7 +55,11 @@
                     "placementType":"topBackground"
                 },
                 "colorTheme":{
-                    "usesLightStyle":true
+                    "colorStyle": {
+                        "header": "darkBackground",
+                        "body": "darkBackground",
+                        "footer": "darkBackground"
+                    }
                 },
                 "viewTheme":{
                     "viewIdentifier":"PhoneRegistration",
