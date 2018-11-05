@@ -448,9 +448,9 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
         self.activityManager = CMMotionActivityManager()
         
         // Request permissions when starting (i.e. at launch, or via other user interaction). For this we use a temporary
-        // RSDMotionRecorder instance.
-        let appDelegate = AppDelegate.shared!
-        let viewController = appDelegate.rootViewController ?? appDelegate.window!.rootViewController!
+        // RSDMotionRecorder instance. Note that this recorder actually ignores the (non-optional) viewController argument
+        // to the requestPermissions method.
+        let viewController = AppDelegate.shared?.window?.rootViewController ?? UIViewController()
         let viewModel = PassiveGaitModel(schemaIdentifier: self.schemaIdentifier)
         let tempRecorder = self.config.instantiateController(with: viewModel) as? RSDMotionRecorder
         tempRecorder?.requestPermissions(on: viewController, { (action, result, error) in
