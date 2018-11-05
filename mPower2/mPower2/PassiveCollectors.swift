@@ -378,6 +378,68 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
     }
     #endif
     
+    /// Start listening for activity updates, and if it says we've started walking, record an up-to-30-second burst
+    /// of motion sensor data. Must be called on the main queue.
+    /// - returns: a flag indicating whether activity updates were started.
+    private func startActivityUpdates() -> Bool {
+        guard let activityManager = self.activityManager else { return false }
+        activityManager.startActivityUpdates(to: OperationQueue.main, withHandler: { (activity) in
+            // If we get called without an activity object, ignore it.
+            guard let activity = activity else { return }
+            
+            // Were we already recording a walk?
+            let isAlreadyRecording = self.recorder != nil
+            
+            // Are we walking now?
+            let isWalkingNow = (activity.walking == true) && (activity.confidence == .high)
+            
+            // We only care when the walking state changes:
+            guard isAlreadyRecording != isWalkingNow else { return }
+            
+            // If we were recording a walk but we're not walking anymore, cut it short and go with what we've got.
+            if isAlreadyRecording {
+                #if DEBUG
+                self.debugNotification(title: "Stopped walking", body: "\(self.describe(activity: activity))")
+                #endif
+                self.stopRecorderAndUpload()
+            }
+                // If we were *not* recording a walk already, but now we're walking, record and upload a 30-second burst
+                // of motion sensor data.
+            else {
+                #if DEBUG
+                self.debugNotification(title: "Logging", body: "\(self.describe(activity: activity))")
+                #endif
+                self.recordMotionSensorBurst()
+            }
+        })
+        
+        // Also, listen for active gait recorders being started, and when that happens shut ours down so we don't interfere.
+        // This will be called on the posting queue, which for this notification is always main.
+        self.listener = NotificationCenter.default.addObserver(forName: .RSDMotionRecorderWillStart, object: nil, queue: nil, using: { (notification) in
+            guard let userInfo = notification.userInfo,
+                let startedRecorder = userInfo[RSDIdentifier.motionRecorderInstance] as? RSDMotionRecorder,
+                startedRecorder != self.recorder,
+                self.recorder != nil,
+                self.viewModel != nil
+                else {
+                    return
+            }
+            #if DEBUG
+            self.debugNotification(title: "Active task needs motion recorder", body: "Stopping passive gait recorder")
+            #endif
+            self.stopRecorderAndUpload()
+        })
+
+        return true
+    }
+    
+    /// Stop listening for motion activity updates. Must be called on the main queue.
+    private func stopActivityUpdates() {
+        guard let activityManager = self.activityManager else { return }
+        activityManager.stopActivityUpdates()
+        self.activityManager = nil
+    }
+    
     /// Start the passive gait collector.
     func start() {
         // No point in bothering if we can't tell whether or not they're walking.
@@ -392,54 +454,8 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
         let viewModel = PassiveGaitModel(schemaIdentifier: self.schemaIdentifier)
         let tempRecorder = self.config.instantiateController(with: viewModel) as? RSDMotionRecorder
         tempRecorder?.requestPermissions(on: viewController, { (action, result, error) in
-            // If we got permission, start listening for activity updates, and if it says we've started walking,
-            // record an up-to-30-second burst of motion sensor data.
-            self.activityManager?.startActivityUpdates(to: OperationQueue.main, withHandler: { (activity) in
-                // If we get called without an activity object, ignore it.
-                guard let activity = activity else { return }
-                
-                // Were we already recording a walk?
-                let weWereWalking = self.recorder != nil
-                
-                // Are we walking now?
-                let weAreWalkingNow = (activity.walking == true) && (activity.confidence == .high)
-                
-                // We only care when the walking state changes:
-                guard weWereWalking != weAreWalkingNow else { return }
-                
-                // If we were recording a walk but we're not walking anymore, cut it short and go with what we've got.
-                if weWereWalking {
-                    #if DEBUG
-                    self.debugNotification(title: "Stopped walking", body: "\(self.describe(activity: activity))")
-                    #endif
-                    self.stopRecorderAndUpload()
-                }
-                // If we were *not* recording a walk already, but now we're walking, record and upload a 30-second burst
-                // of motion sensor data.
-                else {
-                    #if DEBUG
-                    self.debugNotification(title: "Logging", body: "\(self.describe(activity: activity))")
-                    #endif
-                    self.recordMotionSensorBurst()
-                }
-            })
-            
-            // Also, listen for active gait recorders being started, and when that happens shut ours down so we don't interfere.
-            // This will be called on the posting queue, which for this notification is always main.
-            self.listener = NotificationCenter.default.addObserver(forName: .RSDMotionRecorderWillStart, object: nil, queue: nil, using: { (notification) in
-                guard let userInfo = notification.userInfo,
-                        let startedRecorder = userInfo[RSDIdentifier.motionRecorderInstance] as? RSDMotionRecorder,
-                        startedRecorder != self.recorder,
-                        self.recorder != nil,
-                        self.viewModel != nil
-                    else {
-                        return
-                }
-                #if DEBUG
-                self.debugNotification(title: "Active task needs motion recorder", body: "Stopping passive gait recorder")
-                #endif
-                self.stopRecorderAndUpload()
-            })
+            // If we got permission, start listening for activity updates to determine when to record gait data.
+            self.startActivityUpdates()
         })
         
         // Start location services to set a geofence so we'll get woken up to check activity type when they go on the move.
@@ -481,10 +497,11 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
     /// Stop the passive gait collector altogether.
     func stop() {
         DispatchQueue.main.async {
-            self.activityManager = nil
+            self.stopActivityUpdates()
         }
         stopLocationServices()
         guard let listener = self.listener else { return }
+        self.listener = nil
         NotificationCenter.default.removeObserver(listener)
     }
     
@@ -590,8 +607,8 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
                     #if DEBUG
                     self.debugNotification(title: "Done archiving", body: self.archiveErrorDesc(error))
                     #endif
-                    self.endBackgroundTask()
                 }
+                self.endBackgroundTask()
             }
             else {
                 #if DEBUG
@@ -615,6 +632,7 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
     func locationManagerDidPauseLocationUpdates(_ manager: CLLocationManager) {
         // This gets called when we are at some place and Location Services thinks we're going to be here
         // for a while. So, let's set a geofence around it so we'll get pinged when we leave.
+        guard manager == self.locationManager else { return }
         #if DEBUG
         debugNotification(title: "Pausing location updates", body: nil)
         #endif
@@ -622,11 +640,12 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
         
         // In order to do that though, we need to get a good fix on our location first, and handle it
         // in the didUpdateLocations delegate method.
-        self.locationManager?.desiredAccuracy = kCLLocationAccuracyBest
-        self.locationManager?.requestLocation()
+        manager.desiredAccuracy = kCLLocationAccuracyBest
+        manager.requestLocation()
     }
     
     func locationManagerDidResumeLocationUpdates(_ manager: CLLocationManager) {
+        guard manager == self.locationManager else { return }
         #if DEBUG
         debugNotification(title: "Resuming location updates", body: nil)
         #endif
@@ -634,17 +653,22 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
     }
     
     func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
-        guard region.identifier == kPassiveGaitRegionIdentifier else { return }
+        guard manager == self.locationManager,
+                region.identifier == kPassiveGaitRegionIdentifier
+            else {
+                return
+        }
         #if DEBUG
         debugNotification(title: "Left the region", body: "Starting location updates")
         #endif
 
-        self.locationManager?.stopMonitoring(for: region)
-        self.locationManager!.desiredAccuracy = kCLLocationAccuracyKilometer
-        self.locationManager?.startUpdatingLocation()
+        manager.stopMonitoring(for: region)
+        manager.desiredAccuracy = kCLLocationAccuracyKilometer
+        manager.startUpdatingLocation()
     }
     
     func locationManager(_ manager: CLLocationManager, monitoringDidFailFor region: CLRegion?, withError error: Error) {
+        guard manager == self.locationManager else { return }
         #if DEBUG
         debugNotification(title: "Error monitoring region", body: "\(error)")
         #endif
@@ -661,6 +685,8 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard manager == self.locationManager else { return }
+
         // Listen for most recent valid location reading
         guard let validLocation = locations.filter( { $0.horizontalAccuracy >= 0 } ).last else { return }
         self.lastValidLocation = validLocation
@@ -675,13 +701,14 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
                 // use an accuracy no more precise than what we get from wifi so we don't keep the GPS radio turned on
                 let accuracy = max(validLocation.horizontalAccuracy, 65.0)
                 let geofence = CLCircularRegion(center: validLocation.coordinate, radius: accuracy, identifier: kPassiveGaitRegionIdentifier)
-                self.locationManager?.startMonitoring(for: geofence)
-                self.locationManager?.stopUpdatingLocation()
+                manager.startMonitoring(for: geofence)
+                manager.stopUpdatingLocation()
             }
         }
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        guard manager == self.locationManager else { return }
         // log it
         #if DEBUG
         debugNotification(title: "Location manager failed", body: "\(error)")
