@@ -380,9 +380,8 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
     
     /// Start listening for activity updates, and if it says we've started walking, record an up-to-30-second burst
     /// of motion sensor data. Must be called on the main queue.
-    /// - returns: a flag indicating whether activity updates were started.
-    private func startActivityUpdates() -> Bool {
-        guard let activityManager = self.activityManager else { return false }
+    private func startActivityUpdates() {
+        guard let activityManager = self.activityManager else { return }
         activityManager.startActivityUpdates(to: OperationQueue.main, withHandler: { (activity) in
             // If we get called without an activity object, ignore it.
             guard let activity = activity else { return }
@@ -429,8 +428,6 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
             #endif
             self.stopRecorderAndUpload()
         })
-
-        return true
     }
     
     /// Stop listening for motion activity updates. Must be called on the main queue.
