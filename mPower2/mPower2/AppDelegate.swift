@@ -170,6 +170,7 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
         // Otherwise, this will ask for permission to use location without any explanation on first launch
         // of the app.
         PassiveDisplacementCollector.shared.start()
+        PassiveGaitCollector.shared.start()
     }
     
     func showSignInViewController(animated: Bool) {
