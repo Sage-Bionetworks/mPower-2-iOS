@@ -661,6 +661,7 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
 
         manager.stopMonitoring(for: region)
         manager.desiredAccuracy = kCLLocationAccuracyKilometer
+        self.locationManagerPaused = false
         manager.startUpdatingLocation()
     }
     
