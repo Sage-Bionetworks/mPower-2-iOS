@@ -36,6 +36,7 @@ import BridgeApp
 import CoreLocation
 import CoreMotion
 import BridgeSDK
+import UserNotifications
 
 private let kLastLocationKey: String = "MP2LastKnownLocation"
 private let kLatitudeKey: String = "latitude"
@@ -55,6 +56,14 @@ private let kFloorKey: String = "floor"
 private let kAltitudeKey: String = "altitude"
 private let kHorizontalAccuracyKey: String = "horizontalAccuracy"
 private let kVerticalAccuracyKey: String = "verticalAccuracy"
+
+// Rumor has it that for GPS-enabled devices, iOS will clamp the region radius to 100m
+// if you set it to anything less than that. In practice this seems about right.
+// Furthermore, to make fairly sure we're currently inside the region we set, we need to make sure we
+// use a region radius big enough to cover the error bars of the current location reading to better
+// than the 68% probability (1 sigma) provided by the horizontalAccuracy. Let's use a minimum of 150m.
+private let kRegionRadius: CLLocationDistance = 150.0
+private let kGeofencingAccuracyFactor: Double = 3.0 // 3 sigma would be 99.7% if it were a normal distribution (which it's not, but...)
 
 /// Protocol for location-services-triggered passive data collectors.
 protocol PassiveLocationTriggeredCollector: class, CLLocationManagerDelegate {
@@ -361,15 +370,29 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
     
     #if DEBUG
     func debugNotification(title: String?, body: String?) {
-        let localNote = UILocalNotification()
-        let alertTitle = title ?? ""
-        let alertBody = body ?? ""
-        localNote.alertTitle = alertTitle
-        localNote.alertBody = alertBody
-        DispatchQueue.main.async {
-            UIApplication.shared.presentLocalNotificationNow(localNote)
+        let noteTitle = title ?? ""
+        let noteBody = body ?? ""
+        
+        // make sure we're authorized before requesting a local notification
+        UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .alert, .sound]) { (granted, _) in
+            DispatchQueue.main.async {
+                guard granted else {
+                    print("Notifications not authorized")
+                    return
+                }
+                let localNoteContent = UNMutableNotificationContent()
+                localNoteContent.title = noteTitle
+                localNoteContent.body = noteBody
+                let localNoteTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.1, repeats: false)
+                let localNoteRequest = UNNotificationRequest(identifier: UUID().uuidString, content: localNoteContent, trigger: localNoteTrigger)
+                UNUserNotificationCenter.current().add(localNoteRequest) { (error) in
+                    guard let error = error else { return }
+                    print("Error attempting to add debug notification: \(error)")
+                }
+            }
         }
-        print("\(alertTitle) : \(alertBody)")
+
+        print("\(noteTitle) : \(noteBody)")
     }
     
     func describe(activity: CMMotionActivity?) -> String {
@@ -692,16 +715,17 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
         // If the location manager is paused, and we're getting readings, that means we got the pause callback and
         // requested an accurate location, so when we get one that's accurate enough, use it to set a geofence
         if self.locationManagerPaused {
-            if validLocation.horizontalAccuracy < 100.0 {
-                #if DEBUG
-                debugNotification(title: "Setting geofence", body: "\(validLocation)")
-                #endif
-                // use an accuracy no more precise than what we get from wifi so we don't keep the GPS radio turned on
-                let accuracy = max(validLocation.horizontalAccuracy, 65.0)
-                let geofence = CLCircularRegion(center: validLocation.coordinate, radius: accuracy, identifier: kPassiveGaitRegionIdentifier)
-                manager.startMonitoring(for: geofence)
-                manager.stopUpdatingLocation()
-            }
+            // location manager paused means we got here via requestLocation(), so we're only going to get the one
+            // reading, the best we can do in a reasonable time, and we don't need to manually shut down location updates.
+
+            // use a radius big enough to cover the error bars on our current location, but at least our defined minimum
+            let regionRadius = max(validLocation.horizontalAccuracy * kGeofencingAccuracyFactor, kRegionRadius)
+
+            #if DEBUG
+            debugNotification(title: "Setting geofence with radius \(regionRadius)", body: "\(validLocation)")
+            #endif
+            let geofence = CLCircularRegion(center: validLocation.coordinate, radius: regionRadius, identifier: kPassiveGaitRegionIdentifier)
+            manager.startMonitoring(for: geofence)
         }
     }
     
