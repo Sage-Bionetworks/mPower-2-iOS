@@ -373,11 +373,19 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
         let noteTitle = title ?? ""
         let noteBody = body ?? ""
         
+        // make sure the notification gets posted if we're being called in the background
+        let bgTaskId = UIApplication.shared.beginBackgroundTask()
+        
+        func debugEndBgTask() {
+            UIApplication.shared.endBackgroundTask(bgTaskId)
+        }
+        
         // make sure we're authorized before requesting a local notification
         UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .alert, .sound]) { (granted, _) in
             DispatchQueue.main.async {
                 guard granted else {
                     print("Notifications not authorized")
+                    debugEndBgTask()
                     return
                 }
                 let localNoteContent = UNMutableNotificationContent()
@@ -386,8 +394,12 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
                 let localNoteTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.1, repeats: false)
                 let localNoteRequest = UNNotificationRequest(identifier: UUID().uuidString, content: localNoteContent, trigger: localNoteTrigger)
                 UNUserNotificationCenter.current().add(localNoteRequest) { (error) in
-                    guard let error = error else { return }
+                    guard let error = error else {
+                        debugEndBgTask()
+                        return
+                    }
                     print("Error attempting to add debug notification: \(error)")
+                    debugEndBgTask()
                 }
             }
         }
@@ -713,7 +725,7 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
         self.lastValidLocation = validLocation
         
         // If the location manager is paused, and we're getting readings, that means we got the pause callback and
-        // requested an accurate location, so when we get one that's accurate enough, use it to set a geofence
+        // requested an accurate location, so use it to set a geofence
         if self.locationManagerPaused {
             // location manager paused means we got here via requestLocation(), so we're only going to get the one
             // reading, the best we can do in a reasonable time, and we don't need to manually shut down location updates.

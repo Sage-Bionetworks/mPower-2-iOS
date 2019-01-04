@@ -65,10 +65,13 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
         SBAMedicationReminderManager.shared.setupNotifications()
         UNUserNotificationCenter.current().delegate = SBAMedicationReminderManager.shared
         
-        // Start the passive data collectors (if we have all the necessary consents, authorizations, pernissions, etc.)
+        let retval = super.application(application, willFinishLaunchingWithOptions: launchOptions)
+        
+        // Start the passive data collectors (if we have all the necessary consents, authorizations, permissions, etc.).
+        // This has to be done *after* Bridge has been set up, so do it after calling super.
         self.startPassiveCollectors()
         
-        return super.application(application, willFinishLaunchingWithOptions: launchOptions)
+        return retval
     }
     
     func showAppropriateViewController(animated: Bool) {
