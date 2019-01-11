@@ -83,7 +83,7 @@ protocol PassiveLocationTriggeredCollector: class, CLLocationManagerDelegate {
 extension PassiveLocationTriggeredCollector {
     /// Check location authorization status, and request permission if not yet determined.
     func setupLocationManager() throws {
-        // If it's already set up, just return
+        // If it's already set up, just return.
         guard self.locationManager == nil else { return }
         
         // Create a location manager instance and set ourselves as the delegate. We do this here so
@@ -105,7 +105,7 @@ extension PassiveLocationTriggeredCollector {
         // Get the current status and exit early if the status is restricted or denied.
         let status = CLLocationManager.authorizationStatus()
         if status != .authorizedAlways && status != .notDetermined {
-            // anything but "always" or "not yet asked" means we can't continue
+            // Anything but "always" or "not yet asked" means we can't continue.
             throw authorizationError(for: status)
         }
         
@@ -116,7 +116,7 @@ extension PassiveLocationTriggeredCollector {
         
         let newStatus = CLLocationManager.authorizationStatus()
         if newStatus != .authorizedAlways {
-            // and here we are again
+            // And here we are again.
             throw authorizationError(for: newStatus)
         }
     }
@@ -197,7 +197,7 @@ class PassiveDisplacementCollector : NSObject, PassiveLocationTriggeredCollector
         }
     }
     
-    /// Upload a PassiveDisplacementRecord
+    /// Upload a PassiveDisplacementRecord.
     func uploadDisplacement(_ displacementData: RSDDistanceRecord) {
         let archiveFilename = kPassiveDisplacementArchiveFilename
         let archive = SBBDataArchive(reference: schemaIdentifier, jsonValidationMapping: nil)
@@ -217,16 +217,16 @@ class PassiveDisplacementCollector : NSObject, PassiveLocationTriggeredCollector
     // MARK: CLLocationManagerDelegate
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedAlways {
-            // hey we have permission now, yay! so (re)start monitoring
+            // Hey we have permission now, yay! so (re)start monitoring.
             start()
         } else {
-            // we no longer have permission
+            // We no longer have permission.
             stop()
         }
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        // Generate & upload (a) displacement(s) from the given location(s)
+        // Generate & upload (a) displacement(s) from the given location(s).
         let validLocations = locations.filter({$0.horizontalAccuracy >= 0.0})
         for location in validLocations {
             if let lastLocation = previousLocation {
@@ -373,14 +373,14 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
         let noteTitle = title ?? ""
         let noteBody = body ?? ""
         
-        // make sure the notification gets posted if we're being called in the background
+        // Make sure the notification gets posted if we're being called in the background.
         let bgTaskId = UIApplication.shared.beginBackgroundTask()
         
         func debugEndBgTask() {
             UIApplication.shared.endBackgroundTask(bgTaskId)
         }
         
-        // make sure we're authorized before requesting a local notification
+        // Make sure we're authorized before requesting a local notification.
         UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .alert, .sound]) { (granted, _) in
             DispatchQueue.main.async {
                 guard granted else {
@@ -505,7 +505,7 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
                 do {
                     try self.setupLocationManager()
                 } catch {
-                    // we don't have permission to track their location so just ignore it
+                    // We don't have permission to track their location so just ignore it.
                     return
                 }
             }
@@ -562,19 +562,19 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
                 return
             }
             
-            // if we've already (still) got a background task going, just bail
+            // If we've already (still) got a background task going, just bail.
             guard self.backgroundTaskId == .invalid else { return }
             
-            // mark the time
+            // Mark the time.
             self.startTime = Date()
             
-            // try to get up to 30 seconds of motion data, but take whatever iOS gives us
+            // Try to get up to 30 seconds of motion data, but take whatever iOS gives us.
             self.timer = Timer.scheduledTimer(withTimeInterval: 30.0, repeats: false) {_ in
                 self.stopRecorderAndUpload()
             }
 
             self.backgroundTaskId = UIApplication.shared.beginBackgroundTask(withName: "Passive gait collection") {
-                // if we get a callback that we're out of time before our timer expires, upload whatever we managed to get
+                // If we get a callback that we're out of time before our timer expires, upload whatever we managed to get.
                 #if DEBUG
                 let elapsedTime = Date().timeIntervalSince(self.startTime!)
                 self.debugNotification(title: "Cutting it short", body: "background task about to expire after \(elapsedTime) seconds")
@@ -616,7 +616,7 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
         self.startTime = nil
         self.recorder = nil
 
-        // kill the timer if it's still running
+        // Kill the timer if it's still running.
         if timer.isValid {
             timer.invalidate()
         }
@@ -709,10 +709,10 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedAlways {
-            // hey we have permission now, yay! so (re)start monitoring
+            // Hey we have permission now, yay! so (re)start monitoring.
             startLocationServices()
         } else {
-            // we no longer have permission
+            // We no longer have permission.
             stopLocationServices()
         }
     }
@@ -725,12 +725,12 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
         self.lastValidLocation = validLocation
         
         // If the location manager is paused, and we're getting readings, that means we got the pause callback and
-        // requested an accurate location, so use it to set a geofence
+        // requested an accurate location, so use it to set a geofence.
         if self.locationManagerPaused {
-            // location manager paused means we got here via requestLocation(), so we're only going to get the one
+            // Location manager paused means we got here via requestLocation(), so we're only going to get the one
             // reading, the best we can do in a reasonable time, and we don't need to manually shut down location updates.
 
-            // use a radius big enough to cover the error bars on our current location, but at least our defined minimum
+            // Use a radius big enough to cover the error bars on our current location, but at least our defined minimum.
             let regionRadius = max(validLocation.horizontalAccuracy * kGeofencingAccuracyFactor, kRegionRadius)
 
             #if DEBUG
@@ -743,8 +743,8 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         guard manager == self.locationManager else { return }
-        // log it
         #if DEBUG
+        // Log it.
         debugNotification(title: "Location manager failed", body: "\(error)")
         #endif
     }
