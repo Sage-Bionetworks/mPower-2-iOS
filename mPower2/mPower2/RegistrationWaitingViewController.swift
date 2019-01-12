@@ -42,7 +42,9 @@ class RegistrationWaitingViewController: RSDStepViewController {
     @IBOutlet weak var submitButton: RSDRoundedButton!
     @IBOutlet weak var resendLinkButton: RSDUnderlinedButton!
     
-    private static let kResendLinkDelay = 15.0
+    private let kResendLinkDelay = 15.0
+    
+    private var resendLinkTimer: Timer?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -50,10 +52,20 @@ class RegistrationWaitingViewController: RSDStepViewController {
         if let taskController = self.stepViewModel.rootPathComponent.taskController as? SignInTaskViewController {
             self.phoneLabel.text = taskController.phoneNumber
         }
+        
+        self.showResendLinkAfterDelay()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        self.resendLinkTimer?.invalidate()
+        self.resendLinkTimer = nil
+        super.viewDidDisappear(animated)
     }
     
     private func showResendLinkAfterDelay() {
-        
+        self.resendLinkTimer = Timer.scheduledTimer(withTimeInterval: self.kResendLinkDelay, repeats: false) {_ in
+            self.resendLinkButton.isHidden = false
+        }
     }
     
     @IBAction func didTapChangeMobileButton(_ sender: Any) {
@@ -136,6 +148,9 @@ class RegistrationWaitingViewController: RSDStepViewController {
         taskController.showLoadingView()
         taskController.signUpAndRequestSMSLink { (task, result, error) in
             taskController.hideLoadingIfNeeded()
+            
+            // Restart the resend link timer in case it still doesn't arrive soon-ish
+            self.showResendLinkAfterDelay()
             
             guard let err = error as NSError?
                 else {
