@@ -63,7 +63,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xuK-qy-WCW" customClass="RSDStatusBarBackgroundView" customModule="ResearchUI">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="20"/>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CrL-HL-9j9" customClass="RSDGenericNavigationFooterView" customModule="ResearchUI">
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CrL-HL-9j9" customClass="RSDGenericNavigationFooterView" customModule="ResearchUI">
                                 <rect key="frame" x="0.0" y="474" width="320" height="94"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <userDefinedRuntimeAttributes>
@@ -112,7 +112,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="1000" text="Your link is on its way!" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o3f-jn-lwu">
-                                        <rect key="frame" x="11" y="263" width="304.5" height="36"/>
+                                        <rect key="frame" x="11" y="261" width="304.5" height="36"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="32" id="4MG-0B-P4C"/>
                                         </constraints>
@@ -124,11 +124,11 @@
                                         <rect key="frame" x="110" y="517.5" width="100" height="32.5"/>
                                         <state key="normal" title="(Resend link)"/>
                                         <connections>
-                                            <action selector="didTapChangeMobileButton:" destination="EgZ-vC-TR2" eventType="touchUpInside" id="eee-uh-IAM"/>
+                                            <action selector="didTapResendLinkButton:" destination="EgZ-vC-TR2" eventType="touchUpInside" id="H5C-aV-FMO"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We sent you a link to verify your identity via SMS text message to" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZaT-D7-Cg0">
-                                        <rect key="frame" x="11.5" y="316" width="297" height="43"/>
+                                        <rect key="frame" x="11.5" y="309" width="297" height="43"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="297" id="JwT-xF-zeU"/>
                                         </constraints>
@@ -137,10 +137,10 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z32-Mj-JTE">
-                                        <rect key="frame" x="24" y="405" width="272" height="112.5"/>
+                                        <rect key="frame" x="24" y="396" width="272" height="121.5"/>
                                         <subviews>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Code" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LQC-8n-47E">
-                                                <rect key="frame" x="0.0" y="31.5" width="272" height="50"/>
+                                                <rect key="frame" x="0.0" y="3" width="272" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="zqe-CM-bHP"/>
                                                 </constraints>
@@ -148,19 +148,35 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="38"/>
                                                 <textInputTraits key="textInputTraits" textContentType="one-time-code"/>
                                             </textField>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hDj-kc-Bhf" customClass="RSDRoundedButton" customModule="ResearchUI">
+                                                <rect key="frame" x="0.0" y="69" width="272" height="52"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="52" id="FfM-UY-Lm3"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                <state key="normal" title="Submit">
+                                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="didTapSubmitButton:" destination="EgZ-vC-TR2" eventType="touchUpInside" id="MDB-k8-S0b"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
+                                            <constraint firstItem="hDj-kc-Bhf" firstAttribute="top" secondItem="LQC-8n-47E" secondAttribute="bottom" constant="16" id="2V1-3o-hRj"/>
+                                            <constraint firstAttribute="trailing" secondItem="hDj-kc-Bhf" secondAttribute="trailing" id="2bc-Kp-OGL"/>
                                             <constraint firstItem="LQC-8n-47E" firstAttribute="leading" secondItem="z32-Mj-JTE" secondAttribute="leading" id="ACU-dN-3ko"/>
-                                            <constraint firstItem="LQC-8n-47E" firstAttribute="centerY" secondItem="z32-Mj-JTE" secondAttribute="centerY" id="SUR-Ns-yl4"/>
+                                            <constraint firstItem="LQC-8n-47E" firstAttribute="centerY" secondItem="z32-Mj-JTE" secondAttribute="centerY" constant="-33" id="SUR-Ns-yl4"/>
                                             <constraint firstItem="LQC-8n-47E" firstAttribute="centerX" secondItem="z32-Mj-JTE" secondAttribute="centerX" id="UdM-Uh-kxB"/>
+                                            <constraint firstItem="hDj-kc-Bhf" firstAttribute="leading" secondItem="z32-Mj-JTE" secondAttribute="leading" id="eug-UX-Get"/>
                                             <constraint firstAttribute="trailing" secondItem="LQC-8n-47E" secondAttribute="trailing" id="qrQ-U1-C0U"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2cb-Lj-Xpr">
-                                        <rect key="frame" x="69" y="373" width="182" height="32"/>
+                                        <rect key="frame" x="69" y="364" width="182" height="32"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="950" ambiguous="YES" text="(202)555-1212" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KnH-k1-TOz">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="950" text="(202)555-1212" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KnH-k1-TOz">
                                                 <rect key="frame" x="0.0" y="0.0" width="132" height="32"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="120" id="pT6-yi-96D"/>
@@ -171,8 +187,11 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N3i-NW-eXC" customClass="RSDUnderlinedButton" customModule="ResearchUI">
-                                                <rect key="frame" x="152" y="-0.5" width="30" height="33"/>
+                                                <rect key="frame" x="152" y="0.0" width="30" height="32.5"/>
                                                 <state key="normal" title="edit"/>
+                                                <connections>
+                                                    <action selector="didTapChangeMobileButton:" destination="EgZ-vC-TR2" eventType="touchUpInside" id="zU2-o8-tl5"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -181,6 +200,7 @@
                                             <constraint firstAttribute="height" constant="32" id="EEM-2O-DQQ"/>
                                             <constraint firstItem="KnH-k1-TOz" firstAttribute="centerY" secondItem="2cb-Lj-Xpr" secondAttribute="centerY" id="FSZ-zi-hJE"/>
                                             <constraint firstAttribute="width" constant="182" id="NQe-Bs-Wsg"/>
+                                            <constraint firstItem="KnH-k1-TOz" firstAttribute="leading" secondItem="2cb-Lj-Xpr" secondAttribute="leading" id="ZOc-bO-3dQ"/>
                                             <constraint firstItem="N3i-NW-eXC" firstAttribute="centerY" secondItem="2cb-Lj-Xpr" secondAttribute="centerY" id="iTa-LR-Ak2"/>
                                         </constraints>
                                     </view>
@@ -188,10 +208,10 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="pPg-EO-a3r" secondAttribute="bottom" constant="18" id="1SA-Km-bJX"/>
-                                    <constraint firstItem="ZaT-D7-Cg0" firstAttribute="top" secondItem="o3f-jn-lwu" secondAttribute="bottom" constant="17" id="3Mx-vV-mQK"/>
+                                    <constraint firstItem="ZaT-D7-Cg0" firstAttribute="top" secondItem="o3f-jn-lwu" secondAttribute="bottom" constant="12" id="3Mx-vV-mQK"/>
                                     <constraint firstItem="o3f-jn-lwu" firstAttribute="centerX" secondItem="nBS-5w-xU9" secondAttribute="centerX" constant="3" id="3Y9-5z-zhY"/>
                                     <constraint firstItem="pPg-EO-a3r" firstAttribute="top" secondItem="z32-Mj-JTE" secondAttribute="bottom" id="4Lo-0P-wRd"/>
-                                    <constraint firstItem="2cb-Lj-Xpr" firstAttribute="top" secondItem="ZaT-D7-Cg0" secondAttribute="bottom" constant="14" id="4MI-z7-gIE"/>
+                                    <constraint firstItem="2cb-Lj-Xpr" firstAttribute="top" secondItem="ZaT-D7-Cg0" secondAttribute="bottom" constant="12" id="4MI-z7-gIE"/>
                                     <constraint firstItem="2cb-Lj-Xpr" firstAttribute="centerX" secondItem="nBS-5w-xU9" secondAttribute="centerX" id="5o1-Mh-EB7"/>
                                     <constraint firstItem="z32-Mj-JTE" firstAttribute="leading" secondItem="nBS-5w-xU9" secondAttribute="leading" constant="24" id="IRW-0U-n4d"/>
                                     <constraint firstItem="pPg-EO-a3r" firstAttribute="centerX" secondItem="nBS-5w-xU9" secondAttribute="centerX" id="SqL-H7-P23"/>
@@ -201,7 +221,7 @@
                                 </constraints>
                                 <connections>
                                     <outlet property="imageView" destination="4Er-BM-A58" id="eY4-x7-iQL"/>
-                                    <outlet property="textLabel" destination="KnH-k1-TOz" id="usz-uN-xTU"/>
+                                    <outlet property="textLabel" destination="ZaT-D7-Cg0" id="KsB-dE-6bg"/>
                                     <outlet property="titleLabel" destination="o3f-jn-lwu" id="asA-El-xih"/>
                                 </connections>
                             </view>
@@ -234,13 +254,16 @@
                             <constraint firstItem="4Er-BM-A58" firstAttribute="centerX" secondItem="HEh-6R-2pL" secondAttribute="centerX" id="UkM-HO-JxV"/>
                             <constraint firstItem="wSl-Fj-TIm" firstAttribute="trailing" secondItem="hmg-0H-NFl" secondAttribute="trailing" id="W0Q-AA-nDf"/>
                             <constraint firstItem="nBS-5w-xU9" firstAttribute="trailing" secondItem="hmg-0H-NFl" secondAttribute="trailing" id="k2q-N3-3dq"/>
-                            <constraint firstItem="wSl-Fj-TIm" firstAttribute="bottom" secondItem="o3f-jn-lwu" secondAttribute="top" constant="-20" id="mPq-H5-MzG"/>
+                            <constraint firstItem="wSl-Fj-TIm" firstAttribute="bottom" secondItem="o3f-jn-lwu" secondAttribute="top" constant="-18" id="mPq-H5-MzG"/>
                             <constraint firstItem="wSl-Fj-TIm" firstAttribute="top" secondItem="HEh-6R-2pL" secondAttribute="top" id="vjO-Bb-jqn"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="hmg-0H-NFl"/>
                     </view>
                     <connections>
+                        <outlet property="enterCodeTextField" destination="LQC-8n-47E" id="lWU-cW-ZCL"/>
                         <outlet property="phoneLabel" destination="KnH-k1-TOz" id="A4S-Fn-OUm"/>
+                        <outlet property="resendLinkButton" destination="pPg-EO-a3r" id="izq-nD-3H2"/>
+                        <outlet property="submitButton" destination="hDj-kc-Bhf" id="iZ1-1d-sfZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Ic-5b-awS" userLabel="First Responder" sceneMemberID="firstResponder"/>

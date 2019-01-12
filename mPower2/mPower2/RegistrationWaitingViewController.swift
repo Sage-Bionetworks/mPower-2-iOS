@@ -38,6 +38,11 @@ import BridgeSDK
 
 class RegistrationWaitingViewController: RSDStepViewController {
     @IBOutlet weak var phoneLabel: UILabel!
+    @IBOutlet weak var enterCodeTextField: UITextField!
+    @IBOutlet weak var submitButton: RSDRoundedButton!
+    @IBOutlet weak var resendLinkButton: RSDUnderlinedButton!
+    
+    private static let kResendLinkDelay = 15.0
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -45,6 +50,10 @@ class RegistrationWaitingViewController: RSDStepViewController {
         if let taskController = self.stepViewModel.rootPathComponent.taskController as? SignInTaskViewController {
             self.phoneLabel.text = taskController.phoneNumber
         }
+    }
+    
+    private func showResendLinkAfterDelay() {
+        
     }
     
     @IBAction func didTapChangeMobileButton(_ sender: Any) {
@@ -118,5 +127,42 @@ class RegistrationWaitingViewController: RSDStepViewController {
         // only enable the save action if it's a 10-digit number and not the same as the previous phone number
         let match = newNumber.range(of:"^\\d{10}$", options:.regularExpression)
         alertController.actions[1].isEnabled = (match != nil) && (newNumber != self.phoneLabel.text)
+    }
+    
+    @IBAction func didTapResendLinkButton(_ sender: UIButton) {
+        guard let taskController = self.stepViewModel.rootPathComponent.taskController as? SignInTaskViewController else { return }
+        
+        self.resendLinkButton.isHidden = true
+        taskController.showLoadingView()
+        taskController.signUpAndRequestSMSLink { (task, result, error) in
+            taskController.hideLoadingIfNeeded()
+            
+            guard let err = error as NSError?
+                else {
+                    return
+            }
+            
+            // 400 is the response for an invalid phone number
+            if err.code == 400 {
+                self.presentAlertWithOk(title: "Wrong Number", message: "The phone number you entered is not valid. Please enter a valid U.S. phone number.", actionHandler: { (_) in
+                    self.didTapChangeMobileButton(self)
+                })
+            } else {
+                self.presentAlertWithOk(title: "Error", message: "The server returned an error: \(err)", actionHandler: { (_) in
+                    self.didTapChangeMobileButton(self)
+                })
+            }
+            debugPrint("Error attempting to re-sign up and re-request SMS link:\n\(String(describing: error))\n\nResult:\n\(String(describing: result))")
+        }
+    }
+    
+    @IBAction func didTapSubmitButton(_ sender: Any) {
+        guard let signInDelegate = (UIApplication.shared.delegate as? AppDelegate)?.smsSignInDelegate,
+                let taskController = self.stepViewModel.rootPathComponent.taskController as? SignInTaskViewController,
+                let token = self.enterCodeTextField.text
+            else { return }
+        
+        taskController.showLoadingView()
+        signInDelegate.signIn(token: token)
     }
 }
