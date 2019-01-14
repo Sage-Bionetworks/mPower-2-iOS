@@ -36,7 +36,7 @@ import ResearchUI
 import Research
 import BridgeSDK
 
-class RegistrationWaitingViewController: RSDStepViewController {
+class RegistrationWaitingViewController: RSDStepViewController, UITextFieldDelegate {
     @IBOutlet weak var phoneLabel: UILabel!
     @IBOutlet weak var enterCodeTextField: UITextField!
     @IBOutlet weak var submitButton: RSDRoundedButton!
@@ -46,6 +46,13 @@ class RegistrationWaitingViewController: RSDStepViewController {
     
     private var resendLinkTimer: Timer?
     
+    private var keyboardWillShowObserver: Any?
+    private var keyboardWillHideObserver: Any?
+    private var textDidChangeObserver: Any?
+    private var savedViewYPosition: CGFloat = 0.0
+    
+    private let kKeyboardPadding: CGFloat = 5.0
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -54,12 +61,72 @@ class RegistrationWaitingViewController: RSDStepViewController {
         }
         
         self.showResendLinkAfterDelay()
+        
+        // Add observers for keyboard show/hide notifications and text changes.
+        let center = NotificationCenter.default
+        let mainQ = OperationQueue.main
+        
+        self.keyboardWillShowObserver = center.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: mainQ, using: { (notification) in
+            guard let keyboardRect = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect,
+                    let screenCoordinates = self.view.window?.screen.fixedCoordinateSpace
+                else { return }
+            
+            self.savedViewYPosition = self.view.frame.origin.y
+            let submitView = self.submitButton!
+            let submitFrame = submitView.convert(submitView.bounds, to: screenCoordinates) // keyboardRect is in screen coordinates.
+            let submitFrameBottom = submitFrame.origin.y + submitFrame.size.height
+            let yOffset = keyboardRect.origin.y - submitFrameBottom - self.kKeyboardPadding
+            
+            // Don't scroll if the bottom of the code entry field is already above the keyboard.
+            if yOffset < 0 {
+                var newFrame = self.view.frame
+                newFrame.origin.y += yOffset
+                
+                UIView.animate(withDuration: 0.3, animations: {
+                    self.view.frame = newFrame
+                })
+            }
+        })
+        
+        self.keyboardWillHideObserver = center.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: mainQ, using: { (notification) in
+            var oldFrame = self.view.frame
+            
+            // If we scrolled it when the keyboard slid up, scroll it back now.
+            if oldFrame.origin.y != self.savedViewYPosition {
+                oldFrame.origin.y = self.savedViewYPosition
+                
+                UIView.animate(withDuration: 0.3, animations: {
+                    self.view.frame = oldFrame
+                })
+            }
+        })
+        
+        self.textDidChangeObserver = center.addObserver(forName: UITextField.textDidChangeNotification, object: nil, queue: mainQ, using: { (notification) in
+            // Update the Submit button's enabled state.
+            let textField = self.enterCodeTextField!
+            let newNumber = textField.text ?? ""
+            
+            // Only enable the submit button if it's a 6-digit number, possibly copypasted with a hyphen in the middle.
+            let match = newNumber.range(of:"^\\d{3}-?\\d{3}$", options:.regularExpression)
+            self.submitButton.isEnabled = (match != nil)
+
+        })
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         self.resendLinkTimer?.invalidate()
         self.resendLinkTimer = nil
-        super.viewDidDisappear(animated)
+        
+        // Remove keyboard show/hide notification listeners.
+        let center = NotificationCenter.default
+        if let showObserver = self.keyboardWillShowObserver {
+            center.removeObserver(showObserver)
+        }
+        if let hideObserver = self.keyboardWillHideObserver {
+            center.removeObserver(hideObserver)
+        }
+        
+        super.viewWillDisappear(animated)
     }
     
     private func showResendLinkAfterDelay() {
@@ -79,7 +146,7 @@ class RegistrationWaitingViewController: RSDStepViewController {
             let textField = alertController.textFields![0] as UITextField
             let newNumber = textField.text
             
-            // do nothing if they entered the same number
+            // Do nothing if they entered the same number.
             guard newNumber != self.phoneLabel.text else { return }
             
             self.phoneLabel.text = newNumber
@@ -96,7 +163,7 @@ class RegistrationWaitingViewController: RSDStepViewController {
                         return
                 }
                 
-                // 400 is the response for an invalid phone number
+                // 400 is the response for an invalid phone number.
                 if err.code == 400 {
                     self.presentAlertWithOk(title: "Wrong Number", message: "The phone number you entered is not valid. Please enter a valid U.S. phone number.", actionHandler: { (_) in
                         self.didTapChangeMobileButton(self)
@@ -131,12 +198,12 @@ class RegistrationWaitingViewController: RSDStepViewController {
         let textField = sender as! UITextField
         let newNumber = textField.text ?? ""
         
-        // find the alert controller in the responder chain
+        // Find the alert controller in the responder chain.
         var responder: UIResponder = sender as! UIResponder
         while !(responder is UIAlertController) { responder = responder.next! }
         let alertController = responder as! UIAlertController
         
-        // only enable the save action if it's a 10-digit number and not the same as the previous phone number
+        // Only enable the save action if it's a 10-digit number and not the same as the previous phone number.
         let match = newNumber.range(of:"^\\d{10}$", options:.regularExpression)
         alertController.actions[1].isEnabled = (match != nil) && (newNumber != self.phoneLabel.text)
     }
@@ -149,7 +216,7 @@ class RegistrationWaitingViewController: RSDStepViewController {
         taskController.signUpAndRequestSMSLink { (task, result, error) in
             taskController.hideLoadingIfNeeded()
             
-            // Restart the resend link timer in case it still doesn't arrive soon-ish
+            // Restart the resend link timer in case it still doesn't arrive soon-ish.
             self.showResendLinkAfterDelay()
             
             guard let err = error as NSError?
@@ -157,7 +224,7 @@ class RegistrationWaitingViewController: RSDStepViewController {
                     return
             }
             
-            // 400 is the response for an invalid phone number
+            // 400 is the response for an invalid phone number.
             if err.code == 400 {
                 self.presentAlertWithOk(title: "Wrong Number", message: "The phone number you entered is not valid. Please enter a valid U.S. phone number.", actionHandler: { (_) in
                     self.didTapChangeMobileButton(self)
@@ -179,5 +246,15 @@ class RegistrationWaitingViewController: RSDStepViewController {
         
         taskController.showLoadingView()
         signInDelegate.signIn(token: token)
+    }
+    
+    // MARK: UITextField delegate
+    
+    /// Resign first responder on "Enter" key tapped.
+    open func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField.canResignFirstResponder {
+            textField.resignFirstResponder()
+        }
+        return false
     }
 }
