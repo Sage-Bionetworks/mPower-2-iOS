@@ -177,6 +177,9 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
     }
     
     func startPassiveCollectors() {
+        // TODO: emm 2019-01-15 Short-circuited to deploy interim bug fixes. Remove this line when passive data collection is ready for release.
+        return
+        
         // Start passive data collectors *only* after the user has signed in and consented.
         // Otherwise, this will ask for permission to use location without any explanation on first launch
         // of the app.
