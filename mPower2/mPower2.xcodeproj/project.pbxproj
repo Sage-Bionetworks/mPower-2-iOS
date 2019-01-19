@@ -63,36 +63,12 @@
 		80A0BE3321095E1A00D31B68 /* TrackedItemsIntroductionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6196512109473900F2E3EA /* TrackedItemsIntroductionStepObject.swift */; };
 		80A0BE4921095E4F00D31B68 /* TrackedItemsIntroductionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5E16EE210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift */; };
 		80F3739C20FC32D200A565E0 /* VersionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F3739B20FC32D200A565E0 /* VersionLabel.swift */; };
-		B508B31C2076ECA3001645CF /* MCTHandSelectionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B508B31B2076ECA3001645CF /* MCTHandSelectionStepObject.swift */; };
-		B508B39920772D76001645CF /* MCTSkippableSectionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B508B39820772D76001645CF /* MCTSkippableSectionStepObject.swift */; };
-		B532ACED208150C00009EAD3 /* MCTCompletionGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B532ACEC208150C00009EAD3 /* MCTCompletionGradient.swift */; };
-		B532AD04208158860009EAD3 /* MCTCompletionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B532AD03208158860009EAD3 /* MCTCompletionStepViewController.swift */; };
-		B532AD0620817F620009EAD3 /* MCTTappingCompletionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B532AD0520817F610009EAD3 /* MCTTappingCompletionStepViewController.swift */; };
-		B5386FA6206ABD11005A0FAC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5386FA5206ABD11005A0FAC /* Images.xcassets */; };
-		B5386FBF206AF30C005A0FAC /* MCTTaskInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5386FBE206AF30C005A0FAC /* MCTTaskInfo.swift */; };
-		B5386FC1206B0211005A0FAC /* MCTFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5386FC0206B0211005A0FAC /* MCTFactory.swift */; };
-		B53FD159207EBCFC00FBCC85 /* MCTTapButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53FD158207EBCFC00FBCC85 /* MCTTapButton.swift */; };
-		B5581F0A20754A7D00F224C6 /* Tremor.json in Resources */ = {isa = PBXBuildFile; fileRef = B5581EF420754A7D00F224C6 /* Tremor.json */; };
-		B56E4D0620781A640009C489 /* NavigationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56E4D0520781A640009C489 /* NavigationTests.swift */; };
-		B56E4D0A207BCA110009C489 /* MCTInstructionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56E4D09207BCA110009C489 /* MCTInstructionStepObject.swift */; };
-		B587ABE2206C57DB00542548 /* ActiveTaskSteps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B587ABE1206C57DB00542548 /* ActiveTaskSteps.storyboard */; };
 		B587AC08206D696800542548 /* UIView+mPowerTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B587AC07206D696800542548 /* UIView+mPowerTheme.swift */; };
-		B59FC273206EA445002BFDB9 /* MCTActiveStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59FC272206EA445002BFDB9 /* MCTActiveStepViewController.swift */; };
-		B59FC28C20728BC7002BFDB9 /* MCTOverviewStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59FC28B20728BC7002BFDB9 /* MCTOverviewStepViewController.swift */; };
-		B59FC2AA2073DD81002BFDB9 /* MCTOverviewStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59FC2A92073DD81002BFDB9 /* MCTOverviewStepObject.swift */; };
-		B5D822F7207449D400C03F3C /* MCTInstructionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D822F6207449D400C03F3C /* MCTInstructionStepViewController.swift */; };
-		B5DC83A22076B5FD00DEE4A2 /* Finger_Tapping.json in Resources */ = {isa = PBXBuildFile; fileRef = B5DC838C2076B5FD00DEE4A2 /* Finger_Tapping.json */; };
-		B5FA25FC206985E600A4FF3D /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7CD2062F28500CD351C /* Research.framework */; };
-		B5FA25FD206985FE00A4FF3D /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7DE2062F28F00CD351C /* ResearchUI.framework */; };
-		B5FA25FF2069867C00A4FF3D /* Walk_And_Balance.json in Resources */ = {isa = PBXBuildFile; fileRef = B5FA25FE2069867C00A4FF3D /* Walk_And_Balance.json */; };
 		CB5E16EF210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5E16EE210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift */; };
 		CB6196522109473900F2E3EA /* TrackedItemsIntroductionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6196512109473900F2E3EA /* TrackedItemsIntroductionStepObject.swift */; };
 		F8078F3F20ADF1DC00757F42 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8078F2920ADF1DC00757F42 /* AppDelegate.swift */; };
 		F8078F4320ADFA6A00757F42 /* DataSourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8078F4220ADFA6A00757F42 /* DataSourceManager.swift */; };
 		F8078F4420AE078A00757F42 /* DataSourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8078F4220ADFA6A00757F42 /* DataSourceManager.swift */; };
-		F80CB9EC207D2D2300B4EE5D /* MCTTappingStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80CB9EB207D2D2300B4EE5D /* MCTTappingStepViewController.swift */; };
-		F80CB9EF207D2DE400B4EE5D /* MCTTappingResultObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80CB9EE207D2DE400B4EE5D /* MCTTappingResultObject.swift */; };
-		F80CB9FD207D3AD800B4EE5D /* MotorControl.strings in Resources */ = {isa = PBXBuildFile; fileRef = F80CB9FC207D3AD800B4EE5D /* MotorControl.strings */; };
 		F81BE7BF20B4AB4B00EE57D3 /* AppConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = F81BE7BE20B4AB4B00EE57D3 /* AppConfig.json */; };
 		F81BE7C020B4B8F700EE57D3 /* BridgeSDK_Test.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F81BE7B520B4AA7C00EE57D3 /* BridgeSDK_Test.framework */; };
 		F81BE7C120B4B8F700EE57D3 /* BridgeSDK_Test.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F81BE7B520B4AA7C00EE57D3 /* BridgeSDK_Test.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -106,7 +82,6 @@
 		F832AC3920DA29E6005A9025 /* MP2Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F832AC3720DA29E6005A9025 /* MP2Factory.swift */; };
 		F8398D62212F32E5005DE6E0 /* Background.json in Resources */ = {isa = PBXBuildFile; fileRef = F8398D4C212F32E5005DE6E0 /* Background.json */; };
 		F8398D64212F32EE005DE6E0 /* Withdrawal.json in Resources */ = {isa = PBXBuildFile; fileRef = F8398D63212F32EE005DE6E0 /* Withdrawal.json */; };
-		F8460D752097CF0C0084E197 /* MCTCountdownStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8460D742097CF0C0084E197 /* MCTCountdownStepViewController.swift */; };
 		F848F4F32107C9A00001ADBF /* Motivation.json in Resources */ = {isa = PBXBuildFile; fileRef = F848F4DD2107C99F0001ADBF /* Motivation.json */; };
 		F84E723620E1866300E5C6C3 /* Demographics.json in Resources */ = {isa = PBXBuildFile; fileRef = F84E722020E1866300E5C6C3 /* Demographics.json */; };
 		F84E723820E1866A00E5C6C3 /* Engagement.json in Resources */ = {isa = PBXBuildFile; fileRef = F84E723720E1866A00E5C6C3 /* Engagement.json */; };
@@ -136,8 +111,6 @@
 		F8545994208FA44800D37243 /* BridgeSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7BC2062F27600CD351C /* BridgeSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8545997208FA45500D37243 /* BridgeApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7A72062F26D00CD351C /* BridgeApp.framework */; };
 		F8545998208FA45500D37243 /* BridgeApp.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7A72062F26D00CD351C /* BridgeApp.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F854599B208FA46800D37243 /* MotorControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E82D2063072100CD351C /* MotorControl.framework */; };
-		F854599C208FA46800D37243 /* MotorControl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E82D2063072100CD351C /* MotorControl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F85459A0208FA58800D37243 /* ResourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F854599F208FA58800D37243 /* ResourceTests.swift */; };
 		F85459B5208FA76D00D37243 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E7802062F1B900CD351C /* Assets.xcassets */; };
 		F85459B6208FA77400D37243 /* UIColor+mPowerTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82AE7B52063160B00952D74 /* UIColor+mPowerTheme.swift */; };
@@ -146,9 +119,6 @@
 		F861B68A2134ADF00077D43A /* SurveyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F861B6882134ADF00077D43A /* SurveyViewController.swift */; };
 		F861B6A22134B3440077D43A /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F861B6A12134B3440077D43A /* TabBarViewController.swift */; };
 		F861B6A32134B3440077D43A /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F861B6A12134B3440077D43A /* TabBarViewController.swift */; };
-		F884198F207EB4E400028A2B /* TappingSectionStep.json in Resources */ = {isa = PBXBuildFile; fileRef = F8841979207EB4E400028A2B /* TappingSectionStep.json */; };
-		F8841993207EB77000028A2B /* TremorSectionStep.json in Resources */ = {isa = PBXBuildFile; fileRef = F8841992207EB77000028A2B /* TremorSectionStep.json */; };
-		F88419B5207EC14400028A2B /* ResourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88419B4207EC14400028A2B /* ResourceTests.swift */; };
 		F88E8DFB20ADEE2600117A99 /* ExternalIDRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608241F12093D9F70026E843 /* ExternalIDRegistrationViewController.swift */; };
 		F88E8DFC20ADEE2600117A99 /* PhoneRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603B7BC220913B1A00794B7C /* PhoneRegistrationViewController.swift */; };
 		F88E8DFD20ADEE2600117A99 /* RegistrationIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608241DA2093D9A90026E843 /* RegistrationIntroViewController.swift */; };
@@ -161,7 +131,6 @@
 		F88E8E0920ADEE6000117A99 /* mPower2.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03C9DD0B20A4F956007074EE /* mPower2.strings */; };
 		F88E8E0A20ADEE6C00117A99 /* BridgeInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E7F62063039200CD351C /* BridgeInfo.plist */; };
 		F89B3DA920C60F8B002EAE2D /* TodayScheduleManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89B3DA820C60F8B002EAE2D /* TodayScheduleManagerTests.swift */; };
-		F8AA3E46214873C0006612F8 /* Research_UnitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5D56CC8208131770080AE38 /* Research_UnitTest.framework */; };
 		F8C58DB120AF4823001C7B7F /* TodayScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C58DB020AF4823001C7B7F /* TodayScheduleManager.swift */; };
 		F8C58DB220AF4823001C7B7F /* TodayScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C58DB020AF4823001C7B7F /* TodayScheduleManager.swift */; };
 		F8C58DCA20AF5E86001C7B7F /* StudyBurstScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C58DC920AF5E86001C7B7F /* StudyBurstScheduleManager.swift */; };
@@ -186,10 +155,6 @@
 		F8D3E7F72063039200CD351C /* BridgeInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E7F62063039200CD351C /* BridgeInfo.plist */; };
 		F8D3E8022063055500CD351C /* sage-mpower-2.pem in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E8002063055500CD351C /* sage-mpower-2.pem */; };
 		F8D3E8032063055500CD351C /* BridgeInfo-private.plist in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E8012063055500CD351C /* BridgeInfo-private.plist */; };
-		F8D3E8362063072200CD351C /* MotorControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E82D2063072100CD351C /* MotorControl.framework */; };
-		F8D3E83F2063072200CD351C /* MotorControl.h in Headers */ = {isa = PBXBuildFile; fileRef = F8D3E82F2063072100CD351C /* MotorControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F8D3E8422063072200CD351C /* MotorControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E82D2063072100CD351C /* MotorControl.framework */; };
-		F8D3E8432063072200CD351C /* MotorControl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E82D2063072100CD351C /* MotorControl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -215,13 +180,6 @@
 			remoteInfo = "BridgeSDK-Test";
 		};
 		F84E724220E2C99900E5C6C3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8D3E76E2062F1B900CD351C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F8545973208FA2ED00D37243;
-			remoteInfo = mPower2TestApp;
-		};
-		F8545986208FA38900D37243 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F8D3E76E2062F1B900CD351C /* Project object */;
 			proxyType = 1;
@@ -262,13 +220,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = F83B44A42032467D002825AE;
 			remoteInfo = "BridgeApp (iOS)";
-		};
-		F854599D208FA46800D37243 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8D3E76E2062F1B900CD351C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F8D3E82C2063072100CD351C;
-			remoteInfo = MotorControl;
 		};
 		F8AA3E4121487380006612F8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -403,20 +354,6 @@
 			remoteGlobalIDString = F83B44A42032467D002825AE;
 			remoteInfo = "BridgeApp (iOS)";
 		};
-		F8D3E8372063072200CD351C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8D3E76E2062F1B900CD351C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F8D3E82C2063072100CD351C;
-			remoteInfo = MotorControl;
-		};
-		F8D3E8402063072200CD351C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8D3E76E2062F1B900CD351C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F8D3E82C2063072100CD351C;
-			remoteInfo = MotorControl;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -431,7 +368,6 @@
 				F8545990208FA43D00D37243 /* Research.framework in Embed Frameworks */,
 				F8545994208FA44800D37243 /* BridgeSDK.framework in Embed Frameworks */,
 				F81BE7C120B4B8F700EE57D3 /* BridgeSDK_Test.framework in Embed Frameworks */,
-				F854599C208FA46800D37243 /* MotorControl.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -446,7 +382,6 @@
 				F8D3E7F12062F9DE00CD351C /* BridgeApp.framework in Embed Frameworks */,
 				F8D3E7E92062F9DE00CD351C /* Research.framework in Embed Frameworks */,
 				F8D3E7ED2062F9DE00CD351C /* BridgeSDK.framework in Embed Frameworks */,
-				F8D3E8432063072200CD351C /* MotorControl.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -487,33 +422,11 @@
 		80015137212F8504006B3C8E /* CSS_files */ = {isa = PBXFileReference; lastKnownFileType = folder; path = CSS_files; sourceTree = "<group>"; };
 		801E8EB1214896EF00AF6701 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = mPower2/Base.lproj/PhoneLearnMore.html; sourceTree = "<group>"; };
 		80F3739B20FC32D200A565E0 /* VersionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionLabel.swift; sourceTree = "<group>"; };
-		B508B31B2076ECA3001645CF /* MCTHandSelectionStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTHandSelectionStepObject.swift; sourceTree = "<group>"; };
-		B508B39820772D76001645CF /* MCTSkippableSectionStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTSkippableSectionStepObject.swift; sourceTree = "<group>"; };
-		B532ACEC208150C00009EAD3 /* MCTCompletionGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTCompletionGradient.swift; sourceTree = "<group>"; };
-		B532AD03208158860009EAD3 /* MCTCompletionStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTCompletionStepViewController.swift; sourceTree = "<group>"; };
-		B532AD0520817F610009EAD3 /* MCTTappingCompletionStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTTappingCompletionStepViewController.swift; sourceTree = "<group>"; };
-		B5386FA5206ABD11005A0FAC /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		B5386FBE206AF30C005A0FAC /* MCTTaskInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTTaskInfo.swift; sourceTree = "<group>"; };
-		B5386FC0206B0211005A0FAC /* MCTFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTFactory.swift; sourceTree = "<group>"; };
-		B53FD158207EBCFC00FBCC85 /* MCTTapButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTTapButton.swift; sourceTree = "<group>"; };
-		B5581EF420754A7D00F224C6 /* Tremor.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Tremor.json; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.javascript; };
-		B56E4D0520781A640009C489 /* NavigationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTests.swift; sourceTree = "<group>"; };
-		B56E4D09207BCA110009C489 /* MCTInstructionStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTInstructionStepObject.swift; sourceTree = "<group>"; };
-		B587ABE1206C57DB00542548 /* ActiveTaskSteps.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ActiveTaskSteps.storyboard; sourceTree = "<group>"; };
 		B587AC07206D696800542548 /* UIView+mPowerTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+mPowerTheme.swift"; sourceTree = "<group>"; };
-		B59FC272206EA445002BFDB9 /* MCTActiveStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTActiveStepViewController.swift; sourceTree = "<group>"; };
-		B59FC28B20728BC7002BFDB9 /* MCTOverviewStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTOverviewStepViewController.swift; sourceTree = "<group>"; };
-		B59FC2A92073DD81002BFDB9 /* MCTOverviewStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTOverviewStepObject.swift; sourceTree = "<group>"; };
-		B5D822F6207449D400C03F3C /* MCTInstructionStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTInstructionStepViewController.swift; sourceTree = "<group>"; };
-		B5DC838C2076B5FD00DEE4A2 /* Finger_Tapping.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Finger_Tapping.json; sourceTree = "<group>"; };
-		B5FA25FE2069867C00A4FF3D /* Walk_And_Balance.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Walk_And_Balance.json; sourceTree = "<group>"; };
 		CB5E16EE210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TrackedItemsIntroductionStepViewController.swift; path = "View Controllers/TrackedItemsIntroductionStepViewController.swift"; sourceTree = "<group>"; };
 		CB6196512109473900F2E3EA /* TrackedItemsIntroductionStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TrackedItemsIntroductionStepObject.swift; path = Model/TrackedItemsIntroductionStepObject.swift; sourceTree = "<group>"; };
 		F8078F2920ADF1DC00757F42 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F8078F4220ADFA6A00757F42 /* DataSourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSourceManager.swift; sourceTree = "<group>"; };
-		F80CB9EB207D2D2300B4EE5D /* MCTTappingStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTTappingStepViewController.swift; sourceTree = "<group>"; };
-		F80CB9EE207D2DE400B4EE5D /* MCTTappingResultObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTTappingResultObject.swift; sourceTree = "<group>"; };
-		F80CB9FC207D3AD800B4EE5D /* MotorControl.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = MotorControl.strings; sourceTree = "<group>"; };
 		F81BE7BE20B4AB4B00EE57D3 /* AppConfig.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AppConfig.json; sourceTree = "<group>"; };
 		F82AE7B52063160B00952D74 /* UIColor+mPowerTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+mPowerTheme.swift"; sourceTree = "<group>"; };
 		F832ABE820D8D341005A9025 /* StudyBurstCompletionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StudyBurstCompletionViewController.swift; path = "View Controllers/StudyBurstCompletionViewController.swift"; sourceTree = "<group>"; };
@@ -522,7 +435,6 @@
 		F832AC3720DA29E6005A9025 /* MP2Factory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MP2Factory.swift; sourceTree = "<group>"; };
 		F8398D4C212F32E5005DE6E0 /* Background.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Background.json; sourceTree = "<group>"; };
 		F8398D63212F32EE005DE6E0 /* Withdrawal.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Withdrawal.json; sourceTree = "<group>"; };
-		F8460D742097CF0C0084E197 /* MCTCountdownStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTCountdownStepViewController.swift; sourceTree = "<group>"; };
 		F848F4DD2107C99F0001ADBF /* Motivation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Motivation.json; sourceTree = "<group>"; };
 		F84E722020E1866300E5C6C3 /* Demographics.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Demographics.json; sourceTree = "<group>"; };
 		F84E723720E1866A00E5C6C3 /* Engagement.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Engagement.json; sourceTree = "<group>"; };
@@ -543,10 +455,6 @@
 		F854599F208FA58800D37243 /* ResourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceTests.swift; sourceTree = "<group>"; };
 		F861B6882134ADF00077D43A /* SurveyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyViewController.swift; sourceTree = "<group>"; };
 		F861B6A12134B3440077D43A /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
-		F8841979207EB4E400028A2B /* TappingSectionStep.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TappingSectionStep.json; sourceTree = "<group>"; };
-		F8841992207EB77000028A2B /* TremorSectionStep.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TremorSectionStep.json; sourceTree = "<group>"; };
-		F88419B4207EC14400028A2B /* ResourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceTests.swift; sourceTree = "<group>"; };
-		F88419CC207EC22A00028A2B /* MotorControlTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MotorControlTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		F89B3DA820C60F8B002EAE2D /* TodayScheduleManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayScheduleManagerTests.swift; sourceTree = "<group>"; };
 		F8C58DB020AF4823001C7B7F /* TodayScheduleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayScheduleManager.swift; sourceTree = "<group>"; };
 		F8C58DC920AF5E86001C7B7F /* StudyBurstScheduleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyBurstScheduleManager.swift; sourceTree = "<group>"; };
@@ -569,11 +477,6 @@
 		F8D3E7F62063039200CD351C /* BridgeInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BridgeInfo.plist; sourceTree = "<group>"; };
 		F8D3E8002063055500CD351C /* sage-mpower-2.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "sage-mpower-2.pem"; path = "../../../iOSPrivateProjectInfo/mPower2/sage-mpower-2.pem"; sourceTree = "<group>"; };
 		F8D3E8012063055500CD351C /* BridgeInfo-private.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "BridgeInfo-private.plist"; path = "../../../iOSPrivateProjectInfo/mPower2/BridgeInfo-private.plist"; sourceTree = "<group>"; };
-		F8D3E82D2063072100CD351C /* MotorControl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MotorControl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F8D3E82F2063072100CD351C /* MotorControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MotorControl.h; sourceTree = "<group>"; };
-		F8D3E8302063072100CD351C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F8D3E8352063072200CD351C /* MotorControlTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MotorControlTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F8D3E83E2063072200CD351C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -593,7 +496,6 @@
 				F854598F208FA43D00D37243 /* Research.framework in Frameworks */,
 				F8545993208FA44800D37243 /* BridgeSDK.framework in Frameworks */,
 				F81BE7C020B4B8F700EE57D3 /* BridgeSDK_Test.framework in Frameworks */,
-				F854599B208FA46800D37243 /* MotorControl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -605,7 +507,6 @@
 				F8D3E7E42062F9DE00CD351C /* ResearchUI.framework in Frameworks */,
 				F8D3E7EC2062F9DE00CD351C /* BridgeSDK.framework in Frameworks */,
 				F8D3E7F02062F9DE00CD351C /* BridgeApp.framework in Frameworks */,
-				F8D3E8422063072200CD351C /* MotorControl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -613,24 +514,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F8D3E8292063072100CD351C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B5FA25FD206985FE00A4FF3D /* ResearchUI.framework in Frameworks */,
-				B5FA25FC206985E600A4FF3D /* Research.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F8D3E8322063072200CD351C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F8AA3E46214873C0006612F8 /* Research_UnitTest.framework in Frameworks */,
-				F8D3E8362063072200CD351C /* MotorControl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -703,55 +586,6 @@
 			name = HTML;
 			sourceTree = "<group>";
 		};
-		B53FD157207EBC8F00FBCC85 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				B532ACEC208150C00009EAD3 /* MCTCompletionGradient.swift */,
-				B53FD158207EBCFC00FBCC85 /* MCTTapButton.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		B56E4D67207D31D80009C489 /* StepObjects */ = {
-			isa = PBXGroup;
-			children = (
-				B508B31B2076ECA3001645CF /* MCTHandSelectionStepObject.swift */,
-				B56E4D09207BCA110009C489 /* MCTInstructionStepObject.swift */,
-				B59FC2A92073DD81002BFDB9 /* MCTOverviewStepObject.swift */,
-				B508B39820772D76001645CF /* MCTSkippableSectionStepObject.swift */,
-			);
-			path = StepObjects;
-			sourceTree = "<group>";
-		};
-		B56E4D68207D31F50009C489 /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				B59FC272206EA445002BFDB9 /* MCTActiveStepViewController.swift */,
-				B532AD03208158860009EAD3 /* MCTCompletionStepViewController.swift */,
-				F8460D742097CF0C0084E197 /* MCTCountdownStepViewController.swift */,
-				B5D822F6207449D400C03F3C /* MCTInstructionStepViewController.swift */,
-				B59FC28B20728BC7002BFDB9 /* MCTOverviewStepViewController.swift */,
-				B532AD0520817F610009EAD3 /* MCTTappingCompletionStepViewController.swift */,
-				F80CB9EB207D2D2300B4EE5D /* MCTTappingStepViewController.swift */,
-			);
-			path = ViewControllers;
-			sourceTree = "<group>";
-		};
-		B5FA25FB2069856700A4FF3D /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				B587ABE1206C57DB00542548 /* ActiveTaskSteps.storyboard */,
-				B5DC838C2076B5FD00DEE4A2 /* Finger_Tapping.json */,
-				F8841979207EB4E400028A2B /* TappingSectionStep.json */,
-				B5581EF420754A7D00F224C6 /* Tremor.json */,
-				F8841992207EB77000028A2B /* TremorSectionStep.json */,
-				B5FA25FE2069867C00A4FF3D /* Walk_And_Balance.json */,
-				B5386FA5206ABD11005A0FAC /* Images.xcassets */,
-				F80CB9FC207D3AD800B4EE5D /* MotorControl.strings */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
 		CB5E1705210946E200AEE6A6 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -774,14 +608,6 @@
 				F8CE28AA21221362007765F1 /* MP2ReminderManager.swift */,
 			);
 			name = "Schedule Management";
-			sourceTree = "<group>";
-		};
-		F80CB9ED207D2D9D00B4EE5D /* ResultObjects */ = {
-			isa = PBXGroup;
-			children = (
-				F80CB9EE207D2DE400B4EE5D /* MCTTappingResultObject.swift */,
-			);
-			path = ResultObjects;
 			sourceTree = "<group>";
 		};
 		F8188F7B2072CF51009AC215 /* Resources */ = {
@@ -864,8 +690,6 @@
 				F8545975208FA2ED00D37243 /* mPower2TestApp */,
 				F8D3E78D2062F1B900CD351C /* mPower2Tests */,
 				F84E723E20E2C99900E5C6C3 /* mPower2TestAppUITests */,
-				F8D3E82E2063072100CD351C /* MotorControl */,
-				F8D3E83B2063072200CD351C /* MotorControlTests */,
 				F8D3E7992062F23A00CD351C /* Frameworks */,
 				F8D3E7772062F1B900CD351C /* Products */,
 			);
@@ -876,8 +700,6 @@
 			children = (
 				F8D3E7762062F1B900CD351C /* mPower2.app */,
 				F8D3E78A2062F1B900CD351C /* mPower2Tests.xctest */,
-				F8D3E82D2063072100CD351C /* MotorControl.framework */,
-				F8D3E8352063072200CD351C /* MotorControlTests.xctest */,
 				F8545974208FA2ED00D37243 /* mPower2TestApp.app */,
 				F84E723D20E2C99900E5C6C3 /* mPower2TestAppUITests.xctest */,
 			);
@@ -981,45 +803,7 @@
 			name = "Support Files";
 			sourceTree = "<group>";
 		};
-		F8D3E82E2063072100CD351C /* MotorControl */ = {
-			isa = PBXGroup;
-			children = (
-				F8D3E8302063072100CD351C /* Info.plist */,
-				F8D3E82F2063072100CD351C /* MotorControl.h */,
-				B5386FC0206B0211005A0FAC /* MCTFactory.swift */,
-				B5386FBE206AF30C005A0FAC /* MCTTaskInfo.swift */,
-				B5FA25FB2069856700A4FF3D /* Resources */,
-				F80CB9ED207D2D9D00B4EE5D /* ResultObjects */,
-				B56E4D67207D31D80009C489 /* StepObjects */,
-				B56E4D68207D31F50009C489 /* ViewControllers */,
-				B53FD157207EBC8F00FBCC85 /* Views */,
-			);
-			path = MotorControl;
-			sourceTree = "<group>";
-		};
-		F8D3E83B2063072200CD351C /* MotorControlTests */ = {
-			isa = PBXGroup;
-			children = (
-				F88419CC207EC22A00028A2B /* MotorControlTests-Bridging-Header.h */,
-				B56E4D0520781A640009C489 /* NavigationTests.swift */,
-				F88419B4207EC14400028A2B /* ResourceTests.swift */,
-				F8D3E83E2063072200CD351C /* Info.plist */,
-			);
-			path = MotorControlTests;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
-
-/* Begin PBXHeadersBuildPhase section */
-		F8D3E82A2063072100CD351C /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F8D3E83F2063072200CD351C /* MotorControl.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		F84E723C20E2C99900E5C6C3 /* mPower2TestAppUITests */ = {
@@ -1056,7 +840,6 @@
 				F8545992208FA43D00D37243 /* PBXTargetDependency */,
 				F8545996208FA44800D37243 /* PBXTargetDependency */,
 				F854599A208FA45500D37243 /* PBXTargetDependency */,
-				F854599E208FA46800D37243 /* PBXTargetDependency */,
 				F81BE7C320B4B8F700EE57D3 /* PBXTargetDependency */,
 			);
 			name = mPower2TestApp;
@@ -1081,7 +864,6 @@
 				F8D3E7E72062F9DE00CD351C /* PBXTargetDependency */,
 				F8D3E7EF2062F9DE00CD351C /* PBXTargetDependency */,
 				F8D3E7F32062F9DE00CD351C /* PBXTargetDependency */,
-				F8D3E8412063072200CD351C /* PBXTargetDependency */,
 			);
 			name = mPower2;
 			productName = mPower2;
@@ -1104,43 +886,6 @@
 			name = mPower2Tests;
 			productName = mPower2Tests;
 			productReference = F8D3E78A2062F1B900CD351C /* mPower2Tests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		F8D3E82C2063072100CD351C /* MotorControl */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F8D3E8442063072200CD351C /* Build configuration list for PBXNativeTarget "MotorControl" */;
-			buildPhases = (
-				F8D3E8282063072100CD351C /* Sources */,
-				F8D3E8292063072100CD351C /* Frameworks */,
-				F8D3E82A2063072100CD351C /* Headers */,
-				F8D3E82B2063072100CD351C /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = MotorControl;
-			productName = MotorControl;
-			productReference = F8D3E82D2063072100CD351C /* MotorControl.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		F8D3E8342063072200CD351C /* MotorControlTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F8D3E8472063072200CD351C /* Build configuration list for PBXNativeTarget "MotorControlTests" */;
-			buildPhases = (
-				F8D3E8312063072200CD351C /* Sources */,
-				F8D3E8322063072200CD351C /* Frameworks */,
-				F8D3E8332063072200CD351C /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				F8D3E8382063072200CD351C /* PBXTargetDependency */,
-				F8545987208FA38900D37243 /* PBXTargetDependency */,
-			);
-			name = MotorControlTests;
-			productName = MotorControlTests;
-			productReference = F8D3E8352063072200CD351C /* MotorControlTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -1192,17 +937,6 @@
 						ProvisioningStyle = Automatic;
 						TestTargetID = F8545973208FA2ED00D37243;
 					};
-					F8D3E82C2063072100CD351C = {
-						CreatedOnToolsVersion = 9.2;
-						LastSwiftMigration = 1000;
-						ProvisioningStyle = Automatic;
-					};
-					F8D3E8342063072200CD351C = {
-						CreatedOnToolsVersion = 9.2;
-						LastSwiftMigration = 1000;
-						ProvisioningStyle = Automatic;
-						TestTargetID = F8545973208FA2ED00D37243;
-					};
 				};
 			};
 			buildConfigurationList = F8D3E7712062F1B900CD351C /* Build configuration list for PBXProject "mPower2" */;
@@ -1240,8 +974,6 @@
 				F8545973208FA2ED00D37243 /* mPower2TestApp */,
 				F8D3E7892062F1B900CD351C /* mPower2Tests */,
 				F84E723C20E2C99900E5C6C3 /* mPower2TestAppUITests */,
-				F8D3E82C2063072100CD351C /* MotorControl */,
-				F8D3E8342063072200CD351C /* MotorControlTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1443,28 +1175,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F8D3E82B2063072100CD351C /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F8841993207EB77000028A2B /* TremorSectionStep.json in Resources */,
-				F884198F207EB4E400028A2B /* TappingSectionStep.json in Resources */,
-				B5581F0A20754A7D00F224C6 /* Tremor.json in Resources */,
-				F80CB9FD207D3AD800B4EE5D /* MotorControl.strings in Resources */,
-				B5FA25FF2069867C00A4FF3D /* Walk_And_Balance.json in Resources */,
-				B587ABE2206C57DB00542548 /* ActiveTaskSteps.storyboard in Resources */,
-				B5386FA6206ABD11005A0FAC /* Images.xcassets in Resources */,
-				B5DC83A22076B5FD00DEE4A2 /* Finger_Tapping.json in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F8D3E8332063072200CD351C /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -1596,38 +1306,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F8D3E8282063072100CD351C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B532ACED208150C00009EAD3 /* MCTCompletionGradient.swift in Sources */,
-				B532AD04208158860009EAD3 /* MCTCompletionStepViewController.swift in Sources */,
-				B59FC28C20728BC7002BFDB9 /* MCTOverviewStepViewController.swift in Sources */,
-				B59FC273206EA445002BFDB9 /* MCTActiveStepViewController.swift in Sources */,
-				B5D822F7207449D400C03F3C /* MCTInstructionStepViewController.swift in Sources */,
-				F80CB9EC207D2D2300B4EE5D /* MCTTappingStepViewController.swift in Sources */,
-				B5386FBF206AF30C005A0FAC /* MCTTaskInfo.swift in Sources */,
-				B59FC2AA2073DD81002BFDB9 /* MCTOverviewStepObject.swift in Sources */,
-				B53FD159207EBCFC00FBCC85 /* MCTTapButton.swift in Sources */,
-				B508B39920772D76001645CF /* MCTSkippableSectionStepObject.swift in Sources */,
-				B532AD0620817F620009EAD3 /* MCTTappingCompletionStepViewController.swift in Sources */,
-				B508B31C2076ECA3001645CF /* MCTHandSelectionStepObject.swift in Sources */,
-				B56E4D0A207BCA110009C489 /* MCTInstructionStepObject.swift in Sources */,
-				B5386FC1206B0211005A0FAC /* MCTFactory.swift in Sources */,
-				F80CB9EF207D2DE400B4EE5D /* MCTTappingResultObject.swift in Sources */,
-				F8460D752097CF0C0084E197 /* MCTCountdownStepViewController.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F8D3E8312063072200CD351C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F88419B5207EC14400028A2B /* ResourceTests.swift in Sources */,
-				B56E4D0620781A640009C489 /* NavigationTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1640,11 +1318,6 @@
 			isa = PBXTargetDependency;
 			target = F8545973208FA2ED00D37243 /* mPower2TestApp */;
 			targetProxy = F84E724220E2C99900E5C6C3 /* PBXContainerItemProxy */;
-		};
-		F8545987208FA38900D37243 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = F8545973208FA2ED00D37243 /* mPower2TestApp */;
-			targetProxy = F8545986208FA38900D37243 /* PBXContainerItemProxy */;
 		};
 		F8545989208FA3BA00D37243 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1671,11 +1344,6 @@
 			name = "BridgeApp (iOS)";
 			targetProxy = F8545999208FA45500D37243 /* PBXContainerItemProxy */;
 		};
-		F854599E208FA46800D37243 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = F8D3E82C2063072100CD351C /* MotorControl */;
-			targetProxy = F854599D208FA46800D37243 /* PBXContainerItemProxy */;
-		};
 		F8D3E7E72062F9DE00CD351C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "ResearchUI (iOS)";
@@ -1695,16 +1363,6 @@
 			isa = PBXTargetDependency;
 			name = "BridgeApp (iOS)";
 			targetProxy = F8D3E7F22062F9DE00CD351C /* PBXContainerItemProxy */;
-		};
-		F8D3E8382063072200CD351C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = F8D3E82C2063072100CD351C /* MotorControl */;
-			targetProxy = F8D3E8372063072200CD351C /* PBXContainerItemProxy */;
-		};
-		F8D3E8412063072200CD351C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = F8D3E82C2063072100CD351C /* MotorControl */;
-			targetProxy = F8D3E8402063072200CD351C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -2053,96 +1711,6 @@
 			};
 			name = Release;
 		};
-		F8D3E8452063072200CD351C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 27;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = KA9Z8R6M6K;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 27;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = MotorControl/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.MotorControl;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = 1;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		F8D3E8462063072200CD351C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 27;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = KA9Z8R6M6K;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 27;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = MotorControl/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.MotorControl;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = 1;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		F8D3E8482063072200CD351C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = KA9Z8R6M6K;
-				INFOPLIST_FILE = MotorControlTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.MotorControlTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "MotorControlTests/MotorControlTests-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/mPower2TestApp.app/mPower2TestApp";
-			};
-			name = Debug;
-		};
-		F8D3E8492063072200CD351C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = KA9Z8R6M6K;
-				INFOPLIST_FILE = MotorControlTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.MotorControlTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "MotorControlTests/MotorControlTests-Bridging-Header.h";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/mPower2TestApp.app/mPower2TestApp";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2187,24 +1755,6 @@
 			buildConfigurations = (
 				F8D3E7972062F1B900CD351C /* Debug */,
 				F8D3E7982062F1B900CD351C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		F8D3E8442063072200CD351C /* Build configuration list for PBXNativeTarget "MotorControl" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F8D3E8452063072200CD351C /* Debug */,
-				F8D3E8462063072200CD351C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		F8D3E8472063072200CD351C /* Build configuration list for PBXNativeTarget "MotorControlTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F8D3E8482063072200CD351C /* Debug */,
-				F8D3E8492063072200CD351C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
