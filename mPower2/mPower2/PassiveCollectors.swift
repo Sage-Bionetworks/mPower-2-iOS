@@ -357,7 +357,10 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
     private var startTime: Date?
 
     /// The identifier for the background task that collects motion data.
-    private var backgroundTaskId: UIBackgroundTaskIdentifier = .invalid
+    private var backgroundMotionTaskId: UIBackgroundTaskIdentifier = .invalid
+    
+    /// The identifier for the background task that sets a region when the location manager pauses updates.
+    private var backgroundPausingTaskId: UIBackgroundTaskIdentifier = .invalid
     
     /// The archive manager we use for archiving and uploading the results.
     private let archiveManager = SBAArchiveManager()
@@ -563,7 +566,7 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
             }
             
             // If we've already (still) got a background task going, just bail.
-            guard self.backgroundTaskId == .invalid else { return }
+            guard self.backgroundMotionTaskId == .invalid else { return }
             
             // Mark the time.
             self.startTime = Date()
@@ -573,7 +576,7 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
                 self.stopRecorderAndUpload()
             }
 
-            self.backgroundTaskId = UIApplication.shared.beginBackgroundTask(withName: "Passive gait collection") {
+            self.backgroundMotionTaskId = UIApplication.shared.beginBackgroundTask(withName: "Passive gait collection") {
                 // If we get a callback that we're out of time before our timer expires, upload whatever we managed to get.
                 #if DEBUG
                 let elapsedTime = Date().timeIntervalSince(self.startTime!)
@@ -584,9 +587,14 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
         }
     }
     
-    private func endBackgroundTask() {
-        UIApplication.shared.endBackgroundTask(self.backgroundTaskId)
-        self.backgroundTaskId = .invalid
+    private func endBackgroundMotionTask() {
+        UIApplication.shared.endBackgroundTask(self.backgroundMotionTaskId)
+        self.backgroundMotionTaskId = .invalid
+    }
+    
+    private func endBackgroundPausingTask() {
+        UIApplication.shared.endBackgroundTask(self.backgroundPausingTaskId)
+        self.backgroundPausingTaskId = .invalid
     }
     
     #if DEBUG
@@ -640,7 +648,7 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
                     self.debugNotification(title: "Done archiving", body: self.archiveErrorDesc(error))
                     #endif
                 }
-                self.endBackgroundTask()
+                self.endBackgroundMotionTask()
             }
             else {
                 #if DEBUG
@@ -655,7 +663,7 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
                 }
                 #endif
                 taskState.deleteOutputDirectory(error: error)
-                self.endBackgroundTask()
+                self.endBackgroundMotionTask()
             }
         }
     }
@@ -671,7 +679,18 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
         self.locationManagerPaused = true
         
         // In order to do that though, we need to get a good fix on our location first, and handle it
-        // in the didUpdateLocations delegate method.
+        // in the didUpdateLocations delegate method. We also need to start a background task to make
+        // sure we *get* that update and set the new region to monitor.
+        self.backgroundPausingTaskId = UIApplication.shared.beginBackgroundTask(withName: "Pausing location updates") {
+            // If we get a callback that we're out of time before we got a good location to set a region, do our best with whatever we have.
+            #if DEBUG
+            self.debugNotification(title: "Cutting it short", body: "'pausing location updates' background task about to expire -- setting region with last known location")
+            #endif
+            
+            // This ends the pausing background task too, so we don't get unceremoniously killed.
+            self.setGeofence()
+        }
+
         manager.desiredAccuracy = kCLLocationAccuracyBest
         manager.requestLocation()
     }
@@ -682,6 +701,9 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
         debugNotification(title: "Resuming location updates", body: nil)
         #endif
         self.locationManagerPaused = false
+        
+        // Just in case...
+        self.endBackgroundPausingTask()
     }
     
     func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
@@ -717,6 +739,27 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
         }
     }
     
+    private func setGeofence() {
+        // Make sure we have a valid location. If not, oh well.
+        guard let validLocation = self.lastValidLocation else {
+            self.endBackgroundPausingTask()
+            return
+        }
+        
+        // Use a radius big enough to cover the error bars on our current location, but at least our defined minimum.
+        let regionRadius = max(validLocation.horizontalAccuracy * kGeofencingAccuracyFactor, kRegionRadius)
+        
+        #if DEBUG
+        debugNotification(title: "Setting geofence with radius \(regionRadius)", body: "\(validLocation)")
+        #endif
+        let geofence = CLCircularRegion(center: validLocation.coordinate, radius: regionRadius, identifier: kPassiveGaitRegionIdentifier)
+        self.locationManager?.startMonitoring(for: geofence)
+        
+        // End the background task that was keeping us alive to get here.
+        self.endBackgroundPausingTask()
+
+    }
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard manager == self.locationManager else { return }
 
@@ -729,15 +772,7 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
         if self.locationManagerPaused {
             // Location manager paused means we got here via requestLocation(), so we're only going to get the one
             // reading, the best we can do in a reasonable time, and we don't need to manually shut down location updates.
-
-            // Use a radius big enough to cover the error bars on our current location, but at least our defined minimum.
-            let regionRadius = max(validLocation.horizontalAccuracy * kGeofencingAccuracyFactor, kRegionRadius)
-
-            #if DEBUG
-            debugNotification(title: "Setting geofence with radius \(regionRadius)", body: "\(validLocation)")
-            #endif
-            let geofence = CLCircularRegion(center: validLocation.coordinate, radius: regionRadius, identifier: kPassiveGaitRegionIdentifier)
-            manager.startMonitoring(for: geofence)
+            self.setGeofence()
         }
     }
     
