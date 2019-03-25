@@ -49,6 +49,12 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
         return MP2BridgeConfiguration()
     }
     
+    override func instantiateColorPalette() -> RSDColorPalette {
+        let primary = RSDColorMatrix.shared.colorKey(for: .palette(.royal), version: 0, index: 3)
+        let secondary = RSDColorMatrix.shared.colorKey(for: .palette(.butterscotch), version: 0, index: 3)
+        return RSDColorPalette(version: 0, primary: primary, secondary: secondary, accent: primary)
+    }
+    
     override func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]?) -> Bool {
         SBASurveyConfiguration.shared = MP2SurveyConfiguration()
         

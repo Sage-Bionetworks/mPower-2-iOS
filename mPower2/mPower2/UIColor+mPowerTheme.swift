@@ -35,54 +35,26 @@ import Foundation
 import ResearchUI
 
 extension UIColor {
-    
-    // MARK: Primary Tint
-    
-    @objc open class var primaryTintColor: UIColor {
-        return UIColor.royal500
-    }
 
-    @objc open class var lightPrimaryTintColor: UIColor {
-        return UIColor.royal400
-    }
-    
-    @objc open class var darkPrimaryTintColor: UIColor {
-        return UIColor.royal600
-    }
-    
-    @objc open class var veryDarkPrimaryTintColor: UIColor {
-        return UIColor.royal700
-    }
-    
-    // MARK: Secondary Tint
-    
-    @objc open class var secondaryTintColor: UIColor {
-        return UIColor.butterscotch500
-    }
-    
-    @objc open class var darkSecondaryTintColor: UIColor {
-        return UIColor.butterscotch600
-    }
-
-    // MARK: Countdown Dial
-    
-    @objc open class var rsd_dialInnerBackgroundLightStyle: UIColor {
-        return primaryTintColor
-    }
-    
-    @objc open class var rsd_dialInnerBakcground: UIColor {
-        return primaryTintColor
-    }
-    
-    // MARK: Rounded Button Text
-    
-    @objc open class var rsd_roundedButtonText: UIColor {
-        return UIColor.appTextDark
-    }
-    
-    @objc open class var rsd_roundedButtonTextLightStyle: UIColor {
-        return UIColor.appTextDark
-    }
+//    // MARK: Countdown Dial
+//
+//    @objc open class var rsd_dialInnerBackgroundLightStyle: UIColor {
+//        return primaryTintColor
+//    }
+//
+//    @objc open class var rsd_dialInnerBakcground: UIColor {
+//        return primaryTintColor
+//    }
+//
+//    // MARK: Rounded Button Text
+//
+//    @objc open class var rsd_roundedButtonText: UIColor {
+//        return UIColor.appTextDark
+//    }
+//
+//    @objc open class var rsd_roundedButtonTextLightStyle: UIColor {
+//        return UIColor.appTextDark
+//    }
     
     // MARK: Royal Purple
     
