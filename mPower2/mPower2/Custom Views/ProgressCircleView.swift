@@ -44,8 +44,11 @@ import ResearchUI
         let ring = RSDCountdownDial(frame: frame)
         ring.dialWidth = strokeWidth
         ring.ringWidth = strokeWidth
-        ring.backgroundColor = UIColor.white
-        ring.progressColor = UIColor.primaryTintColor
+        ring.backgroundColor = UIColor.clear
+        ring.innerColor = UIColor.white
+        ring.progressColor = RSDStudyConfiguration.shared.colorPalette.primary.normal.color
+        dayLabel.textColor = UIColor.royal700
+        dayCountLabel.textColor = UIColor.royal700
         insertSubview(ring, at: 0)
         ring.rsd_alignAllToSuperview(padding: strokeWidth / 2)
         return ring

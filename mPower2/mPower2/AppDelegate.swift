@@ -58,6 +58,9 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
     override func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]?) -> Bool {
         SBASurveyConfiguration.shared = MP2SurveyConfiguration()
         
+        // TODO: syoung 03/25/2019 Refactor bridge study manager to be able to set this through the appConfig.
+        RSDStudyConfiguration.shared.fullInstructionsFrequency = .monthly
+        
         // Instantiate and load the scheduled activities and reports for the study burst.
         StudyBurstScheduleManager.shared.loadScheduledActivities()
         StudyBurstScheduleManager.shared.loadReports()
