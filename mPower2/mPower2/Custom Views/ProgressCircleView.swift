@@ -47,8 +47,8 @@ import ResearchUI
         ring.backgroundColor = UIColor.clear
         ring.innerColor = UIColor.white
         ring.progressColor = RSDStudyConfiguration.shared.colorPalette.primary.normal.color
-        dayLabel.textColor = UIColor.royal700
-        dayCountLabel.textColor = UIColor.royal700
+        dayLabel.textColor = RSDStudyConfiguration.shared.colorPalette.primary.veryDark.color
+        dayCountLabel.textColor = RSDStudyConfiguration.shared.colorPalette.primary.veryDark.color
         insertSubview(ring, at: 0)
         ring.rsd_alignAllToSuperview(padding: strokeWidth / 2)
         return ring
@@ -67,7 +67,7 @@ import ResearchUI
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: "HelveticaNeue-Bold", size: 12.0)
-        label.textColor = UIColor.royal700
+        label.textColor = RSDStudyConfiguration.shared.colorPalette.primary.veryDark.color
         label.textAlignment = .center
         label.text = "Day" // TODO: jbruhin 5-1-18 localize
         label.sizeToFit()
@@ -81,7 +81,7 @@ import ResearchUI
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: "HelveticaNeue-Thin", size: 30.0)
-        label.textColor = UIColor.royal700
+        label.textColor = RSDStudyConfiguration.shared.colorPalette.primary.veryDark.color
         label.textAlignment = .center
         addSubview(label)
         label.rsd_alignCenterVertical(padding: 5.0)
