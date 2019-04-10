@@ -11,12 +11,6 @@
             "type": "fetchable",
             "imageName":"symptoms"
         },
-        "colorTheme": {
-            "colorStyle": {
-                "header": "darkBackground"
-            },
-            "usesLightStyle": false
-        },
         "actions" : { "goForward": { "type": "default", "buttonTitle": "Select Symptoms" }},
         "shouldHideActions": ["skip", "goBackward"]
     },

@@ -11,12 +11,6 @@
             "type": "fetchable",
             "imageName":"medication"
         },
-        "colorTheme": {
-            "colorStyle": {
-                "header": "darkBackground"
-            },
-            "usesLightStyle": false
-        },
         "actions" : { "goForward": { "type": "default", "buttonTitle": "Select Medications" }},
         "shouldHideActions": ["skip", "goBackward"] },
     "selection": {
@@ -32,8 +26,9 @@
             "imageName":"remindersIcon",
             "placementType":"iconBefore"
         },
-        "colorTheme": {
-            "usesLightStyle": false
+        "colorMapping": {
+            "type" : "singleColor",
+            "colorStyle": "white"
         },
         "actions" : { "goForward": { "type": "default", "buttonTitle": "Submit" }},
         "shouldHideActions":["skip", "goBackward"],

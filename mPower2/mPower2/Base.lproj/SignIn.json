@@ -13,12 +13,9 @@
                      "imageName":"welcomeScreenImage",
                      "placementType":"topBackground"
                  },
-                 "colorTheme":{
-                     "colorStyle": {
-                         "header": "darkBackground",
-                         "body": "darkBackground",
-                         "footer": "darkBackground"
-                     }
+                 "colorMapping":{
+                     "type": "singleColor",
+                     "colorStyle": "primary"
                  },
                  "viewTheme":{
                      "viewIdentifier":"RegistrationIntro",
@@ -54,12 +51,9 @@
                     "imageName": "phonebook",
                     "placementType":"topBackground"
                 },
-                "colorTheme":{
-                    "colorStyle": {
-                        "header": "darkBackground",
-                        "body": "darkBackground",
-                        "footer": "darkBackground"
-                    }
+                "colorMapping":{
+                    "type": "singleColor",
+                    "colorStyle": "primary"
                 },
                 "viewTheme":{
                     "viewIdentifier":"PhoneRegistration",
@@ -105,13 +99,6 @@
                     "type": "fetchable",
                     "imageName": "TapLeft1",
                     "placementType":"iconAbove"
-                },
-                "colorTheme":{
-                     "colorStyle": {
-                         "header": "darkBackground",
-                         "body": "lightBackground",
-                         "footer": "lightBackground"
-                     }
                 },
                 "viewTheme":{
                     "viewIdentifier":"ExternalIDRegistration",
