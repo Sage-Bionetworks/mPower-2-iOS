@@ -35,8 +35,6 @@
 		60E94119212B8FD70027432C /* ProfileTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E94111212B8FD60027432C /* ProfileTableHeaderView.swift */; };
 		60E9411A212B8FD70027432C /* ProfileTableFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60E94112212B8FD60027432C /* ProfileTableFooterView.xib */; };
 		60E9411B212B8FD70027432C /* ProfileTableFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60E94112212B8FD60027432C /* ProfileTableFooterView.xib */; };
-		60E9411C212B8FD70027432C /* HealthProfileTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60E94113212B8FD60027432C /* HealthProfileTableHeaderView.xib */; };
-		60E9411D212B8FD70027432C /* HealthProfileTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60E94113212B8FD60027432C /* HealthProfileTableHeaderView.xib */; };
 		60E9411E212B8FD70027432C /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E94114212B8FD60027432C /* ProfileTableViewCell.swift */; };
 		60E9411F212B8FD70027432C /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E94114212B8FD60027432C /* ProfileTableViewCell.swift */; };
 		60E94122212B8FD70027432C /* ProfileTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60E94116212B8FD70027432C /* ProfileTableHeaderView.xib */; };
@@ -441,7 +439,6 @@
 		60E86E4F212B6B430073C69C /* ProfileTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewController.swift; sourceTree = "<group>"; };
 		60E94111212B8FD60027432C /* ProfileTableHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableHeaderView.swift; sourceTree = "<group>"; };
 		60E94112212B8FD60027432C /* ProfileTableFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileTableFooterView.xib; sourceTree = "<group>"; };
-		60E94113212B8FD60027432C /* HealthProfileTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HealthProfileTableHeaderView.xib; sourceTree = "<group>"; };
 		60E94114212B8FD60027432C /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		60E94116212B8FD70027432C /* ProfileTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileTableHeaderView.xib; sourceTree = "<group>"; };
 		60E94117212B8FD70027432C /* ProfileTableFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableFooterView.swift; sourceTree = "<group>"; };
@@ -655,7 +652,6 @@
 				F8D3E7822062F1B900CD351C /* LaunchScreen.storyboard */,
 				F8D3E77D2062F1B900CD351C /* Main.storyboard */,
 				60A1576D209D16C40033FAB5 /* Registration.storyboard */,
-				60E94113212B8FD60027432C /* HealthProfileTableHeaderView.xib */,
 				60E94112212B8FD60027432C /* ProfileTableFooterView.xib */,
 				60E94116212B8FD70027432C /* ProfileTableHeaderView.xib */,
 				F8D3E7802062F1B900CD351C /* Assets.xcassets */,
@@ -1195,7 +1191,6 @@
 				80015136212F837A006B3C8E /* Licenses.html in Resources */,
 				F84E723620E1866300E5C6C3 /* Demographics.json in Resources */,
 				F84E723820E1866A00E5C6C3 /* Engagement.json in Resources */,
-				60E9411D212B8FD70027432C /* HealthProfileTableHeaderView.xib in Resources */,
 				80015133212F6B46006B3C8E /* consent.html in Resources */,
 				F85020D4211B96BA0094E05F /* Medication.json in Resources */,
 				F88E8E0920ADEE6000117A99 /* mPower2.strings in Resources */,
@@ -1219,7 +1214,6 @@
 				F8D3E77F2062F1B900CD351C /* Main.storyboard in Resources */,
 				F85020D7211B96BF0094E05F /* StudyBurstReminder.json in Resources */,
 				F85020DB211B96C40094E05F /* SignIn.json in Resources */,
-				60E9411C212B8FD70027432C /* HealthProfileTableHeaderView.xib in Resources */,
 				80015135212F837A006B3C8E /* Licenses.html in Resources */,
 				F8D3E8022063055500CD351C /* sage-mpower-2.pem in Resources */,
 				60E9411A212B8FD70027432C /* ProfileTableFooterView.xib in Resources */,

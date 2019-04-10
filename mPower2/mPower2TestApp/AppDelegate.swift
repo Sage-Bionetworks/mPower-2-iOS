@@ -51,7 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var testHarness: SBBBridgeTestHarness?
 
     var window: UIWindow?
-    
+        
     let colorPalette:  RSDColorPalette = {
         let primary = RSDColorMatrix.shared.colorKey(for: .palette(.royal), version: 0, index: 3)
         let secondary = RSDColorMatrix.shared.colorKey(for: .palette(.butterscotch), version: 0, index: 3)

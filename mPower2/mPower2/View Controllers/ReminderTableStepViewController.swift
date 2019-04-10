@@ -115,15 +115,6 @@ class ReminderTextFieldCell: RSDStepTextFieldCell {
         topRuleView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(topRuleView)
     }
-    
-    override var usesLightStyle: Bool {
-        didSet {
-            if !usesLightStyle {
-                topRuleView.backgroundColor = UIColor.appVeryLightGray
-                ruleView.backgroundColor = UIColor.appVeryLightGray
-            }
-        }
-    }
 
     override open func updateConstraints() {
         

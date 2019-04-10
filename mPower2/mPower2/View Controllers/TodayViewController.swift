@@ -139,10 +139,12 @@ class TodayViewController: UIViewController {
 
     func setupView() {
         
+        let designSystem = RSDDesignSystem()
+        
         // Initial setup.
         actionBarView.layer.cornerRadius = 4.0
         actionBarView.layer.masksToBounds = true
-        actionBarView.backgroundColor = UIColor.primaryTintColor
+        actionBarView.backgroundColor = designSystem.colorRules.backgroundPrimary.color
         
         // set up view for initial state.
         self.updateActionBar()
