@@ -32,6 +32,7 @@
 //
 
 import UIKit
+import Research
 
 class ProfileTableFooterView: UITableViewHeaderFooterView {
     static let className = String(describing: ProfileTableFooterView.self)
@@ -43,8 +44,9 @@ class ProfileTableFooterView: UITableViewHeaderFooterView {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        let designSystem = RSDDesignSystem()
         upperSeparatorView?.backgroundColor = UIColor.white
-        lowerSeparatorView?.backgroundColor = UIColor.primaryTintColor
+        lowerSeparatorView?.backgroundColor = designSystem.colorRules.backgroundPrimary.color
     }
     
 }

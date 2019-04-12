@@ -76,13 +76,16 @@ class ProfileTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let designSystem = RSDDesignSystem()
+        let background = designSystem.colorRules.backgroundPrimary
+        
         let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString")
         versionLabel?.text = "\(Localization.localizedAppName) \(version!), build \(Bundle.main.appVersion())"
         tableView.backgroundColor = UIColor.white
-        tableHeaderView?.backgroundColor = UIColor.primaryTintColor
-        headerTitleLabel?.textColor = UIColor.white
-        tableFooterView?.backgroundColor = UIColor.primaryTintColor
-        versionLabel?.textColor = UIColor.white
+        tableHeaderView?.backgroundColor = background.color
+        headerTitleLabel?.textColor = designSystem.colorRules.textColor(on: background, for: .heading4)
+        tableFooterView?.backgroundColor = background.color
+        versionLabel?.textColor = designSystem.colorRules.textColor(on: background, for: .bodyDetail)
         
         registerSectionHeaderView()
         registerSectionFooterView()

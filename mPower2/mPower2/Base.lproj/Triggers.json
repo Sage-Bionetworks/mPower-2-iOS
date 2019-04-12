@@ -11,12 +11,6 @@
             "type": "fetchable",
             "imageName":"triggers"
         },
-        "colorTheme": {
-            "colorStyle": {
-                "header": "darkBackground"
-            },
-            "usesLightStyle": false
-        },
         "actions" : { "goForward": { "type": "default", "buttonTitle": "Select Triggers" }},
         "shouldHideActions": ["skip", "goBackward"]
     },

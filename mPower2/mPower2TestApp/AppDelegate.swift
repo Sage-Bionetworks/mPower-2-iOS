@@ -51,8 +51,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var testHarness: SBBBridgeTestHarness?
 
     var window: UIWindow?
+        
+    let colorPalette:  RSDColorPalette = {
+        let primary = RSDColorMatrix.shared.colorKey(for: .palette(.royal), version: 0, index: 3)
+        let secondary = RSDColorMatrix.shared.colorKey(for: .palette(.butterscotch), version: 0, index: 3)
+        return RSDColorPalette(version: 0, primary: primary, secondary: secondary, accent: primary)
+    }()
     
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        
+        RSDStudyConfiguration.shared.colorPalette = colorPalette
+        RSDStudyConfiguration.shared.fullInstructionsFrequency = .monthly
         
         // Set up localization.
         let mainBundle = LocalizationBundle(bundle: Bundle.main, tableName: "mPower2")
@@ -63,7 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let activityManager = ActivityManager()
         
         // NOTE: syoung 06/28/2018 You can set different study setup objects to test different states.
-        activityManager.studySetup = .day2_nothingFinished
+        activityManager.studySetup = .day9_tasksFinished
         
         SBBComponentManager.registerComponent(activityManager, for: SBBActivityManager.self)
         activityManager.buildSchedules()

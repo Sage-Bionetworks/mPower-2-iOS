@@ -82,7 +82,7 @@ class DataSourceManager {
     
     let tabs: [RSDIdentifier : [RSDIdentifier]] =
         [ .trackingTaskGroup : [.triggersTask, .symptomsTask, .medicationTask],
-          .measuringTaskGroup : MCTTaskIdentifier.all().map { $0.rsdIdentifier }]
+          .measuringTaskGroup : MCTTaskIdentifier.allCases.map { $0.rsdIdentifier }]
     
     let categoryMapping : [RSDIdentifier : SBAReportCategory] = [
         .studyBurstReminder : .singleton,

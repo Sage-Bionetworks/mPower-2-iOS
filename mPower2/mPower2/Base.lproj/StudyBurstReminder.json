@@ -12,8 +12,9 @@
                      "imageName":"remindersIcon",
                      "placementType":"iconBefore"
                  },
-                 "colorTheme": {
-                    "usesLightStyle": false
+                 "colorMapping": {
+                     "type" : "singleColor",
+                     "colorStyle": "white"
                  },
                  "inputFields": [
                                  {

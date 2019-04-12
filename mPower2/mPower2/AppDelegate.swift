@@ -49,8 +49,17 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
         return MP2BridgeConfiguration()
     }
     
+    override func instantiateColorPalette() -> RSDColorPalette? {
+        let primary = RSDColorMatrix.shared.colorKey(for: .palette(.royal), version: 0, index: 3)
+        let secondary = RSDColorMatrix.shared.colorKey(for: .palette(.butterscotch), version: 0, index: 3)
+        return RSDColorPalette(version: 0, primary: primary, secondary: secondary, accent: primary)
+    }
+    
     override func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]?) -> Bool {
         SBASurveyConfiguration.shared = MP2SurveyConfiguration()
+        
+        // TODO: syoung 03/25/2019 Refactor bridge study manager to be able to set this through the appConfig.
+        RSDStudyConfiguration.shared.fullInstructionsFrequency = .monthly
         
         // Instantiate and load the scheduled activities and reports for the study burst.
         StudyBurstScheduleManager.shared.loadScheduledActivities()

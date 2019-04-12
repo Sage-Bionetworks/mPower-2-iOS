@@ -32,6 +32,7 @@
 //
 
 import UIKit
+import Research
 
 class ProfileTableViewCell: UITableViewCell {
     
@@ -43,8 +44,10 @@ class ProfileTableViewCell: UITableViewCell {
         super.awakeFromNib()
         contentView.backgroundColor = UIColor.clear
         
-        titleLabel?.textColor = UIColor.appTextDark
-        chevron.image = chevron?.image?.rsd_applyColor(UIColor.primaryTintColor)
+        let designSystem = RSDDesignSystem()
+        let background = designSystem.colorRules.backgroundLight
+        titleLabel?.textColor = designSystem.colorRules.textColor(on: background, for: .heading4)
+        chevron.image = chevron?.image?.rsd_applyColor(designSystem.colorRules.palette.primary.normal.color)
     }
     
 }
@@ -54,8 +57,10 @@ class ProfileTableViewDetailCell: ProfileTableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        titleLabel?.textColor = UIColor.appTextDark
-        detailLabel?.textColor = UIColor.appLightGray
+        let designSystem = RSDDesignSystem()
+        let background = designSystem.colorRules.backgroundLight
+        titleLabel?.textColor = designSystem.colorRules.textColor(on: background, for: .heading4)
+        detailLabel?.textColor = designSystem.colorRules.textColor(on: background, for: .bodyDetail)
     }
     
 }

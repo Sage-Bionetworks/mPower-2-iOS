@@ -386,7 +386,7 @@ protocol TaskBrowserTabViewDelegate {
     public let rule: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor.royal500
+        view.backgroundColor = RSDStudyConfiguration.shared.colorPalette.primary.normal.color
         return view
     }()
     let label: UILabel = {

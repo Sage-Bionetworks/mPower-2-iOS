@@ -33,6 +33,7 @@
 
 import UIKit
 import ResearchUI
+import Research
 
 class ProfileHTMLViewController: RSDWebViewController {
     
@@ -40,7 +41,9 @@ class ProfileHTMLViewController: RSDWebViewController {
     
     open override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.primaryTintColor
+        
+        let designSystem = RSDDesignSystem()
+        self.view.backgroundColor = designSystem.colorRules.backgroundPrimary.color
     }
 
     open override func viewDidAppear(_ animated: Bool) {
