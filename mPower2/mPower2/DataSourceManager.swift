@@ -56,7 +56,10 @@ extension RSDIdentifier {
     static let engagement: RSDIdentifier = "Engagement"
     static let motivation: RSDIdentifier = "Motivation"
     static let withdrawal: RSDIdentifier = "Withdrawal"
+    static let passiveDataPermission: RSDIdentifier = "PassiveDataPermission"
     static let studyBurstReminder: RSDIdentifier = "StudyBurstReminder"
+    
+    static let passiveDataPermissionProfileKey: RSDIdentifier = "passiveDataAllowed"
 }
 
 extension MCTTaskInfo : SBAActivityInfo {
@@ -90,6 +93,7 @@ class DataSourceManager {
         .demographics : .singleton,
         .background : .singleton,
         .engagement : .singleton,
+        .passiveDataPermission: .singleton,
         .medicationTask : .groupByDay
     ]
     

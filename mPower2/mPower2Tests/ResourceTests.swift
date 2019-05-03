@@ -108,6 +108,18 @@ class ResourceTests: XCTestCase {
         }
     }
     
+    func testPassiveDataPermission() {
+        let identifier = "PassiveDataPermission"
+        do {
+            let resourceTransformer = RSDResourceTransformerObject(resourceName: identifier)
+            let factory = MP2Factory()
+            let task = try factory.decodeTask(with: resourceTransformer)
+            try task.validate()
+        } catch let err {
+            XCTFail("Failed to decode the \(identifier) task. \(err)")
+        }
+    }
+    
     func testTriggers() {
         let identifier = "Triggers"
         do {

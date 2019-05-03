@@ -19,6 +19,7 @@
 		03DD008420E2F9A4006A5794 /* ReminderTableStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DD008220E2F9A4006A5794 /* ReminderTableStepViewController.swift */; };
 		60169BBB20AF445800D29532 /* SignInTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F45523209CF10100C532A0 /* SignInTaskViewController.swift */; };
 		60169BD120AF445C00D29532 /* ConsentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6076F2CA20A6680B00F6235E /* ConsentViewController.swift */; };
+		602EE759223304BD0090713F /* ProfileHTMLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80015118212F5621006B3C8E /* ProfileHTMLViewController.swift */; };
 		603B1086212CA7C500E44EE9 /* WithdrawalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603B1070212CA7C500E44EE9 /* WithdrawalViewController.swift */; };
 		603B1087212CA7C500E44EE9 /* WithdrawalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603B1070212CA7C500E44EE9 /* WithdrawalViewController.swift */; };
 		603B7BAA208E90FF00794B7C /* RegistrationWaitingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603B7BA9208E90FF00794B7C /* RegistrationWaitingViewController.swift */; };
@@ -27,6 +28,10 @@
 		608241DB2093D9A90026E843 /* RegistrationIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608241DA2093D9A90026E843 /* RegistrationIntroViewController.swift */; };
 		608241F22093D9F70026E843 /* ExternalIDRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608241F12093D9F70026E843 /* ExternalIDRegistrationViewController.swift */; };
 		60A1576E209D16C50033FAB5 /* Registration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60A1576D209D16C40033FAB5 /* Registration.storyboard */; };
+		60ADB34E2279FCB100FDF132 /* PassiveDataPermissionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E3D7362279383B0087FCA2 /* PassiveDataPermissionStepViewController.swift */; };
+		60ADB34F227A033800FDF132 /* PassiveDataPermissionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E3D71D2279366A0087FCA2 /* PassiveDataPermissionStepObject.swift */; };
+		60D534C0222719D10022F0C5 /* PassiveDataPermission.json in Resources */ = {isa = PBXBuildFile; fileRef = 60D534BE222719D10022F0C5 /* PassiveDataPermission.json */; };
+		60D534D82227339F0022F0C5 /* PassiveDataPermission.json in Resources */ = {isa = PBXBuildFile; fileRef = 60D534BE222719D10022F0C5 /* PassiveDataPermission.json */; };
 		60E86E50212B6B430073C69C /* ProfileTableItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E86E39212B6B420073C69C /* ProfileTableItems.swift */; };
 		60E86E51212B6B430073C69C /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E86E4F212B6B430073C69C /* ProfileTableViewController.swift */; };
 		60E86E52212B6B570073C69C /* ProfileTableItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E86E39212B6B420073C69C /* ProfileTableItems.swift */; };
@@ -60,6 +65,8 @@
 		801E8EB3214896EF00AF6701 /* PhoneLearnMore.html in Resources */ = {isa = PBXBuildFile; fileRef = 801E8EB0214896EF00AF6701 /* PhoneLearnMore.html */; };
 		80A0BE3321095E1A00D31B68 /* TrackedItemsIntroductionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6196512109473900F2E3EA /* TrackedItemsIntroductionStepObject.swift */; };
 		80A0BE4921095E4F00D31B68 /* TrackedItemsIntroductionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5E16EE210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift */; };
+		80E3D71E2279366A0087FCA2 /* PassiveDataPermissionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E3D71D2279366A0087FCA2 /* PassiveDataPermissionStepObject.swift */; };
+		80E3D7372279383B0087FCA2 /* PassiveDataPermissionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E3D7362279383B0087FCA2 /* PassiveDataPermissionStepViewController.swift */; };
 		80F3739C20FC32D200A565E0 /* VersionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F3739B20FC32D200A565E0 /* VersionLabel.swift */; };
 		B587AC08206D696800542548 /* UIView+mPowerTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B587AC07206D696800542548 /* UIView+mPowerTheme.swift */; };
 		CB5E16EF210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5E16EE210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift */; };
@@ -232,6 +239,7 @@
 		608241DA2093D9A90026E843 /* RegistrationIntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationIntroViewController.swift; sourceTree = "<group>"; };
 		608241F12093D9F70026E843 /* ExternalIDRegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalIDRegistrationViewController.swift; sourceTree = "<group>"; };
 		60A1576D209D16C40033FAB5 /* Registration.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Registration.storyboard; sourceTree = "<group>"; };
+		60D534BF222719D10022F0C5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = Base; path = mPower2/Base.lproj/PassiveDataPermission.json; sourceTree = "<group>"; };
 		60E86E39212B6B420073C69C /* ProfileTableItems.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableItems.swift; sourceTree = "<group>"; };
 		60E86E4F212B6B430073C69C /* ProfileTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewController.swift; sourceTree = "<group>"; };
 		60E94111212B8FD60027432C /* ProfileTableHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableHeaderView.swift; sourceTree = "<group>"; };
@@ -249,6 +257,8 @@
 		80015134212F837A006B3C8E /* Licenses.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Licenses.html; sourceTree = "<group>"; };
 		80015137212F8504006B3C8E /* CSS_files */ = {isa = PBXFileReference; lastKnownFileType = folder; path = CSS_files; sourceTree = "<group>"; };
 		801E8EB1214896EF00AF6701 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = mPower2/Base.lproj/PhoneLearnMore.html; sourceTree = "<group>"; };
+		80E3D71D2279366A0087FCA2 /* PassiveDataPermissionStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PassiveDataPermissionStepObject.swift; path = Model/PassiveDataPermissionStepObject.swift; sourceTree = "<group>"; };
+		80E3D7362279383B0087FCA2 /* PassiveDataPermissionStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PassiveDataPermissionStepViewController.swift; path = "View Controllers/PassiveDataPermissionStepViewController.swift"; sourceTree = "<group>"; };
 		80F3739B20FC32D200A565E0 /* VersionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionLabel.swift; sourceTree = "<group>"; };
 		B587AC07206D696800542548 /* UIView+mPowerTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+mPowerTheme.swift"; sourceTree = "<group>"; };
 		CB5E16EE210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TrackedItemsIntroductionStepViewController.swift; path = "View Controllers/TrackedItemsIntroductionStepViewController.swift"; sourceTree = "<group>"; };
@@ -379,6 +389,7 @@
 				03DD008220E2F9A4006A5794 /* ReminderTableStepViewController.swift */,
 				03A6E0012103E69900FC5A84 /* GreatJobViewController.swift */,
 				CB5E16EE210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift */,
+				80E3D7362279383B0087FCA2 /* PassiveDataPermissionStepViewController.swift */,
 				60E86E4F212B6B430073C69C /* ProfileTableViewController.swift */,
 				603B1070212CA7C500E44EE9 /* WithdrawalViewController.swift */,
 				80015118212F5621006B3C8E /* ProfileHTMLViewController.swift */,
@@ -431,6 +442,7 @@
 			isa = PBXGroup;
 			children = (
 				CB6196512109473900F2E3EA /* TrackedItemsIntroductionStepObject.swift */,
+				80E3D71D2279366A0087FCA2 /* PassiveDataPermissionStepObject.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -493,6 +505,7 @@
 			isa = PBXGroup;
 			children = (
 				F85020DF211B970C0094E05F /* ActivityTracking.json */,
+				60D534BE222719D10022F0C5 /* PassiveDataPermission.json */,
 				F85020B9211B96AE0094E05F /* Triggers.json */,
 				F85020D2211B96B40094E05F /* Symptoms.json */,
 				F85020D6211B96BA0094E05F /* Medication.json */,
@@ -767,6 +780,7 @@
 				F88E8E0620ADEE4700117A99 /* Main.storyboard in Resources */,
 				F88E8E0520ADEE4200117A99 /* LaunchScreen.storyboard in Resources */,
 				F8398D64212F32EE005DE6E0 /* Withdrawal.json in Resources */,
+				60D534D82227339F0022F0C5 /* PassiveDataPermission.json in Resources */,
 				60E94123212B8FD70027432C /* ProfileTableHeaderView.xib in Resources */,
 				F85020DC211B96C40094E05F /* SignIn.json in Resources */,
 				801E8EB3214896EF00AF6701 /* PhoneLearnMore.html in Resources */,
@@ -797,6 +811,7 @@
 				80015116212F3A71006B3C8E /* fetchBridgeResources.sh in Resources */,
 				F8D3E7842062F1B900CD351C /* LaunchScreen.storyboard in Resources */,
 				60A1576E209D16C50033FAB5 /* Registration.storyboard in Resources */,
+				60D534C0222719D10022F0C5 /* PassiveDataPermission.json in Resources */,
 				F8D3E7812062F1B900CD351C /* Assets.xcassets in Resources */,
 				F85020E1211B970C0094E05F /* ActivityTracking.json in Resources */,
 				F85020CF211B96B40094E05F /* Symptoms.json in Resources */,
@@ -873,6 +888,7 @@
 				F8C58DB220AF4823001C7B7F /* TodayScheduleManager.swift in Sources */,
 				F8C58DD620AF8CCC001C7B7F /* SurveyScheduleManager.swift in Sources */,
 				80A0BE3321095E1A00D31B68 /* TrackedItemsIntroductionStepObject.swift in Sources */,
+				60ADB34E2279FCB100FDF132 /* PassiveDataPermissionStepViewController.swift in Sources */,
 				03A6E0032103E69900FC5A84 /* GreatJobViewController.swift in Sources */,
 				F8CE28AC21221362007765F1 /* MP2ReminderManager.swift in Sources */,
 				60E87023212B8E940073C69C /* ProfileTableViewController.swift in Sources */,
@@ -882,7 +898,9 @@
 				F832AC3920DA29E6005A9025 /* MP2Factory.swift in Sources */,
 				60E94119212B8FD70027432C /* ProfileTableHeaderView.swift in Sources */,
 				F8502065211A4F870094E05F /* MP2SurveyConfiguration.swift in Sources */,
+				60ADB34F227A033800FDF132 /* PassiveDataPermissionStepObject.swift in Sources */,
 				F88E8DFE20ADEE2600117A99 /* RegistrationWaitingViewController.swift in Sources */,
+				602EE759223304BD0090713F /* ProfileHTMLViewController.swift in Sources */,
 				60169BD120AF445C00D29532 /* ConsentViewController.swift in Sources */,
 				60FB513F212DED6F00D50F4D /* MP2ProfileDataSource.swift in Sources */,
 				F832AC3620DA22DA005A9025 /* MP2BridgeConfiguration.swift in Sources */,
@@ -908,6 +926,7 @@
 				F861B6892134ADF00077D43A /* SurveyViewController.swift in Sources */,
 				0349535520981C89006A05B1 /* ProgressCircleView.swift in Sources */,
 				F832AC3820DA29E6005A9025 /* MP2Factory.swift in Sources */,
+				80E3D71E2279366A0087FCA2 /* PassiveDataPermissionStepObject.swift in Sources */,
 				60E94118212B8FD70027432C /* ProfileTableHeaderView.swift in Sources */,
 				60FB513B212DEB3B00D50F4D /* MP2ProfileSection.swift in Sources */,
 				608241DB2093D9A90026E843 /* RegistrationIntroViewController.swift in Sources */,
@@ -919,6 +938,7 @@
 				60E9411E212B8FD70027432C /* ProfileTableViewCell.swift in Sources */,
 				F8D3E77A2062F1B900CD351C /* AppDelegate.swift in Sources */,
 				0334415620995CCD009B97A9 /* TaskBrowserViewController.swift in Sources */,
+				80E3D7372279383B0087FCA2 /* PassiveDataPermissionStepViewController.swift in Sources */,
 				F8C58DCA20AF5E86001C7B7F /* StudyBurstScheduleManager.swift in Sources */,
 				F8C58DB120AF4823001C7B7F /* TodayScheduleManager.swift in Sources */,
 				60FB513E212DED6F00D50F4D /* MP2ProfileDataSource.swift in Sources */,
@@ -972,6 +992,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		60D534BE222719D10022F0C5 /* PassiveDataPermission.json */ = {
+			isa = PBXVariantGroup;
+			children = (
+				60D534BF222719D10022F0C5 /* Base */,
+			);
+			name = PassiveDataPermission.json;
+			sourceTree = "<group>";
+		};
 		80015130212F6B3F006B3C8E /* consent.html */ = {
 			isa = PBXVariantGroup;
 			children = (

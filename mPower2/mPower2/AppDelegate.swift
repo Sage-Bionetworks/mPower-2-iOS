@@ -38,7 +38,6 @@ import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
-    
     weak var smsSignInDelegate: SignInDelegate? = nil
     
     override func instantiateFactory() -> RSDFactory {
@@ -78,8 +77,8 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
         
         // Start the passive data collectors (if we have all the necessary consents, authorizations, permissions, etc.).
         // This has to be done *after* Bridge has been set up, so do it after calling super.
-        self.startPassiveCollectors()
-        
+        PassiveCollectorManager.shared.startCollectors()
+
         return retval
     }
     
@@ -182,17 +181,7 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
         self.transition(to: vc, state: .main, animated: true)
         
         // start the passive collectors now in case they weren't started at launch
-        self.startPassiveCollectors()
-    }
-    
-    func startPassiveCollectors() {
-        // Start passive data collectors *only* after the user has signed in and consented.
-        // Otherwise, this will ask for permission to use location without any explanation on first launch
-        // of the app.
-        // TODO: emm 2018-12-03 Also check Profile settings (once they've been implemented) for whether the participant has allowed this.
-        guard BridgeSDK.authManager.isAuthenticated(), SBAParticipantManager.shared.isConsented else { return }
-        PassiveDisplacementCollector.shared.start()
-        PassiveGaitCollector.shared.start()
+        PassiveCollectorManager.shared.startCollectors()
     }
     
     func showSignInViewController(animated: Bool) {

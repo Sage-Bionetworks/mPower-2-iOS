@@ -1,8 +1,8 @@
 //
-//  MP2Factory.swift
+//  PassiveDataPermissionStepObject.swift
 //  mPower2
 //
-//  Copyright © 2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -31,36 +31,10 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
 import BridgeApp
 
-extension RSDStepType {
-    /// Defaults to a `ReminderStep`.
-    public static let reminder: RSDStepType = "reminder"
-    /// Defaults to a `TrackedItemsIntroductionStepObject`
-    public static let trackedItemsIntroduction: RSDStepType = "trackedItemsIntroduction"
-    /// Defaults to a `PassiveDataPermissionStepObject`.
-    public static let passiveDataPermission: RSDStepType = "passiveDataPermission"
-}
-
-class MP2Factory : SBAFactory {
-    
-    override func decodeStep(from decoder:Decoder, with type:RSDStepType) throws -> RSDStep? {
-        
-        switch (type) {
-        case .reminder:
-            return try ReminderStep(from: decoder)
-        case .trackedItemsIntroduction:
-            return try TrackedItemsIntroductionStepObject(from: decoder)
-        case .passiveDataPermission:
-            return try PassiveDataPermissionStepObject(from: decoder)
-        default:
-            return try super.decodeStep(from: decoder, with: type)
-        }
+class PassiveDataPermissionStepObject: RSDFormUIStepObject, RSDStepViewControllerVendor {
+    open func instantiateViewController(with parent: RSDPathComponent?) -> (UIViewController & RSDStepController)? {
+        return PassiveDataPermissionStepViewController.instantiate(with: self, parent: parent)
     }
-    
-    override func decodeProfileDataSource(from decoder: Decoder) throws -> SBAProfileDataSource {
-        return try MP2ProfileDataSource(from: decoder)
-    }
-
 }
