@@ -1,3 +1,12 @@
-[submodule "BridgeApp-Apple-SDK"]
-	path = BridgeApp-Apple-SDK
+[submodule "Carthage/Checkouts/MotorControl-iOS"]
+	path = Carthage/Checkouts/MotorControl-iOS
+	url = https://github.com/Sage-Bionetworks/MotorControl-iOS.git
+[submodule "Carthage/Checkouts/BridgeApp-Apple-SDK"]
+	path = Carthage/Checkouts/BridgeApp-Apple-SDK
 	url = https://github.com/Sage-Bionetworks/BridgeApp-Apple-SDK.git
+[submodule "Carthage/Checkouts/SageResearch"]
+	path = Carthage/Checkouts/SageResearch
+	url = https://github.com/Sage-Bionetworks/SageResearch.git
+[submodule "Carthage/Checkouts/Bridge-iOS-SDK"]
+	path = Carthage/Checkouts/Bridge-iOS-SDK
+	url = https://github.com/Sage-Bionetworks/Bridge-iOS-SDK.git

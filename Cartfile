@@ -1,0 +1,3 @@
+github "Sage-Bionetworks/SageResearch" ~> 1.3.33
+github "Sage-Bionetworks/BridgeApp-Apple-SDK" ~> 1.0.5
+github "Sage-Bionetworks/MotorControl-iOS" "head"

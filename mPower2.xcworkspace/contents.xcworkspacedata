@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "container:mPower2/mPower2.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Carthage/Checkouts/Bridge-iOS-SDK/BridgeSDK.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Carthage/Checkouts/BridgeApp-Apple-SDK/BridgeApp/BridgeApp.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Carthage/Checkouts/MotorControl-iOS/MotorControl/MotorControl.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Carthage/Checkouts/SageResearch/Research/Research.xcodeproj">
+   </FileRef>
+</Workspace>

@@ -2,8 +2,8 @@ notifications:
   email:
   - apple.builds@sagebase.org
 language: objective-c
-osx_image: xcode10
-xcode_project: mPower2/mPower2.xcodeproj
+osx_image: xcode10.2
+xcode_workspace: mPower2.xcworkspace
 xcode_scheme: mPower2
 cache:
 - bundler
