@@ -143,6 +143,10 @@
 		F8A5C877227D08D100DD4692 /* BridgeApp.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C85F227D08BC00DD4692 /* BridgeApp.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8A5C878227D08D100DD4692 /* BridgeSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C85C227D08BC00DD4692 /* BridgeSDK.framework */; };
 		F8A5C879227D08D100DD4692 /* BridgeSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C85C227D08BC00DD4692 /* BridgeSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F8A5C881227E278800DD4692 /* BridgeSDK_Test.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C880227E278800DD4692 /* BridgeSDK_Test.framework */; };
+		F8A5C883227E278800DD4692 /* Research_UnitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C882227E278800DD4692 /* Research_UnitTest.framework */; };
+		F8A5C885227E279700DD4692 /* BridgeSDK_Test.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C884227E279700DD4692 /* BridgeSDK_Test.framework */; };
+		F8A5C887227E279700DD4692 /* Research_UnitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C886227E279700DD4692 /* Research_UnitTest.framework */; };
 		F8C58DB120AF4823001C7B7F /* TodayScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C58DB020AF4823001C7B7F /* TodayScheduleManager.swift */; };
 		F8C58DB220AF4823001C7B7F /* TodayScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C58DB020AF4823001C7B7F /* TodayScheduleManager.swift */; };
 		F8C58DCA20AF5E86001C7B7F /* StudyBurstScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C58DC920AF5E86001C7B7F /* StudyBurstScheduleManager.swift */; };
@@ -286,6 +290,10 @@
 		F8A5C865227D08BC00DD4692 /* Research.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Research.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8A5C868227D08BC00DD4692 /* ResearchUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8A5C86B227D08BC00DD4692 /* ResearchRecorders.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchRecorders.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8A5C880227E278800DD4692 /* BridgeSDK_Test.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BridgeSDK_Test.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8A5C882227E278800DD4692 /* Research_UnitTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Research_UnitTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8A5C884227E279700DD4692 /* BridgeSDK_Test.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BridgeSDK_Test.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8A5C886227E279700DD4692 /* Research_UnitTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Research_UnitTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8C58DB020AF4823001C7B7F /* TodayScheduleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayScheduleManager.swift; sourceTree = "<group>"; };
 		F8C58DC920AF5E86001C7B7F /* StudyBurstScheduleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyBurstScheduleManager.swift; sourceTree = "<group>"; };
 		F8C58DD420AF8CCC001C7B7F /* SurveyScheduleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyScheduleManager.swift; sourceTree = "<group>"; };
@@ -310,6 +318,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F8A5C885227E279700DD4692 /* BridgeSDK_Test.framework in Frameworks */,
+				F8A5C887227E279700DD4692 /* Research_UnitTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -343,6 +353,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F8A5C881227E278800DD4692 /* BridgeSDK_Test.framework in Frameworks */,
+				F8A5C883227E278800DD4692 /* Research_UnitTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -565,6 +577,10 @@
 		F8D3E7992062F23A00CD351C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F8A5C884227E279700DD4692 /* BridgeSDK_Test.framework */,
+				F8A5C886227E279700DD4692 /* Research_UnitTest.framework */,
+				F8A5C880227E278800DD4692 /* BridgeSDK_Test.framework */,
+				F8A5C882227E278800DD4692 /* Research_UnitTest.framework */,
 				F8A5C86B227D08BC00DD4692 /* ResearchRecorders.framework */,
 				F8A5C868227D08BC00DD4692 /* ResearchUI.framework */,
 				F8A5C865227D08BC00DD4692 /* Research.framework */,
