@@ -756,3 +756,48 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
         #endif
     }
 }
+
+class PassiveCollectorManager {
+    static let shared = PassiveCollectorManager()
+    
+    init() {
+        NotificationCenter.default.addObserver(forName: .SBAProfileItemValueUpdated, object: nil, queue: nil) { (notification) in
+            // if the passive data permission flag wasn't updated, bail
+            guard let updates = notification.userInfo?[SBAProfileItemUpdatedItemsKey] as? [String: Any?],
+                    updates.contains(where: { (key, _) -> Bool in
+                        return key == RSDIdentifier.passiveDataPermissionProfileKey.rawValue
+                    })
+                else {
+                    return
+            }
+            
+            let hasPermission = updates[RSDIdentifier.passiveDataPermissionProfileKey.rawValue] as? Bool ?? false
+            if hasPermission {
+                self.startCollectors()
+            }
+            else {
+                self.stopCollectors()
+            }
+        }
+    }
+    
+    func startCollectors() {
+        // Start passive data collectors *only* after the user has signed in and consented.
+        guard BridgeSDK.authManager.isAuthenticated(), SBAParticipantManager.shared.isConsented else { return }
+        
+        // Also check Profile settings first for whether the participant has allowed this.
+        let pm = SBABridgeConfiguration.shared.profileManager
+        guard let passiveDataAllowed = pm.value(forProfileKey: RSDIdentifier.passiveDataPermissionProfileKey.rawValue) as? Bool,
+            passiveDataAllowed == true
+            else {
+                return
+        }
+        PassiveDisplacementCollector.shared.start()
+        PassiveGaitCollector.shared.start()
+    }
+    
+    func stopCollectors() {
+        PassiveGaitCollector.shared.stop()
+        PassiveDisplacementCollector.shared.stop()
+    }
+}

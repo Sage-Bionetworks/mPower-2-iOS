@@ -1,5 +1,5 @@
 //
-//  MP2Factory.swift
+//  PassiveDataPermissionStepViewController.swift
 //  mPower2
 //
 //  Copyright © 2018 Sage Bionetworks. All rights reserved.
@@ -31,36 +31,42 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Foundation
 import BridgeApp
 
-extension RSDStepType {
-    /// Defaults to a `ReminderStep`.
-    public static let reminder: RSDStepType = "reminder"
-    /// Defaults to a `TrackedItemsIntroductionStepObject`
-    public static let trackedItemsIntroduction: RSDStepType = "trackedItemsIntroduction"
-    /// Defaults to a `PassiveDataPermissionStepObject`.
-    public static let passiveDataPermission: RSDStepType = "passiveDataPermission"
-}
+class PassiveDataPermissionStepViewController: RSDTableStepViewController {
+    let permissionResultIdentifier = RSDIdentifier.passiveDataPermissionProfileKey
 
-class MP2Factory : SBAFactory {
-    
-    override func decodeStep(from decoder:Decoder, with type:RSDStepType) throws -> RSDStep? {
+    static func instantiate(with step: RSDStep, parent: RSDPathComponent?) -> PassiveDataPermissionStepViewController? {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "PassiveDataPermissionStepViewController") as? PassiveDataPermissionStepViewController
+        vc?.stepViewModel = vc?.instantiateStepViewModel(for: step, with: parent)
+        return vc
+    }
+
+    override func goForward() {
+        guard validateAndSave()
+            else {
+                return
+        }
         
-        switch (type) {
-        case .reminder:
-            return try ReminderStep(from: decoder)
-        case .trackedItemsIntroduction:
-            return try TrackedItemsIntroductionStepObject(from: decoder)
-        case .passiveDataPermission:
-            return try PassiveDataPermissionStepObject(from: decoder)
-        default:
-            return try super.decodeStep(from: decoder, with: type)
+        guard let taskResult = self.stepViewModel?.taskResult,
+            let step = self.stepViewModel?.step as? PassiveDataPermissionStepObject,
+            let gavePermission = taskResult.findAnswerResult(with: step.identifier)?.value as? Bool
+            else {
+                return
+        }
+        
+        let pm = SBABridgeConfiguration.shared.profileManager
+        do {
+            try pm.setValue(gavePermission, forProfileKey: RSDIdentifier.passiveDataPermissionProfileKey.rawValue)
+        } catch let err {
+            print("Error attempting to set profile item with key \(RSDIdentifier.passiveDataPermissionProfileKey.rawValue) to \(gavePermission): \(err)")
+            return
+        }
+
+        // Give the profile-item-value-updated notification a chance to be processed before going forward
+        DispatchQueue.main.async {
+            super.goForward()
         }
     }
-    
-    override func decodeProfileDataSource(from decoder: Decoder) throws -> SBAProfileDataSource {
-        return try MP2ProfileDataSource(from: decoder)
-    }
-
 }

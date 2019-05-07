@@ -1,0 +1,32 @@
+{
+    "identifier": "PassiveDataPermission",
+    "shouldHideActions": ["skip", "cancel", "back"],
+    "progressMarkers": [],
+    "steps":[
+             {
+                "identifier":"passiveDataAllowed",
+                "type":"passiveDataPermission",
+                "profileKey":"passiveDataAllowed",
+                "text":"Measure movement in the background",
+                "detail":"We are studying whether it is possible to capture similar measurements while you are going about your daily life.  We would like to be able to measure your walking patterns in the background.",
+                "inputFields": [
+                                 {
+                                     "type":"singleChoice.boolean",
+                                     "choices":[
+                                         {"value" : true, "text" : "Okay"},
+                                         {"value" : false, "text" : "Not now"}
+                                     ],
+                                     "defaultValue": true,
+                                     "uiHint":"radioButton",
+                                     "optional": false
+                                 }
+
+                 ],
+                "image":{
+                    "type": "fetchable",
+                    "imageName":"PassiveDataPermission",
+                    "placementType":"topBackground"
+                }
+             }
+        ]
+}
