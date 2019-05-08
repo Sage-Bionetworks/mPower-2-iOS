@@ -1,6 +1,6 @@
 {
     "identifier": "PassiveDataPermission",
-    "shouldHideActions": ["skip", "cancel", "back"],
+    "shouldHideActions": ["skip", "cancel", "goBackward"],
     "progressMarkers": [],
     "steps":[
              {
