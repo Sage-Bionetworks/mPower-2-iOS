@@ -41,7 +41,7 @@ public class TrackingScheduleManager : SBAScheduleManager {
     
     override open func reportQueries() -> [ReportQuery] {
         let tasks: [RSDIdentifier] = [.triggersTask, .symptomsTask, .medicationTask]
-        return tasks.map { ReportQuery(identifier: $0, queryType: .mostRecent, dateRange: nil) }
+        return tasks.map { ReportQuery(reportKey: $0, queryType: .mostRecent, dateRange: nil) }
     }
 }
 
@@ -153,6 +153,6 @@ public class TaskGroupScheduleManager : SBAScheduleManager {
     }
     
     override open func reportQueries() -> [ReportQuery] {
-        return [ReportQuery(identifier: .medicationTask, queryType: .mostRecent, dateRange: nil) ]
+        return [ReportQuery(reportKey: .medicationTask, queryType: .mostRecent, dateRange: nil) ]
     }
 }

@@ -188,7 +188,7 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
                     break
             }
             let passiveInfo = RSDTaskInfoObject(with: taskId)
-            let taskViewModel = SBATaskViewModel(taskInfo: passiveInfo)
+            let taskViewModel = RSDTaskViewModel(taskInfo: passiveInfo)
             let resultType: RSDAnswerResultType = profileItem.itemType.defaultAnswerResultType()
 
             // TODO: emm 2019-04-15 Replace with a DataStorageManager when that's ready?

@@ -110,12 +110,12 @@ class TodayScheduleManagerTests: XCTestCase {
         let scheduleManager = TodayHistoryScheduleManager()
         let scheduledActivities = [schedule1, schedule2]
         
-        let report1 = SBAReport(identifier: .triggersTask,
+        let report1 = SBAReport(reportKey: .triggersTask,
                                 date: run1,
                                 clientData: clientData1 as NSDictionary)
         scheduleManager.reports.insert(report1)
         
-        let report2 = SBAReport(identifier: .triggersTask,
+        let report2 = SBAReport(reportKey: .triggersTask,
                                 date: run2,
                                 clientData: clientData2 as NSDictionary)
         scheduleManager.reports.insert(report2)
