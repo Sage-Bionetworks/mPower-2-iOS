@@ -153,6 +153,7 @@ public class TaskGroupScheduleManager : SBAScheduleManager {
     }
     
     override open func reportQueries() -> [ReportQuery] {
-        return [ReportQuery(reportKey: .medicationTask, queryType: .mostRecent, dateRange: nil) ]
+        let tasks: [RSDIdentifier] = [.medicationTask, .tremorTask, .tappingTask, .walkAndBalanceTask]
+        return tasks.map { ReportQuery(reportKey: $0, queryType: .mostRecent, dateRange: nil) }
     }
 }
