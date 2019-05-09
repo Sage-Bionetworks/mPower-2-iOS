@@ -1426,47 +1426,16 @@
             </objects>
             <point key="canvasLocation" x="1699" y="994"/>
         </scene>
-        <!--Profile Item Edit View Controller-->
+        <!--Task View Controller-->
         <scene sceneID="e95-2l-iyj">
             <objects>
-                <viewController storyboardIdentifier="ProfileItemEditViewController" id="Lqs-Pp-aZR" customClass="ProfileItemEditViewController" customModule="mPower2" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProfileItemEditViewController" id="Lqs-Pp-aZR" customClass="RSDTaskViewController" customModule="ResearchUI" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="NYZ-kc-bEX">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nvu-7y-riq" userLabel="Status Background" customClass="RSDStatusBarBackgroundView" customModule="ResearchUI">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="20"/>
-                                <color key="backgroundColor" red="0.35294117650000001" green="0.2784313725" blue="0.56078431370000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="oUt-7d-5bo"/>
-                                </constraints>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EAb-go-cXA" userLabel="Back Button">
-                                <rect key="frame" x="15" y="30" width="32" height="32"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="EAb-go-cXA" secondAttribute="height" multiplier="1:1" id="Ly5-JF-2HK"/>
-                                    <constraint firstAttribute="width" constant="32" id="sl3-DU-bxx"/>
-                                </constraints>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" image="BackButtonIcon"/>
-                                <connections>
-                                    <action selector="backButtonTapped:" destination="Lqs-Pp-aZR" eventType="touchUpInside" id="YP9-Tr-GZF"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" red="0.35294117650000001" green="0.2784313725" blue="0.56078431370000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="FMn-tV-Fj4" firstAttribute="leading" secondItem="nvu-7y-riq" secondAttribute="leading" id="SwA-iW-fCB"/>
-                            <constraint firstItem="nvu-7y-riq" firstAttribute="top" secondItem="NYZ-kc-bEX" secondAttribute="top" id="X9f-aQ-GQs"/>
-                            <constraint firstItem="FMn-tV-Fj4" firstAttribute="trailing" secondItem="nvu-7y-riq" secondAttribute="trailing" id="bZb-oh-7an"/>
-                            <constraint firstItem="EAb-go-cXA" firstAttribute="leading" secondItem="FMn-tV-Fj4" secondAttribute="leading" constant="15" id="hXC-t8-5Wb"/>
-                            <constraint firstItem="EAb-go-cXA" firstAttribute="top" secondItem="nvu-7y-riq" secondAttribute="bottom" constant="10" id="sUS-Oy-QTp"/>
-                        </constraints>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="FMn-tV-Fj4"/>
                     </view>
-                    <connections>
-                        <outlet property="backButton" destination="EAb-go-cXA" id="EUu-cQ-rTY"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3az-mU-IBT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

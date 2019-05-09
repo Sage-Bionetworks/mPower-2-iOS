@@ -280,7 +280,7 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
                 else { return }
             webVC.url = item.url
         case ProfileTableViewController.profileItemEditViewControllerSegue:
-            guard let taskViewModel = sender as? SBATaskViewModel,
+            guard let taskViewModel = sender as? RSDTaskViewModel,
                 let editVC = segue.destination as? RSDTaskViewController
                 else { return }
             editVC.taskViewModel = taskViewModel
