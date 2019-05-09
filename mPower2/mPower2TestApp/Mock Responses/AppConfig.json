@@ -21,93 +21,25 @@
         "taskToSchemaIdentifierMap": {
             "study-burst-task": "StudyBurst"
         },
-        "groups": [
-            {
-                "identifier": "Tracking",
-                "title": "Tracking",
-                "activityIdentifiers": [
-                    "Symptoms",
-                    "Medication",
-                    "Triggers"
-                ],
-                "activityGuidMap": {
-                    "Medication": "273c4518-7cb6-4496-b1dd-c0b5bf291b09",
-                    "Symptoms": "60868b71-30a4-4e04-a00b-3aca6651deb2",
-                    "Triggers": "b0f07b7e-408e-4d50-9368-8220971e570c"
-                }
-            },
-            {
-                "identifier": "Measuring",
-                "title": "Measuring",
-                "activityIdentifiers": [
-                    "Tapping",
-                    "WalkAndBalance",
-                    "Tremor"
-                ],
-                "schedulePlanGuid": "3d898a6f-1ef2-4ece-9e9f-025d94bcd130"
-            },
-            {
-                "identifier": "Study Burst",
-                "title": "Study Burst",
-                "activityIdentifiers": [
-                    "Tapping",
-                    "Tremor",
-                    "WalkAndBalance",
-                    "study-burst-task"
-                ]
-            }
-        ],
-        "profile": {
-            "manager": {
-                "type": "profileManager",
-                "items": [
-                    {
-                        "type": "report",
-                        "readonly": false,
-                        "itemType": "singleChoice.boolean",
-                        "profileKey": "passiveDataAllowed",
-                        "sourceKey": "PassiveDataPermission",
-                        "demographicSchema": "PassiveDataPermission"
-                    }
-                ]
-            },
-            "dataSource": {
-                "type": "mp2ProfileDatasource",
-                "sections": [
-                    {
-                        "type": "mp2Section",
-                        "title": "Settings",
-                        "items": [
-                            {
-                                "type": "profileItem",
-                                "title": "Passive activity monitoring",
-                                "profileItemKey": "passiveDataAllowed"
-                            },
-                            {
-                                "type": "studyParticipation",
-                                "title": "Study participation",
-                                "notInCohorts": [
-                                    "clinical_consent"
-                                ]
-                            },
-                            {
-                                "type": "html",
-                                "title": "View consent document",
-                                "htmlResource": "consent",
-                                "notInCohorts": [
-                                    "clinical_consent"
-                                ]
-                            },
-                            {
-                                "type": "html",
-                                "title": "Licenses",
-                                "htmlResource": "Licenses"
-                            }
-                        ]
-                    }
-                ]
-            }
-        }
+        "groups": [{
+                   "identifier": "Tracking",
+                   "title": "Tracking",
+                   "activityIdentifiers": ["Symptoms", "Medication", "Triggers"],
+                   "activityGuidMap": {
+                   "Medication": "273c4518-7cb6-4496-b1dd-c0b5bf291b09",
+                   "Symptoms": "60868b71-30a4-4e04-a00b-3aca6651deb2",
+                   "Triggers": "b0f07b7e-408e-4d50-9368-8220971e570c"
+                   }
+                   }, {
+                   "identifier": "Measuring",
+                   "title": "Measuring",
+                   "activityIdentifiers": ["Tapping", "WalkAndBalance", "Tremor"],
+                   "schedulePlanGuid": "3d898a6f-1ef2-4ece-9e9f-025d94bcd130"
+                   }, {
+                   "identifier": "Study Burst",
+                   "title": "Study Burst",
+                   "activityIdentifiers": ["Tapping", "Tremor", "WalkAndBalance", "study-burst-task"]
+                   }]
     },
     "surveyReferences": [{
                          "identifier": "Demographics",
