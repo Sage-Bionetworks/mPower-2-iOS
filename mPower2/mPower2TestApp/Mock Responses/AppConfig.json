@@ -17,6 +17,7 @@
         "studyDuration": {
             "year": 2
         },
+        "usesV1LegacyArchiving": true,
         "taskToSchemaIdentifierMap": {
             "study-burst-task": "StudyBurst"
         },

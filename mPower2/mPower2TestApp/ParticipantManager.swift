@@ -44,8 +44,9 @@ struct ReportData : Hashable {
         return NSDate(iso8601String: timestamp) as Date
     }
     
-    var hashValue: Int {
-        return identifer.hashValue ^ timestamp.hashValue
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(identifer)
+        hasher.combine(timestamp)
     }
     
     static func == (lhs: ReportData, rhs: ReportData) -> Bool {

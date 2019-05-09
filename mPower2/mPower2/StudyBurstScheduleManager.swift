@@ -706,7 +706,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     
     override open func reportQueries() -> [ReportQuery] {
         let queries = self.studyBurst.completionTaskIdentifiers.map {
-            ReportQuery(identifier: $0, queryType: .mostRecent, dateRange: nil)
+            ReportQuery(reportKey: $0, queryType: .mostRecent, dateRange: nil)
         }
         return queries
     }
@@ -754,7 +754,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     }
 
     func getReminderTime() -> DateComponents? {
-        guard let clientData = self.clientData(with: RSDIdentifier.studyBurstReminder.stringValue)
+        guard let clientData = self.report(with: RSDIdentifier.studyBurstReminder.stringValue)?.clientData
             else {
                 return nil
         }
