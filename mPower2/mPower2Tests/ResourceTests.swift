@@ -74,7 +74,7 @@ class ResourceTests: XCTestCase {
                 XCTFail("Failed to decode clientData. \(json)")
                 return
             }
-            let decoder = SBAFactory().createJSONDecoder()
+            let decoder = MP2Factory().createJSONDecoder()
             let mappingObject = try decoder.decode(SBAActivityMappingObject.self, from: clientData)
             
             XCTAssertEqual(mappingObject.studyDuration?.year, 2)

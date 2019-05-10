@@ -33,6 +33,19 @@
 
 import BridgeApp
 
+extension UILabel {
+    /// Convenience method for setting a nav header label's layout constraints.
+    open func setConstraints(in navHeader: RSDStepHeaderView) {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.numberOfLines = 0
+        self.textAlignment = .center
+        self.preferredMaxLayoutWidth = navHeader.constants.labelMaxLayoutWidth
+        
+        self.rsd_alignToSuperview([.leading, .trailing], padding: navHeader.constants.sideMargin)
+        self.rsd_makeHeight(.greaterThanOrEqual, 0.0)
+    }
+}
+
 class PassiveDataPermissionStepViewController: RSDTableStepViewController {
     let permissionResultIdentifier = RSDIdentifier.passiveDataPermissionProfileKey
 
@@ -43,6 +56,21 @@ class PassiveDataPermissionStepViewController: RSDTableStepViewController {
         return vc
     }
 
+    override open func viewDidLoad() {
+        super.viewDidLoad()
+        guard let navHeader = self.navigationHeader as? RSDTableStepHeaderView else { return }
+        navHeader.removeFromSuperview()
+        self.tableView.tableHeaderView = navHeader
+        
+        navHeader.titleLabel?.setConstraints(in: navHeader)
+        navHeader.textLabel?.setConstraints(in: navHeader)
+    }
+    
+    override open func setupStatusBar(with background: RSDColorTile) {
+        let designSystem = RSDDesignSystem()
+        super.setupStatusBar(with: designSystem.colorRules.backgroundPrimary)
+    }
+    
     override func goForward() {
         guard validateAndSave()
             else {

@@ -43,6 +43,7 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
     static let webViewControllerSegue = "WebViewControllerSegue"
     static let withdrawalViewControllerSegue = "WithdrawalViewControllerSegue"
     static let healthProfileViewControllerSegue = "HealthProfileViewControllerSegue"
+    static let profileItemEditViewControllerSegue = "ProfileItemEditViewControllerSegue"
     
     fileprivate lazy var _profileDataSource: SBAProfileDataSource = {
         return SBAProfileDataSourceObject.shared
@@ -187,6 +188,7 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
                     print("Error editing profile item: no such item with profileKey \(profileTableItem.profileItemKey)")
                     break
             }
+            
             let passiveInfo = RSDTaskInfoObject(with: taskId)
             let taskViewModel = RSDTaskViewModel(taskInfo: passiveInfo)
             let resultType: RSDAnswerResultType = profileItem.itemType.defaultAnswerResultType()
@@ -194,9 +196,7 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
             // TODO: emm 2019-04-15 Replace with a DataStorageManager when that's ready?
             let answerResult = RSDAnswerResultObject(identifier: profileItem.demographicKey, answerType: resultType, value: profileItem.demographicJsonValue)
             taskViewModel.append(previousResult: answerResult)
-            let vc = RSDTaskViewController(taskViewModel: taskViewModel)
-            vc.delegate = self
-            self.navigationController?.show(vc, sender: self)
+            self.performSegue(withIdentifier: ProfileTableViewController.profileItemEditViewControllerSegue, sender: taskViewModel)
 
             /* TODO: emm 2018-08-21 deal with this for v2.1
         case scheduleProfileAction:
@@ -279,6 +279,13 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
                 let webVC = segue.destination as? RSDWebViewController
                 else { return }
             webVC.url = item.url
+        case ProfileTableViewController.profileItemEditViewControllerSegue:
+            guard let taskViewModel = sender as? RSDTaskViewModel,
+                let editVC = segue.destination as? RSDTaskViewController
+                else { return }
+            editVC.taskViewModel = taskViewModel
+            editVC.taskViewModel.taskController = editVC
+            editVC.delegate = self
         default:
             // do nothing
             break
