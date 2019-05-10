@@ -64,16 +64,7 @@ class PassiveDataPermissionStepViewController: RSDTableStepViewController {
         
         navHeader.titleLabel?.setConstraints(in: navHeader)
         navHeader.textLabel?.setConstraints(in: navHeader)
-//        navHeader.cancelButton?.setImage(UIImage(named: "BackButtonIcon"), for: .normal)
     }
-    
-//    override open func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        guard let cancelButton = self.navigationHeader?.cancelButton else { return }
-//        let designSystem = RSDDesignSystem()
-//        let background = designSystem.colorRules.backgroundPrimary
-//        cancelButton.tintColor = designSystem.colorRules.tintedButtonColor(on: background)
-//    }
     
     override open func setupStatusBar(with background: RSDColorTile) {
         let designSystem = RSDDesignSystem()
