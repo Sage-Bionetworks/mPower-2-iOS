@@ -361,10 +361,15 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
     // MARK: RSDTaskControllerDelegate
     func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
         self.navigationController?.popViewController(animated: true)
+        if let profileManager = SBABridgeConfiguration.shared.profileManager as? RSDTaskViewControllerDelegate {
+            profileManager.taskController(taskController, didFinishWith: reason, error: error)
+        }
     }
     
     func taskController(_ taskController: RSDTaskController, readyToSave taskViewModel: RSDTaskViewModel) {
-        // required method but we don't need to do anything here
+        if let profileManager = SBABridgeConfiguration.shared.profileManager as? RSDTaskViewControllerDelegate {
+            profileManager.taskController(taskController, readyToSave: taskViewModel)
+        }
     }
     
 
