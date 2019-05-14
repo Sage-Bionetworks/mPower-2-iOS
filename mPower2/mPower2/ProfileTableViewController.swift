@@ -367,7 +367,7 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
     }
     
     func taskController(_ taskController: RSDTaskController, readyToSave taskViewModel: RSDTaskViewModel) {
-        if let profileManager = SBABridgeConfiguration.shared.profileManager as? RSDTaskViewControllerDelegate {
+        if let profileManager = SBABridgeConfiguration.shared.profileManager as? SBAScheduleManager {
             profileManager.taskController(taskController, readyToSave: taskViewModel)
         }
     }
