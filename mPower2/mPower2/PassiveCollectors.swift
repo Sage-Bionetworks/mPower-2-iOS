@@ -786,9 +786,9 @@ class PassiveCollectorManager {
         guard BridgeSDK.authManager.isAuthenticated(), SBAParticipantManager.shared.isConsented else { return }
         
         // Also check Profile settings first for whether the participant has allowed this.
-        let pm = SBABridgeConfiguration.shared.profileManager
-        guard let passiveDataAllowed = pm.value(forProfileKey: RSDIdentifier.passiveDataPermissionProfileKey.rawValue) as? Bool,
-            passiveDataAllowed == true
+        guard let pm = SBABridgeConfiguration.shared.profileManager,
+                let passiveDataAllowed = pm.value(forProfileKey: RSDIdentifier.passiveDataPermissionProfileKey.rawValue) as? Bool,
+                passiveDataAllowed == true
             else {
                 return
         }
