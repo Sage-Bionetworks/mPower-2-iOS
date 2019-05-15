@@ -74,7 +74,7 @@ class ResourceTests: XCTestCase {
                 XCTFail("Failed to decode clientData. \(json)")
                 return
             }
-            let decoder = SBAFactory().createJSONDecoder()
+            let decoder = MP2Factory().createJSONDecoder()
             let mappingObject = try decoder.decode(SBAActivityMappingObject.self, from: clientData)
             
             XCTAssertEqual(mappingObject.studyDuration?.year, 2)
@@ -98,6 +98,18 @@ class ResourceTests: XCTestCase {
     
     func testActivityTracking() {
         let identifier = "ActivityTracking"
+        do {
+            let resourceTransformer = RSDResourceTransformerObject(resourceName: identifier)
+            let factory = MP2Factory()
+            let task = try factory.decodeTask(with: resourceTransformer)
+            try task.validate()
+        } catch let err {
+            XCTFail("Failed to decode the \(identifier) task. \(err)")
+        }
+    }
+    
+    func testPassiveDataPermission() {
+        let identifier = "PassiveDataPermission"
         do {
             let resourceTransformer = RSDResourceTransformerObject(resourceName: identifier)
             let factory = MP2Factory()

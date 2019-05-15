@@ -62,7 +62,9 @@ class WithdrawalViewController: UIViewController, RSDTaskViewControllerDelegate 
     
     func setupViews() {
         
-        self.view.backgroundColor = UIColor.primaryTintColor
+        let designSystem = RSDDesignSystem()
+
+        self.view.backgroundColor = designSystem.colorRules.backgroundPrimary.color
         
         // Setup title label
         titleLabel.textColor = UIColor.white
@@ -79,7 +81,7 @@ class WithdrawalViewController: UIViewController, RSDTaskViewControllerDelegate 
         
         // Setup withdrawal button
         withdrawalButton.setTitle(Localization.localizedString("WITHDRAWAL_FROM_STUDY_BTN_TITLE"), for: .normal)
-        withdrawalButton.setTitleColor(UIColor.appAlertRed, for: .normal)
+        withdrawalButton.setTitleColor(designSystem.colorRules.palette.errorRed.dark.color, for: .normal)
         withdrawalButton.backgroundColor = UIColor.white
         withdrawalButton.addTarget(self, action: #selector(withdrawalTapped), for: .touchUpInside)
     }

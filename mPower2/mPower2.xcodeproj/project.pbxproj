@@ -19,6 +19,7 @@
 		03DD008420E2F9A4006A5794 /* ReminderTableStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DD008220E2F9A4006A5794 /* ReminderTableStepViewController.swift */; };
 		60169BBB20AF445800D29532 /* SignInTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F45523209CF10100C532A0 /* SignInTaskViewController.swift */; };
 		60169BD120AF445C00D29532 /* ConsentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6076F2CA20A6680B00F6235E /* ConsentViewController.swift */; };
+		602EE759223304BD0090713F /* ProfileHTMLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80015118212F5621006B3C8E /* ProfileHTMLViewController.swift */; };
 		603B1086212CA7C500E44EE9 /* WithdrawalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603B1070212CA7C500E44EE9 /* WithdrawalViewController.swift */; };
 		603B1087212CA7C500E44EE9 /* WithdrawalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603B1070212CA7C500E44EE9 /* WithdrawalViewController.swift */; };
 		603B7BAA208E90FF00794B7C /* RegistrationWaitingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603B7BA9208E90FF00794B7C /* RegistrationWaitingViewController.swift */; };
@@ -27,6 +28,10 @@
 		608241DB2093D9A90026E843 /* RegistrationIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608241DA2093D9A90026E843 /* RegistrationIntroViewController.swift */; };
 		608241F22093D9F70026E843 /* ExternalIDRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608241F12093D9F70026E843 /* ExternalIDRegistrationViewController.swift */; };
 		60A1576E209D16C50033FAB5 /* Registration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60A1576D209D16C40033FAB5 /* Registration.storyboard */; };
+		60ADB34E2279FCB100FDF132 /* PassiveDataPermissionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E3D7362279383B0087FCA2 /* PassiveDataPermissionStepViewController.swift */; };
+		60ADB34F227A033800FDF132 /* PassiveDataPermissionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E3D71D2279366A0087FCA2 /* PassiveDataPermissionStepObject.swift */; };
+		60D534C0222719D10022F0C5 /* PassiveDataPermission.json in Resources */ = {isa = PBXBuildFile; fileRef = 60D534BE222719D10022F0C5 /* PassiveDataPermission.json */; };
+		60D534D82227339F0022F0C5 /* PassiveDataPermission.json in Resources */ = {isa = PBXBuildFile; fileRef = 60D534BE222719D10022F0C5 /* PassiveDataPermission.json */; };
 		60E86E50212B6B430073C69C /* ProfileTableItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E86E39212B6B420073C69C /* ProfileTableItems.swift */; };
 		60E86E51212B6B430073C69C /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E86E4F212B6B430073C69C /* ProfileTableViewController.swift */; };
 		60E86E52212B6B570073C69C /* ProfileTableItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E86E39212B6B420073C69C /* ProfileTableItems.swift */; };
@@ -35,8 +40,6 @@
 		60E94119212B8FD70027432C /* ProfileTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E94111212B8FD60027432C /* ProfileTableHeaderView.swift */; };
 		60E9411A212B8FD70027432C /* ProfileTableFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60E94112212B8FD60027432C /* ProfileTableFooterView.xib */; };
 		60E9411B212B8FD70027432C /* ProfileTableFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60E94112212B8FD60027432C /* ProfileTableFooterView.xib */; };
-		60E9411C212B8FD70027432C /* HealthProfileTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60E94113212B8FD60027432C /* HealthProfileTableHeaderView.xib */; };
-		60E9411D212B8FD70027432C /* HealthProfileTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60E94113212B8FD60027432C /* HealthProfileTableHeaderView.xib */; };
 		60E9411E212B8FD70027432C /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E94114212B8FD60027432C /* ProfileTableViewCell.swift */; };
 		60E9411F212B8FD70027432C /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E94114212B8FD60027432C /* ProfileTableViewCell.swift */; };
 		60E94122212B8FD70027432C /* ProfileTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60E94116212B8FD70027432C /* ProfileTableHeaderView.xib */; };
@@ -62,40 +65,16 @@
 		801E8EB3214896EF00AF6701 /* PhoneLearnMore.html in Resources */ = {isa = PBXBuildFile; fileRef = 801E8EB0214896EF00AF6701 /* PhoneLearnMore.html */; };
 		80A0BE3321095E1A00D31B68 /* TrackedItemsIntroductionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6196512109473900F2E3EA /* TrackedItemsIntroductionStepObject.swift */; };
 		80A0BE4921095E4F00D31B68 /* TrackedItemsIntroductionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5E16EE210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift */; };
+		80E3D71E2279366A0087FCA2 /* PassiveDataPermissionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E3D71D2279366A0087FCA2 /* PassiveDataPermissionStepObject.swift */; };
+		80E3D7372279383B0087FCA2 /* PassiveDataPermissionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E3D7362279383B0087FCA2 /* PassiveDataPermissionStepViewController.swift */; };
 		80F3739C20FC32D200A565E0 /* VersionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F3739B20FC32D200A565E0 /* VersionLabel.swift */; };
-		B508B31C2076ECA3001645CF /* MCTHandSelectionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B508B31B2076ECA3001645CF /* MCTHandSelectionStepObject.swift */; };
-		B508B39920772D76001645CF /* MCTSkippableSectionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B508B39820772D76001645CF /* MCTSkippableSectionStepObject.swift */; };
-		B532ACED208150C00009EAD3 /* MCTCompletionGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B532ACEC208150C00009EAD3 /* MCTCompletionGradient.swift */; };
-		B532AD04208158860009EAD3 /* MCTCompletionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B532AD03208158860009EAD3 /* MCTCompletionStepViewController.swift */; };
-		B532AD0620817F620009EAD3 /* MCTTappingCompletionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B532AD0520817F610009EAD3 /* MCTTappingCompletionStepViewController.swift */; };
-		B5386FA6206ABD11005A0FAC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5386FA5206ABD11005A0FAC /* Images.xcassets */; };
-		B5386FBF206AF30C005A0FAC /* MCTTaskInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5386FBE206AF30C005A0FAC /* MCTTaskInfo.swift */; };
-		B5386FC1206B0211005A0FAC /* MCTFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5386FC0206B0211005A0FAC /* MCTFactory.swift */; };
-		B53FD159207EBCFC00FBCC85 /* MCTTapButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53FD158207EBCFC00FBCC85 /* MCTTapButton.swift */; };
-		B5581F0A20754A7D00F224C6 /* Tremor.json in Resources */ = {isa = PBXBuildFile; fileRef = B5581EF420754A7D00F224C6 /* Tremor.json */; };
-		B56E4D0620781A640009C489 /* NavigationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56E4D0520781A640009C489 /* NavigationTests.swift */; };
-		B56E4D0A207BCA110009C489 /* MCTInstructionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56E4D09207BCA110009C489 /* MCTInstructionStepObject.swift */; };
-		B587ABE2206C57DB00542548 /* ActiveTaskSteps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B587ABE1206C57DB00542548 /* ActiveTaskSteps.storyboard */; };
 		B587AC08206D696800542548 /* UIView+mPowerTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B587AC07206D696800542548 /* UIView+mPowerTheme.swift */; };
-		B59FC273206EA445002BFDB9 /* MCTActiveStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59FC272206EA445002BFDB9 /* MCTActiveStepViewController.swift */; };
-		B59FC28C20728BC7002BFDB9 /* MCTOverviewStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59FC28B20728BC7002BFDB9 /* MCTOverviewStepViewController.swift */; };
-		B59FC2AA2073DD81002BFDB9 /* MCTOverviewStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59FC2A92073DD81002BFDB9 /* MCTOverviewStepObject.swift */; };
-		B5D822F7207449D400C03F3C /* MCTInstructionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D822F6207449D400C03F3C /* MCTInstructionStepViewController.swift */; };
-		B5DC83A22076B5FD00DEE4A2 /* Finger_Tapping.json in Resources */ = {isa = PBXBuildFile; fileRef = B5DC838C2076B5FD00DEE4A2 /* Finger_Tapping.json */; };
-		B5FA25FC206985E600A4FF3D /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7CD2062F28500CD351C /* Research.framework */; };
-		B5FA25FD206985FE00A4FF3D /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7DE2062F28F00CD351C /* ResearchUI.framework */; };
-		B5FA25FF2069867C00A4FF3D /* Walk_And_Balance.json in Resources */ = {isa = PBXBuildFile; fileRef = B5FA25FE2069867C00A4FF3D /* Walk_And_Balance.json */; };
 		CB5E16EF210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5E16EE210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift */; };
 		CB6196522109473900F2E3EA /* TrackedItemsIntroductionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6196512109473900F2E3EA /* TrackedItemsIntroductionStepObject.swift */; };
 		F8078F3F20ADF1DC00757F42 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8078F2920ADF1DC00757F42 /* AppDelegate.swift */; };
 		F8078F4320ADFA6A00757F42 /* DataSourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8078F4220ADFA6A00757F42 /* DataSourceManager.swift */; };
 		F8078F4420AE078A00757F42 /* DataSourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8078F4220ADFA6A00757F42 /* DataSourceManager.swift */; };
-		F80CB9EC207D2D2300B4EE5D /* MCTTappingStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80CB9EB207D2D2300B4EE5D /* MCTTappingStepViewController.swift */; };
-		F80CB9EF207D2DE400B4EE5D /* MCTTappingResultObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80CB9EE207D2DE400B4EE5D /* MCTTappingResultObject.swift */; };
-		F80CB9FD207D3AD800B4EE5D /* MotorControl.strings in Resources */ = {isa = PBXBuildFile; fileRef = F80CB9FC207D3AD800B4EE5D /* MotorControl.strings */; };
 		F81BE7BF20B4AB4B00EE57D3 /* AppConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = F81BE7BE20B4AB4B00EE57D3 /* AppConfig.json */; };
-		F81BE7C020B4B8F700EE57D3 /* BridgeSDK_Test.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F81BE7B520B4AA7C00EE57D3 /* BridgeSDK_Test.framework */; };
-		F81BE7C120B4B8F700EE57D3 /* BridgeSDK_Test.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F81BE7B520B4AA7C00EE57D3 /* BridgeSDK_Test.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F82AE7B62063160B00952D74 /* UIColor+mPowerTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82AE7B52063160B00952D74 /* UIColor+mPowerTheme.swift */; };
 		F832ABE920D8D341005A9025 /* StudyBurstCompletionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F832ABE820D8D341005A9025 /* StudyBurstCompletionViewController.swift */; };
 		F832ABEA20D96FEF005A9025 /* StudyBurstCompletionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F832ABE820D8D341005A9025 /* StudyBurstCompletionViewController.swift */; };
@@ -106,7 +85,6 @@
 		F832AC3920DA29E6005A9025 /* MP2Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F832AC3720DA29E6005A9025 /* MP2Factory.swift */; };
 		F8398D62212F32E5005DE6E0 /* Background.json in Resources */ = {isa = PBXBuildFile; fileRef = F8398D4C212F32E5005DE6E0 /* Background.json */; };
 		F8398D64212F32EE005DE6E0 /* Withdrawal.json in Resources */ = {isa = PBXBuildFile; fileRef = F8398D63212F32EE005DE6E0 /* Withdrawal.json */; };
-		F8460D752097CF0C0084E197 /* MCTCountdownStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8460D742097CF0C0084E197 /* MCTCountdownStepViewController.swift */; };
 		F848F4F32107C9A00001ADBF /* Motivation.json in Resources */ = {isa = PBXBuildFile; fileRef = F848F4DD2107C99F0001ADBF /* Motivation.json */; };
 		F84E723620E1866300E5C6C3 /* Demographics.json in Resources */ = {isa = PBXBuildFile; fileRef = F84E722020E1866300E5C6C3 /* Demographics.json */; };
 		F84E723820E1866A00E5C6C3 /* Engagement.json in Resources */ = {isa = PBXBuildFile; fileRef = F84E723720E1866A00E5C6C3 /* Engagement.json */; };
@@ -128,16 +106,6 @@
 		F85020E2211B970C0094E05F /* ActivityTracking.json in Resources */ = {isa = PBXBuildFile; fileRef = F85020DF211B970C0094E05F /* ActivityTracking.json */; };
 		F85020F8211BA8550094E05F /* TaskGroupScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85020F7211BA8550094E05F /* TaskGroupScheduleManager.swift */; };
 		F85020F9211BA8550094E05F /* TaskGroupScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85020F7211BA8550094E05F /* TaskGroupScheduleManager.swift */; };
-		F854598A208FA43700D37243 /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7DE2062F28F00CD351C /* ResearchUI.framework */; };
-		F854598B208FA43700D37243 /* ResearchUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7DE2062F28F00CD351C /* ResearchUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F854598F208FA43D00D37243 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7CD2062F28500CD351C /* Research.framework */; };
-		F8545990208FA43D00D37243 /* Research.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7CD2062F28500CD351C /* Research.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F8545993208FA44800D37243 /* BridgeSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7BC2062F27600CD351C /* BridgeSDK.framework */; };
-		F8545994208FA44800D37243 /* BridgeSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7BC2062F27600CD351C /* BridgeSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F8545997208FA45500D37243 /* BridgeApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7A72062F26D00CD351C /* BridgeApp.framework */; };
-		F8545998208FA45500D37243 /* BridgeApp.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7A72062F26D00CD351C /* BridgeApp.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F854599B208FA46800D37243 /* MotorControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E82D2063072100CD351C /* MotorControl.framework */; };
-		F854599C208FA46800D37243 /* MotorControl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E82D2063072100CD351C /* MotorControl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F85459A0208FA58800D37243 /* ResourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F854599F208FA58800D37243 /* ResourceTests.swift */; };
 		F85459B5208FA76D00D37243 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E7802062F1B900CD351C /* Assets.xcassets */; };
 		F85459B6208FA77400D37243 /* UIColor+mPowerTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82AE7B52063160B00952D74 /* UIColor+mPowerTheme.swift */; };
@@ -146,9 +114,6 @@
 		F861B68A2134ADF00077D43A /* SurveyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F861B6882134ADF00077D43A /* SurveyViewController.swift */; };
 		F861B6A22134B3440077D43A /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F861B6A12134B3440077D43A /* TabBarViewController.swift */; };
 		F861B6A32134B3440077D43A /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F861B6A12134B3440077D43A /* TabBarViewController.swift */; };
-		F884198F207EB4E400028A2B /* TappingSectionStep.json in Resources */ = {isa = PBXBuildFile; fileRef = F8841979207EB4E400028A2B /* TappingSectionStep.json */; };
-		F8841993207EB77000028A2B /* TremorSectionStep.json in Resources */ = {isa = PBXBuildFile; fileRef = F8841992207EB77000028A2B /* TremorSectionStep.json */; };
-		F88419B5207EC14400028A2B /* ResourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88419B4207EC14400028A2B /* ResourceTests.swift */; };
 		F88E8DFB20ADEE2600117A99 /* ExternalIDRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608241F12093D9F70026E843 /* ExternalIDRegistrationViewController.swift */; };
 		F88E8DFC20ADEE2600117A99 /* PhoneRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603B7BC220913B1A00794B7C /* PhoneRegistrationViewController.swift */; };
 		F88E8DFD20ADEE2600117A99 /* RegistrationIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608241DA2093D9A90026E843 /* RegistrationIntroViewController.swift */; };
@@ -161,7 +126,34 @@
 		F88E8E0920ADEE6000117A99 /* mPower2.strings in Resources */ = {isa = PBXBuildFile; fileRef = 03C9DD0B20A4F956007074EE /* mPower2.strings */; };
 		F88E8E0A20ADEE6C00117A99 /* BridgeInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E7F62063039200CD351C /* BridgeInfo.plist */; };
 		F89B3DA920C60F8B002EAE2D /* TodayScheduleManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89B3DA820C60F8B002EAE2D /* TodayScheduleManagerTests.swift */; };
-		F8AA3E46214873C0006612F8 /* Research_UnitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5D56CC8208131770080AE38 /* Research_UnitTest.framework */; };
+		F8A5C85D227D08BC00DD4692 /* BridgeSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C85C227D08BC00DD4692 /* BridgeSDK.framework */; };
+		F8A5C85E227D08BC00DD4692 /* BridgeSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C85C227D08BC00DD4692 /* BridgeSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F8A5C860227D08BC00DD4692 /* BridgeApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C85F227D08BC00DD4692 /* BridgeApp.framework */; };
+		F8A5C861227D08BC00DD4692 /* BridgeApp.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C85F227D08BC00DD4692 /* BridgeApp.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F8A5C863227D08BC00DD4692 /* MotorControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C862227D08BC00DD4692 /* MotorControl.framework */; };
+		F8A5C864227D08BC00DD4692 /* MotorControl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C862227D08BC00DD4692 /* MotorControl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F8A5C866227D08BC00DD4692 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C865227D08BC00DD4692 /* Research.framework */; };
+		F8A5C867227D08BC00DD4692 /* Research.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C865227D08BC00DD4692 /* Research.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F8A5C869227D08BC00DD4692 /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C868227D08BC00DD4692 /* ResearchUI.framework */; };
+		F8A5C86A227D08BC00DD4692 /* ResearchUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C868227D08BC00DD4692 /* ResearchUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F8A5C86C227D08BC00DD4692 /* ResearchRecorders.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C86B227D08BC00DD4692 /* ResearchRecorders.framework */; };
+		F8A5C86D227D08BC00DD4692 /* ResearchRecorders.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C86B227D08BC00DD4692 /* ResearchRecorders.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F8A5C86E227D08D100DD4692 /* ResearchRecorders.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C86B227D08BC00DD4692 /* ResearchRecorders.framework */; };
+		F8A5C86F227D08D100DD4692 /* ResearchRecorders.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C86B227D08BC00DD4692 /* ResearchRecorders.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F8A5C870227D08D100DD4692 /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C868227D08BC00DD4692 /* ResearchUI.framework */; };
+		F8A5C871227D08D100DD4692 /* ResearchUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C868227D08BC00DD4692 /* ResearchUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F8A5C872227D08D100DD4692 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C865227D08BC00DD4692 /* Research.framework */; };
+		F8A5C873227D08D100DD4692 /* Research.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C865227D08BC00DD4692 /* Research.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F8A5C874227D08D100DD4692 /* MotorControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C862227D08BC00DD4692 /* MotorControl.framework */; };
+		F8A5C875227D08D100DD4692 /* MotorControl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C862227D08BC00DD4692 /* MotorControl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F8A5C876227D08D100DD4692 /* BridgeApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C85F227D08BC00DD4692 /* BridgeApp.framework */; };
+		F8A5C877227D08D100DD4692 /* BridgeApp.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C85F227D08BC00DD4692 /* BridgeApp.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F8A5C878227D08D100DD4692 /* BridgeSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C85C227D08BC00DD4692 /* BridgeSDK.framework */; };
+		F8A5C879227D08D100DD4692 /* BridgeSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C85C227D08BC00DD4692 /* BridgeSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F8A5C881227E278800DD4692 /* BridgeSDK_Test.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C880227E278800DD4692 /* BridgeSDK_Test.framework */; };
+		F8A5C883227E278800DD4692 /* Research_UnitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C882227E278800DD4692 /* Research_UnitTest.framework */; };
+		F8A5C885227E279700DD4692 /* BridgeSDK_Test.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C884227E279700DD4692 /* BridgeSDK_Test.framework */; };
+		F8A5C887227E279700DD4692 /* Research_UnitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C886227E279700DD4692 /* Research_UnitTest.framework */; };
 		F8C58DB120AF4823001C7B7F /* TodayScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C58DB020AF4823001C7B7F /* TodayScheduleManager.swift */; };
 		F8C58DB220AF4823001C7B7F /* TodayScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C58DB020AF4823001C7B7F /* TodayScheduleManager.swift */; };
 		F8C58DCA20AF5E86001C7B7F /* StudyBurstScheduleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C58DC920AF5E86001C7B7F /* StudyBurstScheduleManager.swift */; };
@@ -175,53 +167,13 @@
 		F8D3E77F2062F1B900CD351C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E77D2062F1B900CD351C /* Main.storyboard */; };
 		F8D3E7812062F1B900CD351C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E7802062F1B900CD351C /* Assets.xcassets */; };
 		F8D3E7842062F1B900CD351C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E7822062F1B900CD351C /* LaunchScreen.storyboard */; };
-		F8D3E7E42062F9DE00CD351C /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7DE2062F28F00CD351C /* ResearchUI.framework */; };
-		F8D3E7E52062F9DE00CD351C /* ResearchUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7DE2062F28F00CD351C /* ResearchUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F8D3E7E82062F9DE00CD351C /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7CD2062F28500CD351C /* Research.framework */; };
-		F8D3E7E92062F9DE00CD351C /* Research.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7CD2062F28500CD351C /* Research.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F8D3E7EC2062F9DE00CD351C /* BridgeSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7BC2062F27600CD351C /* BridgeSDK.framework */; };
-		F8D3E7ED2062F9DE00CD351C /* BridgeSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7BC2062F27600CD351C /* BridgeSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F8D3E7F02062F9DE00CD351C /* BridgeApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7A72062F26D00CD351C /* BridgeApp.framework */; };
-		F8D3E7F12062F9DE00CD351C /* BridgeApp.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E7A72062F26D00CD351C /* BridgeApp.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8D3E7F72063039200CD351C /* BridgeInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E7F62063039200CD351C /* BridgeInfo.plist */; };
 		F8D3E8022063055500CD351C /* sage-mpower-2.pem in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E8002063055500CD351C /* sage-mpower-2.pem */; };
 		F8D3E8032063055500CD351C /* BridgeInfo-private.plist in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E8012063055500CD351C /* BridgeInfo-private.plist */; };
-		F8D3E8362063072200CD351C /* MotorControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E82D2063072100CD351C /* MotorControl.framework */; };
-		F8D3E83F2063072200CD351C /* MotorControl.h in Headers */ = {isa = PBXBuildFile; fileRef = F8D3E82F2063072100CD351C /* MotorControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F8D3E8422063072200CD351C /* MotorControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E82D2063072100CD351C /* MotorControl.framework */; };
-		F8D3E8432063072200CD351C /* MotorControl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8D3E82D2063072100CD351C /* MotorControl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		B5D56CC7208131770080AE38 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8D3E7C32062F28500CD351C /* Research.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F875575620807E2300235078;
-			remoteInfo = "Research-UnitTest";
-		};
-		F81BE7B420B4AA7C00EE57D3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8D3E7AC2062F27600CD351C /* BridgeSDK.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F81BE77820B4951F00EE57D3;
-			remoteInfo = "BridgeSDK-Test";
-		};
-		F81BE7C220B4B8F700EE57D3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8D3E7AC2062F27600CD351C /* BridgeSDK.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = F81BE77720B4951F00EE57D3;
-			remoteInfo = "BridgeSDK-Test";
-		};
 		F84E724220E2C99900E5C6C3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8D3E76E2062F1B900CD351C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F8545973208FA2ED00D37243;
-			remoteInfo = mPower2TestApp;
-		};
-		F8545986208FA38900D37243 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F8D3E76E2062F1B900CD351C /* Project object */;
 			proxyType = 1;
@@ -235,188 +187,6 @@
 			remoteGlobalIDString = F8545973208FA2ED00D37243;
 			remoteInfo = mPower2TestApp;
 		};
-		F854598C208FA43700D37243 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8D3E7D62062F28F00CD351C /* ResearchUI.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = FFF2D9371FCF415E007258F8;
-			remoteInfo = "ResearchUI (iOS)";
-		};
-		F8545991208FA43D00D37243 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8D3E7C32062F28500CD351C /* Research.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = FF8B53131FCE678E006B6937;
-			remoteInfo = "Research (iOS)";
-		};
-		F8545995208FA44800D37243 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8D3E7AC2062F27600CD351C /* BridgeSDK.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 80855F4F19BE258C006601C7;
-			remoteInfo = BridgeSDK;
-		};
-		F8545999208FA45500D37243 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8D3E79A2062F26D00CD351C /* BridgeApp.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = F83B44A42032467D002825AE;
-			remoteInfo = "BridgeApp (iOS)";
-		};
-		F854599D208FA46800D37243 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8D3E76E2062F1B900CD351C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F8D3E82C2063072100CD351C;
-			remoteInfo = MotorControl;
-		};
-		F8AA3E4121487380006612F8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8D3E7C32062F28500CD351C /* Research.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F8BE123521370931000AAB1E;
-			remoteInfo = "Research (macOS)";
-		};
-		F8D3E7A62062F26D00CD351C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8D3E79A2062F26D00CD351C /* BridgeApp.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F83B44A52032467D002825AE;
-			remoteInfo = "BridgeApp (iOS)";
-		};
-		F8D3E7A82062F26D00CD351C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8D3E79A2062F26D00CD351C /* BridgeApp.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F83B44AE2032467D002825AE;
-			remoteInfo = BridgeAppTests;
-		};
-		F8D3E7AA2062F26D00CD351C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8D3E79A2062F26D00CD351C /* BridgeApp.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F83B450220324A33002825AE;
-			remoteInfo = BridgeAppExample;
-		};
-		F8D3E7BB2062F27600CD351C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8D3E7AC2062F27600CD351C /* BridgeSDK.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 80855F5019BE258C006601C7;
-			remoteInfo = BridgeSDK;
-		};
-		F8D3E7BD2062F27600CD351C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8D3E7AC2062F27600CD351C /* BridgeSDK.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 80855F5B19BE258C006601C7;
-			remoteInfo = BridgeSDKTests;
-		};
-		F8D3E7BF2062F27600CD351C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8D3E7AC2062F27600CD351C /* BridgeSDK.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 807AE2871B603309002588BB;
-			remoteInfo = BridgeSDKIntegration;
-		};
-		F8D3E7C12062F27600CD351C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8D3E7AC2062F27600CD351C /* BridgeSDK.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 807AE29F1B60330C002588BB;
-			remoteInfo = BridgeSDKIntegrationTests;
-		};
-		F8D3E7CC2062F28500CD351C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8D3E7C32062F28500CD351C /* Research.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FF8B53141FCE678E006B6937;
-			remoteInfo = "Research (iOS)";
-		};
-		F8D3E7CE2062F28500CD351C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8D3E7C32062F28500CD351C /* Research.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FF8B531C1FCE678E006B6937;
-			remoteInfo = ResearchTests_iOS;
-		};
-		F8D3E7D02062F28500CD351C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8D3E7C32062F28500CD351C /* Research.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FF8B53301FCE67AA006B6937;
-			remoteInfo = "Research (watchOS)";
-		};
-		F8D3E7D22062F28500CD351C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8D3E7C32062F28500CD351C /* Research.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FF8B533D1FCE67C7006B6937;
-			remoteInfo = "Research (tvOS)";
-		};
-		F8D3E7DD2062F28F00CD351C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8D3E7D62062F28F00CD351C /* ResearchUI.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FFF2D9381FCF415E007258F8;
-			remoteInfo = "ResearchUI (iOS)";
-		};
-		F8D3E7DF2062F28F00CD351C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8D3E7D62062F28F00CD351C /* ResearchUI.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FFF2D9401FCF415E007258F8;
-			remoteInfo = ResearchUITests_iOS;
-		};
-		F8D3E7E12062F28F00CD351C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8D3E7D62062F28F00CD351C /* ResearchUI.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FFF2D9701FCF41BF007258F8;
-			remoteInfo = "ResearchUI (watchOS)";
-		};
-		F8D3E7E62062F9DE00CD351C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8D3E7D62062F28F00CD351C /* ResearchUI.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = FFF2D9371FCF415E007258F8;
-			remoteInfo = "ResearchUI (iOS)";
-		};
-		F8D3E7EA2062F9DE00CD351C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8D3E7C32062F28500CD351C /* Research.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = FF8B53131FCE678E006B6937;
-			remoteInfo = "Research (iOS)";
-		};
-		F8D3E7EE2062F9DE00CD351C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8D3E7AC2062F27600CD351C /* BridgeSDK.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 80855F4F19BE258C006601C7;
-			remoteInfo = BridgeSDK;
-		};
-		F8D3E7F22062F9DE00CD351C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8D3E79A2062F26D00CD351C /* BridgeApp.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = F83B44A42032467D002825AE;
-			remoteInfo = "BridgeApp (iOS)";
-		};
-		F8D3E8372063072200CD351C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8D3E76E2062F1B900CD351C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F8D3E82C2063072100CD351C;
-			remoteInfo = MotorControl;
-		};
-		F8D3E8402063072200CD351C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F8D3E76E2062F1B900CD351C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = F8D3E82C2063072100CD351C;
-			remoteInfo = MotorControl;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -426,12 +196,12 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				F854598B208FA43700D37243 /* ResearchUI.framework in Embed Frameworks */,
-				F8545998208FA45500D37243 /* BridgeApp.framework in Embed Frameworks */,
-				F8545990208FA43D00D37243 /* Research.framework in Embed Frameworks */,
-				F8545994208FA44800D37243 /* BridgeSDK.framework in Embed Frameworks */,
-				F81BE7C120B4B8F700EE57D3 /* BridgeSDK_Test.framework in Embed Frameworks */,
-				F854599C208FA46800D37243 /* MotorControl.framework in Embed Frameworks */,
+				F8A5C877227D08D100DD4692 /* BridgeApp.framework in Embed Frameworks */,
+				F8A5C875227D08D100DD4692 /* MotorControl.framework in Embed Frameworks */,
+				F8A5C879227D08D100DD4692 /* BridgeSDK.framework in Embed Frameworks */,
+				F8A5C86F227D08D100DD4692 /* ResearchRecorders.framework in Embed Frameworks */,
+				F8A5C873227D08D100DD4692 /* Research.framework in Embed Frameworks */,
+				F8A5C871227D08D100DD4692 /* ResearchUI.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -442,11 +212,12 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				F8D3E7E52062F9DE00CD351C /* ResearchUI.framework in Embed Frameworks */,
-				F8D3E7F12062F9DE00CD351C /* BridgeApp.framework in Embed Frameworks */,
-				F8D3E7E92062F9DE00CD351C /* Research.framework in Embed Frameworks */,
-				F8D3E7ED2062F9DE00CD351C /* BridgeSDK.framework in Embed Frameworks */,
-				F8D3E8432063072200CD351C /* MotorControl.framework in Embed Frameworks */,
+				F8A5C864227D08BC00DD4692 /* MotorControl.framework in Embed Frameworks */,
+				F8A5C86D227D08BC00DD4692 /* ResearchRecorders.framework in Embed Frameworks */,
+				F8A5C85E227D08BC00DD4692 /* BridgeSDK.framework in Embed Frameworks */,
+				F8A5C861227D08BC00DD4692 /* BridgeApp.framework in Embed Frameworks */,
+				F8A5C867227D08BC00DD4692 /* Research.framework in Embed Frameworks */,
+				F8A5C86A227D08BC00DD4692 /* ResearchUI.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -468,11 +239,11 @@
 		608241DA2093D9A90026E843 /* RegistrationIntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationIntroViewController.swift; sourceTree = "<group>"; };
 		608241F12093D9F70026E843 /* ExternalIDRegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalIDRegistrationViewController.swift; sourceTree = "<group>"; };
 		60A1576D209D16C40033FAB5 /* Registration.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Registration.storyboard; sourceTree = "<group>"; };
+		60D534BF222719D10022F0C5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = Base; path = mPower2/Base.lproj/PassiveDataPermission.json; sourceTree = "<group>"; };
 		60E86E39212B6B420073C69C /* ProfileTableItems.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableItems.swift; sourceTree = "<group>"; };
 		60E86E4F212B6B430073C69C /* ProfileTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewController.swift; sourceTree = "<group>"; };
 		60E94111212B8FD60027432C /* ProfileTableHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableHeaderView.swift; sourceTree = "<group>"; };
 		60E94112212B8FD60027432C /* ProfileTableFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileTableFooterView.xib; sourceTree = "<group>"; };
-		60E94113212B8FD60027432C /* HealthProfileTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HealthProfileTableHeaderView.xib; sourceTree = "<group>"; };
 		60E94114212B8FD60027432C /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		60E94116212B8FD70027432C /* ProfileTableHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileTableHeaderView.xib; sourceTree = "<group>"; };
 		60E94117212B8FD70027432C /* ProfileTableFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableFooterView.swift; sourceTree = "<group>"; };
@@ -486,34 +257,14 @@
 		80015134212F837A006B3C8E /* Licenses.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Licenses.html; sourceTree = "<group>"; };
 		80015137212F8504006B3C8E /* CSS_files */ = {isa = PBXFileReference; lastKnownFileType = folder; path = CSS_files; sourceTree = "<group>"; };
 		801E8EB1214896EF00AF6701 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = mPower2/Base.lproj/PhoneLearnMore.html; sourceTree = "<group>"; };
+		80E3D71D2279366A0087FCA2 /* PassiveDataPermissionStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PassiveDataPermissionStepObject.swift; path = Model/PassiveDataPermissionStepObject.swift; sourceTree = "<group>"; };
+		80E3D7362279383B0087FCA2 /* PassiveDataPermissionStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PassiveDataPermissionStepViewController.swift; path = "View Controllers/PassiveDataPermissionStepViewController.swift"; sourceTree = "<group>"; };
 		80F3739B20FC32D200A565E0 /* VersionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionLabel.swift; sourceTree = "<group>"; };
-		B508B31B2076ECA3001645CF /* MCTHandSelectionStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTHandSelectionStepObject.swift; sourceTree = "<group>"; };
-		B508B39820772D76001645CF /* MCTSkippableSectionStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTSkippableSectionStepObject.swift; sourceTree = "<group>"; };
-		B532ACEC208150C00009EAD3 /* MCTCompletionGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTCompletionGradient.swift; sourceTree = "<group>"; };
-		B532AD03208158860009EAD3 /* MCTCompletionStepViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTCompletionStepViewController.swift; sourceTree = "<group>"; };
-		B532AD0520817F610009EAD3 /* MCTTappingCompletionStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTTappingCompletionStepViewController.swift; sourceTree = "<group>"; };
-		B5386FA5206ABD11005A0FAC /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		B5386FBE206AF30C005A0FAC /* MCTTaskInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCTTaskInfo.swift; sourceTree = "<group>"; };
-		B5386FC0206B0211005A0FAC /* MCTFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTFactory.swift; sourceTree = "<group>"; };
-		B53FD158207EBCFC00FBCC85 /* MCTTapButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTTapButton.swift; sourceTree = "<group>"; };
-		B5581EF420754A7D00F224C6 /* Tremor.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Tremor.json; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.javascript; };
-		B56E4D0520781A640009C489 /* NavigationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTests.swift; sourceTree = "<group>"; };
-		B56E4D09207BCA110009C489 /* MCTInstructionStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTInstructionStepObject.swift; sourceTree = "<group>"; };
-		B587ABE1206C57DB00542548 /* ActiveTaskSteps.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ActiveTaskSteps.storyboard; sourceTree = "<group>"; };
 		B587AC07206D696800542548 /* UIView+mPowerTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+mPowerTheme.swift"; sourceTree = "<group>"; };
-		B59FC272206EA445002BFDB9 /* MCTActiveStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTActiveStepViewController.swift; sourceTree = "<group>"; };
-		B59FC28B20728BC7002BFDB9 /* MCTOverviewStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTOverviewStepViewController.swift; sourceTree = "<group>"; };
-		B59FC2A92073DD81002BFDB9 /* MCTOverviewStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTOverviewStepObject.swift; sourceTree = "<group>"; };
-		B5D822F6207449D400C03F3C /* MCTInstructionStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTInstructionStepViewController.swift; sourceTree = "<group>"; };
-		B5DC838C2076B5FD00DEE4A2 /* Finger_Tapping.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Finger_Tapping.json; sourceTree = "<group>"; };
-		B5FA25FE2069867C00A4FF3D /* Walk_And_Balance.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Walk_And_Balance.json; sourceTree = "<group>"; };
 		CB5E16EE210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TrackedItemsIntroductionStepViewController.swift; path = "View Controllers/TrackedItemsIntroductionStepViewController.swift"; sourceTree = "<group>"; };
 		CB6196512109473900F2E3EA /* TrackedItemsIntroductionStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TrackedItemsIntroductionStepObject.swift; path = Model/TrackedItemsIntroductionStepObject.swift; sourceTree = "<group>"; };
 		F8078F2920ADF1DC00757F42 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F8078F4220ADFA6A00757F42 /* DataSourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSourceManager.swift; sourceTree = "<group>"; };
-		F80CB9EB207D2D2300B4EE5D /* MCTTappingStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTTappingStepViewController.swift; sourceTree = "<group>"; };
-		F80CB9EE207D2DE400B4EE5D /* MCTTappingResultObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTTappingResultObject.swift; sourceTree = "<group>"; };
-		F80CB9FC207D3AD800B4EE5D /* MotorControl.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = MotorControl.strings; sourceTree = "<group>"; };
 		F81BE7BE20B4AB4B00EE57D3 /* AppConfig.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AppConfig.json; sourceTree = "<group>"; };
 		F82AE7B52063160B00952D74 /* UIColor+mPowerTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+mPowerTheme.swift"; sourceTree = "<group>"; };
 		F832ABE820D8D341005A9025 /* StudyBurstCompletionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StudyBurstCompletionViewController.swift; path = "View Controllers/StudyBurstCompletionViewController.swift"; sourceTree = "<group>"; };
@@ -522,7 +273,6 @@
 		F832AC3720DA29E6005A9025 /* MP2Factory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MP2Factory.swift; sourceTree = "<group>"; };
 		F8398D4C212F32E5005DE6E0 /* Background.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Background.json; sourceTree = "<group>"; };
 		F8398D63212F32EE005DE6E0 /* Withdrawal.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Withdrawal.json; sourceTree = "<group>"; };
-		F8460D742097CF0C0084E197 /* MCTCountdownStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCTCountdownStepViewController.swift; sourceTree = "<group>"; };
 		F848F4DD2107C99F0001ADBF /* Motivation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Motivation.json; sourceTree = "<group>"; };
 		F84E722020E1866300E5C6C3 /* Demographics.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Demographics.json; sourceTree = "<group>"; };
 		F84E723720E1866A00E5C6C3 /* Engagement.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Engagement.json; sourceTree = "<group>"; };
@@ -543,11 +293,17 @@
 		F854599F208FA58800D37243 /* ResourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceTests.swift; sourceTree = "<group>"; };
 		F861B6882134ADF00077D43A /* SurveyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyViewController.swift; sourceTree = "<group>"; };
 		F861B6A12134B3440077D43A /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
-		F8841979207EB4E400028A2B /* TappingSectionStep.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TappingSectionStep.json; sourceTree = "<group>"; };
-		F8841992207EB77000028A2B /* TremorSectionStep.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TremorSectionStep.json; sourceTree = "<group>"; };
-		F88419B4207EC14400028A2B /* ResourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceTests.swift; sourceTree = "<group>"; };
-		F88419CC207EC22A00028A2B /* MotorControlTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MotorControlTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		F89B3DA820C60F8B002EAE2D /* TodayScheduleManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayScheduleManagerTests.swift; sourceTree = "<group>"; };
+		F8A5C85C227D08BC00DD4692 /* BridgeSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BridgeSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8A5C85F227D08BC00DD4692 /* BridgeApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BridgeApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8A5C862227D08BC00DD4692 /* MotorControl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MotorControl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8A5C865227D08BC00DD4692 /* Research.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Research.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8A5C868227D08BC00DD4692 /* ResearchUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8A5C86B227D08BC00DD4692 /* ResearchRecorders.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchRecorders.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8A5C880227E278800DD4692 /* BridgeSDK_Test.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BridgeSDK_Test.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8A5C882227E278800DD4692 /* Research_UnitTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Research_UnitTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8A5C884227E279700DD4692 /* BridgeSDK_Test.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BridgeSDK_Test.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8A5C886227E279700DD4692 /* Research_UnitTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Research_UnitTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8C58DB020AF4823001C7B7F /* TodayScheduleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayScheduleManager.swift; sourceTree = "<group>"; };
 		F8C58DC920AF5E86001C7B7F /* StudyBurstScheduleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyBurstScheduleManager.swift; sourceTree = "<group>"; };
 		F8C58DD420AF8CCC001C7B7F /* SurveyScheduleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyScheduleManager.swift; sourceTree = "<group>"; };
@@ -561,19 +317,10 @@
 		F8D3E7852062F1B900CD351C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F8D3E78A2062F1B900CD351C /* mPower2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = mPower2Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8D3E7902062F1B900CD351C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F8D3E79A2062F26D00CD351C /* BridgeApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BridgeApp.xcodeproj; path = "../BridgeApp-Apple-SDK/BridgeApp/BridgeApp.xcodeproj"; sourceTree = "<group>"; };
-		F8D3E7AC2062F27600CD351C /* BridgeSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BridgeSDK.xcodeproj; path = "../BridgeApp-Apple-SDK/Bridge-iOS-SDK/BridgeSDK.xcodeproj"; sourceTree = "<group>"; };
-		F8D3E7C32062F28500CD351C /* Research.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Research.xcodeproj; path = "../BridgeApp-Apple-SDK/SageResearch/Research/Research.xcodeproj"; sourceTree = "<group>"; };
-		F8D3E7D62062F28F00CD351C /* ResearchUI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ResearchUI.xcodeproj; path = "../BridgeApp-Apple-SDK/SageResearch/ResearchUI/ResearchUI.xcodeproj"; sourceTree = "<group>"; };
 		F8D3E7E32062F2D700CD351C /* mPower2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = mPower2.entitlements; sourceTree = "<group>"; };
 		F8D3E7F62063039200CD351C /* BridgeInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BridgeInfo.plist; sourceTree = "<group>"; };
 		F8D3E8002063055500CD351C /* sage-mpower-2.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "sage-mpower-2.pem"; path = "../../../iOSPrivateProjectInfo/mPower2/sage-mpower-2.pem"; sourceTree = "<group>"; };
 		F8D3E8012063055500CD351C /* BridgeInfo-private.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "BridgeInfo-private.plist"; path = "../../../iOSPrivateProjectInfo/mPower2/BridgeInfo-private.plist"; sourceTree = "<group>"; };
-		F8D3E82D2063072100CD351C /* MotorControl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MotorControl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F8D3E82F2063072100CD351C /* MotorControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MotorControl.h; sourceTree = "<group>"; };
-		F8D3E8302063072100CD351C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F8D3E8352063072200CD351C /* MotorControlTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MotorControlTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F8D3E83E2063072200CD351C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -581,6 +328,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F8A5C885227E279700DD4692 /* BridgeSDK_Test.framework in Frameworks */,
+				F8A5C887227E279700DD4692 /* Research_UnitTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -588,12 +337,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F854598A208FA43700D37243 /* ResearchUI.framework in Frameworks */,
-				F8545997208FA45500D37243 /* BridgeApp.framework in Frameworks */,
-				F854598F208FA43D00D37243 /* Research.framework in Frameworks */,
-				F8545993208FA44800D37243 /* BridgeSDK.framework in Frameworks */,
-				F81BE7C020B4B8F700EE57D3 /* BridgeSDK_Test.framework in Frameworks */,
-				F854599B208FA46800D37243 /* MotorControl.framework in Frameworks */,
+				F8A5C876227D08D100DD4692 /* BridgeApp.framework in Frameworks */,
+				F8A5C874227D08D100DD4692 /* MotorControl.framework in Frameworks */,
+				F8A5C878227D08D100DD4692 /* BridgeSDK.framework in Frameworks */,
+				F8A5C86E227D08D100DD4692 /* ResearchRecorders.framework in Frameworks */,
+				F8A5C872227D08D100DD4692 /* Research.framework in Frameworks */,
+				F8A5C870227D08D100DD4692 /* ResearchUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -601,11 +350,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F8D3E7E82062F9DE00CD351C /* Research.framework in Frameworks */,
-				F8D3E7E42062F9DE00CD351C /* ResearchUI.framework in Frameworks */,
-				F8D3E7EC2062F9DE00CD351C /* BridgeSDK.framework in Frameworks */,
-				F8D3E7F02062F9DE00CD351C /* BridgeApp.framework in Frameworks */,
-				F8D3E8422063072200CD351C /* MotorControl.framework in Frameworks */,
+				F8A5C863227D08BC00DD4692 /* MotorControl.framework in Frameworks */,
+				F8A5C86C227D08BC00DD4692 /* ResearchRecorders.framework in Frameworks */,
+				F8A5C85D227D08BC00DD4692 /* BridgeSDK.framework in Frameworks */,
+				F8A5C860227D08BC00DD4692 /* BridgeApp.framework in Frameworks */,
+				F8A5C866227D08BC00DD4692 /* Research.framework in Frameworks */,
+				F8A5C869227D08BC00DD4692 /* ResearchUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -613,24 +363,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F8D3E8292063072100CD351C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B5FA25FD206985FE00A4FF3D /* ResearchUI.framework in Frameworks */,
-				B5FA25FC206985E600A4FF3D /* Research.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F8D3E8322063072200CD351C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F8AA3E46214873C0006612F8 /* Research_UnitTest.framework in Frameworks */,
-				F8D3E8362063072200CD351C /* MotorControl.framework in Frameworks */,
+				F8A5C881227E278800DD4692 /* BridgeSDK_Test.framework in Frameworks */,
+				F8A5C883227E278800DD4692 /* Research_UnitTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -655,6 +389,7 @@
 				03DD008220E2F9A4006A5794 /* ReminderTableStepViewController.swift */,
 				03A6E0012103E69900FC5A84 /* GreatJobViewController.swift */,
 				CB5E16EE210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift */,
+				80E3D7362279383B0087FCA2 /* PassiveDataPermissionStepViewController.swift */,
 				60E86E4F212B6B430073C69C /* ProfileTableViewController.swift */,
 				603B1070212CA7C500E44EE9 /* WithdrawalViewController.swift */,
 				80015118212F5621006B3C8E /* ProfileHTMLViewController.swift */,
@@ -703,59 +438,11 @@
 			name = HTML;
 			sourceTree = "<group>";
 		};
-		B53FD157207EBC8F00FBCC85 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				B532ACEC208150C00009EAD3 /* MCTCompletionGradient.swift */,
-				B53FD158207EBCFC00FBCC85 /* MCTTapButton.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		B56E4D67207D31D80009C489 /* StepObjects */ = {
-			isa = PBXGroup;
-			children = (
-				B508B31B2076ECA3001645CF /* MCTHandSelectionStepObject.swift */,
-				B56E4D09207BCA110009C489 /* MCTInstructionStepObject.swift */,
-				B59FC2A92073DD81002BFDB9 /* MCTOverviewStepObject.swift */,
-				B508B39820772D76001645CF /* MCTSkippableSectionStepObject.swift */,
-			);
-			path = StepObjects;
-			sourceTree = "<group>";
-		};
-		B56E4D68207D31F50009C489 /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				B59FC272206EA445002BFDB9 /* MCTActiveStepViewController.swift */,
-				B532AD03208158860009EAD3 /* MCTCompletionStepViewController.swift */,
-				F8460D742097CF0C0084E197 /* MCTCountdownStepViewController.swift */,
-				B5D822F6207449D400C03F3C /* MCTInstructionStepViewController.swift */,
-				B59FC28B20728BC7002BFDB9 /* MCTOverviewStepViewController.swift */,
-				B532AD0520817F610009EAD3 /* MCTTappingCompletionStepViewController.swift */,
-				F80CB9EB207D2D2300B4EE5D /* MCTTappingStepViewController.swift */,
-			);
-			path = ViewControllers;
-			sourceTree = "<group>";
-		};
-		B5FA25FB2069856700A4FF3D /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				B587ABE1206C57DB00542548 /* ActiveTaskSteps.storyboard */,
-				B5DC838C2076B5FD00DEE4A2 /* Finger_Tapping.json */,
-				F8841979207EB4E400028A2B /* TappingSectionStep.json */,
-				B5581EF420754A7D00F224C6 /* Tremor.json */,
-				F8841992207EB77000028A2B /* TremorSectionStep.json */,
-				B5FA25FE2069867C00A4FF3D /* Walk_And_Balance.json */,
-				B5386FA5206ABD11005A0FAC /* Images.xcassets */,
-				F80CB9FC207D3AD800B4EE5D /* MotorControl.strings */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
 		CB5E1705210946E200AEE6A6 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				CB6196512109473900F2E3EA /* TrackedItemsIntroductionStepObject.swift */,
+				80E3D71D2279366A0087FCA2 /* PassiveDataPermissionStepObject.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -776,14 +463,6 @@
 			name = "Schedule Management";
 			sourceTree = "<group>";
 		};
-		F80CB9ED207D2D9D00B4EE5D /* ResultObjects */ = {
-			isa = PBXGroup;
-			children = (
-				F80CB9EE207D2DE400B4EE5D /* MCTTappingResultObject.swift */,
-			);
-			path = ResultObjects;
-			sourceTree = "<group>";
-		};
 		F8188F7B2072CF51009AC215 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -792,7 +471,6 @@
 				F8D3E7822062F1B900CD351C /* LaunchScreen.storyboard */,
 				F8D3E77D2062F1B900CD351C /* Main.storyboard */,
 				60A1576D209D16C40033FAB5 /* Registration.storyboard */,
-				60E94113212B8FD60027432C /* HealthProfileTableHeaderView.xib */,
 				60E94112212B8FD60027432C /* ProfileTableFooterView.xib */,
 				60E94116212B8FD70027432C /* ProfileTableHeaderView.xib */,
 				F8D3E7802062F1B900CD351C /* Assets.xcassets */,
@@ -827,6 +505,7 @@
 			isa = PBXGroup;
 			children = (
 				F85020DF211B970C0094E05F /* ActivityTracking.json */,
+				60D534BE222719D10022F0C5 /* PassiveDataPermission.json */,
 				F85020B9211B96AE0094E05F /* Triggers.json */,
 				F85020D2211B96B40094E05F /* Symptoms.json */,
 				F85020D6211B96BA0094E05F /* Medication.json */,
@@ -864,8 +543,6 @@
 				F8545975208FA2ED00D37243 /* mPower2TestApp */,
 				F8D3E78D2062F1B900CD351C /* mPower2Tests */,
 				F84E723E20E2C99900E5C6C3 /* mPower2TestAppUITests */,
-				F8D3E82E2063072100CD351C /* MotorControl */,
-				F8D3E83B2063072200CD351C /* MotorControlTests */,
 				F8D3E7992062F23A00CD351C /* Frameworks */,
 				F8D3E7772062F1B900CD351C /* Products */,
 			);
@@ -876,8 +553,6 @@
 			children = (
 				F8D3E7762062F1B900CD351C /* mPower2.app */,
 				F8D3E78A2062F1B900CD351C /* mPower2Tests.xctest */,
-				F8D3E82D2063072100CD351C /* MotorControl.framework */,
-				F8D3E8352063072200CD351C /* MotorControlTests.xctest */,
 				F8545974208FA2ED00D37243 /* mPower2TestApp.app */,
 				F84E723D20E2C99900E5C6C3 /* mPower2TestAppUITests.xctest */,
 			);
@@ -915,57 +590,18 @@
 		F8D3E7992062F23A00CD351C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F8D3E7D62062F28F00CD351C /* ResearchUI.xcodeproj */,
-				F8D3E7C32062F28500CD351C /* Research.xcodeproj */,
-				F8D3E7AC2062F27600CD351C /* BridgeSDK.xcodeproj */,
-				F8D3E79A2062F26D00CD351C /* BridgeApp.xcodeproj */,
+				F8A5C884227E279700DD4692 /* BridgeSDK_Test.framework */,
+				F8A5C886227E279700DD4692 /* Research_UnitTest.framework */,
+				F8A5C880227E278800DD4692 /* BridgeSDK_Test.framework */,
+				F8A5C882227E278800DD4692 /* Research_UnitTest.framework */,
+				F8A5C86B227D08BC00DD4692 /* ResearchRecorders.framework */,
+				F8A5C868227D08BC00DD4692 /* ResearchUI.framework */,
+				F8A5C865227D08BC00DD4692 /* Research.framework */,
+				F8A5C862227D08BC00DD4692 /* MotorControl.framework */,
+				F8A5C85F227D08BC00DD4692 /* BridgeApp.framework */,
+				F8A5C85C227D08BC00DD4692 /* BridgeSDK.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		F8D3E79B2062F26D00CD351C /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				F8D3E7A72062F26D00CD351C /* BridgeApp.framework */,
-				F8D3E7A92062F26D00CD351C /* BridgeAppTests.xctest */,
-				F8D3E7AB2062F26D00CD351C /* BridgeAppExample.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		F8D3E7AD2062F27600CD351C /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				F8D3E7BC2062F27600CD351C /* BridgeSDK.framework */,
-				F8D3E7BE2062F27600CD351C /* BridgeSDKTests.xctest */,
-				F8D3E7C02062F27600CD351C /* BridgeSDKIntegration.app */,
-				F8D3E7C22062F27600CD351C /* BridgeSDKIntegrationTests.xctest */,
-				F81BE7B520B4AA7C00EE57D3 /* BridgeSDK_Test.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		F8D3E7C42062F28500CD351C /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				F8D3E7CD2062F28500CD351C /* Research.framework */,
-				F8D3E7D12062F28500CD351C /* Research.framework */,
-				F8D3E7D32062F28500CD351C /* Research.framework */,
-				F8AA3E4221487380006612F8 /* Research.framework */,
-				F8D3E7CF2062F28500CD351C /* ResearchTests_iOS.xctest */,
-				B5D56CC8208131770080AE38 /* Research_UnitTest.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		F8D3E7D72062F28F00CD351C /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				F8D3E7DE2062F28F00CD351C /* ResearchUI.framework */,
-				F8D3E7E02062F28F00CD351C /* ResearchUITests_iOS.xctest */,
-				F8D3E7E22062F28F00CD351C /* ResearchUI.framework */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		F8D3E7F52062F9ED00CD351C /* Support Files */ = {
@@ -981,45 +617,7 @@
 			name = "Support Files";
 			sourceTree = "<group>";
 		};
-		F8D3E82E2063072100CD351C /* MotorControl */ = {
-			isa = PBXGroup;
-			children = (
-				F8D3E8302063072100CD351C /* Info.plist */,
-				F8D3E82F2063072100CD351C /* MotorControl.h */,
-				B5386FC0206B0211005A0FAC /* MCTFactory.swift */,
-				B5386FBE206AF30C005A0FAC /* MCTTaskInfo.swift */,
-				B5FA25FB2069856700A4FF3D /* Resources */,
-				F80CB9ED207D2D9D00B4EE5D /* ResultObjects */,
-				B56E4D67207D31D80009C489 /* StepObjects */,
-				B56E4D68207D31F50009C489 /* ViewControllers */,
-				B53FD157207EBC8F00FBCC85 /* Views */,
-			);
-			path = MotorControl;
-			sourceTree = "<group>";
-		};
-		F8D3E83B2063072200CD351C /* MotorControlTests */ = {
-			isa = PBXGroup;
-			children = (
-				F88419CC207EC22A00028A2B /* MotorControlTests-Bridging-Header.h */,
-				B56E4D0520781A640009C489 /* NavigationTests.swift */,
-				F88419B4207EC14400028A2B /* ResourceTests.swift */,
-				F8D3E83E2063072200CD351C /* Info.plist */,
-			);
-			path = MotorControlTests;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
-
-/* Begin PBXHeadersBuildPhase section */
-		F8D3E82A2063072100CD351C /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F8D3E83F2063072200CD351C /* MotorControl.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		F84E723C20E2C99900E5C6C3 /* mPower2TestAppUITests */ = {
@@ -1052,12 +650,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				F854598D208FA43700D37243 /* PBXTargetDependency */,
-				F8545992208FA43D00D37243 /* PBXTargetDependency */,
-				F8545996208FA44800D37243 /* PBXTargetDependency */,
-				F854599A208FA45500D37243 /* PBXTargetDependency */,
-				F854599E208FA46800D37243 /* PBXTargetDependency */,
-				F81BE7C320B4B8F700EE57D3 /* PBXTargetDependency */,
 			);
 			name = mPower2TestApp;
 			productName = mPower2TestApp;
@@ -1077,11 +669,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				F8D3E7EB2062F9DE00CD351C /* PBXTargetDependency */,
-				F8D3E7E72062F9DE00CD351C /* PBXTargetDependency */,
-				F8D3E7EF2062F9DE00CD351C /* PBXTargetDependency */,
-				F8D3E7F32062F9DE00CD351C /* PBXTargetDependency */,
-				F8D3E8412063072200CD351C /* PBXTargetDependency */,
 			);
 			name = mPower2;
 			productName = mPower2;
@@ -1104,43 +691,6 @@
 			name = mPower2Tests;
 			productName = mPower2Tests;
 			productReference = F8D3E78A2062F1B900CD351C /* mPower2Tests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		F8D3E82C2063072100CD351C /* MotorControl */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F8D3E8442063072200CD351C /* Build configuration list for PBXNativeTarget "MotorControl" */;
-			buildPhases = (
-				F8D3E8282063072100CD351C /* Sources */,
-				F8D3E8292063072100CD351C /* Frameworks */,
-				F8D3E82A2063072100CD351C /* Headers */,
-				F8D3E82B2063072100CD351C /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = MotorControl;
-			productName = MotorControl;
-			productReference = F8D3E82D2063072100CD351C /* MotorControl.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		F8D3E8342063072200CD351C /* MotorControlTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F8D3E8472063072200CD351C /* Build configuration list for PBXNativeTarget "MotorControlTests" */;
-			buildPhases = (
-				F8D3E8312063072200CD351C /* Sources */,
-				F8D3E8322063072200CD351C /* Frameworks */,
-				F8D3E8332063072200CD351C /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				F8D3E8382063072200CD351C /* PBXTargetDependency */,
-				F8545987208FA38900D37243 /* PBXTargetDependency */,
-			);
-			name = MotorControlTests;
-			productName = MotorControlTests;
-			productReference = F8D3E8352063072200CD351C /* MotorControlTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -1192,17 +742,6 @@
 						ProvisioningStyle = Automatic;
 						TestTargetID = F8545973208FA2ED00D37243;
 					};
-					F8D3E82C2063072100CD351C = {
-						CreatedOnToolsVersion = 9.2;
-						LastSwiftMigration = 1000;
-						ProvisioningStyle = Automatic;
-					};
-					F8D3E8342063072200CD351C = {
-						CreatedOnToolsVersion = 9.2;
-						LastSwiftMigration = 1000;
-						ProvisioningStyle = Automatic;
-						TestTargetID = F8545973208FA2ED00D37243;
-					};
 				};
 			};
 			buildConfigurationList = F8D3E7712062F1B900CD351C /* Build configuration list for PBXProject "mPower2" */;
@@ -1216,157 +755,15 @@
 			mainGroup = F8D3E76D2062F1B900CD351C;
 			productRefGroup = F8D3E7772062F1B900CD351C /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = F8D3E79B2062F26D00CD351C /* Products */;
-					ProjectRef = F8D3E79A2062F26D00CD351C /* BridgeApp.xcodeproj */;
-				},
-				{
-					ProductGroup = F8D3E7AD2062F27600CD351C /* Products */;
-					ProjectRef = F8D3E7AC2062F27600CD351C /* BridgeSDK.xcodeproj */;
-				},
-				{
-					ProductGroup = F8D3E7C42062F28500CD351C /* Products */;
-					ProjectRef = F8D3E7C32062F28500CD351C /* Research.xcodeproj */;
-				},
-				{
-					ProductGroup = F8D3E7D72062F28F00CD351C /* Products */;
-					ProjectRef = F8D3E7D62062F28F00CD351C /* ResearchUI.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				F8D3E7752062F1B900CD351C /* mPower2 */,
 				F8545973208FA2ED00D37243 /* mPower2TestApp */,
 				F8D3E7892062F1B900CD351C /* mPower2Tests */,
 				F84E723C20E2C99900E5C6C3 /* mPower2TestAppUITests */,
-				F8D3E82C2063072100CD351C /* MotorControl */,
-				F8D3E8342063072200CD351C /* MotorControlTests */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		B5D56CC8208131770080AE38 /* Research_UnitTest.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Research_UnitTest.framework;
-			remoteRef = B5D56CC7208131770080AE38 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F81BE7B520B4AA7C00EE57D3 /* BridgeSDK_Test.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = BridgeSDK_Test.framework;
-			remoteRef = F81BE7B420B4AA7C00EE57D3 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F8AA3E4221487380006612F8 /* Research.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Research.framework;
-			remoteRef = F8AA3E4121487380006612F8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F8D3E7A72062F26D00CD351C /* BridgeApp.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = BridgeApp.framework;
-			remoteRef = F8D3E7A62062F26D00CD351C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F8D3E7A92062F26D00CD351C /* BridgeAppTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = BridgeAppTests.xctest;
-			remoteRef = F8D3E7A82062F26D00CD351C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F8D3E7AB2062F26D00CD351C /* BridgeAppExample.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = BridgeAppExample.app;
-			remoteRef = F8D3E7AA2062F26D00CD351C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F8D3E7BC2062F27600CD351C /* BridgeSDK.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = BridgeSDK.framework;
-			remoteRef = F8D3E7BB2062F27600CD351C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F8D3E7BE2062F27600CD351C /* BridgeSDKTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = BridgeSDKTests.xctest;
-			remoteRef = F8D3E7BD2062F27600CD351C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F8D3E7C02062F27600CD351C /* BridgeSDKIntegration.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = BridgeSDKIntegration.app;
-			remoteRef = F8D3E7BF2062F27600CD351C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F8D3E7C22062F27600CD351C /* BridgeSDKIntegrationTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = BridgeSDKIntegrationTests.xctest;
-			remoteRef = F8D3E7C12062F27600CD351C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F8D3E7CD2062F28500CD351C /* Research.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Research.framework;
-			remoteRef = F8D3E7CC2062F28500CD351C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F8D3E7CF2062F28500CD351C /* ResearchTests_iOS.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = ResearchTests_iOS.xctest;
-			remoteRef = F8D3E7CE2062F28500CD351C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F8D3E7D12062F28500CD351C /* Research.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Research.framework;
-			remoteRef = F8D3E7D02062F28500CD351C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F8D3E7D32062F28500CD351C /* Research.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Research.framework;
-			remoteRef = F8D3E7D22062F28500CD351C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F8D3E7DE2062F28F00CD351C /* ResearchUI.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = ResearchUI.framework;
-			remoteRef = F8D3E7DD2062F28F00CD351C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F8D3E7E02062F28F00CD351C /* ResearchUITests_iOS.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = ResearchUITests_iOS.xctest;
-			remoteRef = F8D3E7DF2062F28F00CD351C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F8D3E7E22062F28F00CD351C /* ResearchUI.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = ResearchUI.framework;
-			remoteRef = F8D3E7E12062F28F00CD351C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		F84E723B20E2C99900E5C6C3 /* Resources */ = {
@@ -1383,6 +780,7 @@
 				F88E8E0620ADEE4700117A99 /* Main.storyboard in Resources */,
 				F88E8E0520ADEE4200117A99 /* LaunchScreen.storyboard in Resources */,
 				F8398D64212F32EE005DE6E0 /* Withdrawal.json in Resources */,
+				60D534D82227339F0022F0C5 /* PassiveDataPermission.json in Resources */,
 				60E94123212B8FD70027432C /* ProfileTableHeaderView.xib in Resources */,
 				F85020DC211B96C40094E05F /* SignIn.json in Resources */,
 				801E8EB3214896EF00AF6701 /* PhoneLearnMore.html in Resources */,
@@ -1396,7 +794,6 @@
 				80015136212F837A006B3C8E /* Licenses.html in Resources */,
 				F84E723620E1866300E5C6C3 /* Demographics.json in Resources */,
 				F84E723820E1866A00E5C6C3 /* Engagement.json in Resources */,
-				60E9411D212B8FD70027432C /* HealthProfileTableHeaderView.xib in Resources */,
 				80015133212F6B46006B3C8E /* consent.html in Resources */,
 				F85020D4211B96BA0094E05F /* Medication.json in Resources */,
 				F88E8E0920ADEE6000117A99 /* mPower2.strings in Resources */,
@@ -1414,13 +811,13 @@
 				80015116212F3A71006B3C8E /* fetchBridgeResources.sh in Resources */,
 				F8D3E7842062F1B900CD351C /* LaunchScreen.storyboard in Resources */,
 				60A1576E209D16C50033FAB5 /* Registration.storyboard in Resources */,
+				60D534C0222719D10022F0C5 /* PassiveDataPermission.json in Resources */,
 				F8D3E7812062F1B900CD351C /* Assets.xcassets in Resources */,
 				F85020E1211B970C0094E05F /* ActivityTracking.json in Resources */,
 				F85020CF211B96B40094E05F /* Symptoms.json in Resources */,
 				F8D3E77F2062F1B900CD351C /* Main.storyboard in Resources */,
 				F85020D7211B96BF0094E05F /* StudyBurstReminder.json in Resources */,
 				F85020DB211B96C40094E05F /* SignIn.json in Resources */,
-				60E9411C212B8FD70027432C /* HealthProfileTableHeaderView.xib in Resources */,
 				80015135212F837A006B3C8E /* Licenses.html in Resources */,
 				F8D3E8022063055500CD351C /* sage-mpower-2.pem in Resources */,
 				60E9411A212B8FD70027432C /* ProfileTableFooterView.xib in Resources */,
@@ -1437,28 +834,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F8D3E7882062F1B900CD351C /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F8D3E82B2063072100CD351C /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F8841993207EB77000028A2B /* TremorSectionStep.json in Resources */,
-				F884198F207EB4E400028A2B /* TappingSectionStep.json in Resources */,
-				B5581F0A20754A7D00F224C6 /* Tremor.json in Resources */,
-				F80CB9FD207D3AD800B4EE5D /* MotorControl.strings in Resources */,
-				B5FA25FF2069867C00A4FF3D /* Walk_And_Balance.json in Resources */,
-				B587ABE2206C57DB00542548 /* ActiveTaskSteps.storyboard in Resources */,
-				B5386FA6206ABD11005A0FAC /* Images.xcassets in Resources */,
-				B5DC83A22076B5FD00DEE4A2 /* Finger_Tapping.json in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F8D3E8332063072200CD351C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1513,6 +888,7 @@
 				F8C58DB220AF4823001C7B7F /* TodayScheduleManager.swift in Sources */,
 				F8C58DD620AF8CCC001C7B7F /* SurveyScheduleManager.swift in Sources */,
 				80A0BE3321095E1A00D31B68 /* TrackedItemsIntroductionStepObject.swift in Sources */,
+				60ADB34E2279FCB100FDF132 /* PassiveDataPermissionStepViewController.swift in Sources */,
 				03A6E0032103E69900FC5A84 /* GreatJobViewController.swift in Sources */,
 				F8CE28AC21221362007765F1 /* MP2ReminderManager.swift in Sources */,
 				60E87023212B8E940073C69C /* ProfileTableViewController.swift in Sources */,
@@ -1522,7 +898,9 @@
 				F832AC3920DA29E6005A9025 /* MP2Factory.swift in Sources */,
 				60E94119212B8FD70027432C /* ProfileTableHeaderView.swift in Sources */,
 				F8502065211A4F870094E05F /* MP2SurveyConfiguration.swift in Sources */,
+				60ADB34F227A033800FDF132 /* PassiveDataPermissionStepObject.swift in Sources */,
 				F88E8DFE20ADEE2600117A99 /* RegistrationWaitingViewController.swift in Sources */,
+				602EE759223304BD0090713F /* ProfileHTMLViewController.swift in Sources */,
 				60169BD120AF445C00D29532 /* ConsentViewController.swift in Sources */,
 				60FB513F212DED6F00D50F4D /* MP2ProfileDataSource.swift in Sources */,
 				F832AC3620DA22DA005A9025 /* MP2BridgeConfiguration.swift in Sources */,
@@ -1548,6 +926,7 @@
 				F861B6892134ADF00077D43A /* SurveyViewController.swift in Sources */,
 				0349535520981C89006A05B1 /* ProgressCircleView.swift in Sources */,
 				F832AC3820DA29E6005A9025 /* MP2Factory.swift in Sources */,
+				80E3D71E2279366A0087FCA2 /* PassiveDataPermissionStepObject.swift in Sources */,
 				60E94118212B8FD70027432C /* ProfileTableHeaderView.swift in Sources */,
 				60FB513B212DEB3B00D50F4D /* MP2ProfileSection.swift in Sources */,
 				608241DB2093D9A90026E843 /* RegistrationIntroViewController.swift in Sources */,
@@ -1559,6 +938,7 @@
 				60E9411E212B8FD70027432C /* ProfileTableViewCell.swift in Sources */,
 				F8D3E77A2062F1B900CD351C /* AppDelegate.swift in Sources */,
 				0334415620995CCD009B97A9 /* TaskBrowserViewController.swift in Sources */,
+				80E3D7372279383B0087FCA2 /* PassiveDataPermissionStepViewController.swift in Sources */,
 				F8C58DCA20AF5E86001C7B7F /* StudyBurstScheduleManager.swift in Sources */,
 				F8C58DB120AF4823001C7B7F /* TodayScheduleManager.swift in Sources */,
 				60FB513E212DED6F00D50F4D /* MP2ProfileDataSource.swift in Sources */,
@@ -1596,119 +976,30 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F8D3E8282063072100CD351C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B532ACED208150C00009EAD3 /* MCTCompletionGradient.swift in Sources */,
-				B532AD04208158860009EAD3 /* MCTCompletionStepViewController.swift in Sources */,
-				B59FC28C20728BC7002BFDB9 /* MCTOverviewStepViewController.swift in Sources */,
-				B59FC273206EA445002BFDB9 /* MCTActiveStepViewController.swift in Sources */,
-				B5D822F7207449D400C03F3C /* MCTInstructionStepViewController.swift in Sources */,
-				F80CB9EC207D2D2300B4EE5D /* MCTTappingStepViewController.swift in Sources */,
-				B5386FBF206AF30C005A0FAC /* MCTTaskInfo.swift in Sources */,
-				B59FC2AA2073DD81002BFDB9 /* MCTOverviewStepObject.swift in Sources */,
-				B53FD159207EBCFC00FBCC85 /* MCTTapButton.swift in Sources */,
-				B508B39920772D76001645CF /* MCTSkippableSectionStepObject.swift in Sources */,
-				B532AD0620817F620009EAD3 /* MCTTappingCompletionStepViewController.swift in Sources */,
-				B508B31C2076ECA3001645CF /* MCTHandSelectionStepObject.swift in Sources */,
-				B56E4D0A207BCA110009C489 /* MCTInstructionStepObject.swift in Sources */,
-				B5386FC1206B0211005A0FAC /* MCTFactory.swift in Sources */,
-				F80CB9EF207D2DE400B4EE5D /* MCTTappingResultObject.swift in Sources */,
-				F8460D752097CF0C0084E197 /* MCTCountdownStepViewController.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F8D3E8312063072200CD351C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F88419B5207EC14400028A2B /* ResourceTests.swift in Sources */,
-				B56E4D0620781A640009C489 /* NavigationTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		F81BE7C320B4B8F700EE57D3 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "BridgeSDK-Test";
-			targetProxy = F81BE7C220B4B8F700EE57D3 /* PBXContainerItemProxy */;
-		};
 		F84E724320E2C99900E5C6C3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = F8545973208FA2ED00D37243 /* mPower2TestApp */;
 			targetProxy = F84E724220E2C99900E5C6C3 /* PBXContainerItemProxy */;
-		};
-		F8545987208FA38900D37243 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = F8545973208FA2ED00D37243 /* mPower2TestApp */;
-			targetProxy = F8545986208FA38900D37243 /* PBXContainerItemProxy */;
 		};
 		F8545989208FA3BA00D37243 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = F8545973208FA2ED00D37243 /* mPower2TestApp */;
 			targetProxy = F8545988208FA3BA00D37243 /* PBXContainerItemProxy */;
 		};
-		F854598D208FA43700D37243 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "ResearchUI (iOS)";
-			targetProxy = F854598C208FA43700D37243 /* PBXContainerItemProxy */;
-		};
-		F8545992208FA43D00D37243 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "Research (iOS)";
-			targetProxy = F8545991208FA43D00D37243 /* PBXContainerItemProxy */;
-		};
-		F8545996208FA44800D37243 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = BridgeSDK;
-			targetProxy = F8545995208FA44800D37243 /* PBXContainerItemProxy */;
-		};
-		F854599A208FA45500D37243 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "BridgeApp (iOS)";
-			targetProxy = F8545999208FA45500D37243 /* PBXContainerItemProxy */;
-		};
-		F854599E208FA46800D37243 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = F8D3E82C2063072100CD351C /* MotorControl */;
-			targetProxy = F854599D208FA46800D37243 /* PBXContainerItemProxy */;
-		};
-		F8D3E7E72062F9DE00CD351C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "ResearchUI (iOS)";
-			targetProxy = F8D3E7E62062F9DE00CD351C /* PBXContainerItemProxy */;
-		};
-		F8D3E7EB2062F9DE00CD351C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "Research (iOS)";
-			targetProxy = F8D3E7EA2062F9DE00CD351C /* PBXContainerItemProxy */;
-		};
-		F8D3E7EF2062F9DE00CD351C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = BridgeSDK;
-			targetProxy = F8D3E7EE2062F9DE00CD351C /* PBXContainerItemProxy */;
-		};
-		F8D3E7F32062F9DE00CD351C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "BridgeApp (iOS)";
-			targetProxy = F8D3E7F22062F9DE00CD351C /* PBXContainerItemProxy */;
-		};
-		F8D3E8382063072200CD351C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = F8D3E82C2063072100CD351C /* MotorControl */;
-			targetProxy = F8D3E8372063072200CD351C /* PBXContainerItemProxy */;
-		};
-		F8D3E8412063072200CD351C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = F8D3E82C2063072100CD351C /* MotorControl */;
-			targetProxy = F8D3E8402063072200CD351C /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		60D534BE222719D10022F0C5 /* PassiveDataPermission.json */ = {
+			isa = PBXVariantGroup;
+			children = (
+				60D534BF222719D10022F0C5 /* Base */,
+			);
+			name = PassiveDataPermission.json;
+			sourceTree = "<group>";
+		};
 		80015130212F6B3F006B3C8E /* consent.html */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -2053,96 +1344,6 @@
 			};
 			name = Release;
 		};
-		F8D3E8452063072200CD351C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 28;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = KA9Z8R6M6K;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 28;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = MotorControl/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.MotorControl;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = 1;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		F8D3E8462063072200CD351C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 28;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = KA9Z8R6M6K;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 28;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = MotorControl/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.MotorControl;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = 1;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		F8D3E8482063072200CD351C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = KA9Z8R6M6K;
-				INFOPLIST_FILE = MotorControlTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.MotorControlTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "MotorControlTests/MotorControlTests-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/mPower2TestApp.app/mPower2TestApp";
-			};
-			name = Debug;
-		};
-		F8D3E8492063072200CD351C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = KA9Z8R6M6K;
-				INFOPLIST_FILE = MotorControlTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.MotorControlTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "MotorControlTests/MotorControlTests-Bridging-Header.h";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/mPower2TestApp.app/mPower2TestApp";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2187,24 +1388,6 @@
 			buildConfigurations = (
 				F8D3E7972062F1B900CD351C /* Debug */,
 				F8D3E7982062F1B900CD351C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		F8D3E8442063072200CD351C /* Build configuration list for PBXNativeTarget "MotorControl" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F8D3E8452063072200CD351C /* Debug */,
-				F8D3E8462063072200CD351C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		F8D3E8472063072200CD351C /* Build configuration list for PBXNativeTarget "MotorControlTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F8D3E8482063072200CD351C /* Debug */,
-				F8D3E8492063072200CD351C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

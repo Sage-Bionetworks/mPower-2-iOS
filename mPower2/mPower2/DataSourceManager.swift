@@ -56,7 +56,10 @@ extension RSDIdentifier {
     static let engagement: RSDIdentifier = "Engagement"
     static let motivation: RSDIdentifier = "Motivation"
     static let withdrawal: RSDIdentifier = "Withdrawal"
+    static let passiveDataPermission: RSDIdentifier = "PassiveDataPermission"
     static let studyBurstReminder: RSDIdentifier = "StudyBurstReminder"
+    
+    static let passiveDataPermissionProfileKey: RSDIdentifier = "passiveDataAllowed"
 }
 
 extension MCTTaskInfo : SBAActivityInfo {
@@ -82,7 +85,7 @@ class DataSourceManager {
     
     let tabs: [RSDIdentifier : [RSDIdentifier]] =
         [ .trackingTaskGroup : [.triggersTask, .symptomsTask, .medicationTask],
-          .measuringTaskGroup : MCTTaskIdentifier.all().map { $0.rsdIdentifier }]
+          .measuringTaskGroup : MCTTaskIdentifier.allCases.map { $0.rsdIdentifier }]
     
     let categoryMapping : [RSDIdentifier : SBAReportCategory] = [
         .studyBurstReminder : .singleton,
@@ -90,6 +93,7 @@ class DataSourceManager {
         .demographics : .singleton,
         .background : .singleton,
         .engagement : .singleton,
+        .passiveDataPermission: .singleton,
         .medicationTask : .groupByDay
     ]
     

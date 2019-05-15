@@ -62,6 +62,7 @@ class StudyBurstViewController: UIViewController {
 
     var taskBrowserVC: StudyBurstTaskBrowserViewController?
     var studyBurstManager: StudyBurstScheduleManager!
+    let designSystem = RSDDesignSystem()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,6 +74,9 @@ class StudyBurstViewController: UIViewController {
         guard let studyBurstManager = studyBurstManager else {
             return
         }
+        
+        designSystem.colorRules.palette = RSDStudyConfiguration.shared.colorPalette
+        headerView.setDesignSystem(designSystem, with: designSystem.colorRules.palette.primary.normal)
         
         // Setup our back button
         headerView.cancelButton?.setImage(UIImage(named: "BackButtonIcon"), for: .normal)

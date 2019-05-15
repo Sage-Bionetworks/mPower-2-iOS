@@ -32,19 +32,23 @@
 //
 
 import UIKit
+import Research
 
 class ProfileTableHeaderView: UITableViewHeaderFooterView {
     static let className = String(describing: ProfileTableHeaderView.self)
     static let cellHeight = CGFloat(67)
     
     @IBOutlet weak var titleLabel: UILabel!
-
+    @IBOutlet var separatorLine: UIView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
 
         contentView.backgroundColor = UIColor.white
         
-        titleLabel.textColor = UIColor.appTextDark
+        let designSystem = RSDDesignSystem()
+        titleLabel.textColor = designSystem.colorRules.textColor(on: designSystem.colorRules.backgroundLight, for: .heading4)
+        separatorLine.backgroundColor = designSystem.colorRules.separatorLine
     }
     
 }

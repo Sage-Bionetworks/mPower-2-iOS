@@ -2,7 +2,7 @@
 //  ProfileTableViewController.swift
 //  mPower2
 //
-//  Copyright © 2016-2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2016-2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -35,7 +35,7 @@ import UIKit
 import BridgeApp
 import ResearchUI
 
-class ProfileTableViewController: UITableViewController {
+class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDelegate {
     
     static let detailCellIdentifier = "ProfileTableViewDetailCell"
     static let cellIdentifier = "ProfileTableViewCell"
@@ -43,6 +43,7 @@ class ProfileTableViewController: UITableViewController {
     static let webViewControllerSegue = "WebViewControllerSegue"
     static let withdrawalViewControllerSegue = "WithdrawalViewControllerSegue"
     static let healthProfileViewControllerSegue = "HealthProfileViewControllerSegue"
+    static let profileItemEditViewControllerSegue = "ProfileItemEditViewControllerSegue"
     
     fileprivate lazy var _profileDataSource: SBAProfileDataSource = {
         return SBAProfileDataSourceObject.shared
@@ -76,13 +77,16 @@ class ProfileTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let designSystem = RSDDesignSystem()
+        let background = designSystem.colorRules.backgroundPrimary
+        
         let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString")
         versionLabel?.text = "\(Localization.localizedAppName) \(version!), build \(Bundle.main.appVersion())"
         tableView.backgroundColor = UIColor.white
-        tableHeaderView?.backgroundColor = UIColor.primaryTintColor
-        headerTitleLabel?.textColor = UIColor.white
-        tableFooterView?.backgroundColor = UIColor.primaryTintColor
-        versionLabel?.textColor = UIColor.white
+        tableHeaderView?.backgroundColor = background.color
+        headerTitleLabel?.textColor = designSystem.colorRules.textColor(on: background, for: .heading4)
+        tableFooterView?.backgroundColor = background.color
+        versionLabel?.textColor = designSystem.colorRules.textColor(on: background, for: .bodyDetail)
         
         registerSectionHeaderView()
         registerSectionFooterView()
@@ -171,26 +175,30 @@ class ProfileTableViewController: UITableViewController {
         case SBAProfileOnSelectedAction.showWithdrawal:
             self.performSegue(withIdentifier: ProfileTableViewController.withdrawalViewControllerSegue, sender: self)
             
-            /* TODO: emm 2018-08-21 deal with this for v2.1
         case SBAProfileOnSelectedAction.editProfileItem:
-            guard let profileItem = item as? SBAProfileItemProfileTableItem else { break }
-            let inputItem: NSDictionary = ["identifier" : profileItem.profileItemKey,
-                                           "type": "profileItem"]
-            guard let step = SurveyFactory().createSurveyStepWithDictionary(inputItem) else { break }
-            step.isOptional = false
-            let answerMap: [String: Any] = profileItem.answerMapKeys.filteredDictionary({ (answerMapKey: (key: String, value: String)) -> (String?, Any?) in
-                let (answerKey, profileKey) = answerMapKey
-                let answer = SBAProfileManager.shared?.value(forProfileKey: profileKey)
-                return (answerKey, answer)
-            })
-            let stepResult = step.stepResult(with: answerMap)
-            let stepVC = step.instantiateStepViewController(with: stepResult)
-            stepVC.continueButtonTitle = Localization.localizedString("JP_SUMBIT_BUTTON")
-            stepVC.delegate = self
-            stepVC.hidesBottomBarWhenPushed = true
-            stepVC.extendedLayoutIncludesOpaqueBars = false
-            self.navigationController?.show(stepVC, sender: self)
+            guard let profileTableItem = item as? SBAProfileItemProfileTableItem,
+                    profileTableItem.isEditable!,
+                    let taskId = profileTableItem.editTaskIdentifier
+                else {
+                    break
+            }
+            let profileItems = SBAProfileManagerObject.shared.profileItems()
+            guard let profileItem = profileItems[profileTableItem.profileItemKey]
+                else {
+                    print("Error editing profile item: no such item with profileKey \(profileTableItem.profileItemKey)")
+                    break
+            }
             
+            let passiveInfo = RSDTaskInfoObject(with: taskId)
+            let taskViewModel = RSDTaskViewModel(taskInfo: passiveInfo)
+            let resultType: RSDAnswerResultType = profileItem.itemType.defaultAnswerResultType()
+
+            // TODO: emm 2019-04-15 Replace with a DataStorageManager when that's ready?
+            let answerResult = RSDAnswerResultObject(identifier: profileItem.demographicKey, answerType: resultType, value: profileItem.demographicJsonValue)
+            taskViewModel.append(previousResult: answerResult)
+            self.performSegue(withIdentifier: ProfileTableViewController.profileItemEditViewControllerSegue, sender: taskViewModel)
+
+            /* TODO: emm 2018-08-21 deal with this for v2.1
         case scheduleProfileAction:
             guard let scheduleItem = item as? ScheduleProfileTableItem,
                 let taskId = scheduleItem.taskGroup.scheduleTaskIdentifier
@@ -271,6 +279,13 @@ class ProfileTableViewController: UITableViewController {
                 let webVC = segue.destination as? RSDWebViewController
                 else { return }
             webVC.url = item.url
+        case ProfileTableViewController.profileItemEditViewControllerSegue:
+            guard let taskViewModel = sender as? RSDTaskViewModel,
+                let editVC = segue.destination as? RSDTaskViewController
+                else { return }
+            editVC.taskViewModel = taskViewModel
+            editVC.taskViewModel.taskController = editVC
+            editVC.delegate = self
         default:
             // do nothing
             break
@@ -342,6 +357,22 @@ class ProfileTableViewController: UITableViewController {
     func scheduleUpdated() {
         self.tableView.reloadData()
     }
+    
+    // MARK: RSDTaskControllerDelegate
+    func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
+        self.navigationController?.popViewController(animated: true)
+        if let profileManager = SBABridgeConfiguration.shared.profileManager as? SBAScheduleManager {
+            profileManager.taskController(taskController, didFinishWith: reason, error: error)
+        }
+    }
+    
+    func taskController(_ taskController: RSDTaskController, readyToSave taskViewModel: RSDTaskViewModel) {
+        if let profileManager = SBABridgeConfiguration.shared.profileManager as? SBAScheduleManager {
+            profileManager.taskController(taskController, readyToSave: taskViewModel)
+        }
+    }
+    
+
 }
 
 // Helper function inserted by Swift 4.2 migrator.

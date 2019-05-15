@@ -791,6 +791,55 @@ class StudyBurstTests: XCTestCase {
         }
     }
     
+    func testDay1_ClientData() {
+        let scheduleManager = TestStudyBurstScheduleManager(.day1_tasksFinished_surveysNotFinished)
+        guard loadSchedules(scheduleManager) else {
+            XCTFail("Failed to load the schedules and reports.")
+            return
+        }
+
+        guard let completionTask = scheduleManager.engagementTaskViewModel(),
+            let steps = (completionTask.task?.stepNavigator as? RSDConditionalStepNavigator)?.steps,
+            steps.count == 2
+            else {
+                XCTFail("Failed to get the expected navigator for the completion task")
+                return
+        }
+        
+        var taskResult = RSDTaskResultObject(identifier: completionTask.identifier, schemaInfo: nil)
+        
+        // Add study burst
+        var reminderTaskResult = RSDTaskResultObject(identifier: "StudyBurstReminder", schemaInfo: nil)
+        var reminderResult = RSDCollectionResultObject(identifier: "reminder")
+        let reminderTimeResultType = RSDAnswerResultType(baseType: .date, sequenceType: nil, formDataType: nil, dateFormat: "HH:mm:ss", unit: nil, sequenceSeparator: nil)
+        let reminderTime = Date()
+        reminderResult.appendInputResults(with: RSDAnswerResultObject(identifier: "reminderTime", answerType: reminderTimeResultType, value: reminderTime))
+        reminderResult.appendInputResults(with: RSDAnswerResultObject(identifier: "noReminder", answerType: .boolean, value: false))
+        reminderTaskResult.appendStepHistory(with: reminderResult)
+        taskResult.appendStepHistory(with: reminderTaskResult)
+        
+        guard let reports = scheduleManager.buildReports(from: taskResult),
+            let report = reports.first
+            else {
+                XCTFail("Failed to build the expected reports")
+                return
+        }
+    
+        XCTAssertEqual(report.identifier, "StudyBurstReminder")
+        XCTAssertEqual(report.date, SBAReportSingletonDate)
+        if let clientData = report.clientData as? [String : Any] {
+            XCTAssertEqual(clientData["noReminder"] as? Int, 0)
+            XCTAssertNotNil(clientData["reminderTime"] as? String)
+        }
+        else {
+            XCTFail("Clientdata does not match expected format. \(report.clientData)")
+        }
+
+        // TODO: syoung 05/07/2019 There isn't a straight-forward way of checking the demographics survey
+        // because that is vended from the server and thus setting up the test means using expectations and
+        // timeouts or else creating the SBBSurvey object from the JSON dictionary.
+    }
+    
     
     // MARK: helper methods
     
