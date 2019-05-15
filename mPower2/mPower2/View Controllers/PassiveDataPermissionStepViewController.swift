@@ -78,13 +78,13 @@ class PassiveDataPermissionStepViewController: RSDTableStepViewController {
         }
         
         guard let taskResult = self.stepViewModel?.taskResult,
-            let step = self.stepViewModel?.step as? PassiveDataPermissionStepObject,
-            let gavePermission = taskResult.findAnswerResult(with: step.identifier)?.value as? Bool
+                let step = self.stepViewModel?.step as? PassiveDataPermissionStepObject,
+                let gavePermission = taskResult.findAnswerResult(with: step.identifier)?.value as? Bool,
+                let pm = SBABridgeConfiguration.shared.profileManager
             else {
                 return
         }
         
-        let pm = SBABridgeConfiguration.shared.profileManager
         do {
             try pm.setValue(gavePermission, forProfileKey: RSDIdentifier.passiveDataPermissionProfileKey.rawValue)
         } catch let err {
