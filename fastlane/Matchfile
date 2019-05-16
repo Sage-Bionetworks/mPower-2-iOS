@@ -7,7 +7,7 @@ type "appstore" # The default type, can be: appstore, adhoc, enterprise or devel
 app_identifier [
   "org.sagebionetworks.mPower2"]
 
-username "apple.developer@sagebase.org" # Your Apple Developer Portal username
+username "appleservicer@sagebase.org" # Your Apple Developer Portal username
 
 readonly true
 # For all available options run `fastlane match --help`
