@@ -37,6 +37,8 @@ import CoreLocation
 import CoreMotion
 import BridgeSDK
 import UserNotifications
+import ResearchMotion
+import ResearchLocation
 
 private let kLastLocationKey: String = "MP2LastKnownLocation"
 private let kLatitudeKey: String = "latitude"
@@ -95,7 +97,7 @@ extension PassiveLocationTriggeredCollector {
         
         func authorizationError(for status: CLAuthorizationStatus) -> Error {
             let rsd_status: RSDAuthorizationStatus = (status == .restricted) ? .restricted : .denied
-            let error = RSDPermissionError.notAuthorized(.location, rsd_status)
+            let error = RSDPermissionError.notAuthorized(RSDStandardPermission.location, rsd_status)
             #if DEBUG
             print("Not authorized to start the passive location recorder: \(rsd_status)")
             #endif
