@@ -38,16 +38,18 @@ struct TodayHistoryItem : Equatable, Comparable {
 
     /// The type of the items in this collection.
     enum ItemType : String, Equatable {
-        case symptoms, medication, triggers, activities
+        case symptoms, medication, triggers, activities, surveys
         
-        var activityIdentifier : RSDIdentifier? {
+        var activityIdentifiers : [RSDIdentifier]? {
             switch self {
             case .symptoms:
-                return .symptomsTask
+                return [.symptomsTask]
             case .medication:
-                return .medicationTask
+                return [.medicationTask]
             case .triggers:
-                return .triggersTask
+                return [.triggersTask]
+            case .activities:
+                return RSDIdentifier.measuringTasks
             default:
                 return nil
             }
@@ -75,10 +77,10 @@ struct TodayHistoryItem : Equatable, Comparable {
         let keyCount = (count == 1) ? "SINGULAR" : "PLURAL"
         let keyName = self.type.stringValue.uppercased()
         let key = "TASK_\(keyCount)_TERM_FOR_\(keyName)"
-        return Localization.localizedStringWithFormatKey(key, NSNumber(value: count))
+        return Localization.localizedStringWithFormatKey(key, count)
     }
     
-    static let sortOrder: [ItemType] = [.symptoms, .medication, .triggers, .activities]
+    static let sortOrder: [ItemType] = [.symptoms, .medication, .triggers, .activities, .surveys]
     
     static func < (lhs: TodayHistoryItem, rhs: TodayHistoryItem) -> Bool {
         return sortOrder.index(of: lhs.type)! < sortOrder.index(of: rhs.type)!
@@ -87,7 +89,7 @@ struct TodayHistoryItem : Equatable, Comparable {
 
 class TodayHistoryScheduleManager : SBAScheduleManager {
     
-    func now() -> Date {
+    func today() -> Date {
         return Date()
     }
     
@@ -96,7 +98,7 @@ class TodayHistoryScheduleManager : SBAScheduleManager {
     
     /// Override to fetch the schedules for all activities that were finished today.
     override func fetchRequests() -> [FetchRequest] {
-        let finishedPredicate = SBBScheduledActivity.finishedOnDatePredicate(on: now())
+        let finishedPredicate = SBBScheduledActivity.finishedOnDatePredicate(on: today())
         let studyBurstPredicate = NSCompoundPredicate(notPredicateWithSubpredicate:
             SBBScheduledActivity.activityIdentifierPredicate(with: RSDIdentifier.studyBurstCompletedTask.stringValue))
         let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [finishedPredicate, studyBurstPredicate])
@@ -105,20 +107,20 @@ class TodayHistoryScheduleManager : SBAScheduleManager {
                                         fetchLimit: nil)
         return [fetchRequest]
     }
-    
-    private var isUpdatingItems : Bool = false
-    
+        
     /// Override to build the new set of today history items.
     override func didUpdateScheduledActivities(from previousActivities: [SBBScheduledActivity]) {
-        guard !isUpdatingItems else { return }
-        isUpdatingItems = true
-        
         let schedules = self.scheduledActivities
+        let activitiesChanged = schedules != previousActivities
+        // If nothing has changed, then swallow the update and do nothing.
+        guard activitiesChanged else {
+            return
+        }
+        
         offMainQueue.async {
             let items = self.consolidateItems(schedules)
             DispatchQueue.main.async {
                 self.items = items
-                self.isUpdatingItems = false
                 super.didUpdateScheduledActivities(from: previousActivities)
             }
         }
@@ -128,17 +130,20 @@ class TodayHistoryScheduleManager : SBAScheduleManager {
         var schedules = scheduledActivities
         let items = TodayHistoryItem.sortOrder.compactMap { (itemType) -> TodayHistoryItem? in
             let filteredSchedules : [SBBScheduledActivity] = {
-                guard let activityIdentifier = itemType.activityIdentifier else { return schedules }
-                let predicate = SBBScheduledActivity.activityIdentifierPredicate(with: activityIdentifier.stringValue)
+                guard let activityIdentifiers = itemType.activityIdentifiers else { return schedules }
+                let predicates = activityIdentifiers.map {
+                    SBBScheduledActivity.activityIdentifierPredicate(with: $0.stringValue)
+                }
+                let predicate = NSCompoundPredicate(orPredicateWithSubpredicates: predicates)
                 return schedules.remove(where: { predicate.evaluate(with: $0) })
             }()
             
             let count: Int = {
                 switch itemType {
                 case .triggers, .symptoms:
-                    let startDate = now().startOfDay()
-                    let endDate = now().addingNumberOfDays(1).startOfDay()
-                    let clientData = self.allClientData(with: itemType.activityIdentifier!.stringValue, from: startDate, to: endDate)
+                    let startDate = today().startOfDay()
+                    let endDate = today().addingNumberOfDays(1).startOfDay()
+                    let clientData = self.allClientData(with: itemType.activityIdentifiers!.first!.stringValue, from: startDate, to: endDate)
                     let decoder = SBAFactory.shared.createJSONDecoder()
                     return clientData.reduce(0, { (input, json) -> Int in
                         guard let dictionary = json as? NSDictionary,

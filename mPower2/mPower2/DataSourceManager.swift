@@ -58,6 +58,7 @@ extension RSDIdentifier {
     static let withdrawal: RSDIdentifier = "Withdrawal"
     static let passiveDataPermission: RSDIdentifier = "PassiveDataPermission"
     static let studyBurstReminder: RSDIdentifier = "StudyBurstReminder"
+    static let moreYouKnow: RSDIdentifier = "MoreYouKnow"
     
     static let passiveDataPermissionProfileKey: RSDIdentifier = "passiveDataAllowed"
 }
@@ -109,7 +110,7 @@ class DataSourceManager {
         return configuration.activityGroup(with: identifier.stringValue)
     }
     
-    func scheduleManager(with identifier: RSDIdentifier) -> SBAScheduleManager {
+    func scheduleManager(with identifier: RSDIdentifier) -> ActivityGroupScheduleManager {
         installTaskGroupsIfNeeded()
         switch identifier {
         case .measuringTaskGroup:

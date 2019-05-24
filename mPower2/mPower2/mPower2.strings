@@ -34,14 +34,16 @@
 
 // The term to use when referring to multiple instances of a task, such as when describing
 // how may times the user has logged taking medication.
-"TASK_PLURAL_TERM_FOR_MEDICATION" = "%@ Doses";
-"TASK_PLURAL_TERM_FOR_TRIGGERS" = "%@ Triggers";
-"TASK_PLURAL_TERM_FOR_SYMPTOMS" = "%@ Symptoms";
-"TASK_PLURAL_TERM_FOR_ACTIVITIES" = "%@ Activities";
-"TASK_SINGULAR_TERM_FOR_MEDICATION" = "%@ Dose";
-"TASK_SINGULAR_TERM_FOR_TRIGGERS" = "%@ Trigger";
-"TASK_SINGULAR_TERM_FOR_SYMPTOMS" = "%@ Symptom";
-"TASK_SINGULAR_TERM_FOR_ACTIVITIES" = "%@ Activity";
+"TASK_PLURAL_TERM_FOR_MEDICATION" = "%u Doses";
+"TASK_PLURAL_TERM_FOR_TRIGGERS" = "%u Triggers";
+"TASK_PLURAL_TERM_FOR_SYMPTOMS" = "%u Symptoms";
+"TASK_PLURAL_TERM_FOR_ACTIVITIES" = "%u Activities";
+"TASK_PLURAL_TERM_FOR_SURVEYS" = "%u Surveys";
+"TASK_SINGULAR_TERM_FOR_MEDICATION" = "%u Dose";
+"TASK_SINGULAR_TERM_FOR_TRIGGERS" = "%u Trigger";
+"TASK_SINGULAR_TERM_FOR_SYMPTOMS" = "%u Symptom";
+"TASK_SINGULAR_TERM_FOR_ACTIVITIES" = "%u Activity";
+"TASK_SINGULAR_TERM_FOR_SURVEYS" = "%u Survey";
 
 // Titles for the activity groups and infos.
 "Measuring" = "Measuring";
@@ -62,8 +64,9 @@
 "WELCOME_MESSAGE_SOME_TASKS_DONE" = "Here’s what you’ve been up to";
 "WELCOME_MESSAGE_NO_TASKS_DONE" = "What would you like to do today?";
 
+"UNLOCK_MESSAGE_FINISH_STUDY_BURST" = "These activities will unlock after you do your Study Burst!";
+
 // Study Burst
-"ACTIVITIES_TO_DO_%@" = "%@ ACTIVITIES TO DO";
 "PROGRESS_EXPIRES_%@" = "Progress expires in %@";
 "%@_ESTIMATED_MINUTES" = "%@ minutes";
 

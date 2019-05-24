@@ -20,8 +20,20 @@
 	<string>27</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Passive gait data collection</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Passive gait data collection</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Passive gait data collection</string>
 	<key>NSMotionUsageDescription</key>
 	<string>mPower would like to access your phone's motion sensors to help gather data during activities.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+		<string>fetch</string>
+		<string>location</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

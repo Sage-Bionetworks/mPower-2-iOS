@@ -56,7 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let primary = RSDColorMatrix.shared.colorKey(for: .palette(.royal), shade: .medium)
         let secondary = RSDColorMatrix.shared.colorKey(for: .palette(.butterscotch), shade: .medium)
         let accent = RSDColorMatrix.shared.colorKey(for: .palette(.turquoise), shade: .medium)
-        return RSDColorPalette(version: 1, primary: primary, secondary: secondary, accent: primary)
+        return RSDColorPalette(version: 1, primary: primary, secondary: secondary, accent: accent)
     }()
     
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
@@ -71,15 +71,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         testHarness = SBBBridgeTestHarness(studyIdentifier: "sage-mpower-2-test")
         
         let activityManager = ActivityManager()
+        let participantManager = ParticipantManager()
         
         // NOTE: syoung 06/28/2018 You can set different study setup objects to test different states.
-        activityManager.studySetup = .day2_tasksNotFinished_surveysFinished
+        activityManager.studySetup = .day1_twoTasksFinished
         
         SBBComponentManager.registerComponent(activityManager, for: SBBActivityManager.self)
-        activityManager.buildSchedules()
         
-        let participantManager = ParticipantManager()
+        activityManager.buildSchedules(with: participantManager)
         participantManager.setup(with: activityManager.studySetup)
+        
         SBBComponentManager.registerComponent(participantManager, for: SBBParticipantManager.self)
         
         SurveyReference.all.forEach {

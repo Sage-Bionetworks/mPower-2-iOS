@@ -70,32 +70,58 @@ public class ParticipantManager : NSObject, SBBParticipantManagerProtocol {
 
     var participant: SBBStudyParticipant!
     var reportDataObjects = Set<ReportData>()
+    let reportManager = SBAReportManager()
     
     func setup(with studySetup: StudySetup) {
         self.participant = studySetup.createParticipant()
-        self.setupReports(studySetup)
     }
     
-    func setupReports(_ studySetup: StudySetup) {
+    func addReport(for taskIdentifier: RSDIdentifier, _ studySetup: StudySetup) {
+        let clientData = buildClientData(for: taskIdentifier, studySetup)
+        let timestamp = (SBAReportSingletonDate as NSDate).iso8601DateOnlyString()!
+        let report = ReportData(identifer: taskIdentifier.stringValue,
+                                timestamp: timestamp,
+                                clientData: clientData as NSDictionary)
+        self.reportDataObjects.insert(report)
+    }
+
+    func addReport(for schedule: SBBScheduledActivity, with studySetup: StudySetup) {
         
-        let surveyMap = studySetup.mapStudyBurstSurveyFinishedOn()
-        
-        // Add all the surveys that are suppose to be from the server.
-        let singletons = StudyBurstConfiguration().completionTaskIdentifiers
-        singletons.forEach {
-            guard surveyMap[$0] != nil else { return }
-            
-            let clientData: [String : Any] = ($0 == .studyBurstReminder) ?
-                [ "reminderTime" : studySetup.reminderTime ?? "09:00:00",
-                  "noReminder" : (studySetup.reminderTime == nil)
-            ] : [:]
-            
-            let timestamp = (SBAReportSingletonDate as NSDate).iso8601DateOnlyString()!
-            let report = ReportData(identifer: $0.stringValue,
-                                    timestamp: timestamp,
-                                    clientData: clientData as NSDictionary)
-            self.reportDataObjects.insert(report)
+        guard let finishedOn = schedule.finishedOn,
+            let activityIdentifier = schedule.activityIdentifier
+            else {
+                return
         }
+        let taskIdentifier = RSDIdentifier(rawValue: activityIdentifier)
+        let schemaIdentifier = taskIdentifier == .studyBurstCompletedTask ? "StudyBurst" : activityIdentifier
+        
+        let category: SBAReportCategory = DataSourceManager.shared.categoryMapping[taskIdentifier] ?? .timestamp
+        let clientData = buildClientData(for: taskIdentifier, studySetup)
+
+        let timestamp: String = {
+            switch category {
+            case .singleton:
+                return (SBAReportSingletonDate as NSDate).iso8601DateOnlyString()
+            case .groupByDay:
+                return (finishedOn as NSDate).iso8601DateOnlyString()
+            case .timestamp:
+                return (finishedOn as NSDate).iso8601String()
+            }
+        } ()
+
+        let report = ReportData(identifer: schemaIdentifier,
+                                timestamp: timestamp,
+                                clientData: clientData as NSDictionary)
+        self.reportDataObjects.insert(report)
+    }
+    
+    func buildClientData(for taskIdentifier: RSDIdentifier, _ studySetup: StudySetup) -> [String : Any] {
+        // TODO: syoung 05/23/2019 Support other reports.
+        let clientData: [String : Any] = (taskIdentifier == .studyBurstReminder) ?
+            [ "reminderTime" : studySetup.reminderTime ?? "09:00:00",
+              "noReminder" : (studySetup.reminderTime == nil)
+            ] : [:]
+        return clientData
     }
     
     public let offMainQueue = DispatchQueue(label: "org.sagebionetworks.BridgeApp.TestParticipantManager")

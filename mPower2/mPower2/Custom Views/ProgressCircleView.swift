@@ -46,6 +46,8 @@ import ResearchUI
         ring.ringWidth = strokeWidth
         ring.backgroundColor = UIColor.clear
         ring.innerColor = UIColor.white
+        // TODO: FIXME!! syoung 05/30/2019 Uncomment once PR #https://github.com/Sage-Bionetworks/SageResearch/pull/121
+//        ring.hasShadow = false
         ring.progressColor = RSDStudyConfiguration.shared.colorPalette.primary.normal.color
         dayLabel.textColor = RSDStudyConfiguration.shared.colorPalette.primary.veryDark.color
         dayCountLabel.textColor = RSDStudyConfiguration.shared.colorPalette.primary.veryDark.color

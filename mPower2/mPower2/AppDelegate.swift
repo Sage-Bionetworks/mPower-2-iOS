@@ -52,7 +52,7 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
         let primary = RSDColorMatrix.shared.colorKey(for: .palette(.royal), shade: .medium)
         let secondary = RSDColorMatrix.shared.colorKey(for: .palette(.butterscotch), shade: .medium)
         let accent = RSDColorMatrix.shared.colorKey(for: .palette(.turquoise), shade: .medium)
-        return RSDColorPalette(version: 1, primary: primary, secondary: secondary, accent: primary)
+        return RSDColorPalette(version: 1, primary: primary, secondary: secondary, accent: accent)
     }
     
     override func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]?) -> Bool {

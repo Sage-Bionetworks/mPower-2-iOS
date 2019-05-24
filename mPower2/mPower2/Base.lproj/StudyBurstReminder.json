@@ -30,7 +30,8 @@
                                  "identifier": "noReminder",
                                  "type": "boolean",
                                  "uiHint": "checkbox",
-                                 "prompt": "Do not set Reminder"
+                                 "prompt": "Do not set Reminder",
+                                 "optional": true
                                  }
                  ]
              }
