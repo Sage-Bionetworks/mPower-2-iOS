@@ -59,7 +59,7 @@ class ScheduledTask : NSObject {
 
 public class ActivityGroupScheduleManager : SBAScheduleManager {
     
-    /// List of the tasks including when the task was last finished. Returnns `nil` if this is not a
+    /// List of the tasks including when the task was last finished. Returns `nil` if this is not a
     /// measurement task.
     var orderedTasks: [ScheduledTask] {
         if _orderedTasks == nil || shouldRefreshTasks {
