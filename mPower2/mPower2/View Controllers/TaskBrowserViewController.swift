@@ -86,6 +86,11 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
         setupView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        unlockMessageLabel?.isHidden = areTasksEnabled
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         guard let delegate = delegate else {
@@ -166,6 +171,7 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
         
         // Reload the collection view
         self.collectionView.reloadData()
+        self.unlockMessageLabel?.isHidden = areTasksEnabled
     }
     
     func taskController(_ taskController: RSDTaskController, readyToSave taskViewModel: RSDTaskViewModel) {
