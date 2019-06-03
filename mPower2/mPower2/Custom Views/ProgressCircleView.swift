@@ -46,8 +46,7 @@ import ResearchUI
         ring.ringWidth = strokeWidth
         ring.backgroundColor = UIColor.clear
         ring.innerColor = UIColor.white
-        // TODO: FIXME!! syoung 05/30/2019 Uncomment once PR #https://github.com/Sage-Bionetworks/SageResearch/pull/121
-//        ring.hasShadow = false
+        ring.hasShadow = false
         ring.progressColor = RSDStudyConfiguration.shared.colorPalette.primary.normal.color
         dayLabel.textColor = RSDStudyConfiguration.shared.colorPalette.primary.veryDark.color
         dayCountLabel.textColor = RSDStudyConfiguration.shared.colorPalette.primary.veryDark.color
@@ -71,7 +70,7 @@ import ResearchUI
         label.font = UIFont(name: "HelveticaNeue-Bold", size: 12.0)
         label.textColor = RSDStudyConfiguration.shared.colorPalette.primary.veryDark.color
         label.textAlignment = .center
-        label.text = "Day" // TODO: jbruhin 5-1-18 localize
+        label.text = Localization.localizedString("STUDY_BURST_DAY")
         label.sizeToFit()
         addSubview(label)
         label.rsd_alignCenterHorizontal(padding: 0.0)
