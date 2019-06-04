@@ -176,6 +176,11 @@
 		F8D3E7F72063039200CD351C /* BridgeInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E7F62063039200CD351C /* BridgeInfo.plist */; };
 		F8D3E8022063055500CD351C /* sage-mpower-2.pem in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E8002063055500CD351C /* sage-mpower-2.pem */; };
 		F8D3E8032063055500CD351C /* BridgeInfo-private.plist in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E8012063055500CD351C /* BridgeInfo-private.plist */; };
+		F8ECAA1222A0F4F00011D497 /* MoreYouKnow.json in Resources */ = {isa = PBXBuildFile; fileRef = F8ECAA1022A0F4F00011D497 /* MoreYouKnow.json */; };
+		F8ECAA1322A0F4F00011D497 /* MoreYouKnow.json in Resources */ = {isa = PBXBuildFile; fileRef = F8ECAA1022A0F4F00011D497 /* MoreYouKnow.json */; };
+		F8EF461C22A05CA30010AE12 /* StudyBurstViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8EF461B22A05CA30010AE12 /* StudyBurstViewControllerTests.swift */; };
+		F8EF461E22A06C180010AE12 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = F8EF461D22A06C180010AE12 /* Localizable.stringsdict */; };
+		F8EF461F22A06C180010AE12 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = F8EF461D22A06C180010AE12 /* Localizable.stringsdict */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -334,6 +339,9 @@
 		F8D3E7F62063039200CD351C /* BridgeInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BridgeInfo.plist; sourceTree = "<group>"; };
 		F8D3E8002063055500CD351C /* sage-mpower-2.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "sage-mpower-2.pem"; path = "../../../iOSPrivateProjectInfo/mPower2/sage-mpower-2.pem"; sourceTree = "<group>"; };
 		F8D3E8012063055500CD351C /* BridgeInfo-private.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "BridgeInfo-private.plist"; path = "../../../iOSPrivateProjectInfo/mPower2/BridgeInfo-private.plist"; sourceTree = "<group>"; };
+		F8ECAA1122A0F4F00011D497 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = Base; path = Base.lproj/MoreYouKnow.json; sourceTree = "<group>"; };
+		F8EF461B22A05CA30010AE12 /* StudyBurstViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyBurstViewControllerTests.swift; sourceTree = "<group>"; };
+		F8EF461D22A06C180010AE12 /* Localizable.stringsdict */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; path = Localizable.stringsdict; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -491,6 +499,7 @@
 				60E94116212B8FD70027432C /* ProfileTableHeaderView.xib */,
 				F8D3E7802062F1B900CD351C /* Assets.xcassets */,
 				03C9DD0B20A4F956007074EE /* mPower2.strings */,
+				F8EF461D22A06C180010AE12 /* Localizable.stringsdict */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -526,6 +535,7 @@
 				F85020D2211B96B40094E05F /* Symptoms.json */,
 				F85020D6211B96BA0094E05F /* Medication.json */,
 				F85020DA211B96BF0094E05F /* StudyBurstReminder.json */,
+				F8ECAA1022A0F4F00011D497 /* MoreYouKnow.json */,
 				F85020DE211B96C40094E05F /* SignIn.json */,
 			);
 			name = "Task JSON";
@@ -599,6 +609,7 @@
 				F854599F208FA58800D37243 /* ResourceTests.swift */,
 				F89B3DA820C60F8B002EAE2D /* TodayScheduleManagerTests.swift */,
 				F832AC1920D9A130005A9025 /* StudyBurstTests.swift */,
+				F8EF461B22A05CA30010AE12 /* StudyBurstViewControllerTests.swift */,
 			);
 			path = mPower2Tests;
 			sourceTree = "<group>";
@@ -733,6 +744,11 @@
 						CreatedOnToolsVersion = 9.3;
 						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					F8D3E7752062F1B900CD351C = {
 						CreatedOnToolsVersion = 9.2;
@@ -804,7 +820,9 @@
 				60E94123212B8FD70027432C /* ProfileTableHeaderView.xib in Resources */,
 				F85020DC211B96C40094E05F /* SignIn.json in Resources */,
 				801E8EB3214896EF00AF6701 /* PhoneLearnMore.html in Resources */,
+				F8ECAA1322A0F4F00011D497 /* MoreYouKnow.json in Resources */,
 				F85459B5208FA76D00D37243 /* Assets.xcassets in Resources */,
+				F8EF461F22A06C180010AE12 /* Localizable.stringsdict in Resources */,
 				F85020D0211B96B40094E05F /* Symptoms.json in Resources */,
 				F85020E2211B970C0094E05F /* ActivityTracking.json in Resources */,
 				F85020B7211B96AE0094E05F /* Triggers.json in Resources */,
@@ -828,6 +846,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F8EF461E22A06C180010AE12 /* Localizable.stringsdict in Resources */,
 				80015116212F3A71006B3C8E /* fetchBridgeResources.sh in Resources */,
 				F8D3E7842062F1B900CD351C /* LaunchScreen.storyboard in Resources */,
 				60A1576E209D16C50033FAB5 /* Registration.storyboard in Resources */,
@@ -842,6 +861,7 @@
 				F8D3E8022063055500CD351C /* sage-mpower-2.pem in Resources */,
 				60E9411A212B8FD70027432C /* ProfileTableFooterView.xib in Resources */,
 				801E8EB2214896EF00AF6701 /* PhoneLearnMore.html in Resources */,
+				F8ECAA1222A0F4F00011D497 /* MoreYouKnow.json in Resources */,
 				F85020B6211B96AE0094E05F /* Triggers.json in Resources */,
 				80015132212F6B40006B3C8E /* consent.html in Resources */,
 				F85020D3211B96BA0094E05F /* Medication.json in Resources */,
@@ -991,6 +1011,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F89B3DA920C60F8B002EAE2D /* TodayScheduleManagerTests.swift in Sources */,
+				F8EF461C22A05CA30010AE12 /* StudyBurstViewControllerTests.swift in Sources */,
 				F832AC1A20D9A130005A9025 /* StudyBurstTests.swift in Sources */,
 				F85459A0208FA58800D37243 /* ResourceTests.swift in Sources */,
 			);
@@ -1098,6 +1119,14 @@
 				F8D3E7832062F1B900CD351C /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		F8ECAA1022A0F4F00011D497 /* MoreYouKnow.json */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F8ECAA1122A0F4F00011D497 /* Base */,
+			);
+			name = MoreYouKnow.json;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

@@ -56,6 +56,7 @@ class SurveyScheduleManager : SBAScheduleManager {
             excludeTaskGroupIdentifiers.formUnion($0.activityIdentifiers.map { $0.stringValue })
         }
         excludeTaskGroupIdentifiers.formUnion(self.studyBurst.completionTaskIdentifiers.map { $0.stringValue})
+        excludeTaskGroupIdentifiers.insert(RSDIdentifier.withdrawal.stringValue)
         
         let taskPredicate = NSPredicate(format: "(activity.survey != nil) AND NOT(activity.survey.identifier IN %@)", excludeTaskGroupIdentifiers)
         let notFinishedPredicate = NSCompoundPredicate(notPredicateWithSubpredicate: SBBScheduledActivity.isFinishedPredicate())

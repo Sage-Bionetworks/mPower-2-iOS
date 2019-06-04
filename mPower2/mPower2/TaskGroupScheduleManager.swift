@@ -37,7 +37,113 @@ import BridgeApp
 let kActivityTrackingIdentifier = "ActivityTracking"
 let kMedicationTimingWindow : TimeInterval = 20 * 60
 
-public class TrackingScheduleManager : SBAScheduleManager {
+class ScheduledTask : NSObject {
+    
+    let taskInfo: RSDTaskInfo
+    var startedOn: Date?
+    var finishedOn: Date?
+    var scheduleGuid: String?
+    
+    init(taskInfo: RSDTaskInfo) {
+        self.taskInfo = taskInfo
+    }
+    
+    var identifier: String {
+        return taskInfo.identifier
+    }
+    
+    override var description: String {
+        return "\(identifier): \(String(describing: finishedOn))"
+    }
+}
+
+public class ActivityGroupScheduleManager : SBAScheduleManager {
+    
+    /// List of the tasks including when the task was last finished. Returns `nil` if this is not a
+    /// measurement task.
+    var orderedTasks: [ScheduledTask] {
+        if _orderedTasks == nil || shouldRefreshTasks {
+            guard let tasks = self.activityGroup?.tasks else {
+                debugPrint("WARNING! No tasks are in the activity group.")
+                return []
+            }
+            
+            // Order the tasks
+            let storedOrder = taskSortOrder
+            _orderedTasks = storedOrder.compactMap { (identifier) -> ScheduledTask? in
+                guard let taskInfo = tasks.first(where: { $0.identifier == identifier }) else { return nil }
+                return ScheduledTask(taskInfo: taskInfo)
+            }
+            refreshOrderedTasks()
+        }
+        return _orderedTasks
+    }
+    private var _orderedTasks: [ScheduledTask]!
+    
+    /// Should the tasks be refreshed?
+    var shouldRefreshTasks: Bool {
+        return false
+    }
+    
+    /// Returns Date(). Included for testing.
+    func today() -> Date {
+        return Date()
+    }
+    
+    /// The order of the tasks.
+    var taskSortOrder: [String] {
+        return self.activityGroup?.activityIdentifiers.map { $0.stringValue } ?? []
+    }
+    
+    func refreshOrderedTasks() {
+        let schedules = self.scheduledActivities
+        let now = today()
+        _orderedTasks?.forEach { (scheduledTask) in
+            let finishedSchedule = schedules.first(where: {
+                if let finishedOn = $0.finishedOn,
+                    $0.activityIdentifier == scheduledTask.identifier,
+                    Calendar.iso8601.isDate(finishedOn, inSameDayAs: now) {
+                    return true
+                }
+                else {
+                    return false
+                }
+            })
+    
+            if let schedule = finishedSchedule {
+                // Look first to see if there is a schedule for this task.
+                scheduledTask.scheduleGuid = schedule.guid
+                scheduledTask.startedOn = schedule.startedOn ?? schedule.finishedOn
+                scheduledTask.finishedOn = schedule.finishedOn
+            }
+            else if let report = self.report(with: scheduledTask.identifier),
+                Calendar.iso8601.isDate(report.date, inSameDayAs: today()) {
+                // If a schedule isn't found, then look for a report.
+                scheduledTask.finishedOn = report.date
+                scheduledTask.startedOn = report.date
+            }
+        }
+    }
+    
+    override public func taskController(_ taskController: RSDTaskController, readyToSave taskViewModel: RSDTaskViewModel) {
+        // Mark the scheduled task start and end date.
+        if let (scheduledTask, taskResult) = scheduledTask(for: taskViewModel) {
+            scheduledTask.startedOn = taskResult.startDate
+            scheduledTask.finishedOn = taskResult.endDate
+        }
+        super.taskController(taskController, readyToSave: taskViewModel)
+    }
+    
+    func scheduledTask(for taskViewModel: RSDTaskViewModel) -> (ScheduledTask, RSDTaskResult)? {
+        guard let scheduledTask = self.orderedTasks.first(where: { $0.identifier == taskViewModel.identifier })
+            else {
+                return nil
+        }
+        return (scheduledTask, taskViewModel.taskResult)
+    }
+}
+
+public class TrackingScheduleManager : ActivityGroupScheduleManager {
     
     override open func reportQueries() -> [ReportQuery] {
         let tasks: [RSDIdentifier] = [.triggersTask, .symptomsTask, .medicationTask]
@@ -45,7 +151,7 @@ public class TrackingScheduleManager : SBAScheduleManager {
     }
 }
 
-public class TaskGroupScheduleManager : SBAScheduleManager {
+public class TaskGroupScheduleManager : ActivityGroupScheduleManager {
     
     var _medicationTimingResult : RSDAnswerResult?
     

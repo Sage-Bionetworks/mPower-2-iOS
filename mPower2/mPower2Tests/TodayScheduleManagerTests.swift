@@ -36,7 +36,7 @@ import XCTest
 import Research
 @testable import BridgeApp
 
-class TodayScheduleManagerTests: XCTestCase {
+class TodayScheduleManagerTests: StudyBurstTests {
     
     override func setUp() {
         super.setUp()
@@ -131,6 +131,93 @@ class TodayScheduleManagerTests: XCTestCase {
         
         XCTAssertEqual(triggersItem.count, 3)
         XCTAssertEqual(triggersItem.type, .triggers)
+    }
+    
+    func testTodaySchedule_Day1_twoTasksFinished() {
+        
+        // Use the study burst manager to load all the schedules
+        let scheduleManager = TestTodayHistoryScheduleManager(.day1_twoTasksFinished)
+        guard loadSchedules(scheduleManager) else {
+            XCTFail("Failed to load the schedules and reports.")
+            return
+        }
+        
+        let items = scheduleManager.items
+        XCTAssertEqual(items.count, 2)
+        guard let firstItem = items.first, let lastItem = items.last else {
+            XCTFail("Failed to create expected activites item.")
+            return
+        }
+        
+        XCTAssertEqual(firstItem.count, 2)
+        XCTAssertEqual(firstItem.type, .activities)
+        
+        XCTAssertEqual(lastItem.count, 1)
+        XCTAssertEqual(lastItem.type, .surveys)
+    }
+}
+
+class TestTodayHistoryScheduleManager : TodayHistoryScheduleManager, TestScheduleManager {
+    
+    init(_ studySetup: StudySetup, now: Date? = nil, taskOrderTimestamp: Date? = referenceDate) {
+        self._now = now ?? Date().addingNumberOfDays(-1).startOfDay().addingTimeInterval(11 * 60 * 60)
+        super.init()
+        
+        // Default to "now" of 11:00 AM yesterday.
+        var setup = studySetup
+        setup.now = self._now
+        setup.taskOrderTimestamp = (taskOrderTimestamp == referenceDate) ? setup.now : taskOrderTimestamp
+        
+        // build the schedules.
+        self._activityManager.studySetup = setup
+        self._activityManager.buildSchedules(with: self._participantManager)
+        self._participantManager.setup(with: setup)
+    }
+    
+    let _activityManager = ActivityManager()
+    let _participantManager = ParticipantManager()
+    var _now: Date
+    
+    override func now() -> Date {
+        return _now
+    }
+    
+    override func today() -> Date {
+        return _now
+    }
+    
+    override var activityManager: SBBActivityManagerProtocol {
+        return _activityManager
+    }
+    
+    override var participantManager: SBBParticipantManagerProtocol {
+        return _participantManager
+    }
+    
+    var updateFinishedBlock: (() -> Void)?
+    var updateFailed_error: Error?
+    var update_previousActivities:[SBBScheduledActivity]?
+    var update_fetchedActivities: [SBBScheduledActivity]?
+    var finishedFetchingReportsBlock: (() -> Void)?
+    
+    override func updateFailed(_ error: Error) {
+        updateFailed_error = error
+        super.updateFailed(error)
+        updateFinishedBlock?()
+        updateFinishedBlock = nil
+    }
+    
+    override func didUpdateScheduledActivities(from previousActivities: [SBBScheduledActivity]) {
+        update_previousActivities = previousActivities
+        update_fetchedActivities = self.scheduledActivities
+        super.didUpdateScheduledActivities(from: previousActivities)
+        updateFinishedBlock?()
+        updateFinishedBlock = nil
+    }
+    
+    override func didFinishFetchingReports() {
+        finishedFetchingReportsBlock?()
+        finishedFetchingReportsBlock = nil
     }
 }
 
