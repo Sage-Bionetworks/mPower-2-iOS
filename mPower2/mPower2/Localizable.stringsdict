@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ACTIVITIES_TO_DO</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@ACTIVITY_TODO_COUNT@</string>
+		<key>ACTIVITY_TODO_COUNT</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>u</string>
+			<key>zero</key>
+			<string>ALL ACTIVITIES DONE</string>
+			<key>one</key>
+			<string>1 ACTIVITY TO DO</string>
+			<key>other</key>
+			<string>%u ACTIVITIES TO DO</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

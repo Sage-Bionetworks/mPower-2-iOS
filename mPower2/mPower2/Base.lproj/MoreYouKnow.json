@@ -1,0 +1,24 @@
+{
+    "identifier":"MoreYouKnow",
+    "shouldHideActions":["skip", "cancel"],
+    "progressMarkers":[],
+    "steps":[
+             {
+                "identifier":"introduction",
+                "type":"instruction",
+                "title":"You finished the Study Burst!",
+                "text":"Did you know that completing these tasks within an hour will help researchers better understand your disease?",
+                 "image":{
+                     "type": "fetchable",
+                     "imageName":"welcomeScreenImage",
+                     "placementType":"topMaginBackground"
+                 },
+                 "actions": {
+                      "goForward": {
+                                 "type": "default",
+                                 "buttonTitle" : "Okay"
+                              }
+                 }
+             }
+        ]
+}

@@ -205,11 +205,12 @@ class TodayViewController: UIViewController {
         // Change the content based on the time of day: morning, afternoon, evening and whether or not the user
         // has completed any tasks today
         
+        let now = studyBurstManager.today()
         let content: (imageName: String, greeting: String, message: String) = {
             let firstName = self.firstName
             var imageName: String
             var greeting: String
-            switch Date().timeRange() {
+            switch now.timeRange() {
             case .morning:
                 imageName = "WelcomeMorning"
                 greeting = firstName == nil ?
@@ -239,7 +240,7 @@ class TodayViewController: UIViewController {
     }
     
     func updateActionBar() {
-
+        
         // If we should not show it, then make it's height 0, otherwise remove
         // the height constraint
         let previousConstraint = actionBarView.rsd_constraint(for: .height, relation: .equal)
@@ -254,11 +255,14 @@ class TodayViewController: UIViewController {
             }
             else if !studyBurstManager.isCompletedForToday {
                 actionBarTitleLabel.text = Localization.localizedString("STUDY_BURST_ACTION_BAR_TITLE")
-                if let expiresOn = studyBurstManager.expiresOn {
+                if let expiresOn = studyBurstManager.expiresOn, !studyBurstManager.hasExpired {
                     actionBarDetailsLabel.updateStudyBurstExpirationTime(expiresOn)
                 }
                 else {
-                    actionBarDetailsLabel.text = Localization.localizedStringWithFormatKey("ACTIVITIES_TO_DO_%@", NSNumber(value: studyBurstManager.totalActivitiesCount))
+                    let remainingCount = studyBurstManager.totalActivitiesCount - studyBurstManager.finishedCount
+                    let formatString : String = NSLocalizedString("ACTIVITIES_TO_DO",
+                                                                  comment: "Detail for the number of activities remaining.")
+                    actionBarDetailsLabel.text = String.localizedStringWithFormat(formatString, remainingCount)
                 }
             }
             else if let actionBarItem = studyBurstManager.actionBarItem {
@@ -390,15 +394,19 @@ class TodayViewController: UIViewController {
     }
     
     func showStudyBurstCompletionTask(_ animated: Bool = false) {
+        guard let nc = self.navigationController else { return }
         // If there is a task to do today, then push it.
-        guard let taskViewModel = studyBurstManager.engagementTaskViewModel(),
-            let nc = self.navigationController
-            else {
-                return
+        if let taskViewModel = studyBurstManager.engagementTaskViewModel() {
+            let vc = RSDTaskViewController(taskViewModel: taskViewModel)
+            vc.delegate = self
+            nc.pushViewController(vc, animated: animated)
         }
-        let vc = RSDTaskViewController(taskViewModel: taskViewModel)
-        vc.delegate = self
-        nc.pushViewController(vc, animated: animated)
+        else if !studyBurstManager.finishedWithinLimit {
+            let taskInfo = RSDTaskInfoObject(with: RSDIdentifier.moreYouKnow.stringValue)
+            let vc = RSDTaskViewController(taskInfo: taskInfo)
+            vc.delegate = self
+            nc.pushViewController(vc, animated: animated)
+        }
     }
 }
 
@@ -449,7 +457,7 @@ extension TodayViewController: StudyBurstProgressExpirationLabelDelegate {
 
 extension TodayViewController: StudyBurstViewControllerDelegate {
     func studyBurstDidFinish(task: RSDTaskViewModel, reason: RSDTaskFinishReason) {
-        if reason == .completed, studyBurstManager.isFinalTask(task) {
+        if reason == .completed, studyBurstManager.isFinalTask(task.identifier) {
             showStudyBurstCompletionTask()
         }
     }
@@ -569,7 +577,7 @@ extension TodayViewController: TaskBrowserViewControllerDelegate {
     }
     
     func taskBrowserDidFinish(task: RSDTaskViewModel, reason: RSDTaskFinishReason) {
-        if reason == .completed, studyBurstManager.isFinalTask(task) {
+        if reason == .completed, studyBurstManager.isFinalTask(task.identifier) {
             showStudyBurstCompletionTask()
         }
     }
@@ -599,20 +607,21 @@ class StudyBurstProgressExpirationLabel: UILabel {
     var delegate: StudyBurstProgressExpirationLabelDelegate?
     
     func updateStudyBurstExpirationTime(_ expiresOn: Date?) {
-        guard expiresOn != nil else {
+        let now = StudyBurstScheduleManager.shared.today()
+        guard let expireTime = expiresOn, now < expireTime else {
             self.isHidden = true
             return
         }
         
         self.isHidden = false
         let formatter = DateComponentsFormatter()
-        formatter.allowedUnits = [.hour, .minute, .second]
+        formatter.allowedUnits = [.minute, .second]
         formatter.collapsesLargestUnit = false
         formatter.zeroFormattingBehavior = .pad
         formatter.allowsFractionalUnits = false
         formatter.unitsStyle = .positional
-        let timeString = formatter.string(from: Date(), to: expiresOn!)!
         
+        let timeString = formatter.string(from: now, to: expireTime)!
         let marker = "%@"
         let format = Localization.localizedString("PROGRESS_EXPIRES_%@")
         

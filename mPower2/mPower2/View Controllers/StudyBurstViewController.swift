@@ -216,22 +216,16 @@ extension StudyBurstViewController: TaskBrowserViewControllerDelegate {
 
 class StudyBurstTaskBrowserViewController: TaskBrowserViewController {
     
-    func firstIncompleteTaskId() -> String? {
-        guard let scheduleManager = scheduleManagers?.first else {
-            return nil
-        }
-        let task = tasks.first(where: { (taskInfo) -> Bool in
-            !scheduleManager.isCompleted(for: taskInfo, on: Date())
-        })
-        return task?.identifier
+    func nextTaskIndex() -> Int {
+        return tasks.firstIndex(where: { $0.finishedOn == nil }) ?? 0
     }
     
     // MARK: Instance methods
     public func startNextTask() {
         // Get the next incomplete task and present it.
-        if let taskInfo = tasks.first(where: { $0.identifier == firstIncompleteTaskId() }) {
-            startTask(for: taskInfo)
-        }
+        let idx = nextTaskIndex()
+        guard tasks.count > idx else { return }
+        startTask(for: tasks[idx].taskInfo)
     }
     
     // MARK: Overrides
@@ -241,13 +235,6 @@ class StudyBurstTaskBrowserViewController: TaskBrowserViewController {
     
     override var minCellVerticalSpacing: CGFloat {
         return 10.0
-    }
-    
-    override var tasks: [RSDTaskInfo] {
-        guard let studyBurstManager = scheduleManagers?.first as? StudyBurstScheduleManager else {
-            return [RSDTaskInfo]()
-        }
-        return studyBurstManager.orderedTasks
     }
     
     override var collectionCellIdentifier: String {
@@ -266,25 +253,26 @@ class StudyBurstTaskBrowserViewController: TaskBrowserViewController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: collectionCellIdentifier, for: indexPath) as? StudyBurstCollectionViewCell
-        let task = tasks[indexPath.row]
+        let scheduledTask = tasks[indexPath.row]
+        let task = scheduledTask.taskInfo
         
         cell?.title = task.title
         cell?.image = nil
-        if let scheduleManager = scheduleManagers?.first {
-            
-            let isCompleted = scheduleManager.isCompleted(for: task, on: Date())
-            cell?.isCompleted = isCompleted
-            task.imageVendor?.fetchImage(for: collectionView.layoutAttributesForItem(at: indexPath)?.size ?? .zero) { (_, img) in
+        
+        
+        let isCompleted = (scheduledTask.finishedOn != nil)
+        let usesFullColorImage = isCompleted || (indexPath.row == self.nextTaskIndex())
+        cell?.isCompleted = isCompleted
+        task.imageVendor?.fetchImage(for: collectionView.layoutAttributesForItem(at: indexPath)?.size ?? .zero) { (_, img) in
                 
                 // If the task is completed or is the first incomplete task, we show the image as normal,
                 // otherwise we show a grayscale version of the image
-                cell?.image = isCompleted || task.identifier == self.firstIncompleteTaskId() ? img : img?.grayscale()
+                cell?.image = usesFullColorImage ? img : img?.grayscale()
             }
             
-            // If the task is completed or is the first incomplete task, we change the alpha of the cell to normal (1.0),
-            // otherwise we dim the view by changing the alpha to less than 1.0
-            cell?.alpha = isCompleted || task.identifier == self.firstIncompleteTaskId() ? 1.0 : 0.5
-        }
+        // If the task is completed or is the first incomplete task, we change the alpha of the cell to normal (1.0),
+        // otherwise we dim the view by changing the alpha to less than 1.0
+        cell?.alpha = usesFullColorImage ? 1.0 : 0.5
         
         // Update the estimated minutes label
         cell?.durationLabel.text = Localization.localizedStringWithFormatKey("%@_ESTIMATED_MINUTES", NSNumber(value: task.estimatedMinutes))
@@ -294,9 +282,8 @@ class StudyBurstTaskBrowserViewController: TaskBrowserViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // Only launch the task if this is the first availble (ie. not completed) task
-        if tasks[indexPath.row].identifier == self.firstIncompleteTaskId() {
-            super.collectionView(collectionView, didSelectItemAt: indexPath)
-        }
+        guard indexPath.row == self.nextTaskIndex() else { return }
+        super.collectionView(collectionView, didSelectItemAt: indexPath)
     }
 }
 
