@@ -51,7 +51,7 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
     }
     
     public var delegate: TaskBrowserViewControllerDelegate?
-    public var scheduleManagers: [SBAScheduleManager]?
+    public var scheduleManagers: [ActivityGroupScheduleManager]?
     
     open var shouldShowTopShadow: Bool {
         return true
@@ -64,28 +64,31 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
         return scheduleManagers.count > 1
     }
     
-    open var tasks: [RSDTaskInfo] {
-        guard let group = selectedScheduleManager?.activityGroup else {
-            return [RSDTaskInfo]()
-        }
-        return group.tasks
+    open var tasks: [ScheduledTask] {
+        return selectedScheduleManager?.orderedTasks ?? []
     }
     
-    func scheduleManager(with identifier: String) -> SBAScheduleManager? {
+    func scheduleManager(with identifier: String) -> ActivityGroupScheduleManager? {
         return scheduleManagers?.first(where: { $0.identifier == identifier })
     }
 
-    private var selectedScheduleManager: SBAScheduleManager!
+    private var selectedScheduleManager: ActivityGroupScheduleManager!
     
     @IBOutlet weak var tabButtonStackView: UIStackView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var ruleView: UIView!
     @IBOutlet weak var shadowView: RSDShadowGradient!
     @IBOutlet weak var tabsViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var unlockMessageLabel: UILabel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        unlockMessageLabel?.isHidden = areTasksEnabled
     }
     
     override func viewDidLayoutSubviews() {
@@ -97,6 +100,8 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
     }
     
     func setupView() {
+        
+        let designSystem = RSDDesignSystem()
         
         // Remove existing managed subviews from tabBar stackView
         tabButtonStackView.arrangedSubviews.forEach({ $0.removeFromSuperview() })
@@ -126,6 +131,10 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
 
         // Hide or show our shadow and rule views
         shadowView.isHidden = !shouldShowTopShadow
+        
+        unlockMessageLabel?.text = Localization.localizedString("UNLOCK_MESSAGE_FINISH_STUDY_BURST")
+        unlockMessageLabel?.textColor = designSystem.colorRules.textColor(on: designSystem.colorRules.backgroundLight, for: .heading3)
+        unlockMessageLabel?.isHidden = true
 
         // Reload our data
         collectionView.reloadData()
@@ -162,6 +171,7 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
         
         // Reload the collection view
         self.collectionView.reloadData()
+        self.unlockMessageLabel?.isHidden = areTasksEnabled
     }
     
     func taskController(_ taskController: RSDTaskController, readyToSave taskViewModel: RSDTaskViewModel) {
@@ -185,6 +195,7 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
             // Save our selected task group and reload collection
             selectedScheduleManager = newManager
             collectionView.reloadData()
+            unlockMessageLabel?.isHidden = areTasksEnabled
             
             // Now update the isSelected value of all the tabs
             tabButtonStackView.arrangedSubviews.forEach {
@@ -199,6 +210,11 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
                 delegate.taskBrowserTabSelected()
             }
         }
+    }
+    
+    var areTasksEnabled: Bool {
+        return StudyBurstScheduleManager.shared.isCompletedForToday ||
+            (selectedScheduleManager.activityGroup!.identifier == RSDIdentifier.trackingTaskGroup)
     }
 }
 
@@ -261,13 +277,12 @@ extension TaskBrowserViewController: UICollectionViewDelegate, UICollectionViewD
     open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: collectionCellIdentifier, for: indexPath) as? TaskCollectionViewCell
-        let task = tasks[indexPath.row]
+        let scheduledTask = tasks[indexPath.row]
+        let task = scheduledTask.taskInfo
         cell?.image = task.iconWhite
         cell?.title = task.title?.uppercased()
-        // Only mark completed if this is for the measuring tasks.
-        cell?.isCompleted =
-            (selectedScheduleManager.activityGroup!.identifier == RSDIdentifier.measuringTaskGroup) &&
-            selectedScheduleManager.isCompleted(for: task, on: Date())
+        cell?.alpha = areTasksEnabled ? 1.0 : 0.35
+        cell?.isCompleted = false
         return cell ?? UICollectionViewCell()
     }
     
@@ -275,7 +290,7 @@ extension TaskBrowserViewController: UICollectionViewDelegate, UICollectionViewD
     open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         // Get our task and present it
-        startTask(for: tasks[indexPath.row])
+        startTask(for: tasks[indexPath.row].taskInfo)
     }
     
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

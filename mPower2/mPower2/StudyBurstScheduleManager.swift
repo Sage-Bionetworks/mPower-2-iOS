@@ -115,11 +115,12 @@ struct TodayActionBarItem {
     let icon: UIImage?
 }
 
+
 /// The study burst manager is accessible on the "Today" view as well as being used to manage the study burst
 /// view controller.
 class StudyBurstScheduleManager : TaskGroupScheduleManager {
     
-    static let shared = StudyBurstScheduleManager()
+    static var shared = StudyBurstScheduleManager()
     
     /// The configuration is set up either by the bridge configuration or using defaults defined internally.
     lazy var studyBurst: StudyBurstConfiguration! = {
@@ -165,32 +166,44 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     
     /// When does the study burst expire?
     public var expiresOn : Date? {
-        guard let expiresOn = _expiresOn else { return nil }
-        if expiresOn > today() {
-            return expiresOn
+        // Look to see that the first task has been started and that the study burst is not completed.
+        guard !isCompletedForToday, let timestamp = orderedTasks.first?.finishedOn
+            else {
+                return nil
         }
-        else {
-            DispatchQueue.main.async {
-                self.didUpdateScheduledActivities(from: self.scheduledActivities)
-            }
-            return nil
-        }
+        return timestamp.addingTimeInterval(expiresLimit)
     }
-    private var _expiresOn : Date?
+    
+    /// Has the study burst expired?
+    public var hasExpired : Bool {
+        guard let expiresOn = self.expiresOn else { return false }
+        return today() > expiresOn
+    }
+    
+    /// Were the tasks finished within the time limit?
+    public var finishedWithinLimit : Bool {
+        guard let startedOn = self.orderedTasks.first?.startedOn,
+            let finishedOn = self.orderedTasks.last?.finishedOn
+            else {
+                return false
+        }
+        let dt = finishedOn.timeIntervalSinceReferenceDate - startedOn.timeIntervalSinceReferenceDate
+        return dt < expiresLimit
+    }
     
     /// What is the current progress on required activities?
     public var progress : CGFloat {
-        return CGFloat(finishedSchedules.count) / CGFloat(totalActivitiesCount)
+        return CGFloat(finishedCount) / CGFloat(totalActivitiesCount)
     }
     
-    /// Expose internally for testing.
-    func today() -> Date {
-        return Date()
-    }
-    
-    /// Is the Study burst completed for today?
+    /// Is the study burst completed for today?
     public var isCompletedForToday : Bool {
-        return !hasStudyBurst || (finishedSchedules.count == totalActivitiesCount)
+        return !hasStudyBurst || (finishedCount == totalActivitiesCount)
+    }
+    
+    /// How many of the tasks are finished?
+    var finishedCount : Int {
+        return self.orderedTasks.reduce(0, { $0 + ($1.finishedOn != nil ? 1 : 0) })
     }
     
     /// Has the user been shown the motivation survey?
@@ -206,22 +219,14 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     }
     
     /// Is this the final study burst task for today?
-    public func isFinalTask(_ taskViewModel: RSDTaskViewModel) -> Bool {
-        guard let group = self.activityGroup, group.activityIdentifiers.contains(where: { $0 == taskViewModel.identifier })
-            else {
-                return false
-        }
-        let activities = Set(finishedSchedules.compactMap { $0.activityIdentifier }).union([taskViewModel.identifier])
-        return activities.count == totalActivitiesCount
+    public func isFinalTask(_ taskIdentifier: String) -> Bool {
+        return taskIdentifier == self.orderedTasks.last?.identifier
     }
     
     /// Total number of activities
     public var totalActivitiesCount : Int {
         return (activityGroup?.activityIdentifiers.count ?? 1)
     }
-    
-    /// Subset of the finished schedules.
-    public private(set) var finishedSchedules: [SBBScheduledActivity] = []
     
     /// Subset of the past survey schedules that were not finished on the day they were scheduled.
     public var pastSurveys: [RSDIdentifier] {
@@ -251,46 +256,43 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         return !self.isCompletedForToday || (self.getUnfinishedSchedule() != nil)
     }
     
+    /// Should the tasks be refreshed?
+    override var shouldRefreshTasks: Bool {
+        let now = today()
+        if let timestamp = _shuffleTimestamp, Calendar.current.isDate(timestamp, inSameDayAs: now) {
+            return false
+        }
+        else {
+            return true
+        }
+    }
+    
     /// Returns an ordered set of task info objects. This will change each day, but should retain the saved
     /// order for any given day.
-    public var orderedTasks: [RSDTaskInfo] {
+    override var taskSortOrder: [String] {
         // Look in-memory first.
         let now = today()
-        if let orderedTasks = _orderedTasks,
+        if let sortTasks = _sortOrder,
             let timestamp = _shuffleTimestamp, Calendar.current.isDate(timestamp, inSameDayAs: now) {
-            return orderedTasks
-        }
-        
-        guard let tasks = self.activityGroup?.tasks else {
-            return []
+            return sortTasks
         }
 
         if let storedOrder = UserDefaults.standard.array(forKey: StudyBurstScheduleManager.orderKey) as? [String],
             let timestamp = UserDefaults.standard.object(forKey: StudyBurstScheduleManager.timestampKey) as? Date,
             Calendar.current.isDate(timestamp, inSameDayAs: now) {
-            // If the timestamp is still valid for today, then sort using the stored order.
-            _orderedTasks = tasks.sorted(by: {
-                guard let idx1 = storedOrder.index(of: $0.identifier),
-                    let idx2 = storedOrder.index(of: $1.identifier)
-                    else {
-                        return false
-                }
-                return idx1 < idx2
-            })
             _shuffleTimestamp = timestamp
+            _sortOrder = storedOrder
+            return storedOrder
         }
         else {
             // Otherwise, shuffle the tasks and store order of the the task identifiers.
-            let shuffledTasks = tasks.shuffled()
-            let sortOrder = shuffledTasks.map { $0.identifier }
+            _sortOrder = super.taskSortOrder.shuffled()
             _shuffleTimestamp = today()
-            _orderedTasks = shuffledTasks
-            StudyBurstScheduleManager.setOrderedTasks(sortOrder, timestamp: _shuffleTimestamp!)
+            StudyBurstScheduleManager.setOrderedTasks(_sortOrder!, timestamp: _shuffleTimestamp!)
+            return _sortOrder!
         }
-        
-        return _orderedTasks!
     }
-    private var _orderedTasks: [RSDTaskInfo]?
+    private var _sortOrder: [String]?
     private var _shuffleTimestamp: Date?
     
     static let orderKey = "StudyBurstTaskOrder"
@@ -375,7 +377,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         let task = RSDTaskObject(identifier: kCompletionTaskIdentifier, stepNavigator: navigator)
         
         // Hide cancel if this is for the initial surveys displayed before the first study burst.
-        if self.dayCount == 1, self.finishedSchedules.count == 0 {
+        if self.dayCount == 1, self.finishedCount == 0 {
             task.shouldHideActions = [.navigation(.cancel)]
         }
         
@@ -408,11 +410,6 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
                 return nil
             }
         }
-    }
-    
-    func loadIfNeeded() {
-        guard self.scheduledActivities.count == 0 else { return }
-        
     }
     
     /// Override to get past 14 days of study burst markers and today's activities.
@@ -458,24 +455,14 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     /// Override to build the new set of today history items.
     override func didUpdateScheduledActivities(from previousActivities: [SBBScheduledActivity]) {
         if let studyMarker = self.getStudyBurst() {
-            let schedules = self.scheduledActivities
-            let (filtered, startedOn, finishedOn) = self.filterFinishedSchedules(schedules)
-            self.finishedSchedules = filtered
-            if studyMarker.isCompleted {
-                self._expiresOn = nil
-            }
-            else {
-                if self.totalActivitiesCount == filtered.count, let finishedOn = finishedOn {
-                    self.markCompleted(studyMarker: studyMarker, startedOn: startedOn, finishedOn: finishedOn, finishedSchedules: finishedSchedules)
-                }
-                else {
-                    self._expiresOn = finishedOn?.addingTimeInterval(expiresLimit)
-                }
+            refreshOrderedTasks()
+            // If a study marker was found, then look to see if the study burst is complete and mark it.
+            if !studyMarker.isCompleted, self.totalActivitiesCount == self.finishedCount {
+                self.markCompleted(studyMarker: studyMarker)
             }
         }
         else {
             self.hasStudyBurst = false
-            self._expiresOn = nil
             self.dayCount = nil
         }
 
@@ -484,32 +471,15 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         super.didUpdateScheduledActivities(from: previousActivities)
     }
     
-    override func taskController(_ taskController: RSDTaskController, readyToSave taskViewModel: RSDTaskViewModel) {
-        
-        // Preload the finished tasks so that the progress will update properly.
-        if let schedule = self.scheduledActivity(for: taskViewModel.taskResult, scheduleIdentifier: taskViewModel.scheduleIdentifier),
-            let activityIdentifier = schedule.activityIdentifier,
-            !self.finishedSchedules.contains(where: { $0.activityIdentifier == activityIdentifier}) {
-            
-            var schedules = self.finishedSchedules
-            schedule.startedOn = taskViewModel.taskResult.startDate
-            schedule.finishedOn = taskViewModel.taskResult.endDate
-            schedules.append(schedule)
-            let (filtered, _, finishedOn) = self.filterFinishedSchedules(schedules)
-            if filtered.count != self.finishedSchedules.count {
-                self.finishedSchedules = filtered
-                self._expiresOn = finishedOn?.addingTimeInterval(self.expiresLimit)
-            }
-        }
-        super.taskController(taskController, readyToSave: taskViewModel)
-    }
-    
     /// Override isCompleted to only return true if the schedule is within the expiration window.
     override func isCompleted(for taskInfo: RSDTaskInfo, on date: Date) -> Bool {
-        guard Calendar.current.isDate(date, inSameDayAs: today()) else {
+        guard Calendar.current.isDate(date, inSameDayAs: today()),
+            let scheduledTask = self.orderedTasks.first(where: { $0.identifier == taskInfo.identifier })
+            else {
             return super.isCompleted(for: taskInfo, on: date)
         }
-        return self.finishedSchedules.first(where: { $0.activityIdentifier == taskInfo.identifier }) != nil
+        let finishedOn = scheduledTask.finishedOn ?? Date(timeIntervalSince1970: 0)
+        return Calendar.current.isDate(finishedOn, inSameDayAs: today())
     }
     
     /// Swallow the message for updated schedules if this is the study burst that we just marked as completed.
@@ -521,10 +491,14 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         super.willSendUpdatedSchedules(for: schedules)
     }
     
-    func markCompleted(studyMarker: SBBScheduledActivity, startedOn: Date?, finishedOn: Date, finishedSchedules: [SBBScheduledActivity]) {
+    func markCompleted(studyMarker: SBBScheduledActivity) {
+        guard let startedOn = self.orderedTasks.first?.startedOn,
+            let finishedOn = self.orderedTasks.last?.finishedOn
+            else {
+                return
+        }
         
-        self._expiresOn = nil
-        studyMarker.startedOn = startedOn ?? today()
+        studyMarker.startedOn = startedOn
         studyMarker.finishedOn = finishedOn
         
         let identifier = studyMarker.activityIdentifier ?? RSDIdentifier.studyBurstCompletedTask.stringValue
@@ -540,12 +514,13 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         
             // build the archive
             let archive = SBAScheduledActivityArchive(identifier: identifier, schemaInfo: schemaInfo, schedule: studyMarker)
-            var json: [String : Any] = [ "taskOrder" : self.orderedTasks.map { $0.identifier }.joined(separator: ",")]
-            finishedSchedules.forEach {
-                guard let identifier = $0.activityIdentifier, let finishedOn = $0.finishedOn else { return }
+            var json: [String : Any] = [ "taskOrder" : self.taskSortOrder.joined(separator: ",")]
+            self.orderedTasks.forEach {
+                let identifier = $0.identifier
+                guard let finishedOn = $0.finishedOn else { return }
                 json["\(identifier).startDate"] = ($0.startedOn ?? today()).jsonObject()
                 json["\(identifier).endDate"] = finishedOn.jsonObject()
-                json["\(identifier).scheduleGuid"] = $0.guid
+                json["\(identifier).scheduleGuid"] = $0.scheduleGuid
             }
             archive.insertDictionary(intoArchive: json, filename: "tasks", createdOn: finishedOn)
             
@@ -598,56 +573,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         
         return studyMarker
     }
-    
-    /// What is the start of the expiration time window?
-    func startTimeWindow() -> Date {
-        return today().addingTimeInterval(-1 * expiresLimit)
-    }
-    
-    /// Get the filtered list of finished schedules.
-    func filterFinishedSchedules(_ schedules: [SBBScheduledActivity], gracePeriod: TimeInterval = 0) -> ([SBBScheduledActivity], startedOn: Date?, finishedOn: Date?) {
-        let taskIds = self.activityGroup?.activityIdentifiers.map { $0.stringValue }
-        guard let activityIdentifiers = taskIds
-            else {
-                return ([], nil, nil)
-        }
-        
-        let calendar = Calendar(identifier: .iso8601)
-        let now = today()
-        var taskSchedules = [SBBScheduledActivity]()
-        var finishedOn : Date?
-        var startedOn : Date?
-        
-        schedules.forEach { (schedule) in
-            guard let activityId = schedule.activityIdentifier,
-                activityIdentifiers.contains(activityId),
-                let scheduleFinished = schedule.finishedOn,
-                calendar.isDate(scheduleFinished, inSameDayAs: now)
-                else {
-                    return
-            }
-            let isNewer = !taskSchedules.contains(where: {
-                $0.finishedOn! > schedule.finishedOn! &&
-                $0.activityIdentifier == schedule.activityIdentifier
-            })
-            guard isNewer else { return }
-            taskSchedules.remove { $0.activityIdentifier == schedule.activityIdentifier }
-            taskSchedules.append(schedule)
-            if (finishedOn == nil) || (finishedOn! > scheduleFinished) {
-                finishedOn = scheduleFinished
-                startedOn = schedule.startedOn
-            }
-        }
-        
-        // If all the tasks are not finished then remove the ones that are outside the 1 hour window.
-        if taskSchedules.count < activityIdentifiers.count {
-            let startWindow = startTimeWindow().addingTimeInterval(-1 * gracePeriod)
-            taskSchedules.remove { $0.finishedOn! < startWindow }
-        }
-        
-        return (taskSchedules, startedOn, finishedOn)
-    }
-    
+
     func calculateThisDay() -> Int {
         guard hasStudyBurst, let day = self.dayCount else { return self.maxDaysCount + 1 }
         if day < self.studyBurst.numberOfDays {
@@ -761,7 +687,16 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         
         let notificationResult: NotificationResult
         do {
-            notificationResult = try SBAFactory.shared.createJSONDecoder().decode(NotificationResult.self, from: clientData)
+            if clientData is NSDictionary {
+                notificationResult = try SBAFactory.shared.createJSONDecoder().decode(NotificationResult.self, from: clientData)
+            }
+            else if let dateString = clientData as? String,
+                let date = SBAFactory.shared.decodeDate(from: dateString) {
+                notificationResult = NotificationResult(reminderTime: date, noReminder: nil)
+            }
+            else {
+                notificationResult = NotificationResult(reminderTime: nil, noReminder: nil)
+            }
         } catch let err {
             debugPrint("Failed to decode the reminder result. \(err)")
             return nil

@@ -288,12 +288,6 @@
                     "type": "fetchable",
                     "imageName": "medication"
                 },
-                "colorTheme": {
-                    "colorStyle": {
-                        "header": "darkBackground"
-                    },
-                    "usesLightStyle": false
-                },
                 "actions": {
                     "goForward": {
                         "type": "default",
@@ -315,9 +309,6 @@
                     "type": "fetchable",
                     "imageName": "remindersIcon",
                     "placementType": "iconBefore"
-                },
-                "colorTheme": {
-                    "usesLightStyle": false
                 },
                 "actions": {
                     "goForward": {
@@ -554,12 +545,6 @@
                     "type": "fetchable",
                     "imageName": "symptoms"
                 },
-                "colorTheme": {
-                    "colorStyle": {
-                        "header": "darkBackground"
-                    },
-                    "usesLightStyle": false
-                },
                 "actions": {
                     "goForward": {
                         "type": "default",
@@ -672,12 +657,6 @@
                 "image": {
                     "type": "fetchable",
                     "imageName": "triggers"
-                },
-                "colorTheme": {
-                    "colorStyle": {
-                        "header": "darkBackground"
-                    },
-                    "usesLightStyle": false
                 },
                 "actions": {
                     "goForward": {

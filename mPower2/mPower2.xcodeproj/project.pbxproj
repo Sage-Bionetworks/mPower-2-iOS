@@ -75,6 +75,16 @@
 		F8078F4320ADFA6A00757F42 /* DataSourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8078F4220ADFA6A00757F42 /* DataSourceManager.swift */; };
 		F8078F4420AE078A00757F42 /* DataSourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8078F4220ADFA6A00757F42 /* DataSourceManager.swift */; };
 		F81BE7BF20B4AB4B00EE57D3 /* AppConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = F81BE7BE20B4AB4B00EE57D3 /* AppConfig.json */; };
+		F82A4ACF2297051200BEBE3C /* BridgeSDK_Test.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F82A4ACE2297051200BEBE3C /* BridgeSDK_Test.framework */; };
+		F82A4AD02297051200BEBE3C /* BridgeSDK_Test.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F82A4ACE2297051200BEBE3C /* BridgeSDK_Test.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F82A4AD22297054600BEBE3C /* ResearchMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F82A4AD12297054600BEBE3C /* ResearchMotion.framework */; };
+		F82A4AD32297054600BEBE3C /* ResearchMotion.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F82A4AD12297054600BEBE3C /* ResearchMotion.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F82A4AD52297054600BEBE3C /* ResearchLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F82A4AD42297054600BEBE3C /* ResearchLocation.framework */; };
+		F82A4AD62297054600BEBE3C /* ResearchLocation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F82A4AD42297054600BEBE3C /* ResearchLocation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F82A4AD8229706BF00BEBE3C /* ResearchMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F82A4AD7229706BF00BEBE3C /* ResearchMotion.framework */; };
+		F82A4AD9229706BF00BEBE3C /* ResearchMotion.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F82A4AD7229706BF00BEBE3C /* ResearchMotion.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F82A4ADB229706BF00BEBE3C /* ResearchLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F82A4ADA229706BF00BEBE3C /* ResearchLocation.framework */; };
+		F82A4ADC229706BF00BEBE3C /* ResearchLocation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F82A4ADA229706BF00BEBE3C /* ResearchLocation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F82AE7B62063160B00952D74 /* UIColor+mPowerTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82AE7B52063160B00952D74 /* UIColor+mPowerTheme.swift */; };
 		F832ABE920D8D341005A9025 /* StudyBurstCompletionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F832ABE820D8D341005A9025 /* StudyBurstCompletionViewController.swift */; };
 		F832ABEA20D96FEF005A9025 /* StudyBurstCompletionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F832ABE820D8D341005A9025 /* StudyBurstCompletionViewController.swift */; };
@@ -136,10 +146,6 @@
 		F8A5C867227D08BC00DD4692 /* Research.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C865227D08BC00DD4692 /* Research.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8A5C869227D08BC00DD4692 /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C868227D08BC00DD4692 /* ResearchUI.framework */; };
 		F8A5C86A227D08BC00DD4692 /* ResearchUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C868227D08BC00DD4692 /* ResearchUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F8A5C86C227D08BC00DD4692 /* ResearchRecorders.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C86B227D08BC00DD4692 /* ResearchRecorders.framework */; };
-		F8A5C86D227D08BC00DD4692 /* ResearchRecorders.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C86B227D08BC00DD4692 /* ResearchRecorders.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F8A5C86E227D08D100DD4692 /* ResearchRecorders.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C86B227D08BC00DD4692 /* ResearchRecorders.framework */; };
-		F8A5C86F227D08D100DD4692 /* ResearchRecorders.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C86B227D08BC00DD4692 /* ResearchRecorders.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8A5C870227D08D100DD4692 /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C868227D08BC00DD4692 /* ResearchUI.framework */; };
 		F8A5C871227D08D100DD4692 /* ResearchUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C868227D08BC00DD4692 /* ResearchUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8A5C872227D08D100DD4692 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C865227D08BC00DD4692 /* Research.framework */; };
@@ -170,6 +176,11 @@
 		F8D3E7F72063039200CD351C /* BridgeInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E7F62063039200CD351C /* BridgeInfo.plist */; };
 		F8D3E8022063055500CD351C /* sage-mpower-2.pem in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E8002063055500CD351C /* sage-mpower-2.pem */; };
 		F8D3E8032063055500CD351C /* BridgeInfo-private.plist in Resources */ = {isa = PBXBuildFile; fileRef = F8D3E8012063055500CD351C /* BridgeInfo-private.plist */; };
+		F8ECAA1222A0F4F00011D497 /* MoreYouKnow.json in Resources */ = {isa = PBXBuildFile; fileRef = F8ECAA1022A0F4F00011D497 /* MoreYouKnow.json */; };
+		F8ECAA1322A0F4F00011D497 /* MoreYouKnow.json in Resources */ = {isa = PBXBuildFile; fileRef = F8ECAA1022A0F4F00011D497 /* MoreYouKnow.json */; };
+		F8EF461C22A05CA30010AE12 /* StudyBurstViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8EF461B22A05CA30010AE12 /* StudyBurstViewControllerTests.swift */; };
+		F8EF461E22A06C180010AE12 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = F8EF461D22A06C180010AE12 /* Localizable.stringsdict */; };
+		F8EF461F22A06C180010AE12 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = F8EF461D22A06C180010AE12 /* Localizable.stringsdict */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -199,9 +210,11 @@
 				F8A5C877227D08D100DD4692 /* BridgeApp.framework in Embed Frameworks */,
 				F8A5C875227D08D100DD4692 /* MotorControl.framework in Embed Frameworks */,
 				F8A5C879227D08D100DD4692 /* BridgeSDK.framework in Embed Frameworks */,
-				F8A5C86F227D08D100DD4692 /* ResearchRecorders.framework in Embed Frameworks */,
+				F82A4AD32297054600BEBE3C /* ResearchMotion.framework in Embed Frameworks */,
+				F82A4AD62297054600BEBE3C /* ResearchLocation.framework in Embed Frameworks */,
 				F8A5C873227D08D100DD4692 /* Research.framework in Embed Frameworks */,
 				F8A5C871227D08D100DD4692 /* ResearchUI.framework in Embed Frameworks */,
+				F82A4AD02297051200BEBE3C /* BridgeSDK_Test.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -213,9 +226,10 @@
 			dstSubfolderSpec = 10;
 			files = (
 				F8A5C864227D08BC00DD4692 /* MotorControl.framework in Embed Frameworks */,
-				F8A5C86D227D08BC00DD4692 /* ResearchRecorders.framework in Embed Frameworks */,
 				F8A5C85E227D08BC00DD4692 /* BridgeSDK.framework in Embed Frameworks */,
 				F8A5C861227D08BC00DD4692 /* BridgeApp.framework in Embed Frameworks */,
+				F82A4ADC229706BF00BEBE3C /* ResearchLocation.framework in Embed Frameworks */,
+				F82A4AD9229706BF00BEBE3C /* ResearchMotion.framework in Embed Frameworks */,
 				F8A5C867227D08BC00DD4692 /* Research.framework in Embed Frameworks */,
 				F8A5C86A227D08BC00DD4692 /* ResearchUI.framework in Embed Frameworks */,
 			);
@@ -266,6 +280,11 @@
 		F8078F2920ADF1DC00757F42 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F8078F4220ADFA6A00757F42 /* DataSourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSourceManager.swift; sourceTree = "<group>"; };
 		F81BE7BE20B4AB4B00EE57D3 /* AppConfig.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AppConfig.json; sourceTree = "<group>"; };
+		F82A4ACE2297051200BEBE3C /* BridgeSDK_Test.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BridgeSDK_Test.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F82A4AD12297054600BEBE3C /* ResearchMotion.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchMotion.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F82A4AD42297054600BEBE3C /* ResearchLocation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchLocation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F82A4AD7229706BF00BEBE3C /* ResearchMotion.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchMotion.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F82A4ADA229706BF00BEBE3C /* ResearchLocation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchLocation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F82AE7B52063160B00952D74 /* UIColor+mPowerTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+mPowerTheme.swift"; sourceTree = "<group>"; };
 		F832ABE820D8D341005A9025 /* StudyBurstCompletionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StudyBurstCompletionViewController.swift; path = "View Controllers/StudyBurstCompletionViewController.swift"; sourceTree = "<group>"; };
 		F832AC1920D9A130005A9025 /* StudyBurstTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyBurstTests.swift; sourceTree = "<group>"; };
@@ -299,7 +318,6 @@
 		F8A5C862227D08BC00DD4692 /* MotorControl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MotorControl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8A5C865227D08BC00DD4692 /* Research.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Research.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8A5C868227D08BC00DD4692 /* ResearchUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F8A5C86B227D08BC00DD4692 /* ResearchRecorders.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchRecorders.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8A5C880227E278800DD4692 /* BridgeSDK_Test.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BridgeSDK_Test.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8A5C882227E278800DD4692 /* Research_UnitTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Research_UnitTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8A5C884227E279700DD4692 /* BridgeSDK_Test.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BridgeSDK_Test.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -321,6 +339,9 @@
 		F8D3E7F62063039200CD351C /* BridgeInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = BridgeInfo.plist; sourceTree = "<group>"; };
 		F8D3E8002063055500CD351C /* sage-mpower-2.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "sage-mpower-2.pem"; path = "../../../iOSPrivateProjectInfo/mPower2/sage-mpower-2.pem"; sourceTree = "<group>"; };
 		F8D3E8012063055500CD351C /* BridgeInfo-private.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "BridgeInfo-private.plist"; path = "../../../iOSPrivateProjectInfo/mPower2/BridgeInfo-private.plist"; sourceTree = "<group>"; };
+		F8ECAA1122A0F4F00011D497 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = Base; path = Base.lproj/MoreYouKnow.json; sourceTree = "<group>"; };
+		F8EF461B22A05CA30010AE12 /* StudyBurstViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyBurstViewControllerTests.swift; sourceTree = "<group>"; };
+		F8EF461D22A06C180010AE12 /* Localizable.stringsdict */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; path = Localizable.stringsdict; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -340,9 +361,11 @@
 				F8A5C876227D08D100DD4692 /* BridgeApp.framework in Frameworks */,
 				F8A5C874227D08D100DD4692 /* MotorControl.framework in Frameworks */,
 				F8A5C878227D08D100DD4692 /* BridgeSDK.framework in Frameworks */,
-				F8A5C86E227D08D100DD4692 /* ResearchRecorders.framework in Frameworks */,
+				F82A4AD22297054600BEBE3C /* ResearchMotion.framework in Frameworks */,
+				F82A4AD52297054600BEBE3C /* ResearchLocation.framework in Frameworks */,
 				F8A5C872227D08D100DD4692 /* Research.framework in Frameworks */,
 				F8A5C870227D08D100DD4692 /* ResearchUI.framework in Frameworks */,
+				F82A4ACF2297051200BEBE3C /* BridgeSDK_Test.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -351,9 +374,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				F8A5C863227D08BC00DD4692 /* MotorControl.framework in Frameworks */,
-				F8A5C86C227D08BC00DD4692 /* ResearchRecorders.framework in Frameworks */,
 				F8A5C85D227D08BC00DD4692 /* BridgeSDK.framework in Frameworks */,
 				F8A5C860227D08BC00DD4692 /* BridgeApp.framework in Frameworks */,
+				F82A4ADB229706BF00BEBE3C /* ResearchLocation.framework in Frameworks */,
+				F82A4AD8229706BF00BEBE3C /* ResearchMotion.framework in Frameworks */,
 				F8A5C866227D08BC00DD4692 /* Research.framework in Frameworks */,
 				F8A5C869227D08BC00DD4692 /* ResearchUI.framework in Frameworks */,
 			);
@@ -475,6 +499,7 @@
 				60E94116212B8FD70027432C /* ProfileTableHeaderView.xib */,
 				F8D3E7802062F1B900CD351C /* Assets.xcassets */,
 				03C9DD0B20A4F956007074EE /* mPower2.strings */,
+				F8EF461D22A06C180010AE12 /* Localizable.stringsdict */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -510,6 +535,7 @@
 				F85020D2211B96B40094E05F /* Symptoms.json */,
 				F85020D6211B96BA0094E05F /* Medication.json */,
 				F85020DA211B96BF0094E05F /* StudyBurstReminder.json */,
+				F8ECAA1022A0F4F00011D497 /* MoreYouKnow.json */,
 				F85020DE211B96C40094E05F /* SignIn.json */,
 			);
 			name = "Task JSON";
@@ -583,6 +609,7 @@
 				F854599F208FA58800D37243 /* ResourceTests.swift */,
 				F89B3DA820C60F8B002EAE2D /* TodayScheduleManagerTests.swift */,
 				F832AC1920D9A130005A9025 /* StudyBurstTests.swift */,
+				F8EF461B22A05CA30010AE12 /* StudyBurstViewControllerTests.swift */,
 			);
 			path = mPower2Tests;
 			sourceTree = "<group>";
@@ -590,11 +617,15 @@
 		F8D3E7992062F23A00CD351C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F82A4ADA229706BF00BEBE3C /* ResearchLocation.framework */,
+				F82A4AD7229706BF00BEBE3C /* ResearchMotion.framework */,
+				F82A4AD42297054600BEBE3C /* ResearchLocation.framework */,
+				F82A4AD12297054600BEBE3C /* ResearchMotion.framework */,
+				F82A4ACE2297051200BEBE3C /* BridgeSDK_Test.framework */,
 				F8A5C884227E279700DD4692 /* BridgeSDK_Test.framework */,
 				F8A5C886227E279700DD4692 /* Research_UnitTest.framework */,
 				F8A5C880227E278800DD4692 /* BridgeSDK_Test.framework */,
 				F8A5C882227E278800DD4692 /* Research_UnitTest.framework */,
-				F8A5C86B227D08BC00DD4692 /* ResearchRecorders.framework */,
 				F8A5C868227D08BC00DD4692 /* ResearchUI.framework */,
 				F8A5C865227D08BC00DD4692 /* Research.framework */,
 				F8A5C862227D08BC00DD4692 /* MotorControl.framework */,
@@ -713,6 +744,11 @@
 						CreatedOnToolsVersion = 9.3;
 						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					F8D3E7752062F1B900CD351C = {
 						CreatedOnToolsVersion = 9.2;
@@ -784,7 +820,9 @@
 				60E94123212B8FD70027432C /* ProfileTableHeaderView.xib in Resources */,
 				F85020DC211B96C40094E05F /* SignIn.json in Resources */,
 				801E8EB3214896EF00AF6701 /* PhoneLearnMore.html in Resources */,
+				F8ECAA1322A0F4F00011D497 /* MoreYouKnow.json in Resources */,
 				F85459B5208FA76D00D37243 /* Assets.xcassets in Resources */,
+				F8EF461F22A06C180010AE12 /* Localizable.stringsdict in Resources */,
 				F85020D0211B96B40094E05F /* Symptoms.json in Resources */,
 				F85020E2211B970C0094E05F /* ActivityTracking.json in Resources */,
 				F85020B7211B96AE0094E05F /* Triggers.json in Resources */,
@@ -808,6 +846,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F8EF461E22A06C180010AE12 /* Localizable.stringsdict in Resources */,
 				80015116212F3A71006B3C8E /* fetchBridgeResources.sh in Resources */,
 				F8D3E7842062F1B900CD351C /* LaunchScreen.storyboard in Resources */,
 				60A1576E209D16C50033FAB5 /* Registration.storyboard in Resources */,
@@ -822,6 +861,7 @@
 				F8D3E8022063055500CD351C /* sage-mpower-2.pem in Resources */,
 				60E9411A212B8FD70027432C /* ProfileTableFooterView.xib in Resources */,
 				801E8EB2214896EF00AF6701 /* PhoneLearnMore.html in Resources */,
+				F8ECAA1222A0F4F00011D497 /* MoreYouKnow.json in Resources */,
 				F85020B6211B96AE0094E05F /* Triggers.json in Resources */,
 				80015132212F6B40006B3C8E /* consent.html in Resources */,
 				F85020D3211B96BA0094E05F /* Medication.json in Resources */,
@@ -971,6 +1011,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F89B3DA920C60F8B002EAE2D /* TodayScheduleManagerTests.swift in Sources */,
+				F8EF461C22A05CA30010AE12 /* StudyBurstViewControllerTests.swift in Sources */,
 				F832AC1A20D9A130005A9025 /* StudyBurstTests.swift in Sources */,
 				F85459A0208FA58800D37243 /* ResourceTests.swift in Sources */,
 			);
@@ -1080,6 +1121,14 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
+		F8ECAA1022A0F4F00011D497 /* MoreYouKnow.json */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F8ECAA1122A0F4F00011D497 /* Base */,
+			);
+			name = MoreYouKnow.json;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -1120,7 +1169,6 @@
 		F8545984208FA2EE00D37243 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
@@ -1140,7 +1188,6 @@
 		F8545985208FA2EE00D37243 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
@@ -1275,7 +1322,6 @@
 		F8D3E7942062F1B900CD351C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = mPower2/mPower2.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1296,7 +1342,6 @@
 		F8D3E7952062F1B900CD351C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = mPower2/mPower2.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";

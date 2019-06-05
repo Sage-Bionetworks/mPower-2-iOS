@@ -2,7 +2,7 @@
 //  StudyBurstTests.swift
 //  mPower2Tests
 //
-//  Copyright © 2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2018-2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -37,16 +37,13 @@ import XCTest
 import Research
 import UserNotifications
 
-class StudyBurstTests: XCTestCase {
+class StudyBurstManagerTests: StudyBurstTests {
     
     override func setUp() {
         super.setUp()
-
-        RSDFactory.shared = MP2Factory()
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
     
@@ -98,12 +95,15 @@ class StudyBurstTests: XCTestCase {
         XCTAssertNotNil(scheduleManager.activityGroup)
         XCTAssertEqual(scheduleManager.dayCount, 1)
         XCTAssertTrue(scheduleManager.hasStudyBurst)
-        XCTAssertEqual(scheduleManager.finishedSchedules.count, 0)
         XCTAssertFalse(scheduleManager.isCompletedForToday)
         XCTAssertFalse(scheduleManager.isLastDay)
         XCTAssertEqual(scheduleManager.calculateThisDay(), 1)
         XCTAssertEqual(scheduleManager.pastSurveys.count, 0)
         XCTAssertNotNil(scheduleManager.todayCompletionTask)
+        
+        let orderedTasks = scheduleManager.orderedTasks
+        let noneFinished = orderedTasks.reduce(true, { $0 && ($1.finishedOn == nil) })
+        XCTAssertTrue(noneFinished)
         
         let demographics = scheduleManager.scheduledActivities.filter {
             $0.activityIdentifier == RSDIdentifier.demographics.stringValue
@@ -129,7 +129,7 @@ class StudyBurstTests: XCTestCase {
         XCTAssertNil(unfinishedSchedule, "scheduleManager.getUnfinishedSchedule(from: pastTasks)")
     }
     
-    func testStudyBurstComplete_Day1() {
+    func testStudyBurst_Day1() {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day1_tasksFinished_surveysNotFinished)
         guard loadSchedules(scheduleManager) else {
@@ -142,12 +142,15 @@ class StudyBurstTests: XCTestCase {
         XCTAssertNotNil(scheduleManager.activityGroup)
         XCTAssertEqual(scheduleManager.dayCount, 1)
         XCTAssertTrue(scheduleManager.hasStudyBurst)
-        XCTAssertEqual(scheduleManager.finishedSchedules.count, 3)
         XCTAssertTrue(scheduleManager.isCompletedForToday)
         XCTAssertFalse(scheduleManager.isLastDay)
         XCTAssertEqual(scheduleManager.calculateThisDay(), 1)
         XCTAssertEqual(scheduleManager.pastSurveys.count, 0)
         XCTAssertNotNil(scheduleManager.todayCompletionTask)
+        
+        let orderedTasks = scheduleManager.orderedTasks
+        let allFinished = orderedTasks.reduce(true, { $0 && ($1.finishedOn != nil) })
+        XCTAssertTrue(allFinished)
         
         let demographics = scheduleManager.scheduledActivities.filter {
             $0.activityIdentifier == RSDIdentifier.demographics.stringValue
@@ -180,9 +183,38 @@ class StudyBurstTests: XCTestCase {
         
         let unfinishedSchedule = scheduleManager.getUnfinishedSchedule()
         XCTAssertNotNil(unfinishedSchedule, "scheduleManager.getUnfinishedSchedule(from: pastTasks)")
+        
+        let today = scheduleManager._now
+        let studyBurstMarkerId = RSDIdentifier.studyBurstCompletedTask.stringValue
+        guard
+            let schedules = scheduleManager.sendUpdated_schedules,
+            let studyMarker = schedules.first(where: {
+                $0.activityIdentifier == studyBurstMarkerId &&
+                    Calendar.current.isDate($0.scheduledOn, inSameDayAs: today) })
+            else {
+                XCTFail("Expected the study burst marker to be sent")
+                return
+        }
+        
+        guard let clientData = studyMarker.clientData as? [String : String]
+            else {
+                XCTFail("Expected study marker to include client data")
+                return
+        }
+        
+        XCTAssertEqual(clientData["taskOrder"], "Tapping,Tremor,WalkAndBalance")
+        XCTAssertNotNil(clientData["Tapping.startDate"])
+        XCTAssertNotNil(clientData["WalkAndBalance.startDate"])
+        XCTAssertNotNil(clientData["Tremor.startDate"])
+        XCTAssertNotNil(clientData["WalkAndBalance.endDate"])
+        XCTAssertNotNil(clientData["Tremor.endDate"])
+        XCTAssertNotNil(clientData["Tapping.endDate"])
+        XCTAssertNotNil(clientData["WalkAndBalance.scheduleGuid"])
+        XCTAssertNotNil(clientData["Tapping.scheduleGuid"])
+        XCTAssertNotNil(clientData["Tremor.scheduleGuid"])
     }
     
-    func testStudyBurstComplete_Day1_twoTasksFinished() {
+    func testStudyBurst_Day1_twoTasksFinished() {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day1_twoTasksFinished)
         guard loadSchedules(scheduleManager) else {
@@ -195,25 +227,145 @@ class StudyBurstTests: XCTestCase {
         XCTAssertNotNil(scheduleManager.activityGroup)
         XCTAssertEqual(scheduleManager.dayCount, 1)
         XCTAssertTrue(scheduleManager.hasStudyBurst)
-        XCTAssertEqual(scheduleManager.finishedSchedules.count, 2)
         XCTAssertFalse(scheduleManager.isCompletedForToday)
         XCTAssertFalse(scheduleManager.isLastDay)
         XCTAssertEqual(scheduleManager.calculateThisDay(), 1)
         XCTAssertEqual(scheduleManager.pastSurveys.count, 0)
+        XCTAssertFalse(scheduleManager.isFinalTask(RSDIdentifier.tappingTask.stringValue))
+        XCTAssertTrue(scheduleManager.isFinalTask(RSDIdentifier.tremorTask.stringValue))
         
-        let finishedSchedules = scheduleManager.finishedSchedules.filter { $0.finishedOn != nil }
+        let orderedTasks = scheduleManager.orderedTasks
+        let expectedIds: [RSDIdentifier] = [.walkAndBalanceTask, .tappingTask, .tremorTask]
+        XCTAssertEqual(orderedTasks.map { $0.identifier }, expectedIds.map { $0.stringValue })
+        
+        guard orderedTasks.count == expectedIds.count else {
+            XCTFail("Failed to get expected count for the ordered tasks")
+            return
+        }
+        
+        XCTAssertNotNil(orderedTasks[0].finishedOn)
+        let completedFirst = scheduleManager.isCompleted(for: orderedTasks[0].taskInfo, on: scheduleManager._now)
+        XCTAssertTrue(completedFirst)
+        XCTAssertNotNil(orderedTasks[1].finishedOn)
+        let completedSecond = scheduleManager.isCompleted(for: orderedTasks[1].taskInfo, on: scheduleManager._now)
+        XCTAssertTrue(completedSecond)
+        XCTAssertNil(orderedTasks[2].finishedOn)
+        let completedLast = scheduleManager.isCompleted(for: orderedTasks[2].taskInfo, on: scheduleManager._now)
+        XCTAssertFalse(completedLast)
+
         guard let expiresOn = scheduleManager.expiresOn,
-            let earliestSchedule = finishedSchedules.sorted(by: { $0.finishedOn! < $1.finishedOn! }).first
+            let earliestFinishedOn = orderedTasks.first?.finishedOn
             else {
                 XCTFail("Failed to get expires on and earliest schedule.")
                 return
         }
         
-        let expectedExpiresOn = earliestSchedule.finishedOn!.addingTimeInterval(60 * 60)
+        let expectedExpiresOn = earliestFinishedOn.addingTimeInterval(60 * 60)
         XCTAssertEqual(expectedExpiresOn, expiresOn)
     }
     
-    func testStudyBurstComplete_Day1_SurveysFinished() {
+    func testStudyBurst_Day2_twoTasksFinished() {
+        
+        let scheduleManager = TestStudyBurstScheduleManager(.day2_twoTasksFinished)
+        guard loadSchedules(scheduleManager) else {
+            XCTFail("Failed to load the schedules and reports.")
+            return
+        }
+        
+        XCTAssertNil(scheduleManager.updateFailed_error)
+        XCTAssertNotNil(scheduleManager.update_fetchedActivities)
+        XCTAssertNotNil(scheduleManager.activityGroup)
+        XCTAssertEqual(scheduleManager.dayCount, 2)
+        XCTAssertTrue(scheduleManager.hasStudyBurst)
+        XCTAssertFalse(scheduleManager.isCompletedForToday)
+        XCTAssertFalse(scheduleManager.isLastDay)
+        XCTAssertEqual(scheduleManager.calculateThisDay(), 2)
+        XCTAssertEqual(scheduleManager.pastSurveys.count, 0)
+        
+        let orderedTasks = scheduleManager.orderedTasks
+        let expectedIds: [RSDIdentifier] = [.tappingTask, .tremorTask, .walkAndBalanceTask]
+        XCTAssertEqual(orderedTasks.map { $0.identifier }, expectedIds.map { $0.stringValue })
+        
+        guard orderedTasks.count == expectedIds.count else {
+            XCTFail("Failed to get expected count for the ordered tasks")
+            return
+        }
+        
+        XCTAssertNotNil(orderedTasks[0].finishedOn)
+        let completedFirst = scheduleManager.isCompleted(for: orderedTasks[0].taskInfo, on: scheduleManager._now)
+        XCTAssertTrue(completedFirst)
+        XCTAssertNotNil(orderedTasks[1].finishedOn)
+        let completedSecond = scheduleManager.isCompleted(for: orderedTasks[1].taskInfo, on: scheduleManager._now)
+        XCTAssertTrue(completedSecond)
+        XCTAssertNil(orderedTasks[2].finishedOn)
+        let completedLast = scheduleManager.isCompleted(for: orderedTasks[2].taskInfo, on: scheduleManager._now)
+        XCTAssertFalse(completedLast)
+        
+        guard let expiresOn = scheduleManager.expiresOn,
+            let earliestFinishedOn = orderedTasks.first?.finishedOn
+            else {
+                XCTFail("Failed to get expires on and earliest schedule.")
+                return
+        }
+        
+        let expectedExpiresOn = earliestFinishedOn.addingTimeInterval(60 * 60)
+        XCTAssertEqual(expectedExpiresOn, expiresOn)
+    }
+    
+    func testStudyBurst_Day2_twoTasksFinished_2HoursAgo() {
+        
+        let scheduleManager = TestStudyBurstScheduleManager(.day2_twoFinished_2HoursAgo)
+        guard loadSchedules(scheduleManager) else {
+            XCTFail("Failed to load the schedules and reports.")
+            return
+        }
+        
+        XCTAssertNil(scheduleManager.updateFailed_error)
+        XCTAssertNotNil(scheduleManager.update_fetchedActivities)
+        XCTAssertNotNil(scheduleManager.activityGroup)
+        XCTAssertEqual(scheduleManager.dayCount, 2)
+        XCTAssertTrue(scheduleManager.hasStudyBurst)
+        XCTAssertFalse(scheduleManager.isCompletedForToday)
+        XCTAssertFalse(scheduleManager.isLastDay)
+        XCTAssertEqual(scheduleManager.calculateThisDay(), 2)
+        XCTAssertEqual(scheduleManager.pastSurveys.count, 0)
+        
+        let orderedTasks = scheduleManager.orderedTasks
+        let expectedIds: [RSDIdentifier] = [.walkAndBalanceTask, .tappingTask, .tremorTask]
+        XCTAssertEqual(orderedTasks.map { $0.identifier }, expectedIds.map { $0.stringValue })
+        
+        guard orderedTasks.count == expectedIds.count else {
+            XCTFail("Failed to get expected count for the ordered tasks")
+            return
+        }
+        
+        XCTAssertNotNil(orderedTasks[0].finishedOn)
+        let completedFirst = scheduleManager.isCompleted(for: orderedTasks[0].taskInfo, on: scheduleManager._now)
+        XCTAssertTrue(completedFirst)
+        XCTAssertNotNil(orderedTasks[1].finishedOn)
+        let completedSecond = scheduleManager.isCompleted(for: orderedTasks[1].taskInfo, on: scheduleManager._now)
+        XCTAssertTrue(completedSecond)
+        XCTAssertNil(orderedTasks[2].finishedOn)
+        let completedLast = scheduleManager.isCompleted(for: orderedTasks[2].taskInfo, on: scheduleManager._now)
+        XCTAssertFalse(completedLast)
+        
+        guard let expiresOn = scheduleManager.expiresOn,
+            let earliestFinishedOn = orderedTasks.first?.finishedOn
+            else {
+                XCTFail("Failed to get expires on and earliest schedule.")
+                return
+        }
+        
+        let expectedExpiresOn = earliestFinishedOn.addingTimeInterval(60 * 60)
+        XCTAssertEqual(expectedExpiresOn, expiresOn)
+        
+        // finish the last task and check if all within limit
+        scheduleManager.orderedTasks.last!.startedOn = scheduleManager._now.addingTimeInterval(-2 * 60)
+        scheduleManager.orderedTasks.last!.finishedOn = scheduleManager._now
+        XCTAssertFalse(scheduleManager.finishedWithinLimit)
+    }
+    
+    func testStudyBurst_Day1_SurveysFinished() {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day1_tasksFinished_surveysFinished)
         guard loadSchedules(scheduleManager) else {
@@ -226,12 +378,15 @@ class StudyBurstTests: XCTestCase {
         XCTAssertNotNil(scheduleManager.activityGroup)
         XCTAssertEqual(scheduleManager.dayCount, 1)
         XCTAssertTrue(scheduleManager.hasStudyBurst)
-        XCTAssertEqual(scheduleManager.finishedSchedules.count, 3)
         XCTAssertTrue(scheduleManager.isCompletedForToday)
         XCTAssertFalse(scheduleManager.isLastDay)
         XCTAssertEqual(scheduleManager.calculateThisDay(), 1)
         XCTAssertEqual(scheduleManager.pastSurveys.count, 0)
         XCTAssertNotNil(scheduleManager.todayCompletionTask)
+        
+        let orderedTasks = scheduleManager.orderedTasks
+        let allFinished = orderedTasks.reduce(true, { $0 && ($1.finishedOn != nil) })
+        XCTAssertTrue(allFinished)
         
         let demographics = scheduleManager.scheduledActivities.filter {
             $0.activityIdentifier == RSDIdentifier.demographics.stringValue
@@ -241,7 +396,7 @@ class StudyBurstTests: XCTestCase {
         XCTAssertNil(scheduleManager.actionBarItem)
     }
     
-    func testStudyBurstComplete_Day2_Day1SurveysNotFinished() {
+    func testStudyBurst_Day2_Day1SurveysNotFinished() {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day2_surveysNotFinished)
         guard loadSchedules(scheduleManager) else {
@@ -254,11 +409,14 @@ class StudyBurstTests: XCTestCase {
         XCTAssertNotNil(scheduleManager.activityGroup)
         XCTAssertEqual(scheduleManager.dayCount, 2)
         XCTAssertTrue(scheduleManager.hasStudyBurst)
-        XCTAssertEqual(scheduleManager.finishedSchedules.count, 0)
         XCTAssertFalse(scheduleManager.isCompletedForToday)
         XCTAssertFalse(scheduleManager.isLastDay)
         XCTAssertEqual(scheduleManager.calculateThisDay(), 2)
         XCTAssertNil(scheduleManager.todayCompletionTask)
+        
+        let orderedTasks = scheduleManager.orderedTasks
+        let noneFinished = orderedTasks.reduce(true, { $0 && ($1.finishedOn == nil) })
+        XCTAssertTrue(noneFinished)
         
         let completionTask = scheduleManager.engagementTaskViewModel()
         XCTAssertNotNil(completionTask)
@@ -274,7 +432,7 @@ class StudyBurstTests: XCTestCase {
         XCTAssertNotNil(scheduleManager.actionBarItem)
     }
     
-    func testStudyBurstComplete_Day15_Missing1() {
+    func testStudyBurst_Day15_Missing1() {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day15_missing1_engagementNotFinished)
         guard loadSchedules(scheduleManager) else {
@@ -305,7 +463,7 @@ class StudyBurstTests: XCTestCase {
         XCTAssertEqual(scheduleManager.actionBarItem?.detail, "6 Minutes")
     }
     
-    func testStudyBurstComplete_Day14_Missing1() {
+    func testStudyBurst_Day14_Missing1() {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day14_missing1_tasksFinished_engagementNotFinished)
         guard loadSchedules(scheduleManager) else {
@@ -318,9 +476,12 @@ class StudyBurstTests: XCTestCase {
         XCTAssertNotNil(scheduleManager.activityGroup)
         XCTAssertEqual(scheduleManager.dayCount, 14)
         XCTAssertTrue(scheduleManager.hasStudyBurst)
-        XCTAssertEqual(scheduleManager.finishedSchedules.count, 3)
         XCTAssertTrue(scheduleManager.isCompletedForToday)
         XCTAssertTrue(scheduleManager.isLastDay)
+        
+        let orderedTasks = scheduleManager.orderedTasks
+        let allFinished = orderedTasks.reduce(true, { $0 && ($1.finishedOn != nil) })
+        XCTAssertTrue(allFinished)
         
         let completionTask = scheduleManager.engagementTaskViewModel()
         XCTAssertNotNil(completionTask)
@@ -338,7 +499,7 @@ class StudyBurstTests: XCTestCase {
         XCTAssertEqual(scheduleManager.actionBarItem?.detail, "6 Minutes")
     }
     
-    func testStudyBurstComplete_Day14_Missing6() {
+    func testStudyBurst_Day14_Missing6() {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day14_missing6_tasksFinished_engagementNotFinished)
         guard loadSchedules(scheduleManager) else {
@@ -351,15 +512,18 @@ class StudyBurstTests: XCTestCase {
         XCTAssertNotNil(scheduleManager.activityGroup)
         XCTAssertEqual(scheduleManager.dayCount, 14)
         XCTAssertTrue(scheduleManager.hasStudyBurst)
-        XCTAssertEqual(scheduleManager.finishedSchedules.count, 3)
         XCTAssertTrue(scheduleManager.isCompletedForToday)
         XCTAssertFalse(scheduleManager.isLastDay)
+        
+        let orderedTasks = scheduleManager.orderedTasks
+        let allFinished = orderedTasks.reduce(true, { $0 && ($1.finishedOn != nil) })
+        XCTAssertTrue(allFinished)
         
         let completionTask = scheduleManager.engagementTaskViewModel()
         XCTAssertNil(completionTask)
     }
     
-    func testStudyBurstComplete_Day9_TasksFinished() {
+    func testStudyBurst_Day9_TasksFinished() {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day9_tasksFinished)
         guard loadSchedules(scheduleManager) else {
@@ -372,9 +536,13 @@ class StudyBurstTests: XCTestCase {
         XCTAssertNotNil(scheduleManager.activityGroup)
         XCTAssertEqual(scheduleManager.dayCount, 9)
         XCTAssertTrue(scheduleManager.hasStudyBurst)
-        XCTAssertEqual(scheduleManager.finishedSchedules.count, 3)
         XCTAssertTrue(scheduleManager.isCompletedForToday)
         XCTAssertFalse(scheduleManager.isLastDay)
+        XCTAssertTrue(scheduleManager.isFinalTask(RSDIdentifier.walkAndBalanceTask.stringValue))
+        
+        let orderedTasks = scheduleManager.orderedTasks
+        let allFinished = orderedTasks.reduce(true, { $0 && ($1.finishedOn != nil) })
+        XCTAssertTrue(allFinished)
         
         XCTAssertNotNil(scheduleManager.todayCompletionTask)
         
@@ -392,7 +560,7 @@ class StudyBurstTests: XCTestCase {
         XCTAssertNotNil(scheduleManager.actionBarItem)
     }
     
-    func testStudyBurstComplete_Day21_Missing6() {
+    func testStudyBurst_Day21_Missing6() {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day21_missing6_engagementNotFinished)
         guard loadSchedules(scheduleManager) else {
@@ -423,7 +591,7 @@ class StudyBurstTests: XCTestCase {
         XCTAssertEqual(scheduleManager.actionBarItem?.detail, "6 Minutes")
     }
     
-    func testStudyBurstComplete_Day15_BurstComplete_EngagementNotComplete() {
+    func testStudyBurst_Day15_BurstComplete_EngagementNotComplete() {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day15_burstCompleted_engagementNotFinished)
         guard loadSchedules(scheduleManager) else {
@@ -455,7 +623,7 @@ class StudyBurstTests: XCTestCase {
         XCTAssertEqual(scheduleManager.actionBarItem?.detail, "6 Minutes")
     }
     
-    func testStudyBurstComplete_Day15_BurstComplete_EngagementComplete() {
+    func testStudyBurst_Day15_BurstComplete_EngagementComplete() {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day15_burstCompleted_engagementFinished)
         guard loadSchedules(scheduleManager) else {
@@ -477,7 +645,7 @@ class StudyBurstTests: XCTestCase {
         XCTAssertNil(scheduleManager.actionBarItem)
     }
     
-    func testStudyBurstComplete_Day1_AllFinished_2HoursAgo() {
+    func testStudyBurst_Day1_AllFinished_2HoursAgo() {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day1_allFinished_2HoursAgo)
         guard loadSchedules(scheduleManager) else {
@@ -490,13 +658,18 @@ class StudyBurstTests: XCTestCase {
         XCTAssertNotNil(scheduleManager.activityGroup)
         XCTAssertEqual(scheduleManager.dayCount, 1)
         XCTAssertTrue(scheduleManager.hasStudyBurst)
-        XCTAssertEqual(scheduleManager.finishedSchedules.count, 3)
         XCTAssertTrue(scheduleManager.isCompletedForToday)
         XCTAssertFalse(scheduleManager.isLastDay)
         XCTAssertEqual(scheduleManager.calculateThisDay(), 1)
         XCTAssertEqual(scheduleManager.pastSurveys.count, 0)
         XCTAssertNotNil(scheduleManager.todayCompletionTask)
         XCTAssertNil(scheduleManager.actionBarItem)
+        
+        let orderedTasks = scheduleManager.orderedTasks
+        let allFinished = orderedTasks.reduce(true, { $0 && ($1.finishedOn != nil) })
+        XCTAssertTrue(allFinished)
+        
+        XCTAssertTrue(scheduleManager.finishedWithinLimit)
     }
     
     // MARK: Notification rules tests
@@ -840,10 +1013,75 @@ class StudyBurstTests: XCTestCase {
         // timeouts or else creating the SBBSurvey object from the JSON dictionary.
     }
     
+    func testRandomShuffleTasks() {
+        
+        let now = Date().addingNumberOfDays(-3).startOfDay().addingTimeInterval(11 * 60 * 60)
+        let scheduleManager = TestStudyBurstScheduleManager(.day2_twoTasksFinished, now: now)
+        guard loadSchedules(scheduleManager) else {
+            XCTFail("Failed to load the schedules and reports.")
+            return
+        }
+        
+        // Run method under test
+        let orderedTasks = scheduleManager.orderedTasks
+        let taskIdentifiers = orderedTasks.map { $0.identifier }
+        
+        let updatedTimestamp = UserDefaults.standard.object(forKey: StudyBurstScheduleManager.timestampKey) as? Date
+        let updatedStoredOrder = UserDefaults.standard.array(forKey: StudyBurstScheduleManager.orderKey) as? [String]
     
-    // MARK: helper methods
+        XCTAssertEqual(taskIdentifiers, updatedStoredOrder)
+        XCTAssertEqual(updatedTimestamp, now)
+        
+        XCTAssertFalse(scheduleManager.shouldRefreshTasks)
+     
+        // Check that calling again returns the same values
+        let secondCall = scheduleManager.orderedTasks.map { $0.identifier }
+        XCTAssertEqual(taskIdentifiers, secondCall)
+        
+        // Set up the study burst for background for a day and check again
+        scheduleManager._now = now.addingNumberOfDays(1)
+        
+        XCTAssertTrue(scheduleManager.shouldRefreshTasks)
+        
+        let newDayTasks = scheduleManager.orderedTasks
+        let newDayTaskIds = newDayTasks.map { $0.identifier }
+        newDayTasks.forEach {
+            XCTAssertNil($0.finishedOn)
+            XCTAssertNil($0.startedOn)
+        }
+        
+        let newDayTimestamp = UserDefaults.standard.object(forKey: StudyBurstScheduleManager.timestampKey) as? Date
+        let newDayStoredOrder = UserDefaults.standard.array(forKey: StudyBurstScheduleManager.orderKey) as? [String]
+        
+        XCTAssertEqual(newDayTimestamp, scheduleManager._now)
+        XCTAssertNotEqual(newDayTimestamp, now)
+        XCTAssertEqual(newDayStoredOrder, newDayTaskIds)
+    }
     
-    func loadSchedules(_ scheduleManager: TestStudyBurstScheduleManager) -> Bool {
+    func testRandomGroups() {
+        let groups: [Set<String>] = Array(1...1000).map { _ in StudyBurstConfiguration().randomEngagementGroups()! }
+        let unique = Set(groups)
+        XCTAssertGreaterThan(unique.count, 1)
+        XCTAssertEqual(unique.count, 16)
+    }
+}
+
+class StudyBurstTests: XCTestCase {
+    
+    override func setUp() {
+        super.setUp()
+        
+        RSDFactory.shared = MP2Factory()
+    }
+    
+    override func tearDown() {
+        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        super.tearDown()
+    }
+    
+    // MARK: helper method
+    
+    func loadSchedules(_ scheduleManager: TestScheduleManager) -> Bool {
         
         let expect = expectation(description: "Update finished called.")
         scheduleManager.updateFinishedBlock = {
@@ -871,30 +1109,47 @@ class StudyBurstTests: XCTestCase {
     }
 }
 
-class TestStudyBurstScheduleManager : StudyBurstScheduleManager {
+protocol TestScheduleManager : class {
+    var updateFinishedBlock: (() -> Void)? { get set }
+    var finishedFetchingReportsBlock: (() -> Void)?  { get set }
     
-    init(_ studySetup: StudySetup, now: Date? = nil) {
+    func loadReports()
+    func loadScheduledActivities()
+}
+
+let referenceDate = Date(timeIntervalSince1970: 0)
+
+class TestStudyBurstScheduleManager : StudyBurstScheduleManager, TestScheduleManager {
+    
+    init(_ studySetup: StudySetup, now: Date? = nil, taskOrderTimestamp: Date? = referenceDate) {
+        self._now = now ?? Date().addingNumberOfDays(-1).startOfDay().addingTimeInterval(11 * 60 * 60)
         super.init()
         
         // Default to "now" of 11:00 AM yesterday.
         var setup = studySetup
-        setup.now = now ?? Date().addingNumberOfDays(-1).startOfDay().addingTimeInterval(11 * 60 * 60)
+        setup.now = self._now
+        setup.taskOrderTimestamp = (taskOrderTimestamp == referenceDate) ? setup.now : taskOrderTimestamp
         
         // build the schedules.
         self._activityManager.studySetup = setup
-        self._activityManager.buildSchedules()
+        self._activityManager.buildSchedules(with: self._participantManager)
         self._participantManager.setup(with: setup)
     }
     
     let _activityManager = ActivityManager()
     let _participantManager = ParticipantManager()
+    var _now: Date
     
     var studySetup: StudySetup {
         return self._activityManager.studySetup
     }
     
+    override func now() -> Date {
+        return _now
+    }
+    
     override func today() -> Date {
-        return self._activityManager.studySetup.now
+        return _now
     }
     
     override var activityManager: SBBActivityManagerProtocol {
@@ -907,7 +1162,9 @@ class TestStudyBurstScheduleManager : StudyBurstScheduleManager {
     
     var updateFinishedBlock: (() -> Void)?
     var updateFailed_error: Error?
-    var update_fetchedActivities:[SBBScheduledActivity]?
+    var update_previousActivities: [SBBScheduledActivity]?
+    var update_fetchedActivities: [SBBScheduledActivity]?
+    var didUpdateScheduledActivities_called: Bool = false
     var sendUpdated_schedules: [SBBScheduledActivity]?
     var sendUpdated_taskPath: RSDTaskViewModel?
     
@@ -920,9 +1177,10 @@ class TestStudyBurstScheduleManager : StudyBurstScheduleManager {
         updateFinishedBlock = nil
     }
     
-    override func update(fetchedActivities: [SBBScheduledActivity]) {
-        update_fetchedActivities = fetchedActivities
-        super.update(fetchedActivities: fetchedActivities)
+    override func didUpdateScheduledActivities(from previousActivities: [SBBScheduledActivity]) {
+        update_previousActivities = previousActivities
+        update_fetchedActivities = self.scheduledActivities
+        super.didUpdateScheduledActivities(from: previousActivities)
         updateFinishedBlock?()
         updateFinishedBlock = nil
     }
@@ -930,5 +1188,11 @@ class TestStudyBurstScheduleManager : StudyBurstScheduleManager {
     override func didFinishFetchingReports() {
         finishedFetchingReportsBlock?()
         finishedFetchingReportsBlock = nil
+    }
+    
+    override func sendUpdated(for schedules: [SBBScheduledActivity], taskViewModel: RSDTaskViewModel? = nil) {
+        self.sendUpdated_schedules = schedules
+        self.sendUpdated_taskPath = taskViewModel
+        super.sendUpdated(for: schedules, taskViewModel: taskViewModel)
     }
 }
