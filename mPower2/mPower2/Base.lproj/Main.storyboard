@@ -993,10 +993,10 @@
                                 </constraints>
                             </view>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TGH-P5-MQB" customClass="MCTCompletionGradient" customModule="MotorControl">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="36"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="159"/>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" image="StudyBurstComplete" translatesAutoresizingMaskIntoConstraints="NO" id="otF-xL-ZKy">
-                                <rect key="frame" x="0.0" y="20" width="320" height="16"/>
+                                <rect key="frame" x="0.0" y="20" width="320" height="139.00000000000006"/>
                                 <color key="backgroundColor" red="0.50980392156862742" green="0.89803921568627454" blue="0.71372549019607845" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
@@ -1011,15 +1011,15 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="950" text="You just completed your first Study Burst" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YEp-IP-aPa">
-                                <rect key="frame" x="16" y="115" width="288" height="57.5"/>
+                                <rect key="frame" x="16" y="238" width="288" height="57.5"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="1000" text="Congratulations!" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hwN-Dl-u5h">
-                                <rect key="frame" x="16" y="66" width="288" height="36"/>
+                                <rect key="frame" x="16" y="189" width="288" height="36"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="950" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0SQ-Vl-5Tc">
-                                <rect key="frame" x="16" y="187.5" width="288" height="150.5"/>
+                                <rect key="frame" x="16" y="310.5" width="288" height="150.5"/>
                                 <string key="text">The scientists are now starting to analyze your data. In order to complete their analysis, they have a short health survey for you to complete. Don’t worry, this shouldn’t take any more than  4 minutes.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                             </label>
@@ -1122,6 +1122,7 @@
                                     <constraint firstItem="13b-at-R5e" firstAttribute="top" secondItem="lAq-F3-fjz" secondAttribute="bottom" constant="48" id="vpK-9q-Fgc"/>
                                 </constraints>
                                 <connections>
+                                    <outlet property="cancelButton" destination="UVS-Gu-tKz" id="Ply-YM-DwG"/>
                                     <outlet property="imageView" destination="13b-at-R5e" id="2xE-Lf-Txc"/>
                                     <outlet property="titleLabel" destination="lAq-F3-fjz" id="k1b-dH-dWN"/>
                                 </connections>
@@ -1182,7 +1183,6 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="BCZ-zl-gi1"/>
                         <connections>
-                            <outlet property="cancelButton" destination="UVS-Gu-tKz" id="vUq-5D-8kR"/>
                             <outlet property="detailLabel" destination="v0q-Z2-jtK" id="U13-lh-Awn"/>
                             <outlet property="textLabel" destination="pV2-lb-sfB" id="IPM-SK-heC"/>
                         </connections>
@@ -1581,7 +1581,7 @@
         <image name="TriggersTaskIcon" width="34" height="46"/>
         <image name="WelcomeAfternoon" width="159" height="160"/>
         <image name="WithdrawalScreenAppIcon" width="150" height="150"/>
-        <image name="closeActivity" width="32" height="32"/>
+        <image name="closeActivity" width="50" height="50"/>
         <image name="confetti_12" width="528" height="528"/>
         <image name="confetti_bg" width="1125" height="855"/>
         <image name="medication" width="100" height="100"/>
