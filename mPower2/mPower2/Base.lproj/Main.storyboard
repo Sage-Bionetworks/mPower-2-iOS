@@ -1142,10 +1142,10 @@
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UVS-Gu-tKz" userLabel="Back Button">
-                                <rect key="frame" x="15" y="30" width="32" height="32"/>
+                                <rect key="frame" x="15" y="30" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="UVS-Gu-tKz" secondAttribute="height" multiplier="1:1" id="IxT-Zm-vbq"/>
-                                    <constraint firstAttribute="width" constant="32" id="ZT8-Su-bep"/>
+                                    <constraint firstAttribute="width" constant="50" id="ZT8-Su-bep"/>
                                 </constraints>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" image="closeActivity"/>
@@ -1259,10 +1259,10 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZUS-Yd-qDk" userLabel="Back Button">
-                                <rect key="frame" x="15" y="30" width="32" height="32"/>
+                                <rect key="frame" x="15" y="30" width="50" height="50"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="32" id="JQh-KU-BTw"/>
-                                    <constraint firstAttribute="height" constant="32" id="UNr-3y-Ps9"/>
+                                    <constraint firstAttribute="height" constant="50" id="UNr-3y-Ps9"/>
+                                    <constraint firstAttribute="width" secondItem="ZUS-Yd-qDk" secondAttribute="height" multiplier="1:1" id="XHv-LS-NB8"/>
                                 </constraints>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" image="closeActivity"/>
