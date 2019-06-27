@@ -42,4 +42,13 @@ class TrackedItemsIntroductionStepViewController : RSDStepViewController {
         vc?.stepViewModel = vc?.instantiateStepViewModel(for: step, with: parent)
         return vc
     }
+    
+    override func setupNavigationView(_ navigationView: RSDStepNavigationView, placement: RSDColorPlacement) {
+        super.setupNavigationView(navigationView, placement: placement)
+        if placement == .body {
+            self.stepDetailLabel?.textColor = self.designSystem.colorRules.textColor(on: self.backgroundColor(for: placement), for: .body)
+            self.stepDetailLabel?.font = self.designSystem.fontRules.font(for: .body, compatibleWith: traitCollection)
+        }
+    }
+    
 }
