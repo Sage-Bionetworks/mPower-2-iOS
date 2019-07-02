@@ -245,6 +245,8 @@ public class ParticipantManager : NSObject, SBBParticipantManagerProtocol {
                 let report = ReportData(identifer: identifier,
                                         timestamp: timestamp,
                                         clientData: reportData.data)
+                // If there is an existing object with the same hash, then remove it and insert the new one.
+                self.reportDataObjects.remove(report)
                 self.reportDataObjects.insert(report)
             }
             else {

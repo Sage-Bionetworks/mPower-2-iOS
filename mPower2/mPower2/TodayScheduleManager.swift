@@ -121,9 +121,14 @@ class TodayHistoryScheduleManager : SBAScheduleManager {
             let items = self.consolidateItems(schedules)
             DispatchQueue.main.async {
                 self.items = items
-                super.didUpdateScheduledActivities(from: previousActivities)
+                self.superDidUpdateScheduledActivities(from: previousActivities)
             }
         }
+    }
+    
+    /// Call through to super using an internal method that can be overridden by tests.
+    func superDidUpdateScheduledActivities(from previousActivities: [SBBScheduledActivity]) {
+        super.didUpdateScheduledActivities(from: previousActivities)
     }
     
     func consolidateItems(_ scheduledActivities: [SBBScheduledActivity]) -> [TodayHistoryItem] {

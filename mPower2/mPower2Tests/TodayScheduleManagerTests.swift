@@ -207,10 +207,10 @@ class TestTodayHistoryScheduleManager : TodayHistoryScheduleManager, TestSchedul
         updateFinishedBlock = nil
     }
     
-    override func didUpdateScheduledActivities(from previousActivities: [SBBScheduledActivity]) {
+    override func superDidUpdateScheduledActivities(from previousActivities: [SBBScheduledActivity]) {
         update_previousActivities = previousActivities
         update_fetchedActivities = self.scheduledActivities
-        super.didUpdateScheduledActivities(from: previousActivities)
+        super.superDidUpdateScheduledActivities(from: previousActivities)
         updateFinishedBlock?()
         updateFinishedBlock = nil
     }
