@@ -27,6 +27,8 @@
 		6076F2CB20A6680B00F6235E /* ConsentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6076F2CA20A6680B00F6235E /* ConsentViewController.swift */; };
 		608241DB2093D9A90026E843 /* RegistrationIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608241DA2093D9A90026E843 /* RegistrationIntroViewController.swift */; };
 		608241F22093D9F70026E843 /* ExternalIDRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 608241F12093D9F70026E843 /* ExternalIDRegistrationViewController.swift */; };
+		609F3B6222C1418300E60E98 /* ProfileItemEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609F3B6122C1418300E60E98 /* ProfileItemEditViewController.swift */; };
+		609F3B6322C1418300E60E98 /* ProfileItemEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609F3B6122C1418300E60E98 /* ProfileItemEditViewController.swift */; };
 		60A1576E209D16C50033FAB5 /* Registration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60A1576D209D16C40033FAB5 /* Registration.storyboard */; };
 		60ADB34E2279FCB100FDF132 /* PassiveDataPermissionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E3D7362279383B0087FCA2 /* PassiveDataPermissionStepViewController.swift */; };
 		60ADB34F227A033800FDF132 /* PassiveDataPermissionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E3D71D2279366A0087FCA2 /* PassiveDataPermissionStepObject.swift */; };
@@ -252,6 +254,7 @@
 		6076F2CA20A6680B00F6235E /* ConsentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentViewController.swift; sourceTree = "<group>"; };
 		608241DA2093D9A90026E843 /* RegistrationIntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationIntroViewController.swift; sourceTree = "<group>"; };
 		608241F12093D9F70026E843 /* ExternalIDRegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalIDRegistrationViewController.swift; sourceTree = "<group>"; };
+		609F3B6122C1418300E60E98 /* ProfileItemEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProfileItemEditViewController.swift; path = "View Controllers/ProfileItemEditViewController.swift"; sourceTree = "<group>"; };
 		60A1576D209D16C40033FAB5 /* Registration.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Registration.storyboard; sourceTree = "<group>"; };
 		60D534BF222719D10022F0C5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = Base; path = mPower2/Base.lproj/PassiveDataPermission.json; sourceTree = "<group>"; };
 		60E86E39212B6B420073C69C /* ProfileTableItems.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableItems.swift; sourceTree = "<group>"; };
@@ -417,6 +420,7 @@
 				60E86E4F212B6B430073C69C /* ProfileTableViewController.swift */,
 				603B1070212CA7C500E44EE9 /* WithdrawalViewController.swift */,
 				80015118212F5621006B3C8E /* ProfileHTMLViewController.swift */,
+				609F3B6122C1418300E60E98 /* ProfileItemEditViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -950,6 +954,7 @@
 				80A0BE4921095E4F00D31B68 /* TrackedItemsIntroductionStepViewController.swift in Sources */,
 				03DD008420E2F9A4006A5794 /* ReminderTableStepViewController.swift in Sources */,
 				603B1087212CA7C500E44EE9 /* WithdrawalViewController.swift in Sources */,
+				609F3B6322C1418300E60E98 /* ProfileItemEditViewController.swift in Sources */,
 				F832ABEA20D96FEF005A9025 /* StudyBurstCompletionViewController.swift in Sources */,
 				60E86E52212B6B570073C69C /* ProfileTableItems.swift in Sources */,
 				F88E8DFC20ADEE2600117A99 /* PhoneRegistrationViewController.swift in Sources */,
@@ -980,6 +985,7 @@
 				0334415620995CCD009B97A9 /* TaskBrowserViewController.swift in Sources */,
 				80E3D7372279383B0087FCA2 /* PassiveDataPermissionStepViewController.swift in Sources */,
 				F8C58DCA20AF5E86001C7B7F /* StudyBurstScheduleManager.swift in Sources */,
+				609F3B6222C1418300E60E98 /* ProfileItemEditViewController.swift in Sources */,
 				F8C58DB120AF4823001C7B7F /* TodayScheduleManager.swift in Sources */,
 				60FB513E212DED6F00D50F4D /* MP2ProfileDataSource.swift in Sources */,
 				F8C58DD520AF8CCC001C7B7F /* SurveyScheduleManager.swift in Sources */,

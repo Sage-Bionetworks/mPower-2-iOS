@@ -1,8 +1,8 @@
 //
-//  ProfileTableViewCell.swift
+//  ProfileItemEditViewController.swift
 //  mPower2
 //
-//  Copyright © 2017-2018 Sage Bionetworks. All rights reserved.
+//  Copyright © 2019 Sage Bionetworks. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
@@ -31,37 +31,8 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import UIKit
-import Research
+import BridgeApp
 
-class ProfileTableViewCell: UITableViewCell {
-    
-    @IBOutlet weak var icon: UIImageView?
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var detailLabel: UILabel!
-    @IBOutlet weak var chevron: UIImageView?
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        contentView.backgroundColor = UIColor.clear
-        
-        let designSystem = RSDDesignSystem()
-        let background = designSystem.colorRules.backgroundLight
-        titleLabel?.textColor = designSystem.colorRules.textColor(on: background, for: .heading4)
-        chevron?.image = chevron?.image?.rsd_applyColor(designSystem.colorRules.palette.primary.normal.color)
-    }
-    
-}
-
-class ProfileTableViewDetailCell: ProfileTableViewCell {
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        let designSystem = RSDDesignSystem()
-        let background = designSystem.colorRules.backgroundLight
-        titleLabel?.textColor = designSystem.colorRules.textColor(on: background, for: .heading4)
-        detailLabel?.textColor = designSystem.colorRules.textColor(on: background, for: .bodyDetail)
-    }
-    
+class ProfileItemEditViewController: RSDTaskViewController {
+    public var profileTableItem: SBAProfileItemProfileTableItem?
 }

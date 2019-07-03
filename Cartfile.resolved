@@ -1,4 +1,4 @@
-github "Sage-Bionetworks/Bridge-iOS-SDK" "c94da52a0339467bba83736b4bd0f29a861647aa"
-github "Sage-Bionetworks/BridgeApp-Apple-SDK" "v1.1.14"
-github "Sage-Bionetworks/MotorControl-iOS" "v1.4.28"
-github "Sage-Bionetworks/SageResearch" "v2.1.47"
+github "Sage-Bionetworks/Bridge-iOS-SDK" "50c21279506924aebb6674de25ebaebcd49e4d2d"
+github "Sage-Bionetworks/BridgeApp-Apple-SDK" "v1.1.15"
+github "Sage-Bionetworks/MotorControl-iOS" "v1.4.29"
+github "Sage-Bionetworks/SageResearch" "v2.1.48"

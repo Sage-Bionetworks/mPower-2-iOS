@@ -43,6 +43,11 @@ extension RSDStepType {
     public static let passiveDataPermission: RSDStepType = "passiveDataPermission"
 }
 
+extension SBAProfileDataSourceType {
+    /// Defaults to a `MP2ProfileDataSource`.
+    public static let mp2ProfileDataSource: SBAProfileDataSourceType = "mp2ProfileDataSource"
+}
+
 class MP2Factory : SBAFactory {
     
     override func decodeStep(from decoder:Decoder, with type:RSDStepType) throws -> RSDStep? {
@@ -60,7 +65,15 @@ class MP2Factory : SBAFactory {
     }
     
     override func decodeProfileDataSource(from decoder: Decoder) throws -> SBAProfileDataSource {
-        return try MP2ProfileDataSource(from: decoder)
+        let type = try decoder.factory.typeName(from: decoder) ?? SBAProfileDataSourceType.mp2ProfileDataSource.rawValue
+        let dsType = SBAProfileDataSourceType(rawValue: type)
+
+        switch dsType {
+        case .mp2ProfileDataSource:
+            return try MP2ProfileDataSource(from: decoder)
+        default:
+            return try super.decodeProfileDataSource(from: decoder)
+        }
     }
 
 }
