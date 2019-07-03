@@ -40,10 +40,6 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
     static let detailCellIdentifier = "ProfileTableViewDetailCell"
     static let cellIdentifier = "ProfileTableViewCell"
     
-//    static let webViewControllerSegueId = "WebViewControllerSegue"
-//    static let withdrawalViewControllerSegueId = "WithdrawalViewControllerSegue"
-//    static let healthProfileViewControllerSegueId = "HealthProfileViewControllerSegue"
-//    static let profileItemEditViewControllerSegueId = "ProfileItemEditViewControllerSegue"
     static let settingsViewControllerSegueId = "SettingsViewControllerSegue"
     
     var webViewControllerStoryboardId = "ProfileHTMLViewController"
@@ -71,12 +67,6 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
             self._profileDataSource = newValue
         }
     }
-    
-/* TODO: emm 2018-08-20 deal with for v2.1
-    lazy var healthProfileVC = {
-        return HealthProfileTableViewController.instantiate()
-    }()
- */
     
     var navBarTranslucency: Bool = true
     
@@ -166,6 +156,9 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
         // Configure the cell...
         cell.titleLabel?.text = titleText
         cell.detailLabel?.text = detailText
+        if let pvpTableItem = tableItem as? SBAProfileViewProfileTableItem {
+            cell.icon?.image = pvpTableItem.icon
+        }
         
         return cell
     }
