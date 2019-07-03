@@ -40,17 +40,36 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
     static let detailCellIdentifier = "ProfileTableViewDetailCell"
     static let cellIdentifier = "ProfileTableViewCell"
     
-    static let webViewControllerSegue = "WebViewControllerSegue"
-    static let withdrawalViewControllerSegue = "WithdrawalViewControllerSegue"
-    static let healthProfileViewControllerSegue = "HealthProfileViewControllerSegue"
-    static let profileItemEditViewControllerSegue = "ProfileItemEditViewControllerSegue"
+//    static let webViewControllerSegueId = "WebViewControllerSegue"
+//    static let withdrawalViewControllerSegueId = "WithdrawalViewControllerSegue"
+//    static let healthProfileViewControllerSegueId = "HealthProfileViewControllerSegue"
+//    static let profileItemEditViewControllerSegueId = "ProfileItemEditViewControllerSegue"
+    static let settingsViewControllerSegueId = "SettingsViewControllerSegue"
     
-    fileprivate lazy var _profileDataSource: SBAProfileDataSource = {
-        return SBAProfileDataSourceObject.shared
-    }()
+    var webViewControllerStoryboardId = "ProfileHTMLViewController"
+    var withdrawalViewControllerStoryboardId = "WithdrawalViewController"
+    var subProfileViewControllerStoryboardId = "SubProfileTableViewController"
+    var profileItemEditViewControllerStoryboardId = "ProfileItemEditViewController"
+    var settingsViewControllerStoryboardId = "SettingsViewController"
     
-    open var profileDataSource: SBAProfileDataSource {
-        return _profileDataSource
+    private var _profileStoryboard: UIStoryboard?
+    var profileStoryboard: UIStoryboard {
+        get {
+            return self._profileStoryboard ?? self.storyboard ?? UIStoryboard(name: "main", bundle: Bundle.main)
+        }
+        set {
+            self._profileStoryboard = newValue
+        }
+    }
+    
+    private var _profileDataSource: SBAProfileDataSource?
+    var profileDataSource: SBAProfileDataSource {
+        get {
+            return self._profileDataSource ?? SBAProfileDataSourceObject.shared
+        }
+        set {
+            self._profileDataSource = newValue
+        }
     }
     
 /* TODO: emm 2018-08-20 deal with for v2.1
@@ -65,6 +84,12 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
     @IBOutlet weak var headerTitleLabel: UILabel!
     @IBOutlet weak var tableFooterView: UIView!
     @IBOutlet weak var versionLabel: UILabel!
+    @IBOutlet weak var settingsButton: UIButton!
+    
+    @IBAction func backButtonTapped(_ sender: Any!) {
+        navigationController?.popViewController(animated: true)
+    }
+
     
     open func registerSectionHeaderView() {
         tableView.register(UINib.init(nibName: ProfileTableHeaderView.className, bundle: nil), forHeaderFooterViewReuseIdentifier: ProfileTableHeaderView.className)
@@ -145,6 +170,10 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
         return cell
     }
     
+    func viewController(for identifier: String) -> UIViewController {
+        return self.profileStoryboard.instantiateViewController(withIdentifier: identifier)
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
@@ -156,8 +185,11 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
         
         switch onSelected {
         case SBAProfileOnSelectedAction.showHTML:
-            guard let htmlItem = itemForRow(at: indexPath) as? SBAHTMLProfileTableItem else { break }
-            self.performSegue(withIdentifier: ProfileTableViewController.webViewControllerSegue, sender: htmlItem)
+            guard let htmlItem = item as? SBAHTMLProfileTableItem else { break }
+            guard let webVC = self.viewController(for: self.webViewControllerStoryboardId) as? RSDWebViewController
+                else { return }
+            webVC.url = htmlItem.url
+            self.show(webVC, sender: self)
 
             /* TODO: emm 2018-09-23 deal with this for v2.1
         case SBAProfileOnSelectedAction.showResource:
@@ -173,7 +205,8 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
              */
 
         case SBAProfileOnSelectedAction.showWithdrawal:
-            self.performSegue(withIdentifier: ProfileTableViewController.withdrawalViewControllerSegue, sender: self)
+            guard let withdrawalVC = self.viewController(for: self.withdrawalViewControllerStoryboardId) as? WithdrawalViewController else { return }
+            self.show(withdrawalVC, sender: self)
             
         case SBAProfileOnSelectedAction.editProfileItem:
             guard let profileTableItem = item as? SBAProfileItemProfileTableItem,
@@ -182,21 +215,38 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
                 else {
                     break
             }
-            let profileItems = SBAProfileManagerObject.shared.profileItems()
+            let pm = profileTableItem.profileManager
+            let profileItems = pm.profileItems()
             guard let profileItem = profileItems[profileTableItem.profileItemKey]
                 else {
-                    print("Error editing profile item: no such item with profileKey \(profileTableItem.profileItemKey)")
+                    print("Error editing profile item: no such item with profileKey \(profileTableItem.profileItemKey) in profile manager '\(pm.identifier)'")
                     break
             }
             
-            let passiveInfo = RSDTaskInfoObject(with: taskId)
-            let taskViewModel = RSDTaskViewModel(taskInfo: passiveInfo)
+            let taskInfo = RSDTaskInfoObject(with: taskId)
+            let taskViewModel = RSDTaskViewModel(taskInfo: taskInfo)
             let resultType: RSDAnswerResultType = profileItem.itemType.defaultAnswerResultType()
 
             // TODO: emm 2019-04-15 Replace with a DataStorageManager when that's ready?
             let answerResult = RSDAnswerResultObject(identifier: profileItem.demographicKey, answerType: resultType, value: profileItem.demographicJsonValue)
             taskViewModel.append(previousResult: answerResult)
-            self.performSegue(withIdentifier: ProfileTableViewController.profileItemEditViewControllerSegue, sender: taskViewModel)
+            guard let editVC = self.viewController(for: self.profileItemEditViewControllerStoryboardId) as? ProfileItemEditViewController
+                else { return }
+            editVC.taskViewModel = taskViewModel
+            editVC.taskViewModel.taskController = editVC
+            editVC.profileTableItem = profileTableItem
+            editVC.delegate = self
+            self.show(editVC, sender: self)
+            
+        case SBAProfileOnSelectedAction.showProfileView:
+            guard let profileViewTableItem = item as? SBAProfileViewProfileTableItem
+                else {
+                    return
+            }
+            guard let profileVC = self.viewController(for: self.subProfileViewControllerStoryboardId) as? ProfileTableViewController
+                else { return }
+            profileVC.profileDataSource = profileViewTableItem.profileDataSource
+            self.show(profileVC, sender: self)
 
             /* TODO: emm 2018-08-21 deal with this for v2.1
         case scheduleProfileAction:
@@ -252,7 +302,7 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
             break
         }
     }
-    
+        
     func showGoToSettingsAlert() {
         let title = Localization.localizedString("JP_SETTINGS_TITLE")
         let format = Localization.localizedString("JP_SETTINGS_MESSAGE_FORMAT")
@@ -274,18 +324,10 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let segueId = segue.identifier else { return }
         switch segueId {
-        case ProfileTableViewController.webViewControllerSegue:
-            guard let item = sender as? SBAHTMLProfileTableItem,
-                let webVC = segue.destination as? RSDWebViewController
+        case ProfileTableViewController.settingsViewControllerSegueId:
+            guard let settingsVC = segue.destination as? ProfileTableViewController
                 else { return }
-            webVC.url = item.url
-        case ProfileTableViewController.profileItemEditViewControllerSegue:
-            guard let taskViewModel = sender as? RSDTaskViewModel,
-                let editVC = segue.destination as? RSDTaskViewController
-                else { return }
-            editVC.taskViewModel = taskViewModel
-            editVC.taskViewModel.taskController = editVC
-            editVC.delegate = self
+            settingsVC.profileDataSource = SBABridgeConfiguration.shared.profileDataSource(for: "SettingsDataSource")!
         default:
             // do nothing
             break
@@ -361,13 +403,16 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
     // MARK: RSDTaskControllerDelegate
     func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
         self.navigationController?.popViewController(animated: true)
-        if let profileManager = SBABridgeConfiguration.shared.profileManager as? SBAScheduleManager {
+        let editVC = taskController as? ProfileItemEditViewController
+        let profileTableItem = editVC?.profileTableItem
+        if let profileManager = (profileTableItem?.profileManager ?? SBAProfileManagerObject.shared) as? SBAScheduleManager {
             profileManager.taskController(taskController, didFinishWith: reason, error: error)
         }
     }
     
     func taskController(_ taskController: RSDTaskController, readyToSave taskViewModel: RSDTaskViewModel) {
-        if let profileManager = SBABridgeConfiguration.shared.profileManager as? SBAScheduleManager {
+        let editVC = taskController as? ProfileItemEditViewController
+        if let profileManager = (editVC?.profileTableItem?.profileManager ?? SBAProfileManagerObject.shared) as? SBAScheduleManager {
             profileManager.taskController(taskController, readyToSave: taskViewModel)
         }
     }
