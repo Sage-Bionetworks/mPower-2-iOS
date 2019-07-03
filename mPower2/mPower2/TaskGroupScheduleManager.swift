@@ -181,7 +181,7 @@ public class TaskGroupScheduleManager : ActivityGroupScheduleManager {
         // complete the task.
         var passiveDataPermissionStep: RSDSubtaskStepObject? = nil
         if taskInfo.identifier == .walkAndBalanceTask,
-                SBAProfileManagerObject.shared.value(forProfileKey: RSDIdentifier.passiveDataPermission.rawValue) == nil {
+                SBAProfileManagerObject.shared.value(forProfileKey: RSDIdentifier.passiveDataPermissionProfileKey.rawValue) == nil {
             let passiveInfo = RSDTaskInfoObject(with: RSDIdentifier.passiveDataPermission.rawValue)
             let passiveInfoStep = RSDTaskInfoStepObject(with: passiveInfo)
             let navSteps = [passiveInfoStep]
