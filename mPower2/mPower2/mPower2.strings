@@ -124,6 +124,8 @@
 // Profile
 "PARTICIPATION_ENROLLED_%@" = "Enrolled in %@ study";            // Participation title when enrolled
 "PARTICIPATION_REJOIN_%@" = "Rejoin %@ study";                   // Participation title when not enrolled
+"PERMISSIONS_STATE_ON" = "On";                                   // Permissions table item detail text when setting is on
+"PERMISSIONS_STATE_OFF" = "Off";                                 // Permissions table item detail text when setting is off
 
 // Study Withdrawal
 "WITHDRAWAL_FROM_STUDY_BTN_TITLE" = "Withdraw from study";      // Withdrawal from Study button action

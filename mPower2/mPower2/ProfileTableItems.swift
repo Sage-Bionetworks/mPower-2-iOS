@@ -34,49 +34,135 @@
 import BridgeApp
 
 extension SBAProfileOnSelectedAction {
+    public static let permissionsProfileAction: SBAProfileOnSelectedAction = "permissionsProfileAction"
+    public static let settingsProfileAction: SBAProfileOnSelectedAction = "settingsProfileAction"
 /* TODO: emm 2019-06-12 deal with this for v2.1
     public static let scheduleProfileAction: SBAProfileOnSelectedAction = "scheduleProfileAction"
-    public static let settingsProfileAction: SBAProfileOnSelectedAction = "settingsProfileAction"
     public static let downloadDataAction: SBAProfileOnSelectedAction = "downloadDataAction"
  */
 }
 
-/* TODO: emm 2018-08-21 deal with this for v2.1
-class SettingsProfileTableItem: SBAProfileTableItemBase {
+/// Define the available profile settings that mPower 2 knows how to handle via the SettingsProfileTableItem.
+public struct MP2ProfileSetting : RawRepresentable, Codable {
+    public typealias RawValue = String
     
-    lazy var permissionsManager = {
-        return SBAPermissionsManager.shared
-    }()
+    public private(set) var rawValue: String
     
-    var permissionType: SBAPermissionObjectType!
-    
-    public required init(dictionaryRepresentation dictionary: [AnyHashable: Any]) {
-        super.init(dictionaryRepresentation: dictionary)
-        let identifier = dictionary["settingType"] as! String
-        permissionType = permissionsManager.permissionsTypeFactory.permissionType(for: identifier)
-        defaultOnSelectedAction = settingsProfileAction
+    public init(rawValue: String) {
+        self.rawValue = rawValue
     }
     
-    override open var detail: String {
-        get {
-            let hasPermission = permissionsManager.isPermissionGranted(for: permissionType)
-            var detailKey = hasPermission ? "JP_HAS_PERMISSION" : "JP_NO_PERMISSION"
-            if permissionType.permissionType == SBAPermissionTypeIdentifier.location {
-                let status = CLLocationManager.authorizationStatus()
-                switch status {
-                case .authorizedAlways:
-                    detailKey = "JP_HAS_PERMISSION_ALWAYS"
-                case .authorizedWhenInUse:
-                    detailKey = "JP_HAS_PERMISSION_WHILE_USING"
-                default:
-                    break
-                }
-            }
-            return Localization.localizedString(detailKey)
-        }
+    public static let medicationReminders: MP2ProfileSetting = "medicationReminders"
+    public static let studyBurstTime: MP2ProfileSetting = "studyBurstTime"
+}
+
+extension MP2ProfileSetting : Equatable {
+    public static func ==(lhs: MP2ProfileSetting, rhs: MP2ProfileSetting) -> Bool {
+        return lhs.rawValue == rhs.rawValue
+    }
+    public static func ==(lhs: String, rhs: MP2ProfileSetting) -> Bool {
+        return lhs == rhs.rawValue
+    }
+    public static func ==(lhs: MP2ProfileSetting, rhs: String) -> Bool {
+        return lhs.rawValue == rhs
     }
 }
 
+extension MP2ProfileSetting : Hashable {
+    public var hashValue : Int {
+        return self.rawValue.hashValue
+    }
+}
+
+extension MP2ProfileSetting : ExpressibleByStringLiteral {
+    public typealias StringLiteralType = String
+    
+    public init(stringLiteral value: String) {
+        self.init(rawValue: value)
+    }
+}
+
+
+struct PermissionsProfileTableItem: SBAProfileTableItem, Decodable {
+    /// The title text to show for the item.
+    var title: String?
+    
+    /// The type of permissions to display/manage.
+    var permissionType: RSDStandardPermissionType
+    
+    /// For the detail text, show their current status for the specified permission type.
+    var detail: String? {
+        get {
+            let status = RSDAuthorizationHandler.authorizationStatus(for: permissionType.identifier)
+            let detailKey = (status == .authorized) ? "PERMISSIONS_STATE_ON" : "PERMISSIONS_STATE_OFF"
+            return Localization.localizedString(detailKey)
+        }
+    }
+    
+    /// The PermissionsProfileTableItem is 'editable' in the sense that you can tap it to change it, but other
+    /// than requesting a permission that hasn't yet been granted or denied, the participant will be directed
+    /// to the Settings app to change it.
+    var isEditable: Bool? {
+        return true
+    }
+    
+    /// A set of cohorts (data groups) the participant must be in, in order to show this item in its containing profile section.
+    var inCohorts: Set<String>?
+    
+    /// A set of cohorts (data groups) the participant must **not** be in, in order to show this item in its containing profile section.
+    var notInCohorts: Set<String>?
+    
+    /// The action when this item is selected is to request the permission if not already granted or denied, or
+    /// to direct the participant to the Settings app to change the permission if it's been previously set.
+    var onSelected: SBAProfileOnSelectedAction? {
+        return .permissionsProfileAction
+    }
+}
+
+struct SettingsProfileTableItem: SBAProfileTableItem, Decodable {
+    /// The title text to show for the item.
+    var title: String?
+    
+    /// The setting to display/manage via this item.
+    var setting: MP2ProfileSetting
+    
+    /// For the detail text, show their current setting state.
+    var detail: String? {
+        switch self.setting {
+        case .medicationReminders:
+            // TODO: emm 2019-07-08 return the current setting for medication reminders
+            return "15 minutes before"
+        case .studyBurstTime:
+            // TODO: emm 2019-07-08 return the current setting for study burst reminder time
+            return "9:00 AM"
+        default:
+            debugPrint("Don't know how to show current setting for unknown setting '\(self.setting.rawValue)'; returning empty string")
+            return ""
+       }
+    }
+    
+    /// The PermissionsProfileTableItem is 'editable' in the sense that you can tap it to change it, but other
+    /// than requesting a permission that hasn't yet been granted or denied, the participant will be directed
+    /// to the Settings app to change it.
+    var isEditable: Bool? {
+        return true
+    }
+    
+    /// A set of cohorts (data groups) the participant must be in, in order to show this item in its containing profile section.
+    var inCohorts: Set<String>?
+    
+    /// A set of cohorts (data groups) the participant must **not** be in, in order to show this item in its containing profile section.
+    var notInCohorts: Set<String>?
+    
+    /// The action when this item is selected will depend on the specific setting.
+    var onSelected: SBAProfileOnSelectedAction? {
+        return .settingsProfileAction
+    }
+    
+    
+}
+
+/* TODO: emm 2018-08-21 deal with this for v2.1
 class ScheduleProfileTableItem: SBAProfileTableItemBase {
     
     public required init(dictionaryRepresentation dictionary: [AnyHashable: Any]) {

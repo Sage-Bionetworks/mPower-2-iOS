@@ -36,6 +36,12 @@ import BridgeApp
 extension SBAProfileTableItemType {
     /// Creates a `StudyParticipationProfileTableItem`.
     public static let studyParticipation: SBAProfileTableItemType = "studyParticipation"
+    
+    /// Creates a `PermissionsProfileTableItem`.
+    public static let permissions: SBAProfileTableItemType = "permissions"
+    
+    /// Creates a `SettingsProfileTableItem`.
+    public static let settings: SBAProfileTableItemType = "settings"
 }
 
 class MP2ProfileSection: SBAProfileSectionObject {
@@ -44,6 +50,8 @@ class MP2ProfileSection: SBAProfileSectionObject {
         switch type {
         case .studyParticipation:
             return try StudyParticipationProfileTableItem(from: decoder)
+        case .permissions:
+            return try PermissionsProfileTableItem(from: decoder)
         default:
             return try super.decodeItem(from: decoder, with: type)
         }
