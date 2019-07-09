@@ -47,7 +47,7 @@ class ProfileTableViewCell: UITableViewCell {
         
         let designSystem = RSDDesignSystem()
         let background = designSystem.colorRules.backgroundLight
-        titleLabel?.textColor = designSystem.colorRules.textColor(on: background, for: .heading4)
+        titleLabel?.textColor = designSystem.colorRules.textColor(on: background, for: .mediumHeader)
         chevron?.image = chevron?.image?.rsd_applyColor(designSystem.colorRules.palette.primary.normal.color)
     }
     
@@ -60,7 +60,7 @@ class ProfileTableViewDetailCell: ProfileTableViewCell {
         
         let designSystem = RSDDesignSystem()
         let background = designSystem.colorRules.backgroundLight
-        titleLabel?.textColor = designSystem.colorRules.textColor(on: background, for: .heading4)
+        titleLabel?.textColor = designSystem.colorRules.textColor(on: background, for: .mediumHeader)
         detailLabel?.textColor = designSystem.colorRules.textColor(on: background, for: .bodyDetail)
     }
     

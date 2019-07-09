@@ -298,6 +298,8 @@ extension SBBParticipantDataSharingScope {
             return "none"
         case .study:
             return "study"
+        @unknown default:
+            return "none"
         }
     }
 }

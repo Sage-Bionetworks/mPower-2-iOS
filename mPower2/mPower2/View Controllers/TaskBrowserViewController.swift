@@ -133,7 +133,7 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
         shadowView.isHidden = !shouldShowTopShadow
         
         unlockMessageLabel?.text = Localization.localizedString("UNLOCK_MESSAGE_FINISH_STUDY_BURST")
-        unlockMessageLabel?.textColor = designSystem.colorRules.textColor(on: designSystem.colorRules.backgroundLight, for: .heading3)
+        unlockMessageLabel?.textColor = designSystem.colorRules.textColor(on: designSystem.colorRules.backgroundLight, for: .largeHeader)
         unlockMessageLabel?.isHidden = true
 
         // Reload our data

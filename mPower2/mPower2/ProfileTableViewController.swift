@@ -99,7 +99,7 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
         versionLabel?.text = "\(Localization.localizedAppName) \(version!), build \(Bundle.main.appVersion())"
         tableView.backgroundColor = UIColor.white
         tableHeaderView?.backgroundColor = background.color
-        headerTitleLabel?.textColor = designSystem.colorRules.textColor(on: background, for: .heading4)
+        headerTitleLabel?.textColor = designSystem.colorRules.textColor(on: background, for: .mediumHeader)
         tableFooterView?.backgroundColor = background.color
         versionLabel?.textColor = designSystem.colorRules.textColor(on: background, for: .bodyDetail)
         
