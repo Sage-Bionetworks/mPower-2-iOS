@@ -83,7 +83,7 @@ struct TodayHistoryItem : Equatable, Comparable {
     static let sortOrder: [ItemType] = [.symptoms, .medication, .triggers, .activities, .surveys]
     
     static func < (lhs: TodayHistoryItem, rhs: TodayHistoryItem) -> Bool {
-        return sortOrder.index(of: lhs.type)! < sortOrder.index(of: rhs.type)!
+        return sortOrder.firstIndex(of: lhs.type)! < sortOrder.firstIndex(of: rhs.type)!
     }
 }
 
