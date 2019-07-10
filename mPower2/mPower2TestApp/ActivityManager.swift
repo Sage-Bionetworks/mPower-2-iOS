@@ -122,7 +122,7 @@ public struct StudySetup {
     
     func createParticipant() -> SBBStudyParticipant {
         return SBBStudyParticipant(dictionaryRepresentation: [
-            "createdOn" : (createdOn as NSDate).iso8601String(),
+            "createdOn" : (createdOn as NSDate).iso8601String()!,
             "dataGroups" : dataGroups,
             "firstName" : firstName,
             "phoneVerified" : NSNumber(value: true),

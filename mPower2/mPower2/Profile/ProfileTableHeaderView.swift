@@ -47,7 +47,7 @@ class ProfileTableHeaderView: UITableViewHeaderFooterView {
         contentView.backgroundColor = UIColor.white
         
         let designSystem = RSDDesignSystem()
-        titleLabel.textColor = designSystem.colorRules.textColor(on: designSystem.colorRules.backgroundLight, for: .heading4)
+        titleLabel.textColor = designSystem.colorRules.textColor(on: designSystem.colorRules.backgroundLight, for: .mediumHeader)
         separatorLine.backgroundColor = designSystem.colorRules.separatorLine
     }
     

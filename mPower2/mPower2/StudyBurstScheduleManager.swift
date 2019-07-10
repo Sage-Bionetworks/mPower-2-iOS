@@ -599,8 +599,8 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
                 return !finished
             }
             let sortedIdentifiers = identifiers.sorted(by: { (lhs, rhs) in
-                let lIdx = task.activityIdentifiers.index(where: { lhs == $0 }) ?? Int.max
-                let rIdx = task.activityIdentifiers.index(where: { rhs == $0 }) ?? Int.max
+                let lIdx = task.activityIdentifiers.firstIndex(where: { lhs == $0 }) ?? Int.max
+                let rIdx = task.activityIdentifiers.firstIndex(where: { rhs == $0 }) ?? Int.max
                 return lIdx < rIdx
             })
             return sortedIdentifiers
