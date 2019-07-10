@@ -119,6 +119,9 @@ struct PermissionsProfileTableItem: SBAProfileTableItem, Decodable {
     }
 }
 
+/// The SettingsProfileTableItem is sort of a catch-all for "other" one-off sorts of items, like the various
+/// reminder settings, that for now at least don't really make sense to each have their own profile table item
+/// type and onSelected action.
 struct SettingsProfileTableItem: SBAProfileTableItem, Decodable {
     /// The title text to show for the item.
     var title: String?
@@ -141,9 +144,7 @@ struct SettingsProfileTableItem: SBAProfileTableItem, Decodable {
        }
     }
     
-    /// The PermissionsProfileTableItem is 'editable' in the sense that you can tap it to change it, but other
-    /// than requesting a permission that hasn't yet been granted or denied, the participant will be directed
-    /// to the Settings app to change it.
+    /// The current set of SettingsProfileTableItem settings are all editable.
     var isEditable: Bool? {
         return true
     }
@@ -154,7 +155,8 @@ struct SettingsProfileTableItem: SBAProfileTableItem, Decodable {
     /// A set of cohorts (data groups) the participant must **not** be in, in order to show this item in its containing profile section.
     var notInCohorts: Set<String>?
     
-    /// The action when this item is selected will depend on the specific setting.
+    /// The action when this item is selected will depend on the specific setting. The table view controller will need
+    /// to examine the item's `setting` field and proceed accordingly.
     var onSelected: SBAProfileOnSelectedAction? {
         return .settingsProfileAction
     }
