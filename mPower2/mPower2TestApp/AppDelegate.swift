@@ -74,7 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let participantManager = ParticipantManager()
         
         // NOTE: syoung 06/28/2018 You can set different study setup objects to test different states.
-        activityManager.studySetup = .day1_twoTasksFinished
+        activityManager.studySetup = .day1_tasksFinished_surveysFinished
         
         SBBComponentManager.registerComponent(activityManager, for: SBBActivityManager.self)
         

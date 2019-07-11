@@ -198,6 +198,24 @@ public class TaskGroupScheduleManager : ActivityGroupScheduleManager {
             let trackingStep = RSDTaskInfoStepObject(with: trackingInfo)
             var navSteps: [RSDStep] = [trackingStep, taskInfoStep]
             
+            do {
+                let medsIdentifier = RSDIdentifier.medicationTask.stringValue
+                let medsTask: RSDTask = try {
+                    if let task = self.configuration.task(for: medsIdentifier) {
+                        return task
+                    }
+                    else {
+                        let transformer = RSDResourceTransformerObject(resourceName: medsIdentifier)
+                        return try self.factory.decodeTask(with: transformer)
+                    }
+                }()
+                let medsStep = try SBAMedicationTrackingStep(mainTask: medsTask)
+                navSteps.insert(medsStep, at: 0)
+            }
+            catch let err {
+                assertionFailure("Failed to create the medication tracking step. \(err)")
+            }
+            
             // Tack on the passive data permission step too, if need be.
             if let permStep = passiveDataPermissionStep {
                 navSteps.append(permStep)
