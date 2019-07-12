@@ -251,7 +251,9 @@ extension StudySetup {
         StudySetup(studyBurstDay: 0,
                    studyBurstFinishedOnDays: [0],
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 1),
-                   finishedTodayTasks: RSDIdentifier.measuringTasks)
+                   finishedTodayTasks: RSDIdentifier.measuringTasks,
+                   timeUntilExpires: 15,
+                   dataGroups: ["gr_SC_DB","gr_BR_II","gr_ST_T","gr_DT_T","parkinsons"])
     
     static let day1_allFinished_2HoursAgo =
         StudySetup(studyBurstDay: 0,
