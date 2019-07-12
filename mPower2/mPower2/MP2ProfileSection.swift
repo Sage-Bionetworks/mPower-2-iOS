@@ -52,6 +52,8 @@ class MP2ProfileSection: SBAProfileSectionObject {
             return try StudyParticipationProfileTableItem(from: decoder)
         case .permissions:
             return try PermissionsProfileTableItem(from: decoder)
+        case .settings:
+            return try SettingsProfileTableItem(from: decoder)
         default:
             return try super.decodeItem(from: decoder, with: type)
         }
