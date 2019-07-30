@@ -68,7 +68,7 @@ struct TodayHistoryItem : Equatable, Comparable {
     /// The icon for this item.
     var icon: UIImage? {
         get {
-            return UIImage(named: "\(self.type.stringValue)TaskIcon")
+            return UIImage(named: "\(self.type.stringValue.capitalized)TaskIcon")
         }
     }
     

@@ -139,3 +139,11 @@
 "SIGN_IN_ERROR_TITLE" = "Oops";     // Title for alert that pops up when there's an error signing in
 "SIGN_IN_ERROR_BODY_GENERIC_ERROR" = "There was some kind of problem contacting the server to sign you in. Please try again later."; // Body for sign-in error alert in general case
 "SIGN_IN_ERROR_BODY_USED_TOKEN" = "Sign-in links can only be used once. Please wait at least one minute since the last link was sent, then enter your phone number again to get a new sign-in link to use.";  // Body for sign-in error alert when user taps an already-used sign-in link
+
+"HISTORY_TITLE_TODAY" = "Today";
+"HISTORY_TITLE_YESTERDAY" = "Yesterday";
+"HISTORY_ITEM_TAP_TITLE" = "Tap Count";
+"HISTORY_ITEM_WALK_TITLE" = "Walk and Balance";
+"HISTORY_ITEM_TREMOR_TITLE" = "Tremor Test";
+"HISTORY_ITEM_TAP_LEFT" = "Left Hand: %d";
+"HISTORY_ITEM_TAP_RIGHT" = "Right Hand: %d";

@@ -116,12 +116,28 @@ public class ParticipantManager : NSObject, SBBParticipantManagerProtocol {
     }
     
     func buildClientData(for taskIdentifier: RSDIdentifier, _ studySetup: StudySetup) -> [String : Any] {
-        // TODO: syoung 05/23/2019 Support other reports.
-        let clientData: [String : Any] = (taskIdentifier == .studyBurstReminder) ?
-            [ "reminderTime" : studySetup.reminderTime ?? "09:00:00",
-              "noReminder" : (studySetup.reminderTime == nil)
-            ] : [:]
-        return clientData
+        switch taskIdentifier {
+        case .studyBurstReminder:
+            return [
+                "reminderTime" : studySetup.reminderTime ?? "09:00:00",
+                "noReminder" : (studySetup.reminderTime == nil)
+            ]
+            
+        case .tappingTask:
+        return [
+            "handSelection": [
+                "handOrder": ["left", "right"],
+                "handSelection": "both"
+            ],
+            "left": 88,
+            "right": 66
+            ]
+
+            
+        default:
+            // TODO: syoung 05/23/2019 Support other reports.
+            return [:]
+        }
     }
     
     public let offMainQueue = DispatchQueue(label: "org.sagebionetworks.BridgeApp.TestParticipantManager")
