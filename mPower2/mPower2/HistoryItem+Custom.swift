@@ -97,8 +97,8 @@ extension HistoryItem {
         calendar.timeZone = self.timeZone
         let timestamp = self.timestamp
         
-        // syoung 07/18/2019 I am not sure this will work for all languages. Do all languages have
-        // a concept of "Yesterday" or "Today"?
+        // TODO: syoung 07/18/2019 I am not sure this will work for all languages. Do all languages
+        // have a concept of "Yesterday" or "Today"?
         if calendar.isDateInToday(timestamp) {
             return Localization.localizedString("HISTORY_TITLE_TODAY")
         }
