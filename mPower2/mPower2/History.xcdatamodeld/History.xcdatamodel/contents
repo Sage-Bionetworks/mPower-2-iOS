@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.99" systemVersion="18F132" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="DataTrackingHistoryItem" representedClassName="DataTrackingHistoryItem" parentEntity="HistoryItem" syncable="YES" codeGenerationType="class">
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sectionIdentifier" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="HistoryItem" representedClassName="HistoryItem" isAbstract="YES" syncable="YES" codeGenerationType="class">
+        <attribute name="category" attributeType="String" syncable="YES"/>
+        <attribute name="dateBucket" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imageName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="reportDate" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="reportIdentifier" attributeType="String" syncable="YES"/>
+        <attribute name="timestampDate" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="timeZoneChanged" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="timeZoneSeconds" attributeType="Integer 32" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="timeBucket" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="HistoryItem" inverseName="timeBucketChildren" inverseEntity="HistoryItem" syncable="YES"/>
+        <relationship name="timeBucketChildren" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="HistoryItem" inverseName="timeBucket" inverseEntity="HistoryItem" syncable="YES"/>
+    </entity>
+    <entity name="MeasurementHistoryItem" representedClassName="MeasurementHistoryItem" parentEntity="HistoryItem" syncable="YES" codeGenerationType="class"/>
+    <entity name="MedicationHistoryItem" representedClassName="MedicationHistoryItem" parentEntity="DataTrackingHistoryItem" syncable="YES" codeGenerationType="class">
+        <attribute name="dosage" attributeType="String" syncable="YES"/>
+        <attribute name="taken" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="timeOfDay" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="SymptomHistoryItem" representedClassName="SymptomHistoryItem" parentEntity="DataTrackingHistoryItem" syncable="YES" codeGenerationType="class">
+        <attribute name="durationLevel" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="medicationTiming" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="severityLevel" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+    </entity>
+    <entity name="TapHistoryItem" representedClassName="TapHistoryItem" parentEntity="MeasurementHistoryItem" syncable="YES" codeGenerationType="class">
+        <attribute name="leftTapCount" optional="YES" attributeType="Integer 16" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="rightTapCount" optional="YES" attributeType="Integer 16" usesScalarValueType="YES" syncable="YES"/>
+    </entity>
+    <entity name="TriggerHistoryItem" representedClassName="TriggerHistoryItem" parentEntity="DataTrackingHistoryItem" syncable="YES" codeGenerationType="class"/>
+    <elements>
+        <element name="DataTrackingHistoryItem" positionX="18" positionY="117" width="128" height="75"/>
+        <element name="HistoryItem" positionX="-54" positionY="-9" width="128" height="225"/>
+        <element name="MeasurementHistoryItem" positionX="9" positionY="99" width="128" height="45"/>
+        <element name="MedicationHistoryItem" positionX="9" positionY="81" width="128" height="90"/>
+        <element name="SymptomHistoryItem" positionX="-9" positionY="72" width="128" height="90"/>
+        <element name="TapHistoryItem" positionX="-27" positionY="63" width="128" height="75"/>
+        <element name="TriggerHistoryItem" positionX="27" positionY="108" width="128" height="45"/>
+    </elements>
+</model>

@@ -61,6 +61,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         
+        HistoryDataManager.flushStore()
+        
         RSDStudyConfiguration.shared.colorPalette = colorPalette
         RSDStudyConfiguration.shared.fullInstructionsFrequency = .monthly
         
@@ -101,6 +103,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Instantiate and load the scheduled activities and reports for the study burst.
         StudyBurstScheduleManager.shared.loadScheduledActivities()
         StudyBurstScheduleManager.shared.loadReports()
+        
+        // load the history manager
+        let _ = HistoryDataManager.shared
         
         return true
     }

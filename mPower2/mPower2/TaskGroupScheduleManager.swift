@@ -199,16 +199,7 @@ public class TaskGroupScheduleManager : ActivityGroupScheduleManager {
             var navSteps: [RSDStep] = [trackingStep, taskInfoStep]
             
             do {
-                let medsIdentifier = RSDIdentifier.medicationTask.stringValue
-                let medsTask: RSDTask = try {
-                    if let task = self.configuration.task(for: medsIdentifier) {
-                        return task
-                    }
-                    else {
-                        let transformer = RSDResourceTransformerObject(resourceName: medsIdentifier)
-                        return try self.factory.decodeTask(with: transformer)
-                    }
-                }()
+                let medsTask: RSDTask = try self.task(with: .medicationTask)
                 let medsStep = try SBAMedicationTrackingStep(mainTask: medsTask)
                 navSteps.insert(medsStep, at: 0)
             }
@@ -279,5 +270,31 @@ public class TaskGroupScheduleManager : ActivityGroupScheduleManager {
     override open func reportQueries() -> [ReportQuery] {
         let tasks: [RSDIdentifier] = [.medicationTask, .tremorTask, .tappingTask, .walkAndBalanceTask]
         return tasks.map { ReportQuery(reportKey: $0, queryType: .mostRecent, dateRange: nil) }
+    }
+}
+
+extension SBAReportManager {
+    
+    /// Get the task with the given identifier.
+    func task(with taskIdentifier: RSDIdentifier) throws -> RSDTask {
+        return try {
+            if let task = self.configuration.task(for: taskIdentifier.rawValue) {
+                return task
+            }
+            else {
+                let transformer = RSDResourceTransformerObject(resourceName: taskIdentifier.rawValue)
+                return try self.factory.decodeTask(with: transformer)
+            }
+        }()
+    }
+    
+    /// Tracked items for this task.
+    func trackedItems(with taskIdentifier: RSDIdentifier) throws -> [SBATrackedItem] {
+        let task = try self.task(with: taskIdentifier)
+        guard let navigator = task.stepNavigator as? SBATrackedItemsStepNavigator
+            else {
+                throw RSDValidationError.invalidType("The step navigator could not be transformed into a tracking navigator.")
+        }
+        return navigator.items
     }
 }

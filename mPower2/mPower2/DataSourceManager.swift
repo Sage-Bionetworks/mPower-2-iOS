@@ -44,6 +44,7 @@ extension RSDIdentifier {
     static let triggersTask: RSDIdentifier = "Triggers"
     static let symptomsTask: RSDIdentifier = "Symptoms"
     static let medicationTask: RSDIdentifier = "Medication"
+    static let dataTrackingTasks: [RSDIdentifier] = [.medicationTask, .symptomsTask, .triggersTask]
     
     static let tappingTask: RSDIdentifier =  MCTTaskIdentifier.tapping.identifier
     static let tremorTask: RSDIdentifier = MCTTaskIdentifier.tremor.identifier
