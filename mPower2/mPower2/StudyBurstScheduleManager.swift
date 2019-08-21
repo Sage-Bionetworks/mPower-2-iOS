@@ -736,9 +736,9 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         }
         
         // If getting near the end, then add next cycle.
-        if futureSchedules.count <= extraDays {
+        if futureSchedules.count <= self.studyBurst.numberOfDays {
             let taskPredicate = SBBScheduledActivity.activityIdentifierPredicate(with: self.studyBurst.identifier)
-            let start = startOfToday.addingNumberOfDays(2 * extraDays)
+            let start = startOfToday.addingNumberOfDays(self.maxDaysCount)
             let end = start.addingNumberOfYears(1)
             let studyMarkerPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
                 SBBScheduledActivity.availablePredicate(from: start, to: end),
@@ -787,7 +787,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         // Set up the notification
         let content = UNMutableNotificationContent()
         // TODO: syoung 07/19/2018 Figure out what the wording of the notification should be.
-        content.body = "Time to do your mPower Study Burst activities!"
+        content.body = NSLocalizedString("Time to do your mPower Study Burst activities!", comment: "Notification message")
         content.sound = UNNotificationSound.default
         content.badge = UIApplication.shared.applicationIconBadgeNumber + 1 as NSNumber;
         content.categoryIdentifier = self.notificationCategory
