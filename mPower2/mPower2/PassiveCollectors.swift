@@ -32,7 +32,7 @@
 //
 
 import Research
-import BridgeApp
+import BridgeAppUI
 import CoreLocation
 import CoreMotion
 import BridgeSDK

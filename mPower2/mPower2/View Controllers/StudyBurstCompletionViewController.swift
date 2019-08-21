@@ -32,7 +32,7 @@
 //
 
 import UIKit
-import BridgeApp
+import BridgeAppUI
 
 class StudyBurstCompletionViewController: RSDStepViewController {
     

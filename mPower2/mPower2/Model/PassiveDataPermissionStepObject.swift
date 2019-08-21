@@ -31,7 +31,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import BridgeApp
+import BridgeAppUI
 
 class PassiveDataPermissionStepObject: RSDFormUIStepObject, RSDStepViewControllerVendor {
     open func instantiateViewController(with parent: RSDPathComponent?) -> (UIViewController & RSDStepController)? {

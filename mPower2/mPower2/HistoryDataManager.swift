@@ -33,7 +33,8 @@
 
 import Foundation
 import CoreData
-import BridgeApp
+import BridgeAppUI
+import DataTracking
 import BridgeSDK
 import MotorControl
 

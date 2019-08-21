@@ -32,7 +32,8 @@
 //
 
 import Foundation
-import BridgeApp
+import BridgeAppUI
+import DataTracking
 
 let kActivityTrackingIdentifier = "ActivityTracking"
 let kMedicationTimingWindow : TimeInterval = 20 * 60

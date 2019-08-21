@@ -31,7 +31,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import BridgeApp
+import BridgeAppUI
 
 extension UILabel {
     /// Convenience method for setting a nav header label's layout constraints.

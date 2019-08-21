@@ -32,7 +32,7 @@
 //
 
 import UIKit
-import BridgeApp
+import BridgeAppUI
 import UserNotifications
 
 class ReminderTableStepViewController: RSDTableStepViewController {

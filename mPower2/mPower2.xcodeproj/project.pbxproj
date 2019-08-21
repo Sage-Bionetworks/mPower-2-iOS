@@ -191,6 +191,14 @@
 		FF50110422DEE81B0035E83C /* HistoryItem+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF50110222DEE81B0035E83C /* HistoryItem+Custom.swift */; };
 		FF50112522DFD4A50035E83C /* SBAReport+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF50112422DFD4A50035E83C /* SBAReport+Custom.swift */; };
 		FF50112622DFD4A50035E83C /* SBAReport+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF50112422DFD4A50035E83C /* SBAReport+Custom.swift */; };
+		FF68A751230DC69E00C066BB /* BridgeAppUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF68A750230DC69E00C066BB /* BridgeAppUI.framework */; };
+		FF68A752230DC69E00C066BB /* BridgeAppUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF68A750230DC69E00C066BB /* BridgeAppUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FF68A754230DC69E00C066BB /* DataTracking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF68A753230DC69E00C066BB /* DataTracking.framework */; };
+		FF68A755230DC69E00C066BB /* DataTracking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF68A753230DC69E00C066BB /* DataTracking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FF68A757230DC6AC00C066BB /* BridgeAppUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF68A756230DC6AC00C066BB /* BridgeAppUI.framework */; };
+		FF68A758230DC6AC00C066BB /* BridgeAppUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF68A756230DC6AC00C066BB /* BridgeAppUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FF68A75A230DC6AC00C066BB /* DataTracking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF68A759230DC6AC00C066BB /* DataTracking.framework */; };
+		FF68A75B230DC6AC00C066BB /* DataTracking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF68A759230DC6AC00C066BB /* DataTracking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FF9EEE5922E13040007375E6 /* HistoryFeedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9EEE5822E13040007375E6 /* HistoryFeedTableViewController.swift */; };
 		FF9EEE5A22E13040007375E6 /* HistoryFeedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9EEE5822E13040007375E6 /* HistoryFeedTableViewController.swift */; };
 /* End PBXBuildFile section */
@@ -220,9 +228,11 @@
 			dstSubfolderSpec = 10;
 			files = (
 				F8A5C877227D08D100DD4692 /* BridgeApp.framework in Embed Frameworks */,
+				FF68A75B230DC6AC00C066BB /* DataTracking.framework in Embed Frameworks */,
 				F8A5C875227D08D100DD4692 /* MotorControl.framework in Embed Frameworks */,
 				F8A5C879227D08D100DD4692 /* BridgeSDK.framework in Embed Frameworks */,
 				F82A4AD32297054600BEBE3C /* ResearchMotion.framework in Embed Frameworks */,
+				FF68A758230DC6AC00C066BB /* BridgeAppUI.framework in Embed Frameworks */,
 				F82A4AD62297054600BEBE3C /* ResearchLocation.framework in Embed Frameworks */,
 				F8A5C873227D08D100DD4692 /* Research.framework in Embed Frameworks */,
 				F8A5C871227D08D100DD4692 /* ResearchUI.framework in Embed Frameworks */,
@@ -242,6 +252,8 @@
 				F8A5C861227D08BC00DD4692 /* BridgeApp.framework in Embed Frameworks */,
 				F82A4ADC229706BF00BEBE3C /* ResearchLocation.framework in Embed Frameworks */,
 				F82A4AD9229706BF00BEBE3C /* ResearchMotion.framework in Embed Frameworks */,
+				FF68A752230DC69E00C066BB /* BridgeAppUI.framework in Embed Frameworks */,
+				FF68A755230DC69E00C066BB /* DataTracking.framework in Embed Frameworks */,
 				F8A5C867227D08BC00DD4692 /* Research.framework in Embed Frameworks */,
 				F8A5C86A227D08BC00DD4692 /* ResearchUI.framework in Embed Frameworks */,
 			);
@@ -359,6 +371,10 @@
 		FF5010FF22DEE7E60035E83C /* HistoryDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryDataManager.swift; sourceTree = "<group>"; };
 		FF50110222DEE81B0035E83C /* HistoryItem+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HistoryItem+Custom.swift"; sourceTree = "<group>"; };
 		FF50112422DFD4A50035E83C /* SBAReport+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SBAReport+Custom.swift"; sourceTree = "<group>"; };
+		FF68A750230DC69E00C066BB /* BridgeAppUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BridgeAppUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF68A753230DC69E00C066BB /* DataTracking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DataTracking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF68A756230DC6AC00C066BB /* BridgeAppUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BridgeAppUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF68A759230DC6AC00C066BB /* DataTracking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DataTracking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF9EEE5822E13040007375E6 /* HistoryFeedTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryFeedTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -377,9 +393,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				F8A5C876227D08D100DD4692 /* BridgeApp.framework in Frameworks */,
+				FF68A75A230DC6AC00C066BB /* DataTracking.framework in Frameworks */,
 				F8A5C874227D08D100DD4692 /* MotorControl.framework in Frameworks */,
 				F8A5C878227D08D100DD4692 /* BridgeSDK.framework in Frameworks */,
 				F82A4AD22297054600BEBE3C /* ResearchMotion.framework in Frameworks */,
+				FF68A757230DC6AC00C066BB /* BridgeAppUI.framework in Frameworks */,
 				F82A4AD52297054600BEBE3C /* ResearchLocation.framework in Frameworks */,
 				F8A5C872227D08D100DD4692 /* Research.framework in Frameworks */,
 				F8A5C870227D08D100DD4692 /* ResearchUI.framework in Frameworks */,
@@ -396,6 +414,8 @@
 				F8A5C860227D08BC00DD4692 /* BridgeApp.framework in Frameworks */,
 				F82A4ADB229706BF00BEBE3C /* ResearchLocation.framework in Frameworks */,
 				F82A4AD8229706BF00BEBE3C /* ResearchMotion.framework in Frameworks */,
+				FF68A751230DC69E00C066BB /* BridgeAppUI.framework in Frameworks */,
+				FF68A754230DC69E00C066BB /* DataTracking.framework in Frameworks */,
 				F8A5C866227D08BC00DD4692 /* Research.framework in Frameworks */,
 				F8A5C869227D08BC00DD4692 /* ResearchUI.framework in Frameworks */,
 			);
@@ -651,6 +671,10 @@
 				F8A5C865227D08BC00DD4692 /* Research.framework */,
 				F8A5C862227D08BC00DD4692 /* MotorControl.framework */,
 				F8A5C85F227D08BC00DD4692 /* BridgeApp.framework */,
+				FF68A759230DC6AC00C066BB /* DataTracking.framework */,
+				FF68A756230DC6AC00C066BB /* BridgeAppUI.framework */,
+				FF68A753230DC69E00C066BB /* DataTracking.framework */,
+				FF68A750230DC69E00C066BB /* BridgeAppUI.framework */,
 				F8A5C85C227D08BC00DD4692 /* BridgeSDK.framework */,
 			);
 			name = Frameworks;

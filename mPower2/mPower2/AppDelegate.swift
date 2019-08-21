@@ -32,7 +32,8 @@
 //
 
 import UIKit
-import BridgeApp
+import BridgeAppUI
+import DataTracking
 import BridgeSDK
 import UserNotifications
 
