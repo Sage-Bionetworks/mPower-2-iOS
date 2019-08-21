@@ -33,6 +33,7 @@
 
 import Foundation
 import BridgeApp
+import DataTracking
 
 extension RSDStepType {
     /// Defaults to a `ReminderStep`.
@@ -48,7 +49,7 @@ extension SBAProfileDataSourceType {
     public static let mp2ProfileDataSource: SBAProfileDataSourceType = "mp2ProfileDataSource"
 }
 
-class MP2Factory : SBAFactory {
+class MP2Factory : SBADataTrackingFactory {
     
     override func decodeStep(from decoder:Decoder, with type:RSDStepType) throws -> RSDStep? {
         
