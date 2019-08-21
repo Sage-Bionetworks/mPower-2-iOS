@@ -32,7 +32,8 @@
 //
 
 import Foundation
-import BridgeApp
+import BridgeAppUI
+import DataTracking
 
 struct TodayHistoryItem : Equatable, Comparable {
 

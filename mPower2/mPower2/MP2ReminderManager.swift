@@ -32,7 +32,7 @@
 //
 
 import Foundation
-import BridgeApp
+import DataTracking
 import UserNotifications
 
 class MP2ReminderManager : SBAMedicationReminderManager {

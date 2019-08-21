@@ -33,7 +33,7 @@
 
 import UIKit
 import Research
-import BridgeApp
+import DataTracking
 import CoreData
 
 class HistoryFeedTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {

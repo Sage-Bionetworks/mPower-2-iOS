@@ -31,7 +31,8 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import BridgeApp
+import BridgeAppUI
+import DataTracking
 
 open class TrackedItemsIntroductionStepObject: RSDUIStepObject, RSDStepViewControllerVendor {
     open func instantiateViewController(with parent: RSDPathComponent?) -> (UIViewController & RSDStepController)? {

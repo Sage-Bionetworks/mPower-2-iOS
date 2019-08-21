@@ -33,6 +33,7 @@
 
 import UIKit
 import BridgeApp
+import ResearchUI
 
 extension RSDIdentifier {
     static let greatJobStep: RSDIdentifier = "greatJob"
