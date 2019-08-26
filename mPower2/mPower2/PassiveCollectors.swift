@@ -95,18 +95,17 @@ extension PassiveLocationTriggeredCollector {
         self.locationManager!.delegate = self
         self.locationManager!.allowsBackgroundLocationUpdates = true
         
-        func authorizationError(for status: CLAuthorizationStatus) -> Error {
-            let rsd_status: RSDAuthorizationStatus = (status == .restricted) ? .restricted : .denied
-            let error = RSDPermissionError.notAuthorized(RSDStandardPermission.location, rsd_status)
+        func authorizationError(for status: RSDAuthorizationStatus) -> Error {
+            let error = RSDPermissionError.notAuthorized(RSDStandardPermission.location, status)
             #if DEBUG
-            print("Not authorized to start the passive location recorder: \(rsd_status)")
+            print("Not authorized to start the passive location recorder: \(status)")
             #endif
             return error
         }
         
         // Get the current status and exit early if the status is restricted or denied.
-        let status = CLLocationManager.authorizationStatus()
-        if status != .authorizedAlways && status != .notDetermined {
+        let status = RSDLocationAuthorization.authorizationStatus(for: .location)
+        if status != .authorized && status != .notDetermined {
             // Anything but "always" or "not yet asked" means we can't continue.
             throw authorizationError(for: status)
         }
@@ -114,10 +113,10 @@ extension PassiveLocationTriggeredCollector {
         guard status == .notDetermined else { return }
         
         // Authorization had not yet been given or denied, so we need to do that now and check again.
-        self.locationManager!.requestAlwaysAuthorization()
+        RSDLocationAuthorization.requestAuthorization(for: .location, locationManager: self.locationManager!) {_,_ in }
         
-        let newStatus = CLLocationManager.authorizationStatus()
-        if newStatus != .authorizedAlways {
+        let newStatus = RSDLocationAuthorization.authorizationStatus(for: .location)
+        if newStatus != .authorized {
             // And here we are again.
             throw authorizationError(for: newStatus)
         }
@@ -763,6 +762,10 @@ class PassiveCollectorManager {
     static let shared = PassiveCollectorManager()
     
     init() {
+        // Register authorization handlers
+        RSDAuthorizationHandler.registerAdaptorIfNeeded(RSDMotionAuthorization.shared)
+        RSDAuthorizationHandler.registerAdaptorIfNeeded(RSDLocationAuthorization.shared)
+
         NotificationCenter.default.addObserver(forName: .SBAProfileItemValueUpdated, object: nil, queue: nil) { (notification) in
             // if the passive data permission flag wasn't updated, bail
             guard let updates = notification.userInfo?[SBAProfileItemUpdatedItemsKey] as? [String: Any?],
