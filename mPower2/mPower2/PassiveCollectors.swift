@@ -104,7 +104,8 @@ extension PassiveLocationTriggeredCollector {
         }
         
         // Get the current status and exit early if the status is restricted or denied.
-        let status = RSDLocationAuthorization.authorizationStatus(for: .location)
+        let locationAlways = RSDStandardPermission(permissionType: .location)
+        let status = RSDLocationAuthorization.shared.authorizationStatus(for: locationAlways.identifier)
         if status != .authorized && status != .notDetermined {
             // Anything but "always" or "not yet asked" means we can't continue.
             throw authorizationError(for: status)
@@ -113,9 +114,9 @@ extension PassiveLocationTriggeredCollector {
         guard status == .notDetermined else { return }
         
         // Authorization had not yet been given or denied, so we need to do that now and check again.
-        RSDLocationAuthorization.requestAuthorization(for: .location, locationManager: self.locationManager!) {_,_ in }
+        RSDLocationAuthorization.shared.requestAuthorization(for: locationAlways) {_,_ in }
         
-        let newStatus = RSDLocationAuthorization.authorizationStatus(for: .location)
+        let newStatus = RSDLocationAuthorization.shared.authorizationStatus(for: locationAlways.identifier)
         if newStatus != .authorized {
             // And here we are again.
             throw authorizationError(for: newStatus)
