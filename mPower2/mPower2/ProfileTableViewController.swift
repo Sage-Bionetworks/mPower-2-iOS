@@ -70,6 +70,7 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
     
     var navBarTranslucency: Bool = true
     
+    @IBInspectable var hideSectionHeaderSeparator: Bool = false
     @IBOutlet weak var tableHeaderView: UIView!
     @IBOutlet weak var headerTitleLabel: UILabel!
     @IBOutlet weak var tableFooterView: UIView!
@@ -111,26 +112,9 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
         super.viewWillAppear(animated)
         self.tableView.reloadData()
         
-        // Register for updates from scheduling manager when user completes timing task
-/* TODO: emm 2018-08-21 deal with this for v2.1
-        NotificationCenter.default.addObserver(self, selector: #selector(self.scheduleUpdated), name: MasterScheduledActivityManager.shared.scheduleUpdatedNotificationName, object: nil)
- */
+        let profileManager = SBABridgeConfiguration.shared.profileManager(for: "ProfileManager")
+        self.headerTitleLabel?.text = profileManager?.value(forProfileKey: "preferredName") as? String
     }
-    
-/* TODO: emm 2018-08-21 deal with this for v2.1
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        // If we're being popped off the nav stack, save any outstanding
-        // clientData profile item updates to Bridge.
-        if self.isMovingFromParentViewController {
-            SBAClientDataProfileItem.updateChangesToBridge()
-        }
-        
-        // Remove updates from scheduling manager when user completes timing task
-        NotificationCenter.default.removeObserver(self, name: MasterScheduledActivityManager.shared.scheduleUpdatedNotificationName, object: nil)
-    }
- */
     
     // MARK: - Table view data source
     
@@ -329,11 +313,31 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
     
     // MARK: Table view delegate
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let sectionHeaderView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ProfileTableHeaderView.className) as! ProfileTableHeaderView
+        guard let title = profileDataSource.title(for: section) else { return nil }
         
-        sectionHeaderView.titleLabel?.text = profileDataSource.title(for: section)
+        let sectionHeaderView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ProfileTableHeaderView.className) as! ProfileTableHeaderView
+        sectionHeaderView.titleLabel?.text = title
+        sectionHeaderView.separatorLine?.isHidden = self.hideSectionHeaderSeparator
         
         return sectionHeaderView
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        guard profileDataSource.title(for: section) != nil else { return CGFloat.leastNormalMagnitude }
+        
+        return UITableView.automaticDimension
+    }
+    
+    override func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+        return self.tableView.estimatedSectionHeaderHeight
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return self.tableView.estimatedRowHeight
     }
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {

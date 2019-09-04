@@ -16,13 +16,16 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jzh-C6-vRT">
-                    <rect key="frame" x="27" y="23" width="333" height="21.5"/>
+                    <rect key="frame" x="27" y="23" width="333" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="UEu-G7-zAY"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nEE-AM-cPo">
-                    <rect key="frame" x="0.0" y="56.5" width="376" height="1"/>
+                    <rect key="frame" x="0.0" y="56" width="376" height="1"/>
                     <color key="backgroundColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="81k-c8-ra4"/>
@@ -35,8 +38,9 @@
                 <constraint firstAttribute="trailing" secondItem="nEE-AM-cPo" secondAttribute="trailing" id="Ebg-7y-VRh"/>
                 <constraint firstItem="Jzh-C6-vRT" firstAttribute="top" secondItem="hDj-lJ-tij" secondAttribute="top" constant="23" id="IJM-w8-eQa"/>
                 <constraint firstAttribute="trailing" secondItem="Jzh-C6-vRT" secondAttribute="trailing" constant="16" id="Pfh-p7-1Na"/>
+                <constraint firstAttribute="bottom" secondItem="nEE-AM-cPo" secondAttribute="bottom" id="QLj-Vn-Otk"/>
                 <constraint firstItem="nEE-AM-cPo" firstAttribute="leading" secondItem="hDj-lJ-tij" secondAttribute="leading" id="fof-ac-sOJ"/>
-                <constraint firstItem="nEE-AM-cPo" firstAttribute="top" secondItem="Jzh-C6-vRT" secondAttribute="bottom" constant="12" id="wut-57-0Db"/>
+                <constraint firstAttribute="bottom" secondItem="Jzh-C6-vRT" secondAttribute="bottom" constant="13" id="wut-57-0Db"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
