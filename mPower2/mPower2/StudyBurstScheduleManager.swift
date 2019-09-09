@@ -208,14 +208,28 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     
     /// Has the user been shown the motivation survey?
     public var hasCompletedMotivationSurvey : Bool {
-        do {
-            let reportIdentifier = self.studyBurst.motivationIdentifier.stringValue
-            let report: SBBReportData? = try self.participantManager.getLatestCachedData(forReport: reportIdentifier)
-            let isNil = (report?.localDate == nil) && (report?.dateTime == nil)
-            return !isNil
-        } catch {
-            return false
-        }
+        // If the motivation survey does not include any responses then there will be no report,
+        // so can only validate whether or not the schedule has been completed by looking a the
+        // schedules. However, because this is checked during the startup sequence, the schedules
+        // may not yet be fetched, so check both this survey *and* the cache.
+        let taskPredicate = SBBScheduledActivity.activityIdentifierPredicate(with: self.studyBurst.motivationIdentifier.stringValue)
+        let schedule: SBBScheduledActivity? = {
+            if let schedule = self.scheduledActivities.first(where: { taskPredicate.evaluate(with: $0) }) {
+                return schedule
+            }
+            else {
+                do {
+                    let schedules = try self.activityManager.getCachedSchedules(using: taskPredicate,
+                                                                sortDescriptors: [],
+                                                                fetchLimit: 1)
+                    return schedules.first
+                }
+                catch {
+                    return nil
+                }
+            }
+        }()
+        return schedule?.isCompleted ?? false
     }
     
     /// Is this the final study burst task for today?
