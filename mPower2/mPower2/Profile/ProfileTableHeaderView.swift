@@ -44,7 +44,9 @@ class ProfileTableHeaderView: UITableViewHeaderFooterView {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        contentView.backgroundColor = UIColor.white
+        let backgroundView = UIView(frame: .zero)
+        backgroundView.backgroundColor = UIColor.white
+        self.backgroundView = backgroundView
         
         let designSystem = RSDDesignSystem()
         titleLabel.textColor = designSystem.colorRules.textColor(on: designSystem.colorRules.backgroundLight, for: .mediumHeader)

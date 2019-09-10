@@ -22,7 +22,6 @@
                     <rect key="frame" x="0.0" y="4" width="375" height="4"/>
                 </view>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="m8s-HA-zhp" firstAttribute="top" secondItem="jCg-Ka-3Dj" secondAttribute="bottom" id="4g0-Z5-9yZ"/>
                 <constraint firstAttribute="bottom" secondItem="m8s-HA-zhp" secondAttribute="bottom" id="78Z-95-Ib6"/>
