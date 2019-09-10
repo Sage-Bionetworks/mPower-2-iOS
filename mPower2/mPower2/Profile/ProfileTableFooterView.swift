@@ -44,6 +44,10 @@ class ProfileTableFooterView: UITableViewHeaderFooterView {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        let backgroundView = UIView(frame: .zero)
+        backgroundView.backgroundColor = UIColor.white
+        self.backgroundView = backgroundView
+        
         let designSystem = RSDDesignSystem()
         upperSeparatorView?.backgroundColor = UIColor.white
         lowerSeparatorView?.backgroundColor = designSystem.colorRules.backgroundPrimary.color
