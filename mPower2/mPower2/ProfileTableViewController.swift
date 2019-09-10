@@ -187,26 +187,16 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
             
         case SBAProfileOnSelectedAction.editProfileItem:
             guard let profileTableItem = item as? SBAProfileItemProfileTableItem,
-                    profileTableItem.isEditable!,
-                    let taskId = profileTableItem.editTaskIdentifier
+                    (profileTableItem.isEditable ?? false)!,
+                    let taskId = profileTableItem.editTaskIdentifier,
+                    let profileManager = profileTableItem.profileManager as? SBAScheduleManager
                 else {
-                    break
-            }
-            let pm = profileTableItem.profileManager
-            let profileItems = pm.profileItems()
-            guard let profileItem = profileItems[profileTableItem.profileItemKey]
-                else {
-                    print("Error editing profile item: no such item with profileKey \(profileTableItem.profileItemKey) in profile manager '\(pm.identifier)'")
                     break
             }
             
             let taskInfo = RSDTaskInfoObject(with: taskId)
-            let taskViewModel = RSDTaskViewModel(taskInfo: taskInfo)
-            let resultType: RSDAnswerResultType = profileItem.itemType.defaultAnswerResultType()
+            let taskViewModel = profileManager.instantiateTaskViewModel(for: taskInfo).taskViewModel
 
-            // TODO: emm 2019-04-15 Replace with a DataStorageManager when that's ready?
-            let answerResult = RSDAnswerResultObject(identifier: profileItem.demographicKey, answerType: resultType, value: profileItem.demographicJsonValue)
-            taskViewModel.append(previousResult: answerResult)
             guard let editVC = self.viewController(for: self.profileItemEditViewControllerStoryboardId) as? ProfileItemEditViewController
                 else { return }
             editVC.taskViewModel = taskViewModel
