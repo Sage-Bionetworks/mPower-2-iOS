@@ -11,7 +11,10 @@ addons:
   homebrew:
     packages: python3
 before_install:
-- echo -e "machine github.com\n  login $CI_USER_TOKEN" >> ~/.netrc
+  - echo -e "machine github.com\n  login $CI_USER_TOKEN" >> ~/.netrc
+  - pip3 install virtualenv
+  - virtualenv -p python3 ~/venv
+  - source ~/venv/bin/activate
 install:
 - pip install travis-wait-improved
 - gem install bundler
