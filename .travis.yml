@@ -19,6 +19,7 @@ install:
 - pip install travis-wait-improved
 - gem install bundler
 - bundle install
+- build exec fastlane env
 script:
   - travis-wait-improved --timeout 30 ./travis/build.sh
 branches:
