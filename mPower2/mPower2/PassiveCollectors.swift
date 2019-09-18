@@ -285,6 +285,12 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
     /// Returns the shared instance.
     static var shared: PassiveGaitCollector = PassiveGaitCollector(with: kPassiveGaitSchemaID)
     
+    /// Defines the minimum interval between successive motion recordings (to prevent excessive data plan usage).
+    static let minimumInterval: TimeInterval = 180.0
+    
+    /// The UserDefaults key under which the time of the last motion recording is stored.
+    static let lastRecordedKey: String = "PassiveGaitLastRecorded"
+    
     /// The schema identifier to which the collector should upload the data it collects.
     var schemaIdentifier: String
     
@@ -338,6 +344,16 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
     
     /// The archive manager we use for archiving and uploading the results.
     private let archiveManager = SBAArchiveManager()
+    
+    /// The last time a motion recording was made.
+    private var lastMotionRecorded: Date {
+        get {
+            return UserDefaults.standard.object(forKey: PassiveGaitCollector.lastRecordedKey) as? Date ?? Date(timeIntervalSince1970: 0)
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: PassiveGaitCollector.lastRecordedKey)
+        }
+    }
     
     /// Create an instance with the specified schema identifier.
     init(with identifier: String) {
@@ -524,9 +540,18 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
                 #endif
                 return
         }
+        
+        /// Don't do it again just yet if we've done one too recently.
+        let now = Date()
+        guard now.timeIntervalSince(self.lastMotionRecorded) >= PassiveGaitCollector.minimumInterval
+            else {
+                return
+        }
+        
         #if DEBUG
         debugNotification(title: "Recording", body: "30 seconds of motion sensors starting at \(Date())")
         #endif
+        self.lastMotionRecorded = now
         self.viewModel = PassiveGaitModel(schemaIdentifier: self.schemaIdentifier)
         self.recorder = self.config.instantiateController(with: self.viewModel!) as? RSDMotionRecorder
         self.recorder?.start() { (action, result, error) in
