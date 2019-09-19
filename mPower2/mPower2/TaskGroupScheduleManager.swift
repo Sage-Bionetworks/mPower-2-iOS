@@ -262,6 +262,16 @@ public class TaskGroupScheduleManager : ActivityGroupScheduleManager {
         return resultIdentifier
     }
     
+    override open func reportIdentifier(for taskResult: RSDTaskResult, topLevelResult: RSDTaskResult?) -> String? {
+        // If this is the activity tracking, then add the answers in with the top level JSON.
+        if taskResult.identifier == kActivityTrackingIdentifier, let topResult = topLevelResult {
+            return super.reportIdentifier(for: topResult, topLevelResult: nil)
+        }
+        else {
+            return super.reportIdentifier(for: taskResult, topLevelResult: topLevelResult)
+        }
+    }
+    
     func isMeasurementTaskIdentifier(_ identifier: String?) -> Bool {
         guard identifier != nil else { return false }
         let rsdIdentifer = RSDIdentifier(rawValue: identifier!)
