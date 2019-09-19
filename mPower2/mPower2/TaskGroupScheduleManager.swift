@@ -266,14 +266,16 @@ public class TaskGroupScheduleManager : ActivityGroupScheduleManager {
     override public func buildClientData(from taskResult: RSDTaskResult) -> SBBJSONValue? {
         let clientData = super.buildClientData(from: taskResult)
         guard let dict = clientData as? [String : Any],
-            self.isMeasurementTaskIdentifier(taskResult.identifier),
-            let medResult = taskResult.findAnswerResult(with: kMedicationTimingKey) ?? _medicationTimingResult,
-            let medTiming = medResult.value
-            else {
+            self.isMeasurementTaskIdentifier(taskResult.identifier) else {
                 return clientData
         }
+        
         var json = dict
-        json[kMedicationTimingKey] = medTiming
+        if let medResult = taskResult.findAnswerResult(with: kMedicationTimingKey) ?? _medicationTimingResult,
+            let medTiming = medResult.value {
+            json[kMedicationTimingKey] = medTiming
+        }
+        
         return json as NSDictionary
     }
     
