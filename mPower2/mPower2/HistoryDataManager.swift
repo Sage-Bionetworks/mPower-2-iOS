@@ -149,7 +149,7 @@ class HistoryDataManager : SBAReportManager {
                         try self.mergeTriggers(from: filteredReports, in: context)
                         
                     default:
-                        try self.insertTasks(from: filteredReports, in: context)
+                        try self.mergeMeasurementTasks(from: filteredReports, in: context)
                     }
                 }
                 
@@ -162,6 +162,7 @@ class HistoryDataManager : SBAReportManager {
                 
                 // Save the edits.
                 try context.save()
+                print("History Core Data context saved.")
             }
             catch let err {
                 print("WARNING! Failed to load reports into store. \(err)")
@@ -169,52 +170,78 @@ class HistoryDataManager : SBAReportManager {
         }
     }
     
-    func insertTasks(from reports: [SBAReport], in context: NSManagedObjectContext) throws {
+    func mergeMeasurementTasks(from reports: [SBAReport], in context: NSManagedObjectContext) throws {
+        guard reports.count > 0 else { return }
         
         // Get existing items.
-        let request: NSFetchRequest<HistoryItem> = HistoryItem.fetchRequest()
+        let reportIdentifier = RSDIdentifier(rawValue: reports.first!.identifier)
+        let request: NSFetchRequest<MeasurementHistoryItem> = (reportIdentifier == .tappingTask) ?
+            TapHistoryItem.fetchRequest() :
+            MeasurementHistoryItem.fetchRequest()
         request.includesSubentities = true
         request.sortDescriptors = fetchReportSortDescriptors()
         request.predicate = fetchReportPredicate(for: reports)
         let results = try context.fetch(request)
-        let reportIdentifier = RSDIdentifier(rawValue: reports.first!.identifier)
         
         // Parse the reports and insert new items.
         reports.forEach { report in
             // measurement tasks are read-only so if the report is already added then there is no
             // more work to be done.
-            guard !results.contains(where: { report.date == $0.timestamp })
+            guard let item = findMeasurementHistoryItem(in: results, for: report) ??
+                createMeasurementHistoryItem(in: context, for: report)
                 else {
+                    print("WARNING! Could not create a history item for \(report)")
                     return
             }
-            
-            switch reportIdentifier {
-            case .tappingTask:
-                let item = TapHistoryItem(context: context, report: report)
-                item.title = Localization.localizedString("HISTORY_ITEM_TAP_TITLE")
-                item.imageName = "TappingTaskIcon"
-                if let json = report.clientData as? [String : Any] {
-                    item.leftTapCount = (json[MCTHandSelection.left.rawValue] as? NSNumber)?.int16Value ?? 0
-                    item.rightTapCount = (json[MCTHandSelection.right.rawValue] as? NSNumber)?.int16Value ?? 0
-                }
-                
-            case .walkAndBalanceTask:
-                let item = MeasurementHistoryItem(context: context, report: report)
-                item.title = Localization.localizedString("HISTORY_ITEM_WALK_TITLE")
-                item.imageName = "WalkAndBalanceTaskIcon"
-                
-            case .tremorTask:
-                let item = MeasurementHistoryItem(context: context, report: report)
-                item.title = Localization.localizedString("HISTORY_ITEM_TREMOR_TITLE")
-                item.imageName = "TremorTaskIcon"
-            
-            default:
-                assertionFailure("WARNING! Unknown report identifier: \(reportIdentifier)")
-            }
+            self.updateMeasurementScoring(item: item, report: report)
         }// reports
     }
     
+    func findMeasurementHistoryItem(in results: [MeasurementHistoryItem], for report: SBAReport) -> MeasurementHistoryItem? {
+        return results.first(where: {
+            report.date == $0.timestamp
+        })
+    }
+    
+    func createMeasurementHistoryItem(in context: NSManagedObjectContext, for report: SBAReport) -> MeasurementHistoryItem? {
+        let reportIdentifier = RSDIdentifier(rawValue: report.identifier)
+        switch reportIdentifier {
+        case .tappingTask:
+            let item = TapHistoryItem(context: context, report: report)
+            item.title = Localization.localizedString("HISTORY_ITEM_TAP_TITLE")
+            item.imageName = "TappingTaskIcon"
+            return item
+            
+        case .walkAndBalanceTask:
+            let item = MeasurementHistoryItem(context: context, report: report)
+            item.title = Localization.localizedString("HISTORY_ITEM_WALK_TITLE")
+            item.imageName = "WalkAndBalanceTaskIcon"
+            return item
+            
+        case .tremorTask:
+            let item = MeasurementHistoryItem(context: context, report: report)
+            item.title = Localization.localizedString("HISTORY_ITEM_TREMOR_TITLE")
+            item.imageName = "TremorTaskIcon"
+            return item
+            
+        default:
+            assertionFailure("WARNING! Unknown report identifier: \(reportIdentifier)")
+            return nil
+        }
+    }
+    
+    func updateMeasurementScoring(item: MeasurementHistoryItem, report: SBAReport) {
+        guard let json = report.clientData as? [String : Any] else { return }
+        let reportIdentifier = RSDIdentifier(rawValue: report.identifier)
+        if reportIdentifier == .tappingTask, let tappingItem = item as? TapHistoryItem {
+            tappingItem.leftTapCount = (json[MCTHandSelection.left.rawValue] as? NSNumber)?.int16Value ?? 0
+            tappingItem.rightTapCount = (json[MCTHandSelection.right.rawValue] as? NSNumber)?.int16Value ?? 0
+        }
+        item.medicationTiming = json[kMedicationTimingKey] as? String
+    }
+    
     func mergeMedications(from reports: [SBAReport], in context: NSManagedObjectContext) throws {
+        guard reports.count > 0 else { return }
         
         // Get existing items.
         let request: NSFetchRequest<MedicationHistoryItem> = MedicationHistoryItem.fetchRequest()
@@ -269,6 +296,7 @@ class HistoryDataManager : SBAReportManager {
     }
     
     func mergeSymptoms(from reports: [SBAReport], in context: NSManagedObjectContext) throws {
+        guard reports.count > 0 else { return }
         
         // Get existing items.
         let request: NSFetchRequest<SymptomHistoryItem> = SymptomHistoryItem.fetchRequest()
@@ -303,6 +331,7 @@ class HistoryDataManager : SBAReportManager {
     }
     
     func mergeTriggers(from reports: [SBAReport], in context: NSManagedObjectContext) throws {
+        guard reports.count > 0 else { return }
         
         // Get existing items.
         let request: NSFetchRequest<TriggerHistoryItem> = TriggerHistoryItem.fetchRequest()
@@ -418,28 +447,31 @@ class HistoryDataManager : SBAReportManager {
     }
     
     func updateMostRecentReport() {
-        guard let context = persistentContainer?.viewContext else { return }
-        do {
-            let request: NSFetchRequest<HistoryItem> = HistoryItem.fetchRequest()
-            request.includesSubentities = true
-            request.sortDescriptors = [NSSortDescriptor(key: #keyPath(HistoryItem.timestampDate), ascending: true)]
-            request.fetchLimit = 1
-            let results = try context.fetch(request)
-            self.mostRecentReportItem = results.first?.timestampDate
-        }
-        catch let error {
-            print("WARNING! Failed to execute fetch of most recent history item. \(error)")
+        guard let context = self.backgroundContext else { return }
+        context.perform {
+            do {
+                let request: NSFetchRequest<HistoryItem> = HistoryItem.fetchRequest()
+                request.includesSubentities = true
+                request.sortDescriptors = [NSSortDescriptor(key: #keyPath(HistoryItem.timestampDate), ascending: true)]
+                request.fetchLimit = 1
+                let results = try context.fetch(request)
+                self.mostRecentReportItem = results.first?.timestampDate
+            }
+            catch let error {
+                print("WARNING! Failed to execute fetch of most recent history item. \(error)")
+            }
         }
     }
     
     /// Save the context.
-    func saveContext () {
+    func saveContext() {
         guard let context = persistentContainer?.viewContext else { return }
         if context.hasChanges {
             do {
                 try context.save()
+                print("History Core Data saved.")
             } catch let error {
-                assertionFailure("Unresolved error \(error)")
+                assertionFailure("History core data failed to save. Unresolved error \(error)")
             }
         }
     }

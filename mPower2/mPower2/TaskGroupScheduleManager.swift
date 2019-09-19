@@ -36,6 +36,7 @@ import BridgeAppUI
 import DataTracking
 
 let kActivityTrackingIdentifier = "ActivityTracking"
+let kMedicationTimingKey = "medicationTiming"
 let kMedicationTimingWindow : TimeInterval = 20 * 60
 
 class ScheduledTask : NSObject {
@@ -248,7 +249,7 @@ public class TaskGroupScheduleManager : ActivityGroupScheduleManager {
     override public func taskController(_ taskController: RSDTaskController, readyToSave taskViewModel: RSDTaskViewModel) {
         
         // Look for the medication timing question and store in memory.
-        if let result = taskViewModel.taskResult.findAnswerResult(with: "medicationTiming") {
+        if let result = taskViewModel.taskResult.findAnswerResult(with: kMedicationTimingKey) {
             _medicationTimingResult = result
         }
         super.taskController(taskController, readyToSave: taskViewModel)
@@ -262,14 +263,18 @@ public class TaskGroupScheduleManager : ActivityGroupScheduleManager {
         return resultIdentifier
     }
     
-    override open func reportIdentifier(for taskResult: RSDTaskResult, topLevelResult: RSDTaskResult?) -> String? {
-        // If this is the activity tracking, then add the answers in with the top level JSON.
-        if taskResult.identifier == kActivityTrackingIdentifier, let topResult = topLevelResult {
-            return super.reportIdentifier(for: topResult, topLevelResult: nil)
+    override public func buildClientData(from taskResult: RSDTaskResult) -> SBBJSONValue? {
+        let clientData = super.buildClientData(from: taskResult)
+        guard let dict = clientData as? [String : Any],
+            self.isMeasurementTaskIdentifier(taskResult.identifier),
+            let medResult = taskResult.findAnswerResult(with: kMedicationTimingKey) ?? _medicationTimingResult,
+            let medTiming = medResult.value
+            else {
+                return clientData
         }
-        else {
-            return super.reportIdentifier(for: taskResult, topLevelResult: topLevelResult)
-        }
+        var json = dict
+        json[kMedicationTimingKey] = medTiming
+        return json as NSDictionary
     }
     
     func isMeasurementTaskIdentifier(_ identifier: String?) -> Bool {
