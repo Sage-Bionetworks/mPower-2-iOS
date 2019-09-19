@@ -121,6 +121,7 @@ class HistoryDataManager : SBAReportManager {
     var backgroundContext: NSManagedObjectContext?
     
     func addHistoryItems(from reports: [SBAReport]) {
+        // print("Add history items from reports: \(reports)")
         guard let context = backgroundContext,
             reports.count > 0
             else {
@@ -198,9 +199,7 @@ class HistoryDataManager : SBAReportManager {
     }
     
     func findMeasurementHistoryItem(in results: [MeasurementHistoryItem], for report: SBAReport) -> MeasurementHistoryItem? {
-        return results.first(where: {
-            report.date == $0.timestamp
-        })
+        return results.first(where: { report.date.matches($0.timestamp) })
     }
     
     func createMeasurementHistoryItem(in context: NSManagedObjectContext, for report: SBAReport) -> MeasurementHistoryItem? {
@@ -274,8 +273,8 @@ class HistoryDataManager : SBAReportManager {
                         let item = results.first(where: {
                             medication.identifier == $0.identifier &&
                             dosage == $0.dosage &&
-                            (timestampItem.timeOfDay == $0.timeOfDay ||
-                             (timestampItem.timeOfDay == nil && timestamp == $0.timestampDate))
+                            ((timestampItem.timeOfDay == $0.timeOfDay) ||
+                             (timestampItem.timeOfDay == nil && timestamp.matches($0.timestampDate)))
                         }) ?? MedicationHistoryItem(context: context, report: report)
                         
                         let medTitle = medication.title ?? medication.identifier
@@ -283,7 +282,8 @@ class HistoryDataManager : SBAReportManager {
                         item.imageName = "MedicationTaskIcon"
                         item.timestampDate = timestamp
                         item.dateBucket = timestamp.dateBucket(for: timestampItem.timeZone)
-                        item.timeZoneSeconds = Int32(timestampItem.timeZone.secondsFromGMT())
+                        item.timeZoneSeconds = Int32(timestampItem.timeZone.secondsFromGMT(for: timestamp))
+                        item.timeZoneIdentifier = timestampItem.timeZone.identifier
                         item.identifier = medication.identifier
                         item.dosage = dosage
                         item.timeOfDay = timestampItem.timeOfDay
@@ -314,7 +314,7 @@ class HistoryDataManager : SBAReportManager {
                 guard let loggedDate = symptomResult.loggedDate else { return }
                 let item = results.first(where: {
                             symptomResult.identifier == $0.identifier &&
-                                loggedDate == $0.timestampDate})
+                                loggedDate.matches($0.timestampDate) })
                     ?? SymptomHistoryItem(context: context, report: report)
                 
                 // Update values
@@ -322,6 +322,7 @@ class HistoryDataManager : SBAReportManager {
                 item.severityLevel = Int64(symptomResult.severity?.rawValue ?? 0)
                 item.timestampDate = loggedDate
                 item.timeZoneSeconds = Int32(symptomResult.timeZone.secondsFromGMT(for: loggedDate))
+                item.timeZoneIdentifier = symptomResult.timeZone.identifier
                 item.note = symptomResult.notes
                 item.medicationTiming = symptomResult.medicationTiming?.rawValue
                 item.imageName = "SymptomsTaskIcon"
@@ -350,12 +351,13 @@ class HistoryDataManager : SBAReportManager {
                 
                 let item = results.first(where: {
                     triggerResult.identifier == $0.identifier &&
-                        loggedDate == $0.timestampDate})
+                        loggedDate.matches($0.timestampDate) })
                     ?? TriggerHistoryItem(context: context, report: report)
                 
                 // Update values
                 item.timestampDate = loggedDate
                 item.timeZoneSeconds = Int32(triggerResult.timeZone.secondsFromGMT(for: loggedDate))
+                item.timeZoneIdentifier = triggerResult.timeZone.identifier
                 item.imageName = "TriggersTaskIcon"
                 item.title = triggerResult.text
             }//items
@@ -391,8 +393,8 @@ class HistoryDataManager : SBAReportManager {
     
     func fetchReportPredicate(for reports: [SBAReport]) -> NSPredicate {
         let reportIdentifier = reports.first!.identifier
-        let minDate = reports.first!.date
-        let maxDate = reports.last!.date
+        let minDate = reports.first!.date.addingNumberOfDays(-1)
+        let maxDate = reports.last!.date.addingNumberOfDays(1)
         let datePredicate = NSPredicate(format: "%K BETWEEN {%@, %@}", #keyPath(HistoryItem.reportDate), minDate as CVarArg, maxDate as CVarArg)
         let identifierPredicate = NSPredicate(format: "%K == %@", #keyPath(HistoryItem.reportIdentifier), reportIdentifier)
         return NSCompoundPredicate(andPredicateWithSubpredicates: [datePredicate, identifierPredicate])
@@ -488,5 +490,14 @@ extension Date {
     
     func delta(from date: Date) -> TimeInterval {
         return date.timeIntervalSinceReferenceDate - self.timeIntervalSinceReferenceDate
+    }
+    
+    /// The initial save of the report uses a high-precision date from the tast result. The encoded
+    /// date from the report returned by the server is a lower-precision timestamp that is decoded
+    /// from a string. Because of this, the comparison of the "same" date is within a certain
+    /// accuracy. The default accuracy is 1 second. syoung 09/19/2019
+    func matches(_ date: Date?, withAccuracy timeInterval: TimeInterval = 1) -> Bool {
+        guard let date = date else { return false }
+        return abs(self.delta(from: date)) < timeInterval
     }
 }

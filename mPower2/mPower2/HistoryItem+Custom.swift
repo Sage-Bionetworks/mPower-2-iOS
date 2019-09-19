@@ -43,14 +43,23 @@ extension HistoryItem {
         self.reportDate = report.date
         self.reportIdentifier = report.identifier
         self.category = report.category.rawValue
-        self.dateBucket = report.date.dateBucket(for: report.timeZone)
         self.timestampDate = report.date
-        self.timeZoneSeconds = Int32(report.timeZone.secondsFromGMT())
+        self.dateBucket = report.date.dateBucket(for: report.timeZone)
+        self.timeZoneSeconds = Int32(report.timeZone.secondsFromGMT(for: report.date))
+        self.timeZoneIdentifier = report.timeZone.identifier
     }
     
     /// The timezone when the item was marked.
     var timeZone: TimeZone {
-        return TimeZone(secondsFromGMT: Int(self.timeZoneSeconds)) ?? TimeZone.current
+        if let identifier = self.timeZoneIdentifier, let timeZone = TimeZone(identifier: identifier) {
+            return timeZone
+        }
+        else if let timeZone = TimeZone(secondsFromGMT: Int(self.timeZoneSeconds)) {
+            return timeZone
+        }
+        else {
+            return TimeZone.current
+        }
     }
     
     /// The timestamp (Date) for when the item was marked as "done".

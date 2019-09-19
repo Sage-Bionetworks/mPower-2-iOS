@@ -13,6 +13,7 @@
         <attribute name="reportIdentifier" attributeType="String" syncable="YES"/>
         <attribute name="timestampDate" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="timeZoneChanged" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="timeZoneIdentifier" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="timeZoneSeconds" attributeType="Integer 32" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="timeBucket" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="HistoryItem" inverseName="timeBucketChildren" inverseEntity="HistoryItem" syncable="YES"/>
@@ -38,7 +39,7 @@
     <entity name="TriggerHistoryItem" representedClassName="TriggerHistoryItem" parentEntity="DataTrackingHistoryItem" syncable="YES" codeGenerationType="class"/>
     <elements>
         <element name="DataTrackingHistoryItem" positionX="18" positionY="117" width="128" height="75"/>
-        <element name="HistoryItem" positionX="-54" positionY="-9" width="128" height="225"/>
+        <element name="HistoryItem" positionX="-54" positionY="-9" width="128" height="240"/>
         <element name="MeasurementHistoryItem" positionX="9" positionY="99" width="128" height="60"/>
         <element name="MedicationHistoryItem" positionX="9" positionY="81" width="128" height="90"/>
         <element name="SymptomHistoryItem" positionX="-9" positionY="72" width="128" height="90"/>
