@@ -57,6 +57,8 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
     }
     
     override func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]?) -> Bool {
+
+        // Set the survey config to the subclass instance
         SBASurveyConfiguration.shared = MP2SurveyConfiguration()
         
         // TODO: syoung 03/25/2019 Refactor bridge study manager to be able to set this through the appConfig.
