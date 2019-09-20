@@ -191,6 +191,8 @@
 		FF50110422DEE81B0035E83C /* HistoryItem+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF50110222DEE81B0035E83C /* HistoryItem+Custom.swift */; };
 		FF50112522DFD4A50035E83C /* SBAReport+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF50112422DFD4A50035E83C /* SBAReport+Custom.swift */; };
 		FF50112622DFD4A50035E83C /* SBAReport+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF50112422DFD4A50035E83C /* SBAReport+Custom.swift */; };
+		FF6494A823354518007D52C6 /* StudyBurstOfflineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6494A723354518007D52C6 /* StudyBurstOfflineTests.swift */; };
+		FF6494AA23356970007D52C6 /* StudyBurstRemindersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6494A923356970007D52C6 /* StudyBurstRemindersTests.swift */; };
 		FF68A751230DC69E00C066BB /* BridgeAppUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF68A750230DC69E00C066BB /* BridgeAppUI.framework */; };
 		FF68A752230DC69E00C066BB /* BridgeAppUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF68A750230DC69E00C066BB /* BridgeAppUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FF68A754230DC69E00C066BB /* DataTracking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF68A753230DC69E00C066BB /* DataTracking.framework */; };
@@ -371,6 +373,8 @@
 		FF5010FF22DEE7E60035E83C /* HistoryDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryDataManager.swift; sourceTree = "<group>"; };
 		FF50110222DEE81B0035E83C /* HistoryItem+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HistoryItem+Custom.swift"; sourceTree = "<group>"; };
 		FF50112422DFD4A50035E83C /* SBAReport+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SBAReport+Custom.swift"; sourceTree = "<group>"; };
+		FF6494A723354518007D52C6 /* StudyBurstOfflineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyBurstOfflineTests.swift; sourceTree = "<group>"; };
+		FF6494A923356970007D52C6 /* StudyBurstRemindersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyBurstRemindersTests.swift; sourceTree = "<group>"; };
 		FF68A750230DC69E00C066BB /* BridgeAppUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BridgeAppUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF68A753230DC69E00C066BB /* DataTracking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DataTracking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF68A756230DC6AC00C066BB /* BridgeAppUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BridgeAppUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -650,6 +654,8 @@
 				F854599F208FA58800D37243 /* ResourceTests.swift */,
 				F89B3DA820C60F8B002EAE2D /* TodayScheduleManagerTests.swift */,
 				F832AC1920D9A130005A9025 /* StudyBurstTests.swift */,
+				FF6494A723354518007D52C6 /* StudyBurstOfflineTests.swift */,
+				FF6494A923356970007D52C6 /* StudyBurstRemindersTests.swift */,
 				F8EF461B22A05CA30010AE12 /* StudyBurstViewControllerTests.swift */,
 			);
 			path = mPower2Tests;
@@ -1080,8 +1086,10 @@
 			files = (
 				F89B3DA920C60F8B002EAE2D /* TodayScheduleManagerTests.swift in Sources */,
 				F8EF461C22A05CA30010AE12 /* StudyBurstViewControllerTests.swift in Sources */,
+				FF6494AA23356970007D52C6 /* StudyBurstRemindersTests.swift in Sources */,
 				F832AC1A20D9A130005A9025 /* StudyBurstTests.swift in Sources */,
 				F85459A0208FA58800D37243 /* ResourceTests.swift in Sources */,
+				FF6494A823354518007D52C6 /* StudyBurstOfflineTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
