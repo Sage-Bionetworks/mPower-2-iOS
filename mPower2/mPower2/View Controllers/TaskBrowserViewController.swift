@@ -51,7 +51,11 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
     }
     
     public var delegate: TaskBrowserViewControllerDelegate?
-    public var scheduleManagers: [ActivityGroupScheduleManager]?
+    public var scheduleManagers: [ActivityGroupScheduleManager]? {
+        didSet {
+            setupManagersIfNeeded()
+        }
+    }
     
     open var shouldShowTopShadow: Bool {
         return true
@@ -72,7 +76,19 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
         return scheduleManagers?.first(where: { $0.identifier == identifier })
     }
 
-    private var selectedScheduleManager: ActivityGroupScheduleManager!
+    /// Check the selected schedules managers and set to the first if not already set.
+    private var selectedScheduleManager: ActivityGroupScheduleManager! {
+        get {
+            if _selectedScheduleManager == nil {
+                _selectedScheduleManager = scheduleManagers?.first
+            }
+            return _selectedScheduleManager
+        }
+        set {
+            _selectedScheduleManager = newValue
+        }
+    }
+    private var _selectedScheduleManager: ActivityGroupScheduleManager!
     
     @IBOutlet weak var tabButtonStackView: UIStackView!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -106,23 +122,7 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
         // Remove existing managed subviews from tabBar stackView
         tabButtonStackView.arrangedSubviews.forEach({ $0.removeFromSuperview() })
         
-        // Let's select the first task group by default.
-        selectedScheduleManager = scheduleManagers?.first
-        
-        // Create tabs for each schedule manager
-        scheduleManagers?.forEach { (manager) in
-            manager.reloadData()
-            let tabView = TaskBrowserTabView(frame: .zero, taskGroupIdentifier: manager.identifier)
-            tabView.title = manager.activityGroup?.title
-            tabView.accessibilityLabel = tabView.title
-            tabView.accessibilityIdentifier = tabView.title
-            tabView.delegate = self
-            tabView.isSelected = (manager.identifier == selectedScheduleManager.identifier)
-            tabButtonStackView.addArrangedSubview(tabView)
-            NotificationCenter.default.addObserver(forName: .SBAUpdatedScheduledActivities, object: manager, queue: OperationQueue.main) { (notification) in
-                self.collectionView.reloadData()
-            }
-        }
+        setupManagersIfNeeded()
         
         // set the tabView height and hide or show it, along with the rule just below
         tabsViewHeightConstraint.constant = shouldShowTabs ? TaskBrowserViewController.tabsHeight() : 0.0
@@ -139,6 +139,26 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
         // Reload our data
         collectionView.reloadData()
     }
+    
+    func setupManagersIfNeeded() {
+        guard !_managersLoaded, self.isViewLoaded, let managers = self.scheduleManagers else { return }
+        _managersLoaded = true
+        // Create tabs for each schedule manager
+        managers.forEach { (manager) in
+            manager.reloadData()
+            let tabView = TaskBrowserTabView(frame: .zero, taskGroupIdentifier: manager.identifier)
+            tabView.title = manager.activityGroup?.title
+            tabView.accessibilityLabel = tabView.title
+            tabView.accessibilityIdentifier = tabView.title
+            tabView.delegate = self
+            tabView.isSelected = (manager.identifier == selectedScheduleManager.identifier)
+            tabButtonStackView.addArrangedSubview(tabView)
+            NotificationCenter.default.addObserver(forName: .SBAUpdatedScheduledActivities, object: manager, queue: OperationQueue.main) { (notification) in
+                self.collectionView.reloadData()
+            }
+        }
+    }
+    private var _managersLoaded = false
     
     func startTask(for taskInfo: RSDTaskInfo) {
         let (taskViewModel, _) = selectedScheduleManager.instantiateTaskViewModel(for: taskInfo)
