@@ -152,6 +152,11 @@ class HistoryDataManager : SBAReportManager {
                     default:
                         try self.mergeMeasurementTasks(from: filteredReports, in: context)
                     }
+                    
+                    if let lastDate = filteredReports.last?.date,
+                        (self.mostRecentReportItem == nil || self.mostRecentReportItem! < lastDate) {
+                        self.mostRecentReportItem = lastDate
+                    }
                 }
                 
                 // Update the time buckets for all items on the days included in the reports.
@@ -162,8 +167,10 @@ class HistoryDataManager : SBAReportManager {
                 try self.updateTimeBuckets(in: context, dateBuckets: dateBuckets)
                 
                 // Save the edits.
-                try context.save()
-                print("History Core Data context saved.")
+                if context.hasChanges {
+                    try context.save()
+                    print("History Core Data context saved.")
+                }
             }
             catch let err {
                 print("WARNING! Failed to load reports into store. \(err)")

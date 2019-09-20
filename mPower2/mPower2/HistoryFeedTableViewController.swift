@@ -53,6 +53,21 @@ class HistoryFeedTableViewController: UITableViewController, NSFetchedResultsCon
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Force a re-fetch of the data when switching to this view controller.
+        if let fetchedResultsController = self.fetchedResultsController {
+            do {
+                try fetchedResultsController.performFetch()
+                self.tableView.reloadData()
+            }
+            catch let err {
+                print("Unable to Perform Fetch Request. \(err)")
+            }
+        }
+    }
+    
     @discardableResult
     func loadFetchedResultsController() -> Bool {
         guard let container = self.dataManager.persistentContainer else {
