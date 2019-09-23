@@ -248,6 +248,22 @@ class StudyBurstTaskBrowserViewController: TaskBrowserViewController {
     override var shouldShowTopShadow: Bool {
         return false
     }
+    
+    // Override to ensure that the study burst schedule manager is *always* set to non-nil.
+    override var scheduleManagers: [ActivityGroupScheduleManager]? {
+        get {
+            guard let scheduleManagers = super.scheduleManagers, scheduleManagers.count == 1
+                else {
+                    let scheduleManagers = [StudyBurstScheduleManager.shared]
+                    super.scheduleManagers = scheduleManagers
+                    return scheduleManagers
+            }
+            return scheduleManagers
+        }
+        set {
+            super.scheduleManagers = newValue
+        }
+    }
 
     // MARK: UICollectionViewDelegate
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
