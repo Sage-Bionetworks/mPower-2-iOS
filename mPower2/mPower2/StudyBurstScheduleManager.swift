@@ -150,7 +150,9 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     }
     
     /// Is there an active study burst?
-    public private(set) var hasStudyBurst : Bool = false
+    public var hasStudyBurst : Bool {
+        return dayCount != nil
+    }
     
     /// The maximum number of days in a study burst.
     public private(set) var maxDaysCount : Int = 19
@@ -159,7 +161,20 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     public private(set) var pastDaysCount : Int = 0
     
     /// What day of the study burst should be displayed?
-    public private(set) var dayCount : Int?
+    public var dayCount : Int? {
+        if let loadedDate = _dayCountLoaded, Calendar.iso8601.isDate(now(), inSameDayAs: loadedDate) {
+            return _dayCount
+        }
+        else {
+            // The day count has not been loaded for today so infer it.
+            // Note: this will get muddled if crossing timezones, but not really sure how to work
+            // around that. syoung 09/20/2019
+            let dayCount = Calendar.iso8601.dateComponents([.day], from: self.studyBurstDayOne, to: now()).day! + 1
+            return dayCount <= numberOfDays ? dayCount : nil
+        }
+    }
+    private var _dayCount : Int?
+    private var _dayCountLoaded : Date?
     
     /// Number of days in the study burst that were missed.
     public private(set) var missedDaysCount: Int = 0
@@ -311,6 +326,23 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     
     static let orderKey = "StudyBurstTaskOrder"
     static let timestampKey = "StudyBurstTimestamp"
+    static let day1StudyBurstKey = "StudyBurstDay1"
+    
+    var studyBurstDayOne: Date {
+        get {
+            return
+                UserDefaults.standard.object(forKey: StudyBurstScheduleManager.day1StudyBurstKey) as? Date ?? now()
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: StudyBurstScheduleManager.day1StudyBurstKey)
+        }
+    }
+    
+    internal static func flushDefaults() {
+        UserDefaults.standard.set(nil, forKey: orderKey)
+        UserDefaults.standard.set(nil, forKey: timestampKey)
+        UserDefaults.standard.set(nil, forKey: day1StudyBurstKey)
+    }
     
     internal static func setOrderedTasks(_ sortOrder: [String], timestamp: Date) {
         UserDefaults.standard.set(sortOrder, forKey: orderKey)
@@ -476,8 +508,8 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
             }
         }
         else {
-            self.hasStudyBurst = false
-            self.dayCount = nil
+            self._dayCount = nil
+            self._dayCountLoaded = now()
         }
 
         self.updateNotifications()
@@ -576,14 +608,18 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         self.pastDaysCount = pastSchedules.count
         
         if hasStudyBurst {
-            self.dayCount = dayCount
+            self._dayCount = dayCount
+            self._dayCountLoaded = now()
             self.missedDaysCount = missedDaysCount
+            if dayCount == 1 {
+                self.studyBurstDayOne = now()
+            }
         }
         else {
-            self.dayCount = nil
+            self._dayCount = nil
+            self._dayCountLoaded = now()
             self.missedDaysCount = 0
         }
-        self.hasStudyBurst = hasStudyBurst
         
         return studyMarker
     }
@@ -609,8 +645,18 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         return pastTasks.flatMap { (task) -> [RSDIdentifier] in
             // Look to see if there is a report and include if *not* finished.
             let identifiers: [RSDIdentifier] = task.activityIdentifiers.filter { (identifier) in
-                let finished = self.reports.contains(where: { $0.identifier == identifier})
-                return !finished
+                if self.reports.count > 0 {
+                    return !self.reports.contains(where: { $0.identifier == identifier})
+                }
+                else {
+                    do {
+                        let report = try self.participantManager.getLatestCachedData(forReport: identifier.stringValue)
+                        return report.data == nil || report.date == nil
+                    } catch let err {
+                        print("WARNING! Unexpected error while fetching latest report for \(identifier): \(err)")
+                        return true
+                    }
+                }
             }
             let sortedIdentifiers = identifiers.sorted(by: { (lhs, rhs) in
                 let lIdx = task.activityIdentifiers.firstIndex(where: { lhs == $0 }) ?? Int.max

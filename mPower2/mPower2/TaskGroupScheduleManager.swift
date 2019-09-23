@@ -97,7 +97,26 @@ public class ActivityGroupScheduleManager : SBAScheduleManager {
     }
     
     func refreshOrderedTasks() {
-        let schedules = self.scheduledActivities
+        let schedules: [SBBScheduledActivity] = {
+            if self.scheduledActivities.count > 0 {
+                return self.scheduledActivities
+            }
+            else if let group = activityGroup {
+                do {
+                    let todayPredicate = SBBScheduledActivity.availableOnPredicate(on: today())
+                    let tasksPredicate = SBBScheduledActivity.activityGroupPredicate(for: group)
+                    let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [todayPredicate, tasksPredicate])
+                    return try self.activityManager.getCachedSchedules(using: predicate, sortDescriptors: nil, fetchLimit: 0)
+                } catch let err {
+                    print("WARNING! Failed to get cached schedules: \(err)")
+                    return []
+                }
+            }
+            else {
+                assertionFailure("This schedule manager requires having the task group set.")
+                return []
+            }
+        }()
         let now = today()
         _orderedTasks?.forEach { (scheduledTask) in
             let finishedSchedule = schedules.first(where: {
