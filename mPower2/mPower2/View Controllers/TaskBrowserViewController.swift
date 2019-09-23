@@ -76,7 +76,7 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
         return scheduleManagers?.first(where: { $0.identifier == identifier })
     }
 
-    /// Check the selected schedules managers and set to the first if not already set.
+    /// Check the selected schedule managers and set to the first if not already set.
     private var selectedScheduleManager: ActivityGroupScheduleManager! {
         get {
             if _selectedScheduleManager == nil {
