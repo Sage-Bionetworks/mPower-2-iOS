@@ -57,14 +57,12 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
     }
     
     override func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]?) -> Bool {
+
+        // Set the survey config to the subclass instance
         SBASurveyConfiguration.shared = MP2SurveyConfiguration()
         
         // TODO: syoung 03/25/2019 Refactor bridge study manager to be able to set this through the appConfig.
         RSDStudyConfiguration.shared.fullInstructionsFrequency = .monthly
-        
-        // Instantiate and load the scheduled activities and reports for the study burst.
-        StudyBurstScheduleManager.shared.loadScheduledActivities()
-        StudyBurstScheduleManager.shared.loadReports()
         
         // Reset the badge icon on active
         // TODO: syoung 07/25/2018 Add appropriate messaging and UI/UX for highlighting notifications.
@@ -76,6 +74,13 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
         UNUserNotificationCenter.current().delegate = SBAMedicationReminderManager.shared
         
         let retval = super.application(application, willFinishLaunchingWithOptions: launchOptions)
+        
+        // Instantiate and load the scheduled activities and reports for the study burst.
+        StudyBurstScheduleManager.shared.loadScheduledActivities()
+        StudyBurstScheduleManager.shared.loadReports()
+        
+        // Set up the history manager to add listener for adding reports.
+        let _ = HistoryDataManager.shared
         
         // Start the passive data collectors (if we have all the necessary consents, authorizations, permissions, etc.).
         // This has to be done *after* Bridge has been set up, so do it after calling super.

@@ -36,6 +36,7 @@ import BridgeAppUI
 import DataTracking
 
 let kActivityTrackingIdentifier = "ActivityTracking"
+let kMedicationTimingKey = "medicationTiming"
 let kMedicationTimingWindow : TimeInterval = 20 * 60
 
 class ScheduledTask : NSObject {
@@ -267,7 +268,7 @@ public class TaskGroupScheduleManager : ActivityGroupScheduleManager {
     override public func taskController(_ taskController: RSDTaskController, readyToSave taskViewModel: RSDTaskViewModel) {
         
         // Look for the medication timing question and store in memory.
-        if let result = taskViewModel.taskResult.findAnswerResult(with: "medicationTiming") {
+        if let result = taskViewModel.taskResult.findAnswerResult(with: kMedicationTimingKey) {
             _medicationTimingResult = result
         }
         super.taskController(taskController, readyToSave: taskViewModel)
@@ -279,6 +280,22 @@ public class TaskGroupScheduleManager : ActivityGroupScheduleManager {
                 return nil
         }
         return resultIdentifier
+    }
+    
+    override public func buildClientData(from taskResult: RSDTaskResult) -> SBBJSONValue? {
+        let clientData = super.buildClientData(from: taskResult)
+        guard let dict = clientData as? [String : Any],
+            self.isMeasurementTaskIdentifier(taskResult.identifier) else {
+                return clientData
+        }
+        
+        var json = dict
+        if let medResult = taskResult.findAnswerResult(with: kMedicationTimingKey) ?? _medicationTimingResult,
+            let medTiming = medResult.value {
+            json[kMedicationTimingKey] = medTiming
+        }
+        
+        return json as NSDictionary
     }
     
     func isMeasurementTaskIdentifier(_ identifier: String?) -> Bool {
