@@ -499,7 +499,7 @@ extension Date {
         return date.timeIntervalSinceReferenceDate - self.timeIntervalSinceReferenceDate
     }
     
-    /// The initial save of the report uses a high-precision date from the tast result. The encoded
+    /// The initial save of the report uses a high-precision date from the test result. The encoded
     /// date from the report returned by the server is a lower-precision timestamp that is decoded
     /// from a string. Because of this, the comparison of the "same" date is within a certain
     /// accuracy. The default accuracy is 1 second. syoung 09/19/2019
