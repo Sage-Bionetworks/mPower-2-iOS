@@ -37,7 +37,7 @@ import XCTest
 import Research
 import UserNotifications
 
-class StudyBurstRemindersTests: StudyBurstManagerTests {
+class StudyBurstRemindersTests: StudyBurstTests {
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.

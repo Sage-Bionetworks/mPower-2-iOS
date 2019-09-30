@@ -38,7 +38,8 @@ import Research
 
 public struct StudySetup {
     
-    init(studyBurstDay: UInt = 3,
+    init(_ studyBurstIndex: Int = 0,
+         studyBurstDay: UInt = 3,
          studyBurstFinishedOnDays: [Int] = [0, 2],
          studyBurstSurveyFinishedOnDays: [RSDIdentifier : Int] = [:],
          finishedTodayTasks: [RSDIdentifier] = [.tappingTask, .walkAndBalanceTask],
@@ -51,10 +52,15 @@ public struct StudySetup {
         self.finishedTodayTasks = finishedTodayTasks
         self.timeUntilExpires = timeUntilExpires
         self.dataGroups = dataGroups
+        self.studyBurstIndex = studyBurstIndex
     }
     
     /// First name of the participant.
     var firstName = "Rumplestiltskin"
+    
+    /// The count for the study bursts. Assumed that if > 0, that the previous study burst was
+    /// completed and the engagement survey was taken.
+    let studyBurstIndex: Int
 
     /// Study Burst "day" where Day 0 is the day the participant was "created".
     let studyBurstDay: UInt
@@ -84,9 +90,16 @@ public struct StudySetup {
     /// Should the task order be set up for this test?
     var taskOrderTimestamp: Date? = Date()
     
+    /// First day of the current study burst.
+    var studyBurstDayOne: Date {
+        return now.startOfDay().addingNumberOfDays(-1 * Int(studyBurstDay))
+    }
+    
     /// The date when the participant started the study. Hardcoded to 6:15AM local time.
     var createdOn: Date {
-        return now.startOfDay().addingNumberOfDays(-1 * Int(studyBurstDay)).addingTimeInterval(6.25 * 60 * 60)
+        let dayOne = studyBurstDayOne
+        let createdOn = Calendar.iso8601.date(byAdding: .month, value: -3 * self.studyBurstIndex, to: dayOne)!.addingTimeInterval(6.25 * 60 * 60)
+        return createdOn
     }
     
     var finishedMotivation: Bool {
@@ -136,14 +149,14 @@ extension StudySetup {
         if studyBurstDay == missingCount {
             return []
         }
-        var finishedDays: [Int] = Array(0..<studyBurstDay)
+        var finishedDays: IndexSet = IndexSet(Array(0..<studyBurstDay))    
         if missingCount > 0 {
             let offset = finishedDays.count / (missingCount + 1)
             for ii in 0..<missingCount {
-                finishedDays.remove(at: offset * (ii + 1))
+                finishedDays.remove(offset * (ii + 1))
             }
         }
-        return finishedDays
+        return Array(finishedDays)
     }
     
     static func previousFinishedSurveys(for studyBurstDay: Int) -> [RSDIdentifier : Int] {
@@ -160,13 +173,13 @@ extension StudySetup {
     }
     
     static let day1_startupState =
-        StudySetup(studyBurstDay: 0,
+        StudySetup(0, studyBurstDay: 0,
                    studyBurstFinishedOnDays: [],
                    studyBurstSurveyFinishedOnDays: [:],
                    finishedTodayTasks: [])
     
     static let day1_startupState_BRII_DTT =
-        StudySetup(studyBurstDay: 0,
+        StudySetup(0, studyBurstDay: 0,
                    studyBurstFinishedOnDays: [],
                    studyBurstSurveyFinishedOnDays: [:],
                    finishedTodayTasks: [],
@@ -174,7 +187,7 @@ extension StudySetup {
                    dataGroups: ["gr_SC_DB","gr_BR_II","gr_ST_T","gr_DT_T"])
     
     static let day1_startupState_BRII_DTF =
-        StudySetup(studyBurstDay: 0,
+        StudySetup(0, studyBurstDay: 0,
                    studyBurstFinishedOnDays: [],
                    studyBurstSurveyFinishedOnDays: [:],
                    finishedTodayTasks: [],
@@ -182,7 +195,7 @@ extension StudySetup {
                    dataGroups: ["gr_SC_DB","gr_BR_II","gr_ST_T","gr_DT_F"])
     
     static let day1_startupState_BRAD_DTT =
-        StudySetup(studyBurstDay: 0,
+        StudySetup(0, studyBurstDay: 0,
                    studyBurstFinishedOnDays: [],
                    studyBurstSurveyFinishedOnDays: [:],
                    finishedTodayTasks: [],
@@ -190,7 +203,7 @@ extension StudySetup {
                    dataGroups: ["gr_SC_DB","gr_BR_AD","gr_ST_T","gr_DT_T"])
     
     static let day1_startupState_BRAD_DTF =
-        StudySetup(studyBurstDay: 0,
+        StudySetup(0, studyBurstDay: 0,
                    studyBurstFinishedOnDays: [],
                    studyBurstSurveyFinishedOnDays: [:],
                    finishedTodayTasks: [],
@@ -198,25 +211,25 @@ extension StudySetup {
                    dataGroups: ["gr_SC_DB","gr_BR_AD","gr_ST_T","gr_DT_F"])
     
     static let day1_noTasksFinished =
-        StudySetup(studyBurstDay: 0,
+        StudySetup(0, studyBurstDay: 0,
                    studyBurstFinishedOnDays: [],
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 0),
                    finishedTodayTasks: [])
     
     static let day1_twoTasksFinished =
-        StudySetup(studyBurstDay: 0,
+        StudySetup(0, studyBurstDay: 0,
                    studyBurstFinishedOnDays: [],
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 0),
                    finishedTodayTasks: [.walkAndBalanceTask, .tappingTask])
     
     static let day1_tasksFinished_surveysNotFinished =
-        StudySetup(studyBurstDay: 0,
+        StudySetup(0, studyBurstDay: 0,
                    studyBurstFinishedOnDays: [],
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 0),
                    finishedTodayTasks: RSDIdentifier.measuringTasks)
     
     static let day1_tasksFinished_surveysNotFinished_BRII_DTT =
-        StudySetup(studyBurstDay: 0,
+        StudySetup(0, studyBurstDay: 0,
                    studyBurstFinishedOnDays: [],
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 0),
                    finishedTodayTasks: [],
@@ -224,7 +237,7 @@ extension StudySetup {
                    dataGroups: ["gr_SC_DB","gr_BR_II","gr_ST_T","gr_DT_T"])
     
     static let day1_tasksFinished_surveysNotFinished_BRII_DTF =
-        StudySetup(studyBurstDay: 0,
+        StudySetup(0, studyBurstDay: 0,
                    studyBurstFinishedOnDays: [],
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 0),
                    finishedTodayTasks: [],
@@ -232,7 +245,7 @@ extension StudySetup {
                    dataGroups: ["gr_SC_DB","gr_BR_II","gr_ST_T","gr_DT_F"])
     
     static let day1_tasksFinished_surveysNotFinished_BRAD_DTT =
-        StudySetup(studyBurstDay: 0,
+        StudySetup(0, studyBurstDay: 0,
                    studyBurstFinishedOnDays: [],
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 0),
                    finishedTodayTasks: [],
@@ -240,7 +253,7 @@ extension StudySetup {
                    dataGroups: ["gr_SC_DB","gr_BR_AD","gr_ST_T","gr_DT_T"])
     
     static let day1_tasksFinished_surveysNotFinished_BRAD_DTF =
-        StudySetup(studyBurstDay: 0,
+        StudySetup(0, studyBurstDay: 0,
                    studyBurstFinishedOnDays: [],
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 0),
                    finishedTodayTasks: [],
@@ -248,7 +261,7 @@ extension StudySetup {
                    dataGroups: ["gr_SC_DB","gr_BR_AD","gr_ST_T","gr_DT_F"])
     
     static let day1_tasksFinished_surveysFinished =
-        StudySetup(studyBurstDay: 0,
+        StudySetup(0, studyBurstDay: 0,
                    studyBurstFinishedOnDays: [0],
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 1),
                    finishedTodayTasks: RSDIdentifier.measuringTasks,
@@ -256,124 +269,130 @@ extension StudySetup {
                    dataGroups: ["gr_SC_DB","gr_BR_II","gr_ST_T","gr_DT_T","parkinsons"])
     
     static let day1_allFinished_2HoursAgo =
-        StudySetup(studyBurstDay: 0,
+        StudySetup(0, studyBurstDay: 0,
                    studyBurstFinishedOnDays: [0],
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 1),
                    finishedTodayTasks: RSDIdentifier.measuringTasks,
                    timeUntilExpires: -2 * 60 * 60)
     
     static let day2_twoFinished_2HoursAgo =
-        StudySetup(studyBurstDay: 1,
+        StudySetup(0, studyBurstDay: 1,
                    studyBurstFinishedOnDays: [0],
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 1),
                    finishedTodayTasks: [.walkAndBalanceTask, .tappingTask],
                    timeUntilExpires: -2 * 60 * 60)
     
     static let day2_nothingFinished =
-        StudySetup(studyBurstDay: 1,
+        StudySetup(0, studyBurstDay: 1,
                    studyBurstFinishedOnDays: [],
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 0),
                    finishedTodayTasks: [])
     
     static let day2_readyToStartTasks =
-        StudySetup(studyBurstDay: 1,
+        StudySetup(0, studyBurstDay: 1,
                    studyBurstFinishedOnDays: [0],
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 1),
                    finishedTodayTasks: [])
     
     static let day2_twoTasksFinished =
-        StudySetup(studyBurstDay: 1,
+        StudySetup(0, studyBurstDay: 1,
                    studyBurstFinishedOnDays: [0],
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 1),
                    finishedTodayTasks: [.tappingTask, .tremorTask])
     
     static let day2_surveysNotFinished =
-        StudySetup(studyBurstDay: 1,
+        StudySetup(0, studyBurstDay: 1,
                    studyBurstFinishedOnDays: [0],
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 0),
                    finishedTodayTasks: [])
     
     static let day2_tasksNotFinished_surveysFinished =
-        StudySetup(studyBurstDay: 1,
+        StudySetup(0, studyBurstDay: 1,
                    studyBurstFinishedOnDays: [0],
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 1),
                    finishedTodayTasks: [])
     
     static let day9_twoTasksFinished =
-        StudySetup(studyBurstDay: 8,
+        StudySetup(0, studyBurstDay: 8,
                    studyBurstFinishedOnDays: finishedOnDays(7, 0),
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 7),
                    finishedTodayTasks: [.walkAndBalanceTask, .tappingTask])
     
     static let day9_tasksFinished =
-        StudySetup(studyBurstDay: 8,
+        StudySetup(0, studyBurstDay: 8,
                    studyBurstFinishedOnDays: finishedOnDays(7, 0),
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 7),
                    finishedTodayTasks: RSDIdentifier.measuringTasks)
     
     static let day11_tasksFinished_noMissingDays =
-        StudySetup(studyBurstDay: 10,
+        StudySetup(0, studyBurstDay: 10,
                    studyBurstFinishedOnDays: finishedOnDays(10, 0),
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 10),
                    finishedTodayTasks: RSDIdentifier.measuringTasks)
     
     
     static let day14_missing1_tasksFinished_engagementNotFinished =
-        StudySetup(studyBurstDay: 13,
+        StudySetup(0, studyBurstDay: 13,
                    studyBurstFinishedOnDays: finishedOnDays(13, 1),
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 12),
                    finishedTodayTasks: RSDIdentifier.measuringTasks)
     
     static let day14_missing6_tasksFinished_engagementNotFinished =
-        StudySetup(studyBurstDay: 13,
+        StudySetup(0, studyBurstDay: 13,
                    studyBurstFinishedOnDays: finishedOnDays(13, 6),
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 12),
                    finishedTodayTasks: RSDIdentifier.measuringTasks)
     
     static let day14_tasksFinished_engagementNotFinished =
-        StudySetup(studyBurstDay: 13,
+        StudySetup(0, studyBurstDay: 13,
                    studyBurstFinishedOnDays: finishedOnDays(13, 0),
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 12),
                    finishedTodayTasks: RSDIdentifier.measuringTasks)
     
     static let day14_twoTasksFinished =
-        StudySetup(studyBurstDay: 13,
+        StudySetup(0, studyBurstDay: 13,
                    studyBurstFinishedOnDays: finishedOnDays(13, 0),
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 12),
                    finishedTodayTasks: [.walkAndBalanceTask, .tappingTask])
     
     static let day15_missing1_engagementNotFinished =
-        StudySetup(studyBurstDay: 14,
+        StudySetup(0, studyBurstDay: 14,
                    studyBurstFinishedOnDays: finishedOnDays(14, 1),
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 12),
                    finishedTodayTasks: [])
     
+    static let day15_missing10_engagementNotFinished =
+        StudySetup(0, studyBurstDay: 14,
+                   studyBurstFinishedOnDays: finishedOnDays(14, 10),
+                   studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 12),
+                   finishedTodayTasks: [])
+    
     static let day15_burstCompleted_engagementNotFinished =
-        StudySetup(studyBurstDay: 14,
+        StudySetup(0, studyBurstDay: 14,
                    studyBurstFinishedOnDays: finishedOnDays(14, 0),
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 12),
                    finishedTodayTasks: [])
     
     static let day15_burstCompleted_engagementFinished =
-        StudySetup(studyBurstDay: 14,
+        StudySetup(0, studyBurstDay: 14,
                    studyBurstFinishedOnDays: finishedOnDays(14, 0),
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 14),
                    finishedTodayTasks: [])
     
     static let day21_missing6_engagementNotFinished =
-        StudySetup(studyBurstDay: 20,
+        StudySetup(0, studyBurstDay: 20,
                    studyBurstFinishedOnDays: finishedOnDays(18, 6),
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 12),
                    finishedTodayTasks: [])
     
     static let day21_tasksFinished_noMissingDays =
-        StudySetup(studyBurstDay: 20,
+        StudySetup(0, studyBurstDay: 20,
                    studyBurstFinishedOnDays: finishedOnDays(14, 0),
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 14),
                    finishedTodayTasks: [])
     
     static let day89_tasksFinished_noMissingDays =
-        StudySetup(studyBurstDay: 88,
+        StudySetup(0, studyBurstDay: 88,
                    studyBurstFinishedOnDays: finishedOnDays(14, 0),
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 14),
                    finishedTodayTasks: [])
