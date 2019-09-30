@@ -32,6 +32,7 @@
 //
 
 import BridgeApp
+import DataTracking
 
 extension SBAProfileOnSelectedAction {
     public static let permissionsProfileAction: SBAProfileOnSelectedAction = "permissionsProfileAction"
@@ -133,11 +134,29 @@ struct SettingsProfileTableItem: SBAProfileTableItem, Decodable {
     var detail: String? {
         switch self.setting {
         case .medicationReminders:
-            // TODO: emm 2019-07-08 return the current setting for medication reminders
-            return "15 minutes before"
+            // Return the current setting for how far in advance to send medication reminders.
+            guard let reminders = SBAMedicationReminderManager.shared.getMedicationResult()?.reminders,
+                    reminders.count > 0
+                else {
+                    return ""
+            }
+            let minutes = reminders[0]
+            let dateComponents = DateComponents(minute: minutes)
+            guard let minutesString = DateComponentsFormatter.localizedString(from: dateComponents, unitsStyle: .full)
+                else {
+                    return ""
+            }
+
+            return Localization.localizedStringWithFormatKey("MEDICATION_REMINDER_MINUTES_BEFORE", minutesString)
+            
         case .studyBurstTime:
-            // TODO: emm 2019-07-08 return the current setting for study burst reminder time
-            return "9:00 AM"
+            // Return the current setting for study burst reminder time.
+            guard let dateComponents = StudyBurstScheduleManager.shared.getReminderTime()
+                else {
+                    return ""
+            }
+            return DateComponentsFormatter.localizedString(from: dateComponents, unitsStyle: .positional)
+            
         default:
             debugPrint("Don't know how to show current setting for unknown setting '\(self.setting.rawValue)'; returning empty string")
             return ""
