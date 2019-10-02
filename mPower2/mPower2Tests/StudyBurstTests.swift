@@ -463,6 +463,32 @@ class StudyBurstManagerTests: StudyBurstTests {
         XCTAssertEqual(scheduleManager.actionBarItem?.detail, "6 Minutes")
     }
     
+    func testStudyBurst_Day15_Missing10() {
+        
+        let scheduleManager = TestStudyBurstScheduleManager(.day15_missing10_engagementNotFinished)
+        guard loadSchedules(scheduleManager) else {
+            XCTFail("Failed to load the schedules and reports.")
+            return
+        }
+
+        XCTAssertNil(scheduleManager.updateFailed_error)
+        XCTAssertNotNil(scheduleManager.update_fetchedActivities)
+        XCTAssertNotNil(scheduleManager.activityGroup)
+        XCTAssertEqual(scheduleManager.dayCount, 15)
+        XCTAssertTrue(scheduleManager.hasStudyBurst)
+        XCTAssertFalse(scheduleManager.isCompletedForToday)
+        XCTAssertFalse(scheduleManager.isLastDay)
+        XCTAssertEqual(scheduleManager.missedDaysCount, 10)
+        
+        let orderedTasks = scheduleManager.orderedTasks
+        let allNotFinished = orderedTasks.reduce(true, { $0 && ($1.finishedOn == nil) })
+        XCTAssertTrue(allNotFinished)
+        
+        let completionTask = scheduleManager.engagementTaskViewModel()
+        XCTAssertNil(completionTask)
+    }
+    
+    
     func testStudyBurst_Day14_Missing1() {
         
         let scheduleManager = TestStudyBurstScheduleManager(.day14_missing1_tasksFinished_engagementNotFinished)
