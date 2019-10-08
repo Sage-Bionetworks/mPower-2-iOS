@@ -261,11 +261,12 @@ class HistoryDataManager : SBAReportManager {
         
         // Get the medication items.
         let trackedItems = try self.trackedItems(with: .medicationTask)
+        let decoder = SBAFactory.shared.createJSONDecoder()
         
         // Parse the reports and add/edit the items.
         try reports.forEach { report in
-            var medResult = SBAMedicationTrackingResult(identifier: report.identifier)
-            try medResult.updateSelected(from: report.clientData, with: trackedItems)
+            let jsonData = try JSONSerialization.data(withJSONObject: report.clientData, options: .prettyPrinted)
+            let medResult = try decoder.decode(SBAMedicationTrackingResult.self, from: jsonData)
 
             medResult.medications.forEach { medication in
                 guard let dosages = medication.dosageItems else { return }
