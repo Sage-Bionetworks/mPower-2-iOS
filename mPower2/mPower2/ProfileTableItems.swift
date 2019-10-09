@@ -93,10 +93,16 @@ struct PermissionsProfileTableItem: SBAProfileTableItem, Decodable {
     
     /// For the detail text, show their current status for the specified permission type.
     var detail: String? {
-        get {
-            let status = RSDAuthorizationHandler.authorizationStatus(for: permissionType.identifier)
-            let detailKey = (status == .authorized) ? "PERMISSIONS_STATE_ON" : "PERMISSIONS_STATE_OFF"
-            return Localization.localizedString(detailKey)
+        let status = RSDAuthorizationHandler.authorizationStatus(for: permissionType.identifier)
+        switch status {
+        case .notDetermined, .restricted:
+            // If the status is restricted or not determined then it cannot be changed via the
+            // the Settings app.
+            return nil
+        case .authorized:
+            return Localization.localizedString("PERMISSIONS_STATE_ON")
+        default:
+            return Localization.localizedString("PERMISSIONS_STATE_OFF")
         }
     }
     

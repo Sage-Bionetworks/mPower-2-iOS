@@ -36,6 +36,7 @@ import BridgeAppUI
 import DataTracking
 import BridgeSDK
 import UserNotifications
+import ResearchMotion
 
 @UIApplicationMain
 class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
@@ -104,6 +105,11 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
     override func applicationDidBecomeActive(_ application: UIApplication) {
         super.applicationDidBecomeActive(application)
         self.showAppropriateViewController(animated: true)
+        
+        // Update the cached motion sensor permission state.
+        RSDAuthorizationHandler.registerAdaptorIfNeeded(RSDMotionAuthorization.shared)
+        RSDMotionAuthorization.requestAuthorization { (_, _) in
+        }
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {

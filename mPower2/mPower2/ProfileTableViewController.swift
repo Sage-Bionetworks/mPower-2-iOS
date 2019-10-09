@@ -161,7 +161,7 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
         }
         
         switch onSelected {
-        case SBAProfileOnSelectedAction.showHTML:
+        case .showHTML:
             guard let htmlItem = item as? SBAHTMLProfileTableItem else { break }
             guard let webVC = self.viewController(for: self.webViewControllerStoryboardId) as? RSDWebViewController
                 else { return }
@@ -181,11 +181,11 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
             }
              */
 
-        case SBAProfileOnSelectedAction.showWithdrawal:
+        case .showWithdrawal:
             guard let withdrawalVC = self.viewController(for: self.withdrawalViewControllerStoryboardId) as? WithdrawalViewController else { return }
             self.show(withdrawalVC, sender: self)
             
-        case SBAProfileOnSelectedAction.editProfileItem:
+        case .editProfileItem:
             guard let profileTableItem = item as? SBAProfileItemProfileTableItem,
                     (profileTableItem.isEditable ?? false)!,
                     let taskId = profileTableItem.editTaskIdentifier,
@@ -205,7 +205,7 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
             editVC.delegate = self
             self.show(editVC, sender: self)
             
-        case SBAProfileOnSelectedAction.showProfileView:
+        case .showProfileView:
             guard let profileViewTableItem = item as? SBAProfileViewProfileTableItem
                 else {
                     return
@@ -214,7 +214,33 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
                 else { return }
             profileVC.profileDataSource = profileViewTableItem.profileDataSource
             self.show(profileVC, sender: self)
-
+            
+        case .permissionsProfileAction:
+            guard let permissionsItem = item as? PermissionsProfileTableItem else { break }
+            let status = RSDAuthorizationHandler.authorizationStatus(for: permissionsItem.permissionType.identifier)
+            let permission = RSDStandardPermission(permissionType: permissionsItem.permissionType)
+            if status == .notDetermined {
+                // If permission has never been granted then request it and reload the row.
+                RSDAuthorizationHandler.requestAuthorization(for: permission) { [weak self] (_, _) in
+                    self?.tableView.reloadRows(at: [indexPath], with: .none)
+                }
+            }
+            else if status != .restricted,
+                let settingsUrl = URL(string: UIApplication.openSettingsURLString),
+                UIApplication.shared.canOpenURL(settingsUrl) {
+                // If the status is *not* restricted and the settings are accessible,
+                // then open them. Note: preferred UI/UX is to go to the app without confirmation
+                // and let the user return via the back button.
+                UIApplication.shared.open(settingsUrl, options: [:], completionHandler: nil)
+            }
+            else {
+                // If the permission is restricted then there is no point in redirecting to the
+                // settings app. Just show the restricted message.
+                self.presentAlertWithOk(title: permission.title,
+                                        message: permission.restrictedMessage) { (_) in
+                }
+            }
+            
             /* TODO: emm 2018-08-21 deal with this for v2.1
         case scheduleProfileAction:
             guard let scheduleItem = item as? ScheduleProfileTableItem,
