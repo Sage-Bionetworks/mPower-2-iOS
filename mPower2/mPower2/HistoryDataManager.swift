@@ -189,6 +189,8 @@ class HistoryDataManager : SBAReportManager {
         request.includesSubentities = true
         request.sortDescriptors = fetchReportSortDescriptors()
         request.predicate = fetchReportPredicate(for: reports)
+        request.includesPendingChanges = true
+        request.includesSubentities = true
         let results = try context.fetch(request)
         
         // Parse the reports and insert new items.
@@ -253,15 +255,18 @@ class HistoryDataManager : SBAReportManager {
         let request: NSFetchRequest<MedicationHistoryItem> = MedicationHistoryItem.fetchRequest()
         request.sortDescriptors = fetchReportSortDescriptors()
         request.predicate = fetchReportPredicate(for: reports)
+        request.returnsDistinctResults = true
+        request.includesPendingChanges = true
         let results = try context.fetch(request)
         
         // Get the medication items.
         let trackedItems = try self.trackedItems(with: .medicationTask)
+        let decoder = SBAFactory.shared.createJSONDecoder()
         
         // Parse the reports and add/edit the items.
         try reports.forEach { report in
-            var medResult = SBAMedicationTrackingResult(identifier: report.identifier)
-            try medResult.updateSelected(from: report.clientData, with: trackedItems)
+            let jsonData = try JSONSerialization.data(withJSONObject: report.clientData, options: .prettyPrinted)
+            let medResult = try decoder.decode(SBAMedicationTrackingResult.self, from: jsonData)
 
             medResult.medications.forEach { medication in
                 guard let dosages = medication.dosageItems else { return }
@@ -309,6 +314,8 @@ class HistoryDataManager : SBAReportManager {
         let request: NSFetchRequest<SymptomHistoryItem> = SymptomHistoryItem.fetchRequest()
         request.sortDescriptors = fetchReportSortDescriptors()
         request.predicate = fetchReportPredicate(for: reports)
+        request.returnsDistinctResults = true
+        request.includesPendingChanges = true
         let results = try context.fetch(request)
         
         let decoder = SBAFactory.shared.createJSONDecoder()
@@ -318,22 +325,13 @@ class HistoryDataManager : SBAReportManager {
             let jsonData = try JSONSerialization.data(withJSONObject: report.clientData, options: .prettyPrinted)
             let reportData = try decoder.decode(SBASymptomReportData.self, from: jsonData)
             reportData.trackedItems.symptomResults.forEach { symptomResult in
-                guard let loggedDate = symptomResult.loggedDate else { return }
-                let item = results.first(where: {
-                            symptomResult.identifier == $0.identifier &&
-                                loggedDate.matches($0.timestampDate) })
-                    ?? SymptomHistoryItem(context: context, report: report)
-                
-                // Update values
-                item.durationLevel = Int64(symptomResult.duration?.rawValue ?? -1)
-                item.severityLevel = Int64(symptomResult.severity?.rawValue ?? 0)
-                item.timestampDate = loggedDate
-                item.timeZoneSeconds = Int32(symptomResult.timeZone.secondsFromGMT(for: loggedDate))
-                item.timeZoneIdentifier = symptomResult.timeZone.identifier
-                item.note = symptomResult.notes
-                item.medicationTiming = symptomResult.medicationTiming?.rawValue
-                item.imageName = "SymptomsTaskIcon"
-                item.title = symptomResult.text
+                guard let loggedDate = symptomResult.loggedDate,
+                    !results.contains(where: {
+                        symptomResult.identifier == $0.identifier &&
+                        loggedDate.matches($0.timestampDate)
+                    }) else { return }
+                // create the new history items - this will add them to the context.
+                let _ = SymptomHistoryItem(context: context, report: report, result: symptomResult, loggedDate: loggedDate)
             }//items
         }// reports
     }
@@ -345,6 +343,8 @@ class HistoryDataManager : SBAReportManager {
         let request: NSFetchRequest<TriggerHistoryItem> = TriggerHistoryItem.fetchRequest()
         request.sortDescriptors = fetchReportSortDescriptors()
         request.predicate = fetchReportPredicate(for: reports)
+        request.returnsDistinctResults = true
+        request.includesPendingChanges = true
         let results = try context.fetch(request)
         
         let decoder = SBAFactory.shared.createJSONDecoder()
@@ -354,19 +354,13 @@ class HistoryDataManager : SBAReportManager {
             let jsonData = try JSONSerialization.data(withJSONObject: report.clientData, options: .prettyPrinted)
             let reportData = try decoder.decode(SBATriggerCollectionResult.self, from: jsonData)
             reportData.triggerResults.forEach { triggerResult in
-                guard let loggedDate = triggerResult.loggedDate else { return }
-                
-                let item = results.first(where: {
-                    triggerResult.identifier == $0.identifier &&
-                        loggedDate.matches($0.timestampDate) })
-                    ?? TriggerHistoryItem(context: context, report: report)
-                
-                // Update values
-                item.timestampDate = loggedDate
-                item.timeZoneSeconds = Int32(triggerResult.timeZone.secondsFromGMT(for: loggedDate))
-                item.timeZoneIdentifier = triggerResult.timeZone.identifier
-                item.imageName = "TriggersTaskIcon"
-                item.title = triggerResult.text
+                guard let loggedDate = triggerResult.loggedDate,
+                    !results.contains(where: {
+                        triggerResult.identifier == $0.identifier &&
+                        loggedDate.matches($0.timestampDate)
+                    }) else { return }
+                // create the new history items - this will add them to the context.
+                let _ = TriggerHistoryItem(context: context, report: report, result: triggerResult, loggedDate: loggedDate)
             }//items
         }// reports
     }
@@ -374,6 +368,8 @@ class HistoryDataManager : SBAReportManager {
     func updateTimeBuckets(in context: NSManagedObjectContext, dateBuckets: Set<String>) throws {
         try dateBuckets.forEach { dateBucket in
             let request: NSFetchRequest<HistoryItem> = HistoryItem.fetchRequest()
+            request.returnsDistinctResults = true
+            request.includesPendingChanges = true
             request.includesSubentities = true
             request.sortDescriptors =
                 [NSSortDescriptor(key: #keyPath(HistoryItem.timestampDate), ascending: true)]

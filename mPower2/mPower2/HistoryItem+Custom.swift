@@ -35,6 +35,7 @@ import UIKit
 import Research
 import CoreData
 import BridgeApp
+import DataTracking
 
 extension HistoryItem {
     
@@ -124,5 +125,45 @@ extension HistoryItem {
     var image: UIImage? {
         let imageName = self.imageName ?? "ActivitiesTaskIcon"
         return UIImage(named: imageName)
+    }
+}
+
+extension TriggerHistoryItem {
+    
+    convenience init(context: NSManagedObjectContext, report: SBAReport, result: SBATriggerResult, loggedDate: Date) {
+        self.init(context: context)
+        self.reportDate = report.date
+        self.reportIdentifier = report.identifier
+        self.category = report.category.rawValue
+        self.identifier = result.identifier
+        let timeZone = result.timeZone
+        self.timestampDate = loggedDate
+        self.dateBucket = loggedDate.dateBucket(for: timeZone)
+        self.timeZoneSeconds = Int32(timeZone.secondsFromGMT(for: loggedDate))
+        self.timeZoneIdentifier = timeZone.identifier
+        self.imageName = "TriggersTaskIcon"
+        self.title = result.text
+    }
+}
+
+extension SymptomHistoryItem {
+    
+    convenience init(context: NSManagedObjectContext, report: SBAReport, result: SBASymptomResult, loggedDate: Date) {
+        self.init(context: context)
+        self.reportDate = report.date
+        self.reportIdentifier = report.identifier
+        self.category = report.category.rawValue
+        self.identifier = result.identifier
+        let timeZone = result.timeZone
+        self.timestampDate = loggedDate
+        self.dateBucket = loggedDate.dateBucket(for: timeZone)
+        self.timeZoneSeconds = Int32(timeZone.secondsFromGMT(for: loggedDate))
+        self.timeZoneIdentifier = timeZone.identifier
+        self.imageName = "SymptomsTaskIcon"
+        self.title = result.text
+        self.durationLevel = Int64(result.duration?.rawValue ?? -1)
+        self.severityLevel = Int64(result.severity?.rawValue ?? 0)
+        self.note = result.notes
+        self.medicationTiming = result.medicationTiming?.rawValue
     }
 }
