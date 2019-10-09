@@ -41,9 +41,11 @@ import ResearchMotion
 import ResearchLocation
 
 private let kLastLocationKey: String = "MP2LastKnownLocation"
+private let kLastGeofenceLocationKey: String = "MP2LastGeofenceLocation"
 private let kLatitudeKey: String = "latitude"
 private let kLongitudeKey: String = "longitude"
 private let kPassiveDisplacementSchemaID: String = "PassiveDisplacement"
+private let kPassiveDisplacementGeofenceSchemaID: String = "PassiveDisplacementGeofence"
 private let kPassiveDisplacementArchiveFilename: String = "displacement"
 private let kPassiveGaitSchemaID: String = "PassiveGait"
 private let kPassiveGaitRegionIdentifier: String = "passive-gait-geofence"
@@ -354,6 +356,30 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
             UserDefaults.standard.set(newValue, forKey: PassiveGaitCollector.lastRecordedKey)
         }
     }
+    
+    /// The last geofence location (stored in UserDefaults).
+    var previousGeofenceLocation: CLLocation? {
+        get {
+            guard let lastLocDict = UserDefaults.standard.dictionary(forKey: kLastGeofenceLocationKey) else { return nil }
+            let latitude = lastLocDict[kLatitudeKey] as! CLLocationDegrees
+            let longitude = lastLocDict[kLongitudeKey] as! CLLocationDegrees
+            return CLLocation(latitude: latitude, longitude: longitude)
+        }
+        set {
+            guard newValue != nil
+                else {
+                    UserDefaults.standard.removeObject(forKey: kLastLocationKey)
+                    return
+            }
+            let lastLocDict = [
+                kLatitudeKey: newValue!.coordinate.latitude,
+                kLongitudeKey: newValue!.coordinate.longitude
+            ]
+            UserDefaults.standard.set(lastLocDict, forKey: kLastGeofenceLocationKey)
+            UserDefaults.standard.synchronize()
+        }
+    }
+
     
     /// Create an instance with the specified schema identifier.
     init(with identifier: String) {
@@ -754,9 +780,38 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
         let geofence = CLCircularRegion(center: validLocation.coordinate, radius: regionRadius, identifier: kPassiveGaitRegionIdentifier)
         self.locationManager?.startMonitoring(for: geofence)
         
+        if let lastLocation = previousGeofenceLocation {
+            let dataPoint = RSDDistanceRecord(uptime: ProcessInfo.processInfo.systemUptime,
+                                              timestamp: 0,
+                                              stepPath: "Passive",
+                                              location: validLocation,
+                                              previousLocation: lastLocation,
+                                              totalDistance: nil,
+                                              relativeDistanceOnly: true)
+            uploadDisplacement(dataPoint)
+        }
+        previousGeofenceLocation = validLocation
+
         // End the background task that was keeping us alive to get here.
         self.endBackgroundPausingTask()
 
+    }
+    
+    /// Upload a PassiveDisplacementGeofence record.
+    private func uploadDisplacement(_ displacementData: RSDDistanceRecord) {
+        let archiveFilename = kPassiveDisplacementArchiveFilename
+        let archive = SBBDataArchive(reference: kPassiveDisplacementGeofenceSchemaID, jsonValidationMapping: nil)
+        if let schemaRevision = MP2BridgeConfiguration.shared.schemaInfo(for: kPassiveDisplacementGeofenceSchemaID)?.schemaVersion {
+            archive.setArchiveInfoObject(schemaRevision, forKey: kSchemaRevisionKey)
+        }
+
+        do {
+            let data = try displacementData.rsd_jsonEncodedData()
+            archive.insertData(intoArchive: data, filename: archiveFilename, createdOn: Date())
+            try archive.complete()
+            archive.encryptAndUploadArchive()
+        }
+        catch {}
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
