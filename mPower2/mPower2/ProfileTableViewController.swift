@@ -111,9 +111,6 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tableView.reloadData()
-        
-        let profileManager = SBABridgeConfiguration.shared.profileManager(for: "ProfileManager")
-        self.headerTitleLabel?.text = profileManager?.value(forProfileKey: "preferredName") as? String
     }
     
     // MARK: - Table view data source
