@@ -220,7 +220,7 @@ class PassiveDisplacementCollector : NSObject, PassiveLocationTriggeredCollector
     
     // MARK: CLLocationManagerDelegate
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status == .authorizedAlways {
+        if status == .authorizedAlways || status == .authorizedWhenInUse {
             // Hey we have permission now, yay! so (re)start monitoring.
             start()
         } else {
@@ -755,7 +755,7 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status == .authorizedAlways {
+        if status == .authorizedAlways || status == .authorizedWhenInUse {
             // Hey we have permission now, yay! so (re)start monitoring.
             startLocationServices()
         } else {
