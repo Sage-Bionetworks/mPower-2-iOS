@@ -318,8 +318,8 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
             guard let answer = ac.textFields![0].text, !answer.isEmpty else { return }
             let answerType = profileTableItem.profileItem.itemType.defaultAnswerResultType()
             do {
-                let value = try answerType.jsonEncode(from: answer)
-                profileTableItem.profileItem.setStoredValue(value)
+                var profileItem = profileTableItem.profileItem
+                profileItem.value = try answerType.jsonEncode(from: answer)
                 self?.tableView.reloadRows(at: [indexPath], with: .none)
             }
             catch let err {
