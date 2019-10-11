@@ -215,7 +215,11 @@ class PassiveDisplacementCollector : NSObject, PassiveLocationTriggeredCollector
             try archive.complete()
             archive.encryptAndUploadArchive()
         }
-        catch {}
+        catch let error {
+            #if DEBUG
+            print("Error preparing passive displacement data for upload: \(error)")
+            #endif
+        }
    }
     
     // MARK: CLLocationManagerDelegate
@@ -811,7 +815,11 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
             try archive.complete()
             archive.encryptAndUploadArchive()
         }
-        catch {}
+        catch let error {
+            #if DEBUG
+            print("Error preparing passive displacement geofence data for upload: \(error)")
+            #endif
+        }
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
