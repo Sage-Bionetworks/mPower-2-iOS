@@ -187,24 +187,17 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
             
         case .editProfileItem:
             guard let profileTableItem = item as? SBAProfileItemProfileTableItem,
-                    (profileTableItem.isEditable ?? false)!,
-                    let taskId = profileTableItem.editTaskIdentifier,
-                    let profileManager = profileTableItem.profileManager as? SBAScheduleManager
+                (profileTableItem.isEditable ?? false)!
                 else {
-                    break
+                    return
             }
-            
-            let taskInfo = RSDTaskInfoObject(with: taskId)
-            let taskViewModel = profileManager.instantiateTaskViewModel(for: taskInfo).taskViewModel
+            if profileTableItem.editTaskIdentifier != nil {
+                self.showTask(for: profileTableItem)
+            }
+            else {
+                self.showPopoverTextbox(for: profileTableItem, at: indexPath)
+            }
 
-            guard let editVC = self.viewController(for: self.profileItemEditViewControllerStoryboardId) as? ProfileItemEditViewController
-                else { return }
-            editVC.taskViewModel = taskViewModel
-            editVC.taskViewModel.taskController = editVC
-            editVC.profileTableItem = profileTableItem
-            editVC.delegate = self
-            self.show(editVC, sender: self)
-            
         case .showProfileView:
             guard let profileViewTableItem = item as? SBAProfileViewProfileTableItem
                 else {
@@ -294,6 +287,52 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
             // do nothing
             break
         }
+    }
+    
+    func showTask(for profileTableItem: SBAProfileItemProfileTableItem) {
+        guard let taskId = profileTableItem.editTaskIdentifier,
+                let profileManager = profileTableItem.profileManager as? SBAScheduleManager
+            else {
+                return
+        }
+        let taskInfo = RSDTaskInfoObject(with: taskId)
+        let taskViewModel = profileManager.instantiateTaskViewModel(for: taskInfo).taskViewModel
+
+        guard let editVC = self.viewController(for: self.profileItemEditViewControllerStoryboardId) as? ProfileItemEditViewController
+            else { return }
+        editVC.taskViewModel = taskViewModel
+        editVC.taskViewModel.taskController = editVC
+        editVC.profileTableItem = profileTableItem
+        editVC.delegate = self
+        self.show(editVC, sender: self)
+    }
+    
+    func showPopoverTextbox(for profileTableItem: SBAProfileItemProfileTableItem, at indexPath: IndexPath) {
+        
+        let ac = UIAlertController(title: profileTableItem.title, message: nil, preferredStyle: .alert)
+        ac.addTextField { (textField) in
+            textField.text = "\(profileTableItem.profileItem.value ?? "")"
+        }
+
+        let submitAction = UIAlertAction(title: Localization.localizedString("BUTTON_SAVE"), style: .default) { [unowned ac, weak self] _ in
+            guard let answer = ac.textFields![0].text, !answer.isEmpty else { return }
+            let answerType = profileTableItem.profileItem.itemType.defaultAnswerResultType()
+            do {
+                var profileItem = profileTableItem.profileItem
+                profileItem.value = try answerType.jsonEncode(from: answer)
+                self?.tableView.reloadRows(at: [indexPath], with: .none)
+            }
+            catch let err {
+                print("WARNING! Failed to encode the text String to \(answerType): \(err)")
+            }
+        }
+        ac.addAction(submitAction)
+        
+        let cancelAction = UIAlertAction(title: Localization.buttonCancel(), style: .cancel) { (_) in
+        }
+        ac.addAction(cancelAction)
+
+        present(ac, animated: true)
     }
         
     func showGoToSettingsAlert() {
