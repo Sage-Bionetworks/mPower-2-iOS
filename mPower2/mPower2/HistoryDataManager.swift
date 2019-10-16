@@ -260,7 +260,6 @@ class HistoryDataManager : SBAReportManager {
         let results = try context.fetch(request)
         
         // Get the medication items.
-        let trackedItems = try self.trackedItems(with: .medicationTask)
         let decoder = SBAFactory.shared.createJSONDecoder()
         
         // Parse the reports and add/edit the items.

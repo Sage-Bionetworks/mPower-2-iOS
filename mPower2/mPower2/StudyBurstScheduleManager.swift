@@ -739,30 +739,33 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         }
     }
 
-    func getReminderTime() -> DateComponents? {
-        guard let clientData = self.report(with: RSDIdentifier.studyBurstReminder.stringValue)?.clientData
+    func getNotificationResult() -> NotificationResult? {
+        guard let report = self.report(with: RSDIdentifier.studyBurstReminder.stringValue)
             else {
                 return nil
         }
+        let clientData = report.clientData
         
-        let notificationResult: NotificationResult
         do {
             if clientData is NSDictionary {
-                notificationResult = try SBAFactory.shared.createJSONDecoder().decode(NotificationResult.self, from: clientData)
+                return try SBAFactory.shared.createJSONDecoder().decode(NotificationResult.self, from: clientData)
             }
             else if let dateString = clientData as? String,
                 let date = SBAFactory.shared.decodeDate(from: dateString) {
-                notificationResult = NotificationResult(reminderTime: date, noReminder: nil)
+                return NotificationResult(reminderTime: date, noReminder: nil)
             }
             else {
-                notificationResult = NotificationResult(reminderTime: nil, noReminder: nil)
+                return NotificationResult(reminderTime: nil, noReminder: nil)
             }
         } catch let err {
-            debugPrint("Failed to decode the reminder result. \(err)")
+            assertionFailure("Failed to decode the reminder result. \(err)")
             return nil
         }
-        
-        guard !(notificationResult.noReminder ?? false),
+    }
+    
+    func getReminderTime() -> DateComponents? {
+        guard let notificationResult = getNotificationResult(),
+            !(notificationResult.noReminder ?? false),
             let reminderTime = notificationResult.reminderTime
             else {
                 return nil
@@ -810,7 +813,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
                 futureSchedules.append(contentsOf: nextSchedules)
             }
             catch let err {
-                debugPrint("Failed to get cached schedules. \(err)")
+                assertionFailure("Failed to get cached schedules. \(err)")
             }
         }
         
@@ -887,5 +890,10 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
                 UNUserNotificationCenter.current().add($0)
             }
         }
+    }
+    
+    public func shouldUsePreviousAnswers(for taskIdentifier: String) -> Bool {
+        // Any redisplay of a question should use the previous answer if available.
+        return true
     }
 }
