@@ -106,6 +106,10 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
         
         registerSectionHeaderView()
         registerSectionFooterView()
+        
+        NotificationCenter.default.addObserver(forName: .SBAUpdatedReports, object: nil, queue: .main) { (_) in
+            self.tableView.reloadData()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -184,7 +188,7 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
             
         case .editProfileItem:
             guard let profileTableItem = item as? SBAProfileItemProfileTableItem,
-                (profileTableItem.isEditable ?? false)!
+                (profileTableItem.isEditable ?? false)
                 else {
                     return
             }
@@ -194,6 +198,14 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
             else {
                 self.showPopoverTextbox(for: profileTableItem, at: indexPath)
             }
+        
+        case .settingsProfileAction:
+            guard let settingsTableItem = item as? SettingsProfileTableItem,
+                (settingsTableItem.isEditable ?? false)
+                else {
+                    return
+            }
+            self.showTask(for: settingsTableItem)
 
         case .showProfileView:
             guard let profileViewTableItem = item as? SBAProfileViewProfileTableItem
@@ -286,9 +298,9 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
         }
     }
     
-    func showTask(for profileTableItem: SBAProfileItemProfileTableItem) {
+    func showTask(for profileTableItem: TaskProfileTableItem) {
         guard let taskId = profileTableItem.editTaskIdentifier,
-                let profileManager = profileTableItem.profileManager as? SBAScheduleManager
+                let profileManager = profileTableItem.taskManager
             else {
                 return
         }
@@ -305,17 +317,17 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
     }
     
     func showPopoverTextbox(for profileTableItem: SBAProfileItemProfileTableItem, at indexPath: IndexPath) {
+        guard let profileItem = profileTableItem.profileItem else { return }
         
         let ac = UIAlertController(title: profileTableItem.title, message: nil, preferredStyle: .alert)
         ac.addTextField { (textField) in
-            textField.text = "\(profileTableItem.profileItem.value ?? "")"
+            textField.text = "\(profileItem.value ?? "")"
         }
 
         let submitAction = UIAlertAction(title: Localization.localizedString("BUTTON_SAVE"), style: .default) { [unowned ac, weak self] _ in
             guard let answer = ac.textFields![0].text, !answer.isEmpty else { return }
-            let answerType = profileTableItem.profileItem.itemType.defaultAnswerResultType()
+            let answerType = profileItem.itemType.defaultAnswerResultType()
             do {
-                var profileItem = profileTableItem.profileItem
                 profileItem.value = try answerType.jsonEncode(from: answer)
                 self?.tableView.reloadRows(at: [indexPath], with: .none)
             }
@@ -339,7 +351,7 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
         presentAlertWithYesNo(title: title, message: message, actionHandler: { (yes) in
             guard yes else { return }
             if let appSettings = URL(string: UIApplication.openSettingsURLString) {
-                UIApplication.shared.open(appSettings, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
+                UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
             }
         })
     }
@@ -451,25 +463,19 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
     
     // MARK: RSDTaskControllerDelegate
     func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
+        self.tableView.reloadData()
         self.navigationController?.popViewController(animated: true)
-        let editVC = taskController as? ProfileItemEditViewController
-        let profileTableItem = editVC?.profileTableItem
-        if let profileManager = (profileTableItem?.profileManager ?? SBAProfileManagerObject.shared) as? SBAScheduleManager {
+        
+        if let editVC = taskController as? ProfileItemEditViewController,
+            let profileManager = editVC.profileTableItem?.taskManager {
             profileManager.taskController(taskController, didFinishWith: reason, error: error)
         }
     }
     
     func taskController(_ taskController: RSDTaskController, readyToSave taskViewModel: RSDTaskViewModel) {
-        let editVC = taskController as? ProfileItemEditViewController
-        if let profileManager = (editVC?.profileTableItem?.profileManager ?? SBAProfileManagerObject.shared) as? SBAScheduleManager {
+        if let editVC = taskController as? ProfileItemEditViewController,
+            let profileManager = editVC.profileTableItem?.taskManager {
             profileManager.taskController(taskController, readyToSave: taskViewModel)
         }
     }
-    
-
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
-	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

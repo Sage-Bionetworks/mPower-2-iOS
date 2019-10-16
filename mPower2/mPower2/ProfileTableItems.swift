@@ -83,13 +83,29 @@ extension MP2ProfileSetting : ExpressibleByStringLiteral {
     }
 }
 
+protocol TaskProfileTableItem : SBAProfileTableItem {
+    
+    /// The task identifier that maps to the task to use when editing this item.
+    var editTaskIdentifier: String? { get }
+    
+    /// The schedule task manager for the task (if any).
+    var taskManager: SBAScheduleManager? { get }
+}
+
+extension SBAProfileItemProfileTableItem : TaskProfileTableItem {
+    
+    /// For profile items, the task manager is the profile manager.
+    var taskManager: SBAScheduleManager? {
+        return self.profileManager as? SBAScheduleManager
+    }
+}
 
 struct PermissionsProfileTableItem: SBAProfileTableItem, Decodable {
     /// The title text to show for the item.
-    var title: String?
+    let title: String?
     
     /// The type of permissions to display/manage.
-    var permissionType: RSDStandardPermissionType
+    let permissionType: RSDStandardPermissionType
     
     /// For the detail text, show their current status for the specified permission type.
     var detail: String? {
@@ -114,10 +130,10 @@ struct PermissionsProfileTableItem: SBAProfileTableItem, Decodable {
     }
     
     /// A set of cohorts (data groups) the participant must be in, in order to show this item in its containing profile section.
-    var inCohorts: Set<String>?
+    let inCohorts: Set<String>?
     
     /// A set of cohorts (data groups) the participant must **not** be in, in order to show this item in its containing profile section.
-    var notInCohorts: Set<String>?
+    let notInCohorts: Set<String>?
     
     /// The action when this item is selected is to request the permission if not already granted or denied, or
     /// to direct the participant to the Settings app to change the permission if it's been previously set.
@@ -129,12 +145,31 @@ struct PermissionsProfileTableItem: SBAProfileTableItem, Decodable {
 /// The SettingsProfileTableItem is sort of a catch-all for "other" one-off sorts of items, like the various
 /// reminder settings, that for now at least don't really make sense to each have their own profile table item
 /// type and onSelected action.
-struct SettingsProfileTableItem: SBAProfileTableItem, Decodable {
+struct SettingsProfileTableItem: TaskProfileTableItem, Decodable {
+
     /// The title text to show for the item.
-    var title: String?
+    let title: String?
     
     /// The setting to display/manage via this item.
-    var setting: MP2ProfileSetting
+    let setting: MP2ProfileSetting
+    
+    var editTaskIdentifier: String? {
+        switch self.setting {
+        case .studyBurstTime:
+            return RSDIdentifier.studyBurstReminder.stringValue
+        default:
+            return nil
+        }
+    }
+    
+    var taskManager: SBAScheduleManager? {
+        switch self.setting {
+        case .studyBurstTime:
+            return StudyBurstScheduleManager.shared
+        default:
+            return nil
+        }
+    }
     
     /// For the detail text, show their current setting state.
     var detail: String? {
@@ -175,18 +210,16 @@ struct SettingsProfileTableItem: SBAProfileTableItem, Decodable {
     }
     
     /// A set of cohorts (data groups) the participant must be in, in order to show this item in its containing profile section.
-    var inCohorts: Set<String>?
+    let inCohorts: Set<String>?
     
     /// A set of cohorts (data groups) the participant must **not** be in, in order to show this item in its containing profile section.
-    var notInCohorts: Set<String>?
+    let notInCohorts: Set<String>?
     
     /// The action when this item is selected will depend on the specific setting. The table view controller will need
     /// to examine the item's `setting` field and proceed accordingly.
     var onSelected: SBAProfileOnSelectedAction? {
         return .settingsProfileAction
     }
-    
-    
 }
 
 /* TODO: emm 2018-08-21 deal with this for v2.1
@@ -220,7 +253,7 @@ class DownloadDataProfileTableItem: SBAProfileTableItemBase {
 struct StudyParticipationProfileTableItem: SBAProfileTableItem, Decodable {
     
     /// The title text to show for the item.
-    var title: String?
+    let title: String?
     
     /// For the detail text, show their current participation status.
     var detail: String? {
@@ -238,10 +271,10 @@ struct StudyParticipationProfileTableItem: SBAProfileTableItem, Decodable {
     }
     
     /// A set of cohorts (data groups) the participant must be in, in order to show this item in its containing profile section.
-    var inCohorts: Set<String>?
+    let inCohorts: Set<String>?
     
     /// A set of cohorts (data groups) the participant must **not** be in, in order to show this item in its containing profile section.
-    var notInCohorts: Set<String>?
+    let notInCohorts: Set<String>?
     
     /// The action when this item is selected is to show the participation/withdrawal screen.
     var onSelected: SBAProfileOnSelectedAction? {
