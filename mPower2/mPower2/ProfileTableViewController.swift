@@ -106,6 +106,10 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
         
         registerSectionHeaderView()
         registerSectionFooterView()
+        
+        NotificationCenter.default.addObserver(forName: .SBAUpdatedReports, object: nil, queue: .main) { (_) in
+            self.tableView.reloadData()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -459,6 +463,7 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
     
     // MARK: RSDTaskControllerDelegate
     func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
+        self.tableView.reloadData()
         self.navigationController?.popViewController(animated: true)
         
         if let editVC = taskController as? ProfileItemEditViewController,
@@ -473,9 +478,4 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
             profileManager.taskController(taskController, readyToSave: taskViewModel)
         }
     }
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
-	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }
