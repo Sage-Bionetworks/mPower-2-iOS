@@ -157,6 +157,8 @@ struct SettingsProfileTableItem: TaskProfileTableItem, Decodable {
         switch self.setting {
         case .studyBurstTime:
             return RSDIdentifier.studyBurstReminder.stringValue
+        case .medicationReminders:
+            return RSDIdentifier.medicationTask.identifier
         default:
             return nil
         }
@@ -166,6 +168,8 @@ struct SettingsProfileTableItem: TaskProfileTableItem, Decodable {
         switch self.setting {
         case .studyBurstTime:
             return StudyBurstScheduleManager.shared
+        case .medicationReminders:
+            return SBAMedicationReminderManager.shared
         default:
             return nil
         }
@@ -206,7 +210,7 @@ struct SettingsProfileTableItem: TaskProfileTableItem, Decodable {
     
     /// The current set of SettingsProfileTableItem settings are all editable.
     var isEditable: Bool? {
-        return true
+        return self.editTaskIdentifier != nil
     }
     
     /// A set of cohorts (data groups) the participant must be in, in order to show this item in its containing profile section.

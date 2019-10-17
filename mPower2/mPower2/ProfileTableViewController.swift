@@ -410,52 +410,6 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
         return sectionFooterView
     }
     
-/* TODO: emm 2018-08-21 deal with this for v2.1
-    // MARK: ORKStepViewControllerDelegate
-    
-    func stepViewController(_ stepViewController: ORKStepViewController, didFinishWith direction: ORKStepViewControllerNavigationDirection) {
-        if (direction == .forward) {
-            stepViewController.update(participantInfo: sharedUser, with: [stepViewController.step!.identifier])
-            
-            // If this is a data groups step then need to update the data groups
-            if let dataGroupsStep = stepViewController.step as? SBADataGroupsStepProtocol,
-                let stepResult = stepViewController.result {
-                let newGroups = dataGroupsStep.union(previousGroups: self.sharedUser.dataGroups, stepResult: stepResult)
-                self.sharedUser.updateDataGroups(Array(newGroups), completion: nil)
-            }
-            
-            self.tableView.reloadData()
-        }
-        self.navigationController?.navigationBar.isTranslucent = self.navBarTranslucency
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    func stepViewControllerResultDidChange(_ stepViewController: ORKStepViewController) {
-        // Do nothing - required
-    }
-    
-    func stepViewControllerDidFail(_ stepViewController: ORKStepViewController, withError error: Error?) {
-        // Do nothing - required
-    }
-    
-    func stepViewController(_ stepViewController: ORKStepViewController, recorder: ORKRecorder, didFailWithError error: Error) {
-        // Do nothing - required
-    }
-    
-    func stepViewControllerHasPreviousStep(_ stepViewController: ORKStepViewController) -> Bool {
-        return true // Show the back button
-    }
-    
-    func stepViewControllerHasNextStep(_ stepViewController: ORKStepViewController) -> Bool {
-        return false
-    }
-    
-    func stepViewControllerWillAppear(_ stepViewController: ORKStepViewController) {
-        self.navBarTranslucency = self.navigationController?.navigationBar.isTranslucent ?? true
-        self.navigationController?.navigationBar.isTranslucent = false
-    }
- */
-    
     // This method will be called when a schedule timing task is updated, so update the UI
     func scheduleUpdated() {
         self.tableView.reloadData()

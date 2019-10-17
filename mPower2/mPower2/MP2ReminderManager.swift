@@ -44,4 +44,21 @@ class MP2ReminderManager : SBAMedicationReminderManager {
         categories.insert(category)
         return categories
     }
+    
+    override func instantiateTaskViewModel(for taskInfo: RSDTaskInfo, in activityGroup: SBAActivityGroup? = nil) -> (taskViewModel: RSDTaskViewModel, referenceSchedule: SBBScheduledActivity?) {
+        
+        if taskInfo.identifier == RSDIdentifier.medicationTask.identifier {
+            do {
+                let medsTask: RSDTask = try self.task(with: .medicationTask)
+                let remindersTask = try SBAMedicationReminderTask(mainTask: medsTask)
+                return self.instantiateTaskViewModel(for: remindersTask, in: activityGroup)
+            }
+            catch let err {
+                assertionFailure("Failed to get the meds task. \(err)")
+            }
+        }
+        
+        // fall through to default.
+        return super.instantiateTaskViewModel(for: taskInfo, in: activityGroup)
+    }
 }
