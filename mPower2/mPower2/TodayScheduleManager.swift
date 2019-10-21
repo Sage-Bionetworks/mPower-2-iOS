@@ -159,8 +159,33 @@ class TodayHistoryScheduleManager : SBAScheduleManager {
                         }
                         return input + result.loggingItems.filter { $0.loggedDate != nil }.count
                     })
-                
-                // TODO: syoung 06/04/2018 Implement counting the medication items rather than just the finished schedules.
+                case .medication:
+                    let report = self.report(with: RSDIdentifier.medicationTask.stringValue)
+                    guard let clientData = report?.clientData as? NSDictionary else {
+                        return 0
+                    }
+                    do {
+                        
+                        let decoder = SBAFactory.shared.createJSONDecoder()
+                        let medsResult = try decoder.decode(SBAMedicationTrackingResult.self, from: clientData)
+                        let now_date = now()
+                        return medsResult.medications.reduce(0) { (input, med) -> Int in
+                            guard let dosageItems = med.dosageItems else { return input }
+                            return dosageItems.reduce(input) { (dIn, dosage) -> Int in
+                                guard let timestamps = dosage.timestamps else { return dIn }
+                                return timestamps.reduce(dIn) { (tIn, timestamp) -> Int in
+                                    guard let logged = timestamp.loggedDate, Calendar.current.isDate(logged, inSameDayAs: now_date) else {
+                                        return tIn
+                                    }
+                                    return tIn + 1
+                                }
+                            }
+                        }
+                    }
+                    catch let err {
+                        assertionFailure("Failed to decode the meds report. \(err)")
+                        return 0
+                    }
 
                 default:
                     return filteredSchedules.count
@@ -174,7 +199,8 @@ class TodayHistoryScheduleManager : SBAScheduleManager {
     }
     
     override open func reportQueries() -> [ReportQuery] {
-        let tasks: [RSDIdentifier] = [.triggersTask, .symptomsTask, .medicationTask]
-        return tasks.map { ReportQuery(reportKey: $0, queryType: .today, dateRange: nil) }
+        return [ ReportQuery(reportKey: .triggersTask, queryType: .today, dateRange: nil),
+                 ReportQuery(reportKey: .symptomsTask, queryType: .today, dateRange: nil),
+                 ReportQuery(reportKey: .medicationTask, queryType: .mostRecent, dateRange: nil)]
     }
 }
