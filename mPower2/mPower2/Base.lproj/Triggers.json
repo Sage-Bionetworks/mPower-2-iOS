@@ -1,131 +1,141 @@
 {
-    "identifier": "Triggers",
-    "type": "tracking",
-    "introduction": {
-        "identifier": "introduction",
-        "type": "trackedItemsIntroduction",
-        "title": "Trigger List",
-        "text": "Your custom Trigger List will live here",
-        "detail":"On the next screen, select your most common Parkinson’s triggers. In the future, your custom list will be here–ready for tracking.",
-        "image":{
-            "type": "fetchable",
-            "imageName":"triggers"
-        },
-        "actions" : { "goForward": { "type": "default", "buttonTitle": "Select Triggers" }},
-        "shouldHideActions": ["skip", "goBackward"]
+  "identifier": "Triggers",
+  "catType": "task",
+  "type": "tracking",
+  "items": [
+    {
+      "sectionIdentifier": "Environment",
+      "identifier": "Cold"
     },
-    "selection": {
-        "title": "What triggers would you like to track?",
-        "detail": "Select all that apply"
+    {
+      "sectionIdentifier": "Environment",
+      "identifier": "Hot"
     },
-    "logging": {
-        "title": "Your triggers",
-        "actions": {
-            "addMore": {
-                "type": "default",
-                "buttonTitle": "Edit triggers"
-            }
-        }
+    {
+      "sectionIdentifier": "Environment",
+      "identifier": "Darkness"
     },
-    "items": [{
-              "sectionIdentifier": "Environment",
-              "identifier": "Cold"
-              },
-              {
-              "sectionIdentifier": "Environment",
-              "identifier": "Hot"
-              },
-              {
-              "sectionIdentifier": "Environment",
-              "identifier": "Darkness"
-              },
-              {
-              "sectionIdentifier": "Environment",
-              "identifier": "Humidity"
-              },
-              {
-              "sectionIdentifier": "Lifestyle",
-              "identifier": "Bedtime, early"
-              },
-              {
-              "sectionIdentifier": "Lifestyle",
-              "identifier": "Bedtime, late"
-              },
-              {
-              "sectionIdentifier": "Lifestyle",
-              "identifier": "Diet, protein"
-              },
-              {
-              "sectionIdentifier": "Lifestyle",
-              "identifier": "Diet, carbohydrates"
-              },
-              {
-              "sectionIdentifier": "Lifestyle",
-              "identifier": "Diet, fiber"
-              },
-              {
-              "sectionIdentifier": "Lifestyle",
-              "identifier": "Diet, caffeine"
-              },
-              {
-              "sectionIdentifier": "Lifestyle",
-              "identifier": "Diet, alcohol"
-              },
-              {
-              "sectionIdentifier": "Lifestyle",
-              "identifier": "Diet, vegetarian"
-              },
-              {
-              "sectionIdentifier": "Lifestyle",
-              "identifier": "Exercise, aerobic, high intensity"
-              },
-              {
-              "sectionIdentifier": "Lifestyle",
-              "identifier": "Exercise, aerobic, low intensity"
-              },
-              {
-              "sectionIdentifier": "Lifestyle",
-              "identifier": "Exercise, stretching"
-              },
-              {
-              "sectionIdentifier": "Lifestyle",
-              "identifier": "Exercise, boxing"
-              },
-              {
-              "sectionIdentifier": "Lifestyle",
-              "identifier": "Exercise, Tai Chi"
-              },
-              {
-              "sectionIdentifier": "Lifestyle",
-              "identifier": "Exercise, yoga"
-              },
-              {
-              "sectionIdentifier": "Lifestyle",
-              "identifier": "Sitting still"
-              },
-              {
-              "sectionIdentifier": "Lifestyle",
-              "identifier": "Illness"
-              },
-              {
-              "sectionIdentifier": "Lifestyle",
-              "identifier": "Stress"
-              },
-              {
-              "sectionIdentifier": "Lifestyle",
-              "identifier": "Traveling"
-              },
-              {
-              "sectionIdentifier": "Holistic treatments",
-              "identifier": "Acupuncture"
-              },
-              {
-              "sectionIdentifier": "Holistic treatments",
-              "identifier": "Aromatherapy"
-              },
-              {
-              "sectionIdentifier": "Holistic treatments",
-              "identifier": "Homeopathic therapy"
-              }
-              ]
+    {
+      "sectionIdentifier": "Environment",
+      "identifier": "Humidity"
+    },
+    {
+      "sectionIdentifier": "Lifestyle",
+      "identifier": "Bedtime, early"
+    },
+    {
+      "sectionIdentifier": "Lifestyle",
+      "identifier": "Bedtime, late"
+    },
+    {
+      "sectionIdentifier": "Lifestyle",
+      "identifier": "Diet, protein"
+    },
+    {
+      "sectionIdentifier": "Lifestyle",
+      "identifier": "Diet, carbohydrates"
+    },
+    {
+      "sectionIdentifier": "Lifestyle",
+      "identifier": "Diet, fiber"
+    },
+    {
+      "sectionIdentifier": "Lifestyle",
+      "identifier": "Diet, caffeine"
+    },
+    {
+      "sectionIdentifier": "Lifestyle",
+      "identifier": "Diet, alcohol"
+    },
+    {
+      "sectionIdentifier": "Lifestyle",
+      "identifier": "Diet, vegetarian"
+    },
+    {
+      "sectionIdentifier": "Lifestyle",
+      "identifier": "Exercise, aerobic, high intensity"
+    },
+    {
+      "sectionIdentifier": "Lifestyle",
+      "identifier": "Exercise, aerobic, low intensity"
+    },
+    {
+      "sectionIdentifier": "Lifestyle",
+      "identifier": "Exercise, stretching"
+    },
+    {
+      "sectionIdentifier": "Lifestyle",
+      "identifier": "Exercise, boxing"
+    },
+    {
+      "sectionIdentifier": "Lifestyle",
+      "identifier": "Exercise, Tai Chi"
+    },
+    {
+      "sectionIdentifier": "Lifestyle",
+      "identifier": "Exercise, yoga"
+    },
+    {
+      "sectionIdentifier": "Lifestyle",
+      "identifier": "Sitting still"
+    },
+    {
+      "sectionIdentifier": "Lifestyle",
+      "identifier": "Illness"
+    },
+    {
+      "sectionIdentifier": "Lifestyle",
+      "identifier": "Stress"
+    },
+    {
+      "sectionIdentifier": "Lifestyle",
+      "identifier": "Traveling"
+    },
+    {
+      "sectionIdentifier": "Holistic treatments",
+      "identifier": "Acupuncture"
+    },
+    {
+      "sectionIdentifier": "Holistic treatments",
+      "identifier": "Aromatherapy"
+    },
+    {
+      "sectionIdentifier": "Holistic treatments",
+      "identifier": "Homeopathic therapy"
+    }
+  ],
+  "introduction": {
+    "identifier": "introduction",
+    "type": "trackedItemsIntroduction",
+    "title": "Trigger List",
+    "text": "Your custom Trigger List will live here",
+    "detail": "On the next screen, select your most common Parkinson’s triggers. In the future, your custom list will be here–ready for tracking.",
+    "image": {
+      "type": "fetchable",
+      "imageName": "triggers"
+    },
+    "actions": {
+      "goForward": {
+        "type": "default",
+        "buttonTitle": "Select Triggers"
+      }
+    },
+    "shouldHideActions": [
+      "skip",
+      "goBackward"
+    ]
+  },
+  "selection": {
+    "title": "What triggers would you like to track?",
+    "detail": "Select all that apply"
+  },
+  "logging": {
+    "title": "Your triggers",
+    "actions": {
+      "addMore": {
+        "type": "default",
+        "buttonTitle": "View Trigger List"
+      }
+    }
+  }
 }

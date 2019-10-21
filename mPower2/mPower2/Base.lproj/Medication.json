@@ -1,191 +1,220 @@
 {
-    "identifier": "Medication",
-    "type": "medicationTracking",
-    "introduction": {
-        "identifier": "introduction",
-        "type": "trackedItemsIntroduction",
-        "title": "Medication List",
-        "text": "Your custom Medication List will live here",
-        "detail":"On the next screen, select your current Parkinson’s medications. In the future, your custom list will be here–ready for tracking.",
-        "image":{
-            "type": "fetchable",
-            "imageName":"medication"
-        },
-        "actions" : { "goForward": { "type": "default", "buttonTitle": "Select Medications" }},
-        "shouldHideActions": ["skip", "goBackward"] },
-    "selection": {
-        "title": "What medications are you taking?",
-        "detail": "Select all that apply" },
-    "reminder": {
-        "identifier": "medicationReminders",
-        "type": "medicationReminders",
-        "title": "Let's set a Reminder for your Medications",
-        "detail":"When do you want us to remind you to take your Parkinson's medications? You can always change them later.",
-        "image":{
-            "type": "fetchable",
-            "imageName":"remindersIcon",
-            "placementType":"iconBefore"
-        },
-        "colorMapping": {
-            "type" : "singleColor",
-            "colorStyle": "white"
-        },
-        "actions" : { "goForward": { "type": "default", "buttonTitle": "Submit" }},
-        "shouldHideActions":["skip", "goBackward"],
-        "modalTitle": "When do you want to be reminded?",
-        "noReminderSetText": "(no reminder set)",
-        "descriptionFormat": "%@ minutes before medication time",
-        "inputFields": [{
-                        "identifier": "reminderChoices",
-                        "inputPrompt": "Add reminders",
-                        "type": "multipleChoice.integer",
-                        "choices": [
-                                    {
-                                    "text": "At scheduled time",
-                                    "value": 0
-                                    },
-                                    {
-                                    "text": "15 minutes before",
-                                    "value": 15
-                                    },
-                                    {
-                                    "text": "30 minutes before",
-                                    "value": 30
-                                    },
-                                    {
-                                    "text": "45 minutes before",
-                                    "value": 45
-                                    },
-                                    {
-                                    "text": "No reminder",
-                                    "isExclusive": true
-                                    }]
-                        }]
+  "identifier": "Medication",
+  "catType": "task",
+  "type": "medicationTracking",
+  "items": [
+    {
+      "sectionIdentifier": "Amantadine",
+      "identifier": "Immediate release amantadine",
+      "detail": "(Symmetrel)"
     },
-    "items": [{
-              "sectionIdentifier": "Amantadine",
-              "identifier": "Immediate release amantadine",
-              "detail": "(Symmetrel)"
-              },
-              {
-              "sectionIdentifier": "Amantadine",
-              "identifier": "Extended release amantadine",
-              "detail": "(Gocovri)"
-              },
-              {
-              "sectionIdentifier": "Anticholinergic Medications",
-              "identifier": "Artane",
-              "detail": "(Trihexyphenidyl)"
-              },
-              {
-              "sectionIdentifier": "Anticholinergic Medications",
-              "identifier": "Cogentin",
-              "detail": "(Benztropine)"
-              },
-              {
-              "sectionIdentifier": "Catechol-O-methyltransferase inhibitors",
-              "identifier": "Comtan",
-              "detail": "(Entacapone)"
-              },
-              {
-              "sectionIdentifier": "Catechol-O-methyltransferase inhibitors",
-              "identifier": "Stalevo",
-              "detail": "(Levodopa / Carbidopa and Entacapone)"
-              },
-              {
-              "sectionIdentifier": "Catechol-O-methyltransferase inhibitors",
-              "identifier": "Tasmar",
-              "detail": "(Tolcapone)"
-              },
-              {
-              "sectionIdentifier": "Dopamine promoter",
-              "identifier": "Apokyn",
-              "detail": "(Apomorphine)"
-              },
-              {
-              "sectionIdentifier": "Dopamine promoter",
-              "identifier": "Mirapex ER",
-              "detail": "(Pramipexole)"
-              },
-              {
-              "sectionIdentifier": "Dopamine promoter",
-              "identifier": "Neupro",
-              "detail": "(Rotigotine)"
-              },
-              {
-              "sectionIdentifier": "Dopamine promoter",
-              "identifier": "Requip",
-              "detail": "(Ropinrole)"
-              },
-              {
-              "sectionIdentifier": "Dopamine promoter",
-              "identifier": "Requip XL",
-              "detail": "(Ropinrole)"
-              },
-              {
-              "sectionIdentifier": "Dopamine replacement therapy",
-              "identifier": "Duopa",
-              "detail": "(Carbidopa / Levodopa)"
-              },
-              {
-              "sectionIdentifier": "Dopamine replacement therapy",
-              "identifier": "Parcopa",
-              "detail": "(Carbidopa / Levodopa)"
-              },
-              {
-              "sectionIdentifier": "Dopamine replacement therapy",
-              "identifier": "Sinemet",
-              "detail": "(Carbidopa / Levodopa)"
-              },
-              {
-              "sectionIdentifier": "Dopamine replacement therapy",
-              "identifier": "Sinemet CR",
-              "detail": "(Carbidopa / Levodopa)"
-              },
-              {
-              "sectionIdentifier": "Dopamine replacement therapy",
-              "identifier": "Rytary",
-              "detail": "(Carbidopa / Levodopa)"
-              },
-              {
-              "sectionIdentifier": "Monoamine Oxidase B inhibitors",
-              "identifier": "Azilect",
-              "detail": "(Rasagiline)"
-              },
-              {
-              "sectionIdentifier": "Monoamine Oxidase B inhibitors",
-              "identifier": "Elderpryl",
-              "detail": "(Selegiline)"
-              },
-              {
-              "sectionIdentifier": "Monoamine Oxidase B inhibitors",
-              "identifier": "Xadago",
-              "detail": "(Safinamide)"
-              },
-              {
-              "sectionIdentifier": "Monoamine Oxidase B inhibitors",
-              "identifier": "Zelapar",
-              "detail": "(Selegiline)"
-              }
-              ],
-    "sections": [{
-                 "identifier": "Amantadine"
-                 },
-                 {
-                 "identifier": "Anticholinergic Medications"
-                 },
-                 {
-                 "identifier": "Catechol-O-methyltransferase inhibitors",
-                 "detail": "(COMT)"
-                 },
-                 {
-                 "identifier": "Dopamine promoter"
-                 },
-                 {
-                 "identifier": "Dopamine replacement therapy"
-                 },
-                 {
-                 "identifier": "Monoamine Oxidase B inhibitors",
-                 "detail": "(MAO-B)"
-                 }]
+    {
+      "sectionIdentifier": "Amantadine",
+      "identifier": "Extended release amantadine",
+      "detail": "(Gocovri)"
+    },
+    {
+      "sectionIdentifier": "Anticholinergic Medications",
+      "identifier": "Artane",
+      "detail": "(Trihexyphenidyl)"
+    },
+    {
+      "sectionIdentifier": "Anticholinergic Medications",
+      "identifier": "Cogentin",
+      "detail": "(Benztropine)"
+    },
+    {
+      "sectionIdentifier": "Catechol-O-methyltransferase inhibitors",
+      "identifier": "Comtan",
+      "detail": "(Entacapone)"
+    },
+    {
+      "sectionIdentifier": "Catechol-O-methyltransferase inhibitors",
+      "identifier": "Stalevo",
+      "detail": "(Levodopa / Carbidopa and Entacapone)"
+    },
+    {
+      "sectionIdentifier": "Catechol-O-methyltransferase inhibitors",
+      "identifier": "Tasmar",
+      "detail": "(Tolcapone)"
+    },
+    {
+      "sectionIdentifier": "Dopamine promoter",
+      "identifier": "Apokyn",
+      "detail": "(Apomorphine)"
+    },
+    {
+      "sectionIdentifier": "Dopamine promoter",
+      "identifier": "Mirapex ER",
+      "detail": "(Pramipexole)"
+    },
+    {
+      "sectionIdentifier": "Dopamine promoter",
+      "identifier": "Neupro",
+      "detail": "(Rotigotine)"
+    },
+    {
+      "sectionIdentifier": "Dopamine promoter",
+      "identifier": "Requip",
+      "detail": "(Ropinrole)"
+    },
+    {
+      "sectionIdentifier": "Dopamine promoter",
+      "identifier": "Requip XL",
+      "detail": "(Ropinrole)"
+    },
+    {
+      "sectionIdentifier": "Dopamine replacement therapy",
+      "identifier": "Duopa",
+      "detail": "(Carbidopa / Levodopa)"
+    },
+    {
+      "sectionIdentifier": "Dopamine replacement therapy",
+      "identifier": "Parcopa",
+      "detail": "(Carbidopa / Levodopa)"
+    },
+    {
+      "sectionIdentifier": "Dopamine replacement therapy",
+      "identifier": "Sinemet",
+      "detail": "(Carbidopa / Levodopa)"
+    },
+    {
+      "sectionIdentifier": "Dopamine replacement therapy",
+      "identifier": "Sinemet CR",
+      "detail": "(Carbidopa / Levodopa)"
+    },
+    {
+      "sectionIdentifier": "Dopamine replacement therapy",
+      "identifier": "Rytary",
+      "detail": "(Carbidopa / Levodopa)"
+    },
+    {
+      "sectionIdentifier": "Monoamine Oxidase B inhibitors",
+      "identifier": "Azilect",
+      "detail": "(Rasagiline)"
+    },
+    {
+      "sectionIdentifier": "Monoamine Oxidase B inhibitors",
+      "identifier": "Elderpryl",
+      "detail": "(Selegiline)"
+    },
+    {
+      "sectionIdentifier": "Monoamine Oxidase B inhibitors",
+      "identifier": "Xadago",
+      "detail": "(Safinamide)"
+    },
+    {
+      "sectionIdentifier": "Monoamine Oxidase B inhibitors",
+      "identifier": "Zelapar",
+      "detail": "(Selegiline)"
+    }
+  ],
+  "sections": [
+    {
+      "identifier": "Amantadine"
+    },
+    {
+      "identifier": "Anticholinergic Medications"
+    },
+    {
+      "identifier": "Catechol-O-methyltransferase inhibitors",
+      "detail": "(COMT)"
+    },
+    {
+      "identifier": "Dopamine promoter"
+    },
+    {
+      "identifier": "Dopamine replacement therapy"
+    },
+    {
+      "identifier": "Monoamine Oxidase B inhibitors",
+      "detail": "(MAO-B)"
+    }
+  ],
+  "introduction": {
+    "identifier": "introduction",
+    "type": "trackedItemsIntroduction",
+    "title": "Medication List",
+    "text": "Your custom Medication List will live here",
+    "detail": "On the next screen, select your current Parkinson’s medications. In the future, your custom list will be here–ready for tracking.",
+    "image": {
+      "type": "fetchable",
+      "imageName": "medication"
+    },
+    "actions": {
+      "goForward": {
+        "type": "default",
+        "buttonTitle": "Select Medications"
+      }
+    },
+    "shouldHideActions": [
+      "skip",
+      "goBackward"
+    ]
+  },
+  "selection": {
+    "title": "What medications are you taking?",
+    "detail": "Select all that apply"
+  },
+  "reminder": {
+    "identifier": "medicationReminders",
+    "type": "medicationReminders",
+    "title": "Let's set a Reminder for your Medications",
+    "detail": "When do you want us to remind you to take your Parkinson's medications? You can always change them later.",
+    "image": {
+      "type": "fetchable",
+      "imageName": "remindersIcon",
+      "placementType": "iconBefore"
+    },
+    "colorTheme": {
+      "usesLightStyle": false
+    },
+    "colorMapping": {
+      "type": "singleColor",
+      "colorStyle": "white"
+    },
+    "actions": {
+      "goForward": {
+        "type": "default",
+        "buttonTitle": "Submit"
+      }
+    },
+    "shouldHideActions": [
+      "skip",
+      "goBackward"
+    ],
+    "modalTitle": "When do you want to be reminded?",
+    "noReminderSetText": "(no reminder set)",
+    "descriptionFormat": "%@ minutes before medication time",
+    "inputFields": [
+      {
+        "identifier": "reminderChoices",
+        "inputPrompt": "Add reminders",
+        "type": "singleChoice.integer",
+        "optional": true,
+        "choices": [
+          {
+            "text": "At scheduled time",
+            "value": 0
+          },
+          {
+            "text": "15 minutes before",
+            "value": 15
+          },
+          {
+            "text": "30 minutes before",
+            "value": 30
+          },
+          {
+            "text": "45 minutes before",
+            "value": 45
+          },
+          {
+            "text": "No reminder",
+            "isExclusive": true
+          }
+        ]
+      }
+    ]
+  }
 }
