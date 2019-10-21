@@ -276,10 +276,7 @@ class HistoryDataManager : SBAReportManager {
                             return
                     }
                     timestamps.forEach { timestampItem in
-                        guard let timestamp = timestampItem.loggedDate ?? timestampItem.timeOfDay(on: report.date)
-                            else {
-                                return
-                        }
+                        guard let timestamp = timestampItem.loggedDate else { return }
                         
                         let item = results.first(where: {
                             medication.identifier == $0.identifier &&
