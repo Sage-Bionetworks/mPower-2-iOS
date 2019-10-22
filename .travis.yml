@@ -2,7 +2,7 @@ notifications:
   email:
   - apple.builds@sagebase.org
 language: objective-c
-osx_image: xcode10.3
+osx_image: xcode11
 xcode_workspace: mPower2.xcworkspace
 xcode_scheme: mPower2
 cache:
