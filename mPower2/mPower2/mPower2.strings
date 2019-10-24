@@ -150,3 +150,6 @@
 "HISTORY_ITEM_TREMOR_TITLE" = "Tremor Test";
 "HISTORY_ITEM_TAP_LEFT" = "Left Hand: %d";
 "HISTORY_ITEM_TAP_RIGHT" = "Right Hand: %d";
+
+"Tremor_TITLE" = "Tremor Test";
+"Tapping_TEXT" = "In this activity we will measure your finger tapping speed with each hand; this may reflect severity of motor systems in Parkinson's Disease.";

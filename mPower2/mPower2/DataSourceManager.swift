@@ -189,6 +189,24 @@ class DataSourceManager {
                 // Install the task and task info.
                 if let mctIdentifier = MCTTaskIdentifier(rawValue: activityId.stringValue) {
                     let taskInfo = MCTTaskInfo(mctIdentifier)
+                    // Check the strings file for a localized key for the title, text, and detail.
+                    if let overviewStep = taskInfo.task.overviewStep {
+                        let titleKey = "\(mctIdentifier.stringValue)_TITLE"
+                        let title = Localization.localizedString(titleKey)
+                        if title != titleKey {
+                            overviewStep.title = title
+                        }
+                        let textKey = "\(mctIdentifier.stringValue)_TEXT"
+                        let text = Localization.localizedString(textKey)
+                        if text != textKey {
+                            overviewStep.text = text
+                        }
+                        let detailKey = "\(mctIdentifier.stringValue)_DETAIL"
+                        let detail = Localization.localizedString(detailKey)
+                        if detail != detailKey {
+                            overviewStep.detail = detail
+                        }
+                    }
                     configuration.addMapping(with: taskInfo)
                 }
                 else {
