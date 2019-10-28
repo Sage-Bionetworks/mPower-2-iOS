@@ -291,7 +291,7 @@ class StudyBurstTaskBrowserViewController: TaskBrowserViewController {
         cell?.alpha = usesFullColorImage ? 1.0 : 0.5
         
         // Update the estimated minutes label
-        cell?.durationLabel.text = Localization.localizedStringWithFormatKey("%@_ESTIMATED_MINUTES", NSNumber(value: task.estimatedMinutes))
+        cell?.durationLabel.text = String.localizedStringWithFormat(Localization.localizedString("%@_ESTIMATED_MINUTES"), NSNumber(value: task.estimatedMinutes))
 
         return cell ?? UICollectionViewCell()
     }

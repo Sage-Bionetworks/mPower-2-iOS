@@ -78,7 +78,7 @@ struct TodayHistoryItem : Equatable, Comparable {
         let keyCount = (count == 1) ? "SINGULAR" : "PLURAL"
         let keyName = self.type.stringValue.uppercased()
         let key = "TASK_\(keyCount)_TERM_FOR_\(keyName)"
-        return Localization.localizedStringWithFormatKey(key, count)
+        return String.localizedStringWithFormat(Localization.localizedString(key), count)
     }
     
     static let sortOrder: [ItemType] = [.symptoms, .medication, .triggers, .activities, .surveys]

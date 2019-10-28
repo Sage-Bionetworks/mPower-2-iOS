@@ -247,8 +247,9 @@ class HistoryFeedTableViewCell : HistoryFeedBaseTableViewCell {
             if let tapItem = item as? TapHistoryItem {
                 // TODO: syoung 07/18/2019 This will work for English. Not sure how well this formatting
                 // will work for other languages that do not separate with a comma.
-                let left = tapItem.leftTapCount > 0 ? Localization.localizedStringWithFormatKey("HISTORY_ITEM_TAP_LEFT", tapItem.leftTapCount) : ""
-                let right = tapItem.rightTapCount >  0 ? Localization.localizedStringWithFormatKey("HISTORY_ITEM_TAP_RIGHT", tapItem.rightTapCount) : ""
+                let left = tapItem.leftTapCount > 0 ?
+                    String.localizedStringWithFormat(Localization.localizedString("HISTORY_ITEM_TAP_LEFT"), tapItem.leftTapCount) : ""
+                let right = tapItem.rightTapCount >  0 ? String.localizedStringWithFormat(Localization.localizedString("HISTORY_ITEM_TAP_RIGHT"), tapItem.rightTapCount) : ""
                 let spacer = left.isEmpty || right.isEmpty ? "" : ", "
                 taskDetailLabel.text = "\(right)\(spacer)\(left)"
             }

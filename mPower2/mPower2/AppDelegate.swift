@@ -108,8 +108,6 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
         
         // Update the cached motion sensor permission state.
         RSDAuthorizationHandler.registerAdaptorIfNeeded(RSDMotionAuthorization.shared)
-        RSDMotionAuthorization.requestAuthorization { (_, _) in
-        }
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {

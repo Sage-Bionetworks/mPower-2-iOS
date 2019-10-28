@@ -215,17 +215,17 @@ class TodayViewController: UIViewController {
                 imageName = "WelcomeMorning"
                 greeting = firstName == nil ?
                     Localization.localizedString("MORNING_WELCOME_GREETING") :
-                    Localization.localizedStringWithFormatKey("MORNING_WELCOME_GREETING_TO_%@", firstName!)
+                    String.localizedStringWithFormat(Localization.localizedString("MORNING_WELCOME_GREETING_TO_%@"), firstName!)
             case .afternoon:
                 imageName = "WelcomeAfternoon"
                 greeting = firstName == nil ?
                     Localization.localizedString("AFTERNOON_WELCOME_GREETING") :
-                    Localization.localizedStringWithFormatKey("AFTERNOON_WELCOME_GREETING_TO_%@", firstName!)
+                    String.localizedStringWithFormat(Localization.localizedString("AFTERNOON_WELCOME_GREETING_TO_%@"), firstName!)
             case .evening, .night:
                 imageName = "WelcomeEvening"
                 greeting = firstName == nil ?
                     Localization.localizedString("EVENING_WELCOME_GREETING") :
-                    Localization.localizedStringWithFormatKey("EVENING_WELCOME_GREETING_TO_%@", firstName!)
+                    String.localizedStringWithFormat(Localization.localizedString("EVENING_WELCOME_GREETING_TO_%@"), firstName!)
             }
             let message = todayManager.items.count > 0 ?
                 Localization.localizedString("WELCOME_MESSAGE_SOME_TASKS_DONE") :
