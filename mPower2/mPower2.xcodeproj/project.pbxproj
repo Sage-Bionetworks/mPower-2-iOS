@@ -203,6 +203,8 @@
 		FF68A75B230DC6AC00C066BB /* DataTracking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF68A759230DC6AC00C066BB /* DataTracking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FF9EEE5922E13040007375E6 /* HistoryFeedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9EEE5822E13040007375E6 /* HistoryFeedTableViewController.swift */; };
 		FF9EEE5A22E13040007375E6 /* HistoryFeedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9EEE5822E13040007375E6 /* HistoryFeedTableViewController.swift */; };
+		FFDFF1F12368CE460094151B /* PrivacyPolicy.html in Resources */ = {isa = PBXBuildFile; fileRef = FFDFF1F02368CE450094151B /* PrivacyPolicy.html */; };
+		FFDFF1F22368CE460094151B /* PrivacyPolicy.html in Resources */ = {isa = PBXBuildFile; fileRef = FFDFF1F02368CE450094151B /* PrivacyPolicy.html */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -380,6 +382,7 @@
 		FF68A756230DC6AC00C066BB /* BridgeAppUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BridgeAppUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF68A759230DC6AC00C066BB /* DataTracking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DataTracking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF9EEE5822E13040007375E6 /* HistoryFeedTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryFeedTableViewController.swift; sourceTree = "<group>"; };
+		FFDFF1F02368CE450094151B /* PrivacyPolicy.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = PrivacyPolicy.html; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -502,6 +505,7 @@
 				80015130212F6B3F006B3C8E /* consent.html */,
 				80015134212F837A006B3C8E /* Licenses.html */,
 				801E8EB0214896EF00AF6701 /* PhoneLearnMore.html */,
+				FFDFF1F02368CE450094151B /* PrivacyPolicy.html */,
 			);
 			name = HTML;
 			sourceTree = "<group>";
@@ -879,6 +883,7 @@
 				F88E8E0520ADEE4200117A99 /* LaunchScreen.storyboard in Resources */,
 				F8398D64212F32EE005DE6E0 /* Withdrawal.json in Resources */,
 				60D534D82227339F0022F0C5 /* PassiveDataPermission.json in Resources */,
+				FFDFF1F22368CE460094151B /* PrivacyPolicy.html in Resources */,
 				60E94123212B8FD70027432C /* ProfileTableHeaderView.xib in Resources */,
 				F85020DC211B96C40094E05F /* SignIn.json in Resources */,
 				801E8EB3214896EF00AF6701 /* PhoneLearnMore.html in Resources */,
@@ -925,6 +930,7 @@
 				801E8EB2214896EF00AF6701 /* PhoneLearnMore.html in Resources */,
 				F8ECAA1222A0F4F00011D497 /* MoreYouKnow.json in Resources */,
 				F85020B6211B96AE0094E05F /* Triggers.json in Resources */,
+				FFDFF1F12368CE460094151B /* PrivacyPolicy.html in Resources */,
 				80015132212F6B40006B3C8E /* consent.html in Resources */,
 				F85020D3211B96BA0094E05F /* Medication.json in Resources */,
 				F8D3E7F72063039200CD351C /* BridgeInfo.plist in Resources */,
