@@ -537,13 +537,23 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         super.willSendUpdatedSchedules(for: schedules)
     }
     
+    private var _lastStudyBurstFinished: Date?
+    
     func markCompleted(studyMarker: SBBScheduledActivity) {
-        guard let startedOn = self.orderedTasks.first?.startedOn,
-            let finishedOn = self.orderedTasks.last?.finishedOn
+        let taskOrder = self.orderedTasks
+        guard let startedOn = taskOrder.first?.startedOn,
+            let finishedOn = taskOrder.last?.finishedOn
             else {
                 return
         }
         
+        // Use an in-memory flag to ensure that this is not getting uploaded more than once per day.
+        guard _lastStudyBurstFinished == nil ||
+            !Calendar.current.isDate(_lastStudyBurstFinished!, inSameDayAs: today())
+            else {
+                return
+        }
+        _lastStudyBurstFinished = finishedOn
         studyMarker.startedOn = startedOn
         studyMarker.finishedOn = finishedOn
         
@@ -560,7 +570,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         
             // build the archive
             let archive = SBAScheduledActivityArchive(identifier: identifier, schemaInfo: schemaInfo, schedule: studyMarker)
-            var json: [String : Any] = [ "taskOrder" : self.taskSortOrder.joined(separator: ",")]
+            var json: [String : Any] = [ "taskOrder" : taskOrder.map({ $0.identifier}).joined(separator: ",")]
             self.orderedTasks.forEach {
                 let identifier = $0.identifier
                 guard let finishedOn = $0.finishedOn else { return }
