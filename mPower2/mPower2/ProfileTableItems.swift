@@ -192,7 +192,7 @@ struct SettingsProfileTableItem: TaskProfileTableItem, Decodable {
                     return ""
             }
 
-            return Localization.localizedStringWithFormatKey("MEDICATION_REMINDER_MINUTES_BEFORE", minutesString)
+            return String.localizedStringWithFormat(Localization.localizedString("MEDICATION_REMINDER_MINUTES_BEFORE"), minutesString)
             
         case .studyBurstTime:
             // Return the current setting for study burst reminder time.
