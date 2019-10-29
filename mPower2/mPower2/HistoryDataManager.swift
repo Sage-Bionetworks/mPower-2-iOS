@@ -169,7 +169,6 @@ class HistoryDataManager : SBAReportManager {
                 // Save the edits.
                 if context.hasChanges {
                     try context.save()
-                    print("History Core Data context saved.")
                 }
             }
             catch let err {

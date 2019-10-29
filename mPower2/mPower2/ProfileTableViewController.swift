@@ -144,8 +144,54 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
         if let pvpTableItem = tableItem as? SBAProfileViewProfileTableItem {
             cell.icon?.image = pvpTableItem.icon
         }
+        cell.chevron?.isHidden = !self.shouldShowChevron(for: tableItem)
         
         return cell
+    }
+    
+    func shouldShowChevron(for tableItem: SBAProfileTableItem?) -> Bool {
+        guard let item = tableItem, let onSelected = item.onSelected else { return false }
+        switch onSelected {
+        case .showHTML:
+            if let htmlItem = item as? SBAHTMLProfileTableItem,
+                htmlItem.url != nil {
+                return true
+            }
+            else {
+                return false
+            }
+            
+
+        case .showWithdrawal:
+            return true
+            
+        case .editProfileItem:
+            if let profileTableItem = item as? SBAProfileItemProfileTableItem,
+                (profileTableItem.isEditable ?? false) {
+                    return true
+            }
+            else {
+                return false
+            }
+        
+        case .settingsProfileAction:
+            if let settingsTableItem = item as? SettingsProfileTableItem,
+                (settingsTableItem.isEditable ?? false) {
+                    return true
+            }
+            else {
+                return false
+            }
+
+        case .showProfileView:
+            return true
+            
+        case .permissionsProfileAction:
+            return true
+            
+        default:
+            return false
+        }
     }
     
     func viewController(for identifier: String) -> UIViewController {
@@ -169,19 +215,6 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
             webVC.url = htmlItem.url
             self.show(webVC, sender: self)
 
-            /* TODO: emm 2018-09-23 deal with this for v2.1
-        case SBAProfileOnSelectedAction.showResource:
-            guard let resourceItem = itemForRow(at: indexPath) as? SBAResourceProfileTableItem else { break }
-            switch resourceItem.resource {
-            case "HealthProfile":
-                self.performSegue(withIdentifier: ProfileTableViewController.healthProfileViewControllerSegue, sender: self)
-                break
-            default:
-                // TODO: emm 2017-06-06 implement
-                break
-            }
-             */
-
         case .showWithdrawal:
             guard let withdrawalVC = self.viewController(for: self.withdrawalViewControllerStoryboardId) as? WithdrawalViewController else { return }
             self.show(withdrawalVC, sender: self)
@@ -193,7 +226,10 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
                     return
             }
             if profileTableItem.editTaskIdentifier != nil {
-                self.showTask(for: profileTableItem)
+                self.showTask(for: profileTableItem, at: indexPath)
+            }
+            else if profileTableItem.choices != nil {
+                self.showChoices(for: profileTableItem, at: indexPath)
             }
             else {
                 self.showPopoverTextbox(for: profileTableItem, at: indexPath)
@@ -205,7 +241,7 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
                 else {
                     return
             }
-            self.showTask(for: settingsTableItem)
+            self.showTask(for: settingsTableItem, at: indexPath)
 
         case .showProfileView:
             guard let profileViewTableItem = item as? SBAProfileViewProfileTableItem
@@ -244,48 +280,6 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
             }
             
             /* TODO: emm 2018-08-21 deal with this for v2.1
-        case scheduleProfileAction:
-            guard let scheduleItem = item as? ScheduleProfileTableItem,
-                let taskId = scheduleItem.taskGroup.scheduleTaskIdentifier
-            else {
-                break
-            }
-            
-            // Before we create the task VC, let's signal to the schedule manager
-            // that we want to ignore the non-applicable completion step
-            let previousState = MasterScheduledActivityManager.shared.alwaysIgnoreTimingIntroductionStepForScheduling
-            MasterScheduledActivityManager.shared.alwaysIgnoreTimingIntroductionStepForScheduling = true
-            let vc = MasterScheduledActivityManager.shared.createTaskViewController(for: taskId)
-            MasterScheduledActivityManager.shared.alwaysIgnoreTimingIntroductionStepForScheduling = previousState
-            
-            if let vcUnwrapped = vc {
-                present(vcUnwrapped, animated: true, completion: nil)
-            }
-            
-        case settingsProfileAction:
-            guard let settingsItem = item as? SettingsProfileTableItem else { break }
-            let hasPermission = SBAPermissionsManager.shared.isPermissionGranted(for: settingsItem.permissionType)
-            if hasPermission {
-                showGoToSettingsAlert()
-            }
-            else {
-                // If we don't have permission, we can't tell if we've never requested it, and if we haven't, there
-                // will be nothing the participant can do about it when they get to the Settings app, so we'd better
-                // request it here first.
-                SBAPermissionsManager.shared.requestPermission(for: settingsItem.permissionType, completion: { (granted, error) in
-                    // If we didn't have permission and now it's just been granted, there's no point in going to the Settings app now.
-                    // If it's not granted, we don't know if they just denied it or if they did in the past, and it seems like
-                    // they wouldn't tap on a permission item that was "Off" if they didn't want to grant it, so we'll offer
-                    // them the option.
-                    if !granted {
-                        self.showGoToSettingsAlert()
-                    }
-                    else {
-                        // We do need to update the display here, though.
-                        self.tableView.reloadData()
-                    }
-                })
-            }
             
         case downloadDataAction:
             self.performSegue(withIdentifier: "downloadDataSegue", sender: self)
@@ -298,7 +292,7 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
         }
     }
     
-    func showTask(for profileTableItem: TaskProfileTableItem) {
+    func showTask(for profileTableItem: TaskProfileTableItem, at indexPath: IndexPath) {
         guard let taskId = profileTableItem.editTaskIdentifier,
                 let profileManager = profileTableItem.taskManager
             else {
@@ -313,6 +307,7 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
         editVC.taskViewModel.taskController = editVC
         editVC.profileTableItem = profileTableItem
         editVC.delegate = self
+        editVC.indexPath = indexPath
         self.show(editVC, sender: self)
     }
     
@@ -342,6 +337,35 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
         ac.addAction(cancelAction)
 
         present(ac, animated: true)
+    }
+    
+    func showChoices(for profileTableItem: SBAProfileItemProfileTableItem, at indexPath: IndexPath) {
+
+        guard let profileItem = profileTableItem.profileItem,
+            let choices = profileTableItem.choices
+            else {
+                return
+        }
+        
+        let formInput = RSDChoiceInputFieldObject(identifier: profileItem.demographicKey,
+                                                  choices: choices,
+                                                  dataType: profileItem.itemType)
+        let formStep = RSDFormUIStepObject(identifier: profileItem.demographicKey, inputFields: [formInput])
+        var navigator = RSDConditionalStepNavigatorObject(with: [formStep])
+        navigator.progressMarkers = []
+        let task = RSDTaskObject(identifier: "ProfileTempTask", stepNavigator: navigator)
+        let taskViewModel = RSDTaskViewModel(task: task)
+        let answerResult = RSDAnswerResultObject(identifier: profileItem.demographicKey, answerType: profileItem.itemType.defaultAnswerResultType(), value: profileItem.value)
+        taskViewModel.append(previousResult: answerResult)
+
+        guard let editVC = self.viewController(for: self.profileItemEditViewControllerStoryboardId) as? ProfileItemEditViewController
+            else { return }
+        editVC.taskViewModel = taskViewModel
+        editVC.taskViewModel.taskController = editVC
+        editVC.profileTableItem = profileTableItem
+        editVC.delegate = self
+        editVC.indexPath = indexPath
+        self.show(editVC, sender: self)
     }
         
     func showGoToSettingsAlert() {
@@ -427,9 +451,24 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
     }
     
     func taskController(_ taskController: RSDTaskController, readyToSave taskViewModel: RSDTaskViewModel) {
-        if let editVC = taskController as? ProfileItemEditViewController,
-            let profileManager = editVC.profileTableItem?.taskManager {
+        guard let editVC = taskController as? ProfileItemEditViewController,
+            let profileTableItem = editVC.profileTableItem,
+            let indexPath = editVC.indexPath
+            else {
+                assertionFailure("Do not have a means to save this task.")
+                return
+        }
+            
+        if let profileManager = profileTableItem.taskManager {
             profileManager.taskController(taskController, readyToSave: taskViewModel)
+        }
+        else if let profileItem = (profileTableItem as? SBAProfileItemProfileTableItem)?.profileItem,
+            let answerResult = taskViewModel.taskResult.findAnswerResult(with: profileItem.demographicKey) {
+            profileItem.value = answerResult.value
+            self.tableView.reloadRows(at: [indexPath], with: .none)
+        }
+        else {
+            assertionFailure("Do not have a means to save this task.")
         }
     }
 }
