@@ -371,6 +371,7 @@
 		F8ECAA1122A0F4F00011D497 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = Base; path = Base.lproj/MoreYouKnow.json; sourceTree = "<group>"; };
 		F8EF461B22A05CA30010AE12 /* StudyBurstViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyBurstViewControllerTests.swift; sourceTree = "<group>"; };
 		F8EF461D22A06C180010AE12 /* Localizable.stringsdict */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; path = Localizable.stringsdict; sourceTree = "<group>"; };
+		FF3EE851236A0BE40024B249 /* HistoryV1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HistoryV1.xcdatamodel; sourceTree = "<group>"; };
 		FF5010FC22DED70B0035E83C /* History.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = History.xcdatamodel; sourceTree = "<group>"; };
 		FF5010FF22DEE7E60035E83C /* HistoryDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryDataManager.swift; sourceTree = "<group>"; };
 		FF50110222DEE81B0035E83C /* HistoryItem+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HistoryItem+Custom.swift"; sourceTree = "<group>"; };
@@ -1529,6 +1530,7 @@
 		FF5010FB22DED70B0035E83C /* History.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				FF3EE851236A0BE40024B249 /* HistoryV1.xcdatamodel */,
 				FF5010FC22DED70B0035E83C /* History.xcdatamodel */,
 			);
 			currentVersion = FF5010FC22DED70B0035E83C /* History.xcdatamodel */;
