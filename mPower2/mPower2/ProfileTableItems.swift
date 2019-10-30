@@ -96,6 +96,7 @@ extension SBAProfileItemProfileTableItem : TaskProfileTableItem {
     
     /// For profile items, the task manager is the profile manager.
     var taskManager: SBAScheduleManager? {
+        guard self.editTaskIdentifier != nil else { return nil }
         return self.profileManager as? SBAScheduleManager
     }
 }
@@ -114,7 +115,7 @@ struct PermissionsProfileTableItem: SBAProfileTableItem, Decodable {
         case .notDetermined, .restricted:
             // If the status is restricted or not determined then it cannot be changed via the
             // the Settings app.
-            return nil
+            return ""
         case .authorized:
             return Localization.localizedString("PERMISSIONS_STATE_ON")
         default:

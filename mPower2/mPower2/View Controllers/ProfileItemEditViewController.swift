@@ -34,5 +34,6 @@
 import BridgeAppUI
 
 class ProfileItemEditViewController: RSDTaskViewController {
-    public var profileTableItem: TaskProfileTableItem?
+    public var profileTableItem: TaskProfileTableItem!
+    public var indexPath: IndexPath!
 }
