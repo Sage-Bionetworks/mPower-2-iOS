@@ -208,11 +208,9 @@ class HistoryDataManager : SBAReportManager {
     
     func findMeasurementHistoryItem(in results: [MeasurementHistoryItem], for report: SBAReport) -> MeasurementHistoryItem? {
         if let taskRunUUID = report.taskRunUUID {
-            print("Found taskRunUUID: \(report)")
             return results.first { (taskRunUUID == $0.taskRunUUID) }
         }
         else {
-            print("Did not find taskRunUUID: \(report)")
             return results.first { report.date.matches($0.reportDate) }
         }
     }
