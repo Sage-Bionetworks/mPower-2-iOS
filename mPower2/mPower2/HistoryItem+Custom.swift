@@ -48,6 +48,7 @@ extension HistoryItem {
         self.dateBucket = report.date.dateBucket(for: report.timeZone)
         self.timeZoneSeconds = Int32(report.timeZone.secondsFromGMT(for: report.date))
         self.timeZoneIdentifier = report.timeZone.identifier
+        self.taskRunUUID = report.taskRunUUID
     }
     
     /// The timezone when the item was marked.
