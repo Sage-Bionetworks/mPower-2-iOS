@@ -207,7 +207,14 @@ class HistoryDataManager : SBAReportManager {
     }
     
     func findMeasurementHistoryItem(in results: [MeasurementHistoryItem], for report: SBAReport) -> MeasurementHistoryItem? {
-        return results.first(where: { report.date.matches($0.timestamp) })
+        if let taskRunUUID = report.taskRunUUID {
+            print("Found taskRunUUID: \(report)")
+            return results.first { (taskRunUUID == $0.taskRunUUID) }
+        }
+        else {
+            print("Did not find taskRunUUID: \(report)")
+            return results.first { report.date.matches($0.reportDate) }
+        }
     }
     
     func createMeasurementHistoryItem(in context: NSManagedObjectContext, for report: SBAReport) -> MeasurementHistoryItem? {
