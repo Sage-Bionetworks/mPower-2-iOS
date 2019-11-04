@@ -37,6 +37,7 @@ import DataTracking
 extension SBAProfileOnSelectedAction {
     public static let permissionsProfileAction: SBAProfileOnSelectedAction = "permissionsProfileAction"
     public static let settingsProfileAction: SBAProfileOnSelectedAction = "settingsProfileAction"
+    public static let mailToProfileAction: SBAProfileOnSelectedAction = "mailToProfileAction"
 /* TODO: emm 2019-06-12 deal with this for v2.1
     public static let scheduleProfileAction: SBAProfileOnSelectedAction = "scheduleProfileAction"
     public static let downloadDataAction: SBAProfileOnSelectedAction = "downloadDataAction"
@@ -140,6 +141,35 @@ struct PermissionsProfileTableItem: SBAProfileTableItem, Decodable {
     /// to direct the participant to the Settings app to change the permission if it's been previously set.
     var onSelected: SBAProfileOnSelectedAction? {
         return .permissionsProfileAction
+    }
+}
+
+struct MailToProfileTableItem: SBAProfileTableItem, Decodable {
+    
+    /// The title text to show for the item.
+    let title: String?
+    
+    /// The email address to send to.
+    let email: String
+    
+    /// A detail string to show for the item.
+    let detail: String?
+    
+    /// The mailTo is "editable" in the sense that you can tap on it and it has an action.
+    var isEditable: Bool? {
+        return true
+    }
+    
+    /// A set of cohorts (data groups) the participant must be in, in order to show this item in its containing profile section.
+    let inCohorts: Set<String>?
+    
+    /// A set of cohorts (data groups) the participant must **not** be in, in order to show this item in its containing profile section.
+    let notInCohorts: Set<String>?
+    
+    /// The action when this item is selected is to request the permission if not already granted or denied, or
+    /// to direct the participant to the Settings app to change the permission if it's been previously set.
+    var onSelected: SBAProfileOnSelectedAction? {
+        return .mailToProfileAction
     }
 }
 

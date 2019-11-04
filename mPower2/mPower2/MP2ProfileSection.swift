@@ -42,6 +42,9 @@ extension SBAProfileTableItemType {
     
     /// Creates a `SettingsProfileTableItem`.
     public static let settings: SBAProfileTableItemType = "settings"
+    
+    /// Creates a `MailToProfileTableItem`.
+    public static let mailTo: SBAProfileTableItemType = "mailTo"
 }
 
 class MP2ProfileSection: SBAProfileSectionObject {
@@ -54,6 +57,8 @@ class MP2ProfileSection: SBAProfileSectionObject {
             return try PermissionsProfileTableItem(from: decoder)
         case .settings:
             return try SettingsProfileTableItem(from: decoder)
+        case .mailTo:
+            return try MailToProfileTableItem(from: decoder)
         default:
             return try super.decodeItem(from: decoder, with: type)
         }
