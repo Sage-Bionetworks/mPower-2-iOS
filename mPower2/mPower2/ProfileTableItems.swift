@@ -166,8 +166,8 @@ struct MailToProfileTableItem: SBAProfileTableItem, Decodable {
     /// A set of cohorts (data groups) the participant must **not** be in, in order to show this item in its containing profile section.
     let notInCohorts: Set<String>?
     
-    /// The action when this item is selected is to request the permission if not already granted or denied, or
-    /// to direct the participant to the Settings app to change the permission if it's been previously set.
+    /// The action when this item is selected is to open the participant's preferred mail tool or
+    /// post an alert if the mail tool is not set up on this device.
     var onSelected: SBAProfileOnSelectedAction? {
         return .mailToProfileAction
     }
