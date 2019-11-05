@@ -161,10 +161,6 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
                 return false
             }
             
-
-        case .showWithdrawal:
-            return true
-            
         case .editProfileItem:
             if let profileTableItem = item as? SBAProfileItemProfileTableItem,
                 (profileTableItem.isEditable ?? false) {
@@ -183,10 +179,10 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
                 return false
             }
 
-        case .showProfileView:
-            return true
-            
-        case .permissionsProfileAction:
+        case .showWithdrawal,
+             .showProfileView,
+             .permissionsProfileAction,
+             .mailToProfileAction:
             return true
             
         default:
@@ -278,7 +274,27 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
                                         message: permission.restrictedMessage) { (_) in
                 }
             }
-            
+        
+        case .mailToProfileAction:
+            guard let mailTo = item as? MailToProfileTableItem else { return }
+            let version = versionLabel?.text ?? ""
+            let device = UIDevice.current.deviceInfo() ?? ""
+            let footer = "\n---\n\(version)\n\(device)"
+            let body = footer.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? ""
+            let urlString = "mailto:\(mailTo.email)?body=\(body)"
+            guard let mailURL = URL(string: urlString),
+                UIApplication.shared.canOpenURL(mailURL)
+                else {
+                    // Cannot open the email application so just present a popup.
+                    // If the phone restricts access to email or doesn't have it set up, we can't
+                    // do anything futher.
+                    let message = String.localizedStringWithFormat(
+                        Localization.localizedString("MAILTO_FAILED_MESSAGE_%@"), mailTo.email)
+                    self.presentAlertWithOk(title: nil, message: message, actionHandler: nil)
+                    return
+            }
+            UIApplication.shared.open(mailURL, options: [:], completionHandler: nil)
+
             /* TODO: emm 2018-08-21 deal with this for v2.1
             
         case downloadDataAction:
