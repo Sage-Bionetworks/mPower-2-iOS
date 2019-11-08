@@ -784,6 +784,8 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
         let geofence = CLCircularRegion(center: validLocation.coordinate, radius: regionRadius, identifier: kPassiveGaitRegionIdentifier)
         self.locationManager?.startMonitoring(for: geofence)
         
+        // If the new geofence is "different" from the previous one, upload the
+        // relative displacement.
         if let lastLocation = previousGeofenceLocation {
             let dataPoint = RSDDistanceRecord(uptime: ProcessInfo.processInfo.systemUptime,
                                               timestamp: 0,
@@ -792,7 +794,10 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
                                               previousLocation: lastLocation,
                                               totalDistance: nil,
                                               relativeDistanceOnly: true)
-            uploadDisplacement(dataPoint)
+            if let distance = dataPoint.relativeDistance,
+                distance > validLocation.horizontalAccuracy {
+                uploadDisplacement(dataPoint)
+            }
         }
         previousGeofenceLocation = validLocation
 
