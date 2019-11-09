@@ -534,6 +534,9 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
             }
             
             if self.locationManagerPaused {
+                // Cancel any previous requestLocation() calls on this location manager.
+                self.locationManager!.stopUpdatingLocation()
+                
                 // Clear out any existing geofence.
                 if let ourFence = self.locationManager!.monitoredRegions.first(where:{ (region) -> Bool in
                         return region.identifier == kPassiveGaitRegionIdentifier
