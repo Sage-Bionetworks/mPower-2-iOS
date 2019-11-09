@@ -533,10 +533,18 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
                 }
             }
             
-            // This will get a good-enough initial fix and set a geofence.
-            self.locationManagerPaused = true
-            self.locationManager!.desiredAccuracy = kCLLocationAccuracyBest
-            self.locationManager!.requestLocation()
+            if self.locationManagerPaused {
+                // Clear out any existing geofence.
+                if let ourFence = self.locationManager!.monitoredRegions.first(where:{ (region) -> Bool in
+                        return region.identifier == kPassiveGaitRegionIdentifier
+                    }) {
+                    self.locationManager?.stopMonitoring(for: ourFence)
+                }
+
+                // Now get a good-enough initial fix and set a geofence.
+                self.locationManager!.desiredAccuracy = kCLLocationAccuracyBest
+                self.locationManager!.requestLocation()
+            }
         }
 
     }
