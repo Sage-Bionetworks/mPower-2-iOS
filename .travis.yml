@@ -20,7 +20,7 @@ install:
 - gem install bundler
 - bundle install
 script:
-  - travis-wait-improved --timeout 30 ./travis/build.sh
+  - travis-wait-improved --timeout 60 ./travis/build.sh
 branches:
   only:
   - master
