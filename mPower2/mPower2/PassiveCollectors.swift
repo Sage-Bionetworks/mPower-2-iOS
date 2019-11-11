@@ -533,10 +533,21 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
                 }
             }
             
-            // This will get a good-enough initial fix and set a geofence.
-            self.locationManagerPaused = true
-            self.locationManager!.desiredAccuracy = kCLLocationAccuracyBest
-            self.locationManager!.requestLocation()
+            if self.locationManagerPaused {
+                // Cancel any previous requestLocation() calls on this location manager.
+                self.locationManager!.stopUpdatingLocation()
+                
+                // Clear out any existing geofence.
+                if let ourFence = self.locationManager!.monitoredRegions.first(where:{ (region) -> Bool in
+                        return region.identifier == kPassiveGaitRegionIdentifier
+                    }) {
+                    self.locationManager?.stopMonitoring(for: ourFence)
+                }
+
+                // Now get a good-enough initial fix and set a geofence.
+                self.locationManager!.desiredAccuracy = kCLLocationAccuracyBest
+                self.locationManager!.requestLocation()
+            }
         }
 
     }
@@ -784,6 +795,8 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
         let geofence = CLCircularRegion(center: validLocation.coordinate, radius: regionRadius, identifier: kPassiveGaitRegionIdentifier)
         self.locationManager?.startMonitoring(for: geofence)
         
+        // If the new geofence is "different" from the previous one, upload the
+        // relative displacement.
         if let lastLocation = previousGeofenceLocation {
             let dataPoint = RSDDistanceRecord(uptime: ProcessInfo.processInfo.systemUptime,
                                               timestamp: 0,
@@ -792,7 +805,10 @@ class PassiveGaitCollector : NSObject, PassiveLocationTriggeredCollector {
                                               previousLocation: lastLocation,
                                               totalDistance: nil,
                                               relativeDistanceOnly: true)
-            uploadDisplacement(dataPoint)
+            if let distance = dataPoint.relativeDistance,
+                distance > validLocation.horizontalAccuracy {
+                uploadDisplacement(dataPoint)
+            }
         }
         previousGeofenceLocation = validLocation
 
