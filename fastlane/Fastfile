@@ -12,12 +12,11 @@
 # This is the minimum version number required.
 # Update this, if you use features of a newer version
 fastlane_version "2.17.1"
-setup_travis
-
 default_platform :ios
 
 platform :ios do
   before_all do
+    setup_travis
     # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
     ENV["MATCH_KEYCHAIN_NAME"] = "ios-build.keychain"
     ENV["TEAM_SAGEBIO"] = "4B822CZK9N"
