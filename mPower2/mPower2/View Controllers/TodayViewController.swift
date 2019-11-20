@@ -86,8 +86,10 @@ class TodayViewController: UIViewController {
         
         // Add an observer for changes to the study participant.
         NotificationCenter.default.addObserver(forName: .SBAStudyParticipantUpdated, object: nil, queue: .main) { (notification) in
+            print("TodayViewController SBAStudyParticipantUpdated observer called")
             self.firstName = (notification.object as? SBAParticipantManager)?.studyParticipant?.firstName
             self.updateWelcomeContent()
+            print("TodayViewController SBAStudyParticipantUpdated observer returning")
         }
         self.firstName = SBAParticipantManager.shared.studyParticipant?.firstName
     }
