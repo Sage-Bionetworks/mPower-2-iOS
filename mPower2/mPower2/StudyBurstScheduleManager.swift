@@ -133,7 +133,14 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
             let studyBurst = self.studyBurst ?? StudyBurstConfiguration()
             let groupId = studyBurst.taskGroupIdentifier.stringValue
             let activityGroup = configuration.activityGroup(with: groupId)
-            return activityGroup ?? DataSourceManager.shared.activityGroup(with: .measuringTaskGroup)
+            return activityGroup ?? SBAActivityGroupObject(identifier: groupId,
+                                                           title: Localization.localizedString(groupId),
+                                                           journeyTitle: nil,
+                                                           image: nil,
+                                                           activityIdentifiers: RSDIdentifier.measuringTasks,
+                                                           notificationIdentifier: nil,
+                                                           schedulePlanGuid: nil,
+                                                           activityGuidMap: nil)
         }
         set {
             // Do nothing
