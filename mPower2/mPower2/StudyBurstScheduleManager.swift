@@ -130,8 +130,17 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     /// Return the activity group set by the navigator.
     override public var activityGroup: SBAActivityGroup? {
         get {
-            guard let groupId = studyBurst?.taskGroupIdentifier.stringValue else { return nil }
-            return configuration.activityGroup(with: groupId)
+            let studyBurst = self.studyBurst ?? StudyBurstConfiguration()
+            let groupId = studyBurst.taskGroupIdentifier.stringValue
+            let activityGroup = configuration.activityGroup(with: groupId)
+            return activityGroup ?? SBAActivityGroupObject(identifier: groupId,
+                                                           title: Localization.localizedString(groupId),
+                                                           journeyTitle: nil,
+                                                           image: nil,
+                                                           activityIdentifiers: RSDIdentifier.measuringTasks,
+                                                           notificationIdentifier: nil,
+                                                           schedulePlanGuid: nil,
+                                                           activityGuidMap: nil)
         }
         set {
             // Do nothing
