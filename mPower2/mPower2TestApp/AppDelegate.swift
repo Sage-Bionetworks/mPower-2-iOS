@@ -63,7 +63,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         HistoryDataManager.flushStore()
         
-        RSDStudyConfiguration.shared.colorPalette = colorPalette
+        RSDDesignSystem.shared.colorRules.palette = colorPalette
         RSDStudyConfiguration.shared.fullInstructionsFrequency = .monthly
         
         // Set up localization.
