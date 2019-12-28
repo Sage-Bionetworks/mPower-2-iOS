@@ -7,6 +7,7 @@ xcode_workspace: mPower2.xcworkspace
 xcode_scheme: mPower2
 cache:
 - bundler
+- cocoapods
 addons:
   homebrew:
     packages: python3
