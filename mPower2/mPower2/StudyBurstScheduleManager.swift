@@ -854,6 +854,8 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     
     func willPresentNotification(_ notification: UNNotification) {
         let nextDate = notification.date.addingNumberOfDays(90)
+        guard nextDate < SBAParticipantManager.shared.startStudy.addingNumberOfYears(2)
+            else { return }
         let dateComponents = Calendar.iso8601.dateComponents([.year, .month, .day, .hour, .minute],
                                                              from: nextDate)
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
