@@ -61,8 +61,12 @@ class StudyBurstViewController: UIViewController {
     public var delegate: StudyBurstViewControllerDelegate?
 
     var taskBrowserVC: StudyBurstTaskBrowserViewController?
-    var studyBurstManager: StudyBurstScheduleManager!
     let designSystem = RSDDesignSystem()
+    var studyBurstManager: StudyBurstScheduleManager! {
+        didSet {
+            if (self.isViewLoaded) { setupView() }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,7 +75,7 @@ class StudyBurstViewController: UIViewController {
 
     func setupView() {
         
-        guard let studyBurstManager = studyBurstManager else {
+        guard let studyBurstManager = self.studyBurstManager else {
             return
         }
         
@@ -95,7 +99,7 @@ class StudyBurstViewController: UIViewController {
         headerView.progressView?.currentStep = studyBurstManager.dayCount ?? 1
         
         // Update greeting and message
-        let content = welcomeContent()
+        let content = studyBurstManager.messageContent()
         headerView.titleLabel?.text = content.title
         headerView.textLabel?.text = content.message
         
@@ -105,47 +109,6 @@ class StudyBurstViewController: UIViewController {
         
         // Set the height of the progress container view
         progressContainerViewHeightConstraint.constant = kProgressContainerViewHeight
-    }
-    
-    func welcomeContent() -> (title: String?, message: String?) {
-        
-        guard let studyBurstManager = studyBurstManager else {
-            return ("", "")
-        }
-
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .none
-        let currentDaysStr = formatter.string(for: studyBurstManager.dayCount ?? 1)!
-        
-        // The title string is the same regardless of how many days they've missed, if any.
-        // It will vary only by the current day of the study burst
-        let formatStr = String(format: "STUDY_BURST_TITLE_DAY_%@", currentDaysStr)
-        let titleStr = Localization.localizedString(formatStr)
-        
-        let messageStr: String? = {
-            if studyBurstManager.missedDaysCount == 0 {
-                // The message will vary by the current day of the study burst
-                let format = String(format: "STUDY_BURST_MESSAGE_DAY_%@", currentDaysStr)
-                return Localization.localizedString(format)
-            }
-            else {
-                // The message will be the same for each day of the study burst and will simply
-                // indicate the current day and the number of missed days
-                let missedDaysStr = formatter.string(for: studyBurstManager.missedDaysCount)!
-                
-                let format = studyBurstManager.missedDaysCount > 1 ?
-                    Localization.localizedString("STUDY_BURST_MESSAGE_IN_%@_DAYS_MISSED_%@_DAYS") :
-                    Localization.localizedString("STUDY_BURST_MESSAGE_IN_%@_DAYS_MISSED_ONE_DAY")
-                
-                let str = studyBurstManager.missedDaysCount > 1 ?
-                    String.localizedStringWithFormat(format, currentDaysStr, missedDaysStr) :
-                    String.localizedStringWithFormat(format, currentDaysStr)
-                
-                return str
-            }
-        }()
-        
-        return (titleStr, messageStr)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
