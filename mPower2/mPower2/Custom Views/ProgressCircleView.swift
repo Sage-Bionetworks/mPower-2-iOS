@@ -47,9 +47,9 @@ import ResearchUI
         ring.backgroundColor = UIColor.clear
         ring.innerColor = UIColor.white
         ring.hasShadow = false
-        ring.progressColor = RSDStudyConfiguration.shared.colorPalette.primary.normal.color
-        dayLabel.textColor = RSDStudyConfiguration.shared.colorPalette.primary.veryDark.color
-        dayCountLabel.textColor = RSDStudyConfiguration.shared.colorPalette.primary.veryDark.color
+        ring.progressColor = RSDDesignSystem.shared.colorRules.palette.primary.normal.color
+        dayLabel.textColor = RSDDesignSystem.shared.colorRules.palette.primary.veryDark.color
+        dayCountLabel.textColor = RSDDesignSystem.shared.colorRules.palette.primary.veryDark.color
         insertSubview(ring, at: 0)
         ring.rsd_alignAllToSuperview(padding: strokeWidth / 2)
         return ring
@@ -68,7 +68,7 @@ import ResearchUI
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: "HelveticaNeue-Bold", size: 12.0)
-        label.textColor = RSDStudyConfiguration.shared.colorPalette.primary.veryDark.color
+        label.textColor = RSDDesignSystem.shared.colorRules.palette.primary.veryDark.color
         label.textAlignment = .center
         label.text = Localization.localizedString("STUDY_BURST_DAY")
         label.sizeToFit()
@@ -82,7 +82,7 @@ import ResearchUI
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: "HelveticaNeue-Thin", size: 30.0)
-        label.textColor = RSDStudyConfiguration.shared.colorPalette.primary.veryDark.color
+        label.textColor = RSDDesignSystem.shared.colorRules.palette.primary.veryDark.color
         label.textAlignment = .center
         addSubview(label)
         label.rsd_alignCenterVertical(padding: 5.0)

@@ -852,6 +852,19 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         return (requests, pendingRequestIds)
     }
     
+    func willPresentNotification(_ notification: UNNotification) {
+        let nextDate = notification.date.addingNumberOfDays(90)
+        guard nextDate < SBAParticipantManager.shared.startStudy.addingNumberOfYears(2)
+            else { return }
+        let dateComponents = Calendar.iso8601.dateComponents([.year, .month, .day, .hour, .minute],
+                                                             from: nextDate)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+        let nextRequest = UNNotificationRequest(identifier: notification.request.identifier,
+                                                content: notification.request.content,
+                                                trigger: trigger)
+        UNUserNotificationCenter.current().add(nextRequest)
+    }
+    
     func getLocalNotificationIdentifier(for schedule: SBBScheduledActivity, at time: DateComponents) -> String {
         let timeIdentifier = time.jsonObject()
         return "\(schedule.guid) \(timeIdentifier)"

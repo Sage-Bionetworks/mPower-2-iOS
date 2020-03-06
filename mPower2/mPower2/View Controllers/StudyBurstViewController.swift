@@ -75,7 +75,7 @@ class StudyBurstViewController: UIViewController {
             return
         }
         
-        designSystem.colorRules.palette = RSDStudyConfiguration.shared.colorPalette
+        designSystem.colorRules.palette = RSDDesignSystem.shared.colorRules.palette
         headerView.setDesignSystem(designSystem, with: designSystem.colorRules.palette.primary.normal)
         
         // Setup our back button
@@ -279,7 +279,7 @@ class StudyBurstTaskBrowserViewController: TaskBrowserViewController {
         let isCompleted = (scheduledTask.finishedOn != nil)
         let usesFullColorImage = isCompleted || (indexPath.row == self.nextTaskIndex())
         cell?.isCompleted = isCompleted
-        task.imageVendor?.fetchImage(for: collectionView.layoutAttributesForItem(at: indexPath)?.size ?? .zero) { (_, img) in
+        task.imageData?.fetchImage(for: collectionView.layoutAttributesForItem(at: indexPath)?.size ?? .zero) { (_, img) in
                 
                 // If the task is completed or is the first incomplete task, we show the image as normal,
                 // otherwise we show a grayscale version of the image
