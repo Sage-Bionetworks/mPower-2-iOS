@@ -928,4 +928,29 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         // Any redisplay of a question should use the previous answer if available.
         return true
     }
+    
+    // MARK: Study burst messaging
+    
+    func messageContent() -> (title: String, message: String) {
+        let titleKey: String
+        let messageKey: String
+        if missedDaysCount <= 2, let day = dayCount {
+            titleKey = "STUDY_BURST_TITLE_DAY_\(day)"
+            messageKey = "STUDY_BURST_MESSAGE_DAY_\(day)"
+        }
+        else if missedDaysCount == 3 {
+            titleKey = "STUDY_BURST_TITLE_MISSED_3"
+            messageKey = "STUDY_BURST_MESSAGE_MISSED_3_RANDOM_\(Int.random(in: 0..<3))"
+        }
+        else if missedDaysCount <= 10 {
+            titleKey = "STUDY_BURST_TITLE_MISSED_4-10_RANDOM_\(Int.random(in: 0..<6))"
+            messageKey = "STUDY_BURST_TITLE_MISSED_4-10_RANDOM_\(Int.random(in: 0..<9))"
+        }
+        else {
+            titleKey = "STUDY_BURST_TITLE_MISSED>10"
+            messageKey = "STUDY_BURST_MESSAGE_MISSED>10"
+        }
+        return (Localization.localizedString(titleKey),
+                Localization.localizedString(messageKey))
+    }
 }

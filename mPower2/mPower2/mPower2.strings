@@ -73,6 +73,8 @@
 // Study Burst titles
 "STUDY_BURST_DAY" = "Day";
 "STUDY_BURST_ACTION_BAR_TITLE" = "Study Burst";
+
+// Study burst title and message (missed < 3 days)
 "STUDY_BURST_TITLE_DAY_1" = "This is your time!";
 "STUDY_BURST_TITLE_DAY_2" = "You are making a difference!";
 "STUDY_BURST_TITLE_DAY_3" = "Great Job!";
@@ -87,13 +89,6 @@
 "STUDY_BURST_TITLE_DAY_12" = "Your contribution is important!";
 "STUDY_BURST_TITLE_DAY_13" = "Every day is a new day!";
 "STUDY_BURST_TITLE_DAY_14" = "This is your time!";
-"STUDY_BURST_TITLE_DAY_15" = "Thank you!";
-"STUDY_BURST_TITLE_DAY_16" = "You can do it!";
-"STUDY_BURST_TITLE_DAY_17" = "You are fantastic!";
-"STUDY_BURST_TITLE_DAY_18" = "You are amazing!";
-"STUDY_BURST_TITLE_DAY_19" = "Your contribution is important!";
-
-// Study Burst messages
 "STUDY_BURST_MESSAGE_DAY_1" = "Use the daily activities to focus on your health.";
 "STUDY_BURST_MESSAGE_DAY_2" = "You are contributing to PD research.";
 "STUDY_BURST_MESSAGE_DAY_3" = "We could not do this study without you.";
@@ -108,15 +103,34 @@
 "STUDY_BURST_MESSAGE_DAY_12" = "The walking activity provides us with daily data on your gait and balance.";
 "STUDY_BURST_MESSAGE_DAY_13" = "As you complete more activities, you will be able to see trends & patterns.";
 "STUDY_BURST_MESSAGE_DAY_14" = "Use the activities to track how you are doing today.";
-"STUDY_BURST_MESSAGE_DAY_15" = "You are helping us make a difference in PD research.";
-"STUDY_BURST_MESSAGE_DAY_16" = "By completing activities, you can track your daily health.";
-"STUDY_BURST_MESSAGE_DAY_17" = "Log your medications and symptoms to keep on track.";
-"STUDY_BURST_MESSAGE_DAY_18" = "We could not do this study without you.";
-"STUDY_BURST_MESSAGE_DAY_19" = "The walking activity provides us with daily data on your gait and balance.";
 
+// Study burst title and message (missed 3 days)
+"STUDY_BURST_TITLE_MISSED_3" = "We missed you!";
+"STUDY_BURST_MESSAGE_MISSED_3_RANDOM_0" = "Tip 💡: Set an alarm on your phone to remember to do your daily activities.";
+"STUDY_BURST_MESSAGE_MISSED_3_RANDOM_1" = "Tip 💡: Update your mPower reminder schedule.";
+"STUDY_BURST_MESSAGE_MISSED_3_RANDOM_2" = "Tip 💡: Create a daily habit. Do your activity/check-in after/before your daily medications.";
 
-"STUDY_BURST_MESSAGE_IN_%@_DAYS_MISSED_%@_DAYS" = "In %1$@ days you’ve only missed %2$@ Study Burst days!";
-"STUDY_BURST_MESSAGE_IN_%@_DAYS_MISSED_ONE_DAY" = "In %1$@ days you’ve only missed 1 Study Burst day!";
+// Study burst title and message (missed 4 - 10 days)
+"STUDY_BURST_TITLE_MISSED_4-10_RANDOM_0" = "Do your best!";
+"STUDY_BURST_TITLE_MISSED_4-10_RANDOM_1" = "Let’s keep going!";
+"STUDY_BURST_TITLE_MISSED_4-10_RANDOM_2" = "Thank you!";
+"STUDY_BURST_TITLE_MISSED_4-10_RANDOM_3" = "You can do it!";
+"STUDY_BURST_TITLE_MISSED_4-10_RANDOM_4" = "We can’t do this without you!";
+"STUDY_BURST_TITLE_MISSED_4-10_RANDOM_5" = "Your input matters!";
+"STUDY_BURST_MESSAGE_MISSED_4-10_RANDOM_0" = "Completing more activities will allow you to see trends and patterns.";
+"STUDY_BURST_MESSAGE_MISSED_4-10_RANDOM_1" = "Use the mPower app to track your medications and symptoms.";
+"STUDY_BURST_MESSAGE_MISSED_4-10_RANDOM_2" = "The mPower app helps keep your day on track.";
+"STUDY_BURST_MESSAGE_MISSED_4-10_RANDOM_3" = "You are contributing to Parkinson’s research.";
+"STUDY_BURST_MESSAGE_MISSED_4-10_RANDOM_4" = "When you complete an activity, you get real-time data on your health.";
+"STUDY_BURST_MESSAGE_MISSED_4-10_RANDOM_5" = "You can share your mPower data with your doctor.";
+"STUDY_BURST_MESSAGE_MISSED_4-10_RANDOM_6" = "You can share your mPower data with your family.";
+"STUDY_BURST_MESSAGE_MISSED_4-10_RANDOM_7" = "We could not do this study without you.";
+"STUDY_BURST_MESSAGE_MISSED_4-10_RANDOM_8" = "The mPower app helps you track your triggers.";
+
+// Study burst title and message (missed > 10 days)
+"STUDY_BURST_TITLE_MISSED>10" = "We need you!";
+"STUDY_BURST_MESSAGE_MISSED>10" = "Your contribution to the mPower study is so important.";
+
 
 // Button Titles
 "SUMBIT_BUTTON" = "Submit";
