@@ -10,3 +10,6 @@
 [submodule "Carthage/Checkouts/Bridge-iOS-SDK"]
 	path = Carthage/Checkouts/Bridge-iOS-SDK
 	url = https://github.com/Sage-Bionetworks/Bridge-iOS-SDK.git
+[submodule "Carthage/Checkouts/CardiorespiratoryFitness-iOS"]
+	path = Carthage/Checkouts/CardiorespiratoryFitness-iOS
+	url = https://github.com/Sage-Bionetworks/CardiorespiratoryFitness-iOS.git
