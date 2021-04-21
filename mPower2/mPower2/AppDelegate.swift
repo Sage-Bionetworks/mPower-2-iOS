@@ -234,3 +234,6 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
     
 }
 
+extension RSDDesignSystem {
+    public static let shared = RSDDesignSystem()
+}

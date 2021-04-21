@@ -73,6 +73,8 @@
 		B587AC08206D696800542548 /* UIView+mPowerTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B587AC07206D696800542548 /* UIView+mPowerTheme.swift */; };
 		CB5E16EF210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5E16EE210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift */; };
 		CB6196522109473900F2E3EA /* TrackedItemsIntroductionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6196512109473900F2E3EA /* TrackedItemsIntroductionStepObject.swift */; };
+		CB73F7AA26309E0600969688 /* CardiorespiratoryFitness.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB73F7A726309DFA00969688 /* CardiorespiratoryFitness.framework */; };
+		CB73F7AB26309E0600969688 /* CardiorespiratoryFitness.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CB73F7A726309DFA00969688 /* CardiorespiratoryFitness.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8078F3F20ADF1DC00757F42 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8078F2920ADF1DC00757F42 /* AppDelegate.swift */; };
 		F8078F4320ADFA6A00757F42 /* DataSourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8078F4220ADFA6A00757F42 /* DataSourceManager.swift */; };
 		F8078F4420AE078A00757F42 /* DataSourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8078F4220ADFA6A00757F42 /* DataSourceManager.swift */; };
@@ -210,6 +212,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		CB73F7A626309DFA00969688 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CB73F7A126309DFA00969688 /* CardiorespiratoryFitness.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F88725D92051C0F800A4B82F;
+			remoteInfo = CardiorespiratoryFitness;
+		};
+		CB73F7A826309DFA00969688 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CB73F7A126309DFA00969688 /* CardiorespiratoryFitness.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F88725E22051C0F900A4B82F;
+			remoteInfo = CardiorespiratoryFitnessTests;
+		};
 		F84E724220E2C99900E5C6C3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F8D3E76E2062F1B900CD351C /* Project object */;
@@ -253,6 +269,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				CB73F7AB26309E0600969688 /* CardiorespiratoryFitness.framework in Embed Frameworks */,
 				F8A5C864227D08BC00DD4692 /* MotorControl.framework in Embed Frameworks */,
 				F8A5C85E227D08BC00DD4692 /* BridgeSDK.framework in Embed Frameworks */,
 				F8A5C861227D08BC00DD4692 /* BridgeApp.framework in Embed Frameworks */,
@@ -308,6 +325,7 @@
 		B587AC07206D696800542548 /* UIView+mPowerTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+mPowerTheme.swift"; sourceTree = "<group>"; };
 		CB5E16EE210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TrackedItemsIntroductionStepViewController.swift; path = "View Controllers/TrackedItemsIntroductionStepViewController.swift"; sourceTree = "<group>"; };
 		CB6196512109473900F2E3EA /* TrackedItemsIntroductionStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TrackedItemsIntroductionStepObject.swift; path = Model/TrackedItemsIntroductionStepObject.swift; sourceTree = "<group>"; };
+		CB73F7A126309DFA00969688 /* CardiorespiratoryFitness.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CardiorespiratoryFitness.xcodeproj; path = "../Carthage/Checkouts/CardiorespiratoryFitness-iOS/CardiorespiratoryFitness/CardiorespiratoryFitness.xcodeproj"; sourceTree = "<group>"; };
 		F8078F2920ADF1DC00757F42 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F8078F4220ADFA6A00757F42 /* DataSourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSourceManager.swift; sourceTree = "<group>"; };
 		F81BE7BE20B4AB4B00EE57D3 /* AppConfig.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AppConfig.json; sourceTree = "<group>"; };
@@ -420,6 +438,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB73F7AA26309E0600969688 /* CardiorespiratoryFitness.framework in Frameworks */,
 				F8A5C863227D08BC00DD4692 /* MotorControl.framework in Frameworks */,
 				F8A5C85D227D08BC00DD4692 /* BridgeSDK.framework in Frameworks */,
 				F8A5C860227D08BC00DD4692 /* BridgeApp.framework in Frameworks */,
@@ -522,6 +541,15 @@
 				80E3D71D2279366A0087FCA2 /* PassiveDataPermissionStepObject.swift */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		CB73F7A226309DFA00969688 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CB73F7A726309DFA00969688 /* CardiorespiratoryFitness.framework */,
+				CB73F7A926309DFA00969688 /* CardiorespiratoryFitnessTests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		F8078F4120ADF9A000757F42 /* Schedule Management */ = {
@@ -673,6 +701,7 @@
 		F8D3E7992062F23A00CD351C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CB73F7A126309DFA00969688 /* CardiorespiratoryFitness.xcodeproj */,
 				F82A4ADA229706BF00BEBE3C /* ResearchLocation.framework */,
 				F82A4AD7229706BF00BEBE3C /* ResearchMotion.framework */,
 				F82A4AD42297054600BEBE3C /* ResearchLocation.framework */,
@@ -862,6 +891,12 @@
 			mainGroup = F8D3E76D2062F1B900CD351C;
 			productRefGroup = F8D3E7772062F1B900CD351C /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = CB73F7A226309DFA00969688 /* Products */;
+					ProjectRef = CB73F7A126309DFA00969688 /* CardiorespiratoryFitness.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				F8D3E7752062F1B900CD351C /* mPower2 */,
@@ -871,6 +906,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		CB73F7A726309DFA00969688 /* CardiorespiratoryFitness.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CardiorespiratoryFitness.framework;
+			remoteRef = CB73F7A626309DFA00969688 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CB73F7A926309DFA00969688 /* CardiorespiratoryFitnessTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = CardiorespiratoryFitnessTests.xctest;
+			remoteRef = CB73F7A826309DFA00969688 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		F84E723B20E2C99900E5C6C3 /* Resources */ = {
@@ -1417,7 +1469,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = KA9Z8R6M6K;
 				INFOPLIST_FILE = mPower2/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.mPower2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1437,7 +1489,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = KA9Z8R6M6K;
 				INFOPLIST_FILE = mPower2/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.mPower2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
