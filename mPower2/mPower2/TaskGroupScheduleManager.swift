@@ -34,6 +34,7 @@
 import Foundation
 import BridgeAppUI
 import DataTracking
+import CardiorespiratoryFitness
 
 let kActivityTrackingIdentifier = "ActivityTracking"
 let kMedicationTimingKey = "medicationTiming"
@@ -72,7 +73,12 @@ public class ActivityGroupScheduleManager : SBAScheduleManager {
             
             // Order the tasks
             let storedOrder = taskSortOrder
-            _orderedTasks = storedOrder.compactMap { (identifier) -> ScheduledTask? in
+            _orderedTasks = storedOrder.compactMap { (identifier) -> ScheduledTask? in                
+                // Special case for crf task info
+                if (identifier == RSDIdentifier.heartSnapshotTask) {
+                    return ScheduledTask(taskInfo: CRFTaskInfo(.heartSnapshot))
+                }
+                
                 guard let taskInfo = tasks.first(where: { $0.identifier == identifier }) else { return nil }
                 return ScheduledTask(taskInfo: taskInfo)
             }

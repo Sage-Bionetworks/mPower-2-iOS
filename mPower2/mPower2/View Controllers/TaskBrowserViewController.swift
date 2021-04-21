@@ -299,8 +299,15 @@ extension TaskBrowserViewController: UICollectionViewDelegate, UICollectionViewD
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: collectionCellIdentifier, for: indexPath) as? TaskCollectionViewCell
         let scheduledTask = tasks[indexPath.row]
         let task = scheduledTask.taskInfo
-        cell?.image = task.iconWhite
-        cell?.title = task.title?.uppercased()
+        if (scheduledTask.identifier == RSDIdentifier.heartSnapshotTask.identifier) {
+            task.imageVendor?.fetchImage(for: CGSize(width: 100, height: 100), callback: { (imageName, image) in
+                cell?.image = image
+            })
+            cell?.title = Localization.localizedString("CRF_HEART_SNAPSHOT").uppercased()
+        } else {
+            cell?.image = task.iconWhite
+            cell?.title = task.title?.uppercased()
+        }
         cell?.alpha = areTasksEnabled ? 1.0 : 0.35
         cell?.isCompleted = false
         return cell ?? UICollectionViewCell()

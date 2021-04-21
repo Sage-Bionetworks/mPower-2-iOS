@@ -76,6 +76,12 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
         
         let retval = super.application(application, willFinishLaunchingWithOptions: launchOptions)
         
+        // The SBAAppDelegate does not refresh the app config if we already have it
+        // To make sure it stays up to date, load it from web every time
+        if let _ = BridgeSDK.appConfig() {
+            SBABridgeConfiguration.shared.refreshAppConfig()
+        }
+        
         // Instantiate and load the scheduled activities and reports for the study burst.
         StudyBurstScheduleManager.shared.loadScheduledActivities()
         StudyBurstScheduleManager.shared.loadReports()

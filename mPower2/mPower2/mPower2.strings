@@ -169,3 +169,6 @@
 "Tapping_TEXT" = "In this activity we will measure your finger tapping speed with each hand; this may reflect severity of motor systems in Parkinson's Disease.";
 
 "MAILTO_FAILED_MESSAGE_%@" = "Send feedback to %@";
+
+// CRF Strings
+"CRF_HEART_SNAPSHOT" = "Heart Snapshot";
