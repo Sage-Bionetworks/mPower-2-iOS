@@ -35,6 +35,7 @@ import Research
 import ResearchUI
 import BridgeSDK
 import BridgeApp
+import CoreTelephony
 
 protocol SignInDelegate : class {
     func signIn(token: String)
@@ -54,6 +55,17 @@ class SignInTaskViewController: RSDTaskViewController, SignInDelegate {
     var regionCode: String? = "US" // TODO: emm 2018-04-25 Handle non-US phone numbers for international studies
 
     init() {
+        if #available(iOS 12.0, *) {
+            if let providers = CTTelephonyNetworkInfo().serviceSubscriberCellularProviders,
+               let carrier = providers.values.first, let countryCode = carrier.isoCountryCode {
+                self.regionCode = countryCode.uppercased()
+            }
+        } else {
+            if let carrier = CTTelephonyNetworkInfo().subscriberCellularProvider, let countryCode = carrier.isoCountryCode {
+                self.regionCode = countryCode.uppercased()
+            }
+        }
+
         do {
             let resourceTransformer = RSDResourceTransformerObject(resourceName: "SignIn")
             let task = try RSDFactory.shared.decodeTask(with: resourceTransformer)
