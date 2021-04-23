@@ -182,7 +182,7 @@ class DataSourceManager {
                 
                 // If the installed info has an image then it's loaded.
                 let installedInfo = configuration.activityInfo(for: activityId.stringValue)
-                if installedInfo?.imageData != nil {
+                if installedInfo?.imageVendor != nil {
                     return
                 }
                 
