@@ -38,6 +38,10 @@ import BridgeSDK
 import UserNotifications
 import ResearchMotion
 
+extension RSDDesignSystem {
+  public static let shared = RSDDesignSystem()
+}
+
 @UIApplicationMain
 class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
     weak var smsSignInDelegate: SignInDelegate? = nil
