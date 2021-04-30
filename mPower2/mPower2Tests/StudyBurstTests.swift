@@ -232,7 +232,10 @@ class StudyBurstManagerTests: StudyBurstTests {
         XCTAssertEqual(scheduleManager.calculateThisDay(), 1)
         XCTAssertEqual(scheduleManager.pastSurveys.count, 0)
         XCTAssertFalse(scheduleManager.isFinalTask(RSDIdentifier.tappingTask.stringValue))
-        XCTAssertTrue(scheduleManager.isFinalTask(RSDIdentifier.tremorTask.stringValue))
+        
+        // Business logic is that heart snapshot shows up once for the whole study burst,
+        // and it will be last, not tremor, on day 1 when only 2 tasks are complete
+        XCTAssertTrue(scheduleManager.isFinalTask(RSDIdentifier.heartSnapshot.stringValue))
         
         let orderedTasks = scheduleManager.orderedTasks
         let expectedIds: [RSDIdentifier] = [.walkAndBalanceTask, .tappingTask, .tremorTask]
@@ -853,6 +856,10 @@ protocol TestScheduleManager : class {
 
 let referenceDate = Date(timeIntervalSince1970: 0)
 
+extension RSDIdentifier {
+    public static let heartSnapshot = RSDIdentifier(rawValue: "HeartSnapshot")
+}
+
 class TestStudyBurstScheduleManager : StudyBurstScheduleManager, TestScheduleManager {
     
     init(_ studySetup: StudySetup, now: Date? = nil, taskOrderTimestamp: Date? = referenceDate) {
@@ -928,5 +935,9 @@ class TestStudyBurstScheduleManager : StudyBurstScheduleManager, TestScheduleMan
         self.sendUpdated_schedules = schedules
         self.sendUpdated_taskPath = taskViewModel
         super.sendUpdated(for: schedules, taskViewModel: taskViewModel)
+    }
+    
+    override open func lastHeartSnapshotFinishedDate() -> Date? {
+        return _now.addingNumberOfDays(-studySetup.heartSnapshotCompletedDaysAgo)
     }
 }

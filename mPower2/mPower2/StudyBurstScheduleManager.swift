@@ -222,7 +222,13 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     
     /// Is the study burst completed for today?
     public var isCompletedForToday : Bool {
-        return !hasStudyBurst || (finishedCount == totalActivitiesCount)
+        guard hasStudyBurst else {
+            return true
+        }
+        // Make sure both daily tasks and one-time tasks are complete
+        let dailyTasksCompletedForToday = (finishedCount == totalActivitiesCount)
+        let oneTimeBurstTaskComplete = isHeartSnapshotFinished()
+        return dailyTasksCompletedForToday && oneTimeBurstTaskComplete
     }
     
     /// How many of the tasks are finished?
@@ -258,6 +264,11 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     
     /// Is this the final study burst task for today?
     public func isFinalTask(_ taskIdentifier: String) -> Bool {
+        // The heart snapshot is the final task if it hasn't been completed yet
+        if (!isHeartSnapshotFinished()) {
+            return taskIdentifier == RSDIdentifier.heartSnapshotTask.identifier
+        }
+        // Otherwise, the final task is the last one in the measuring group
         return taskIdentifier == self.orderedTasks.last?.identifier
     }
     
@@ -641,6 +652,27 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         }
         
         return studyMarker
+    }
+    
+    /// Returns if the heart snapshot has been finished for the current study burst
+    func isHeartSnapshotFinished() -> Bool {
+        if !self.hasActiveStudyBurst {
+            return true
+        }
+        guard let dayCount = self.dayCount,
+            let lastFinishedDate = self.lastHeartSnapshotFinishedDate() else {
+            return true
+        }
+        let studyBurstStart = self.now().addingNumberOfDays(-dayCount).startOfDay()
+        return lastFinishedDate > studyBurstStart
+    }
+    
+    open func lastHeartSnapshotFinishedDate() -> Date? {
+        return UserDefaults.standard.object(forKey: "lastHeartSnapshotFinishedDate") as? Date
+    }
+    
+    func saveLastHeartSnapshotFininshedDate() {
+        UserDefaults.standard.set(Date(), forKey: "lastHeartSnapshotFinishedDate")
     }
 
     func calculateThisDay() -> Int {

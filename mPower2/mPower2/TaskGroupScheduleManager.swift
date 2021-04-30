@@ -153,6 +153,9 @@ public class ActivityGroupScheduleManager : SBAScheduleManager {
             scheduledTask.startedOn = taskResult.startDate
             scheduledTask.finishedOn = taskResult.endDate
         }
+        if (taskController.task.identifier == RSDIdentifier.heartSnapshotTask.identifier) {
+            StudyBurstScheduleManager.shared.saveLastHeartSnapshotFininshedDate()
+        }
         super.taskController(taskController, readyToSave: taskViewModel)
     }
     
@@ -271,6 +274,9 @@ public class TaskGroupScheduleManager : ActivityGroupScheduleManager {
         // Look for the medication timing question and store in memory.
         if let result = taskViewModel.taskResult.findAnswerResult(with: kMedicationTimingKey) {
             _medicationTimingResult = result
+        }
+        if (taskController.task.identifier == RSDIdentifier.heartSnapshotTask.identifier) {
+            StudyBurstScheduleManager.shared.saveLastHeartSnapshotFininshedDate()
         }
         super.taskController(taskController, readyToSave: taskViewModel)
     }

@@ -71,6 +71,8 @@
 		80E3D7372279383B0087FCA2 /* PassiveDataPermissionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E3D7362279383B0087FCA2 /* PassiveDataPermissionStepViewController.swift */; };
 		80F3739C20FC32D200A565E0 /* VersionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F3739B20FC32D200A565E0 /* VersionLabel.swift */; };
 		B587AC08206D696800542548 /* UIView+mPowerTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B587AC07206D696800542548 /* UIView+mPowerTheme.swift */; };
+		CB5B4957263CC4F100DD9093 /* CardiorespiratoryFitness.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB73F7A726309DFA00969688 /* CardiorespiratoryFitness.framework */; };
+		CB5B4958263CC4F100DD9093 /* CardiorespiratoryFitness.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CB73F7A726309DFA00969688 /* CardiorespiratoryFitness.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CB5E16EF210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5E16EE210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift */; };
 		CB6196522109473900F2E3EA /* TrackedItemsIntroductionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6196512109473900F2E3EA /* TrackedItemsIntroductionStepObject.swift */; };
 		CB73F7AA26309E0600969688 /* CardiorespiratoryFitness.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB73F7A726309DFA00969688 /* CardiorespiratoryFitness.framework */; };
@@ -212,6 +214,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		CB5B494B263CB72E00DD9093 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F8D3E76E2062F1B900CD351C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F8D3E7752062F1B900CD351C;
+			remoteInfo = mPower2;
+		};
 		CB73F7A626309DFA00969688 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CB73F7A126309DFA00969688 /* CardiorespiratoryFitness.xcodeproj */;
@@ -257,6 +266,7 @@
 				FF68A758230DC6AC00C066BB /* BridgeAppUI.framework in Embed Frameworks */,
 				F82A4AD62297054600BEBE3C /* ResearchLocation.framework in Embed Frameworks */,
 				F8A5C873227D08D100DD4692 /* Research.framework in Embed Frameworks */,
+				CB5B4958263CC4F100DD9093 /* CardiorespiratoryFitness.framework in Embed Frameworks */,
 				F8A5C871227D08D100DD4692 /* ResearchUI.framework in Embed Frameworks */,
 				F82A4AD02297051200BEBE3C /* BridgeSDK_Test.framework in Embed Frameworks */,
 			);
@@ -429,6 +439,7 @@
 				FF68A757230DC6AC00C066BB /* BridgeAppUI.framework in Frameworks */,
 				F82A4AD52297054600BEBE3C /* ResearchLocation.framework in Frameworks */,
 				F8A5C872227D08D100DD4692 /* Research.framework in Frameworks */,
+				CB5B4957263CC4F100DD9093 /* CardiorespiratoryFitness.framework in Frameworks */,
 				F8A5C870227D08D100DD4692 /* ResearchUI.framework in Frameworks */,
 				F82A4ACF2297051200BEBE3C /* BridgeSDK_Test.framework in Frameworks */,
 			);
@@ -818,6 +829,7 @@
 			);
 			dependencies = (
 				F8545989208FA3BA00D37243 /* PBXTargetDependency */,
+				CB5B494C263CB72E00DD9093 /* PBXTargetDependency */,
 			);
 			name = mPower2Tests;
 			productName = mPower2Tests;
@@ -1161,6 +1173,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		CB5B494C263CB72E00DD9093 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F8D3E7752062F1B900CD351C /* mPower2 */;
+			targetProxy = CB5B494B263CB72E00DD9093 /* PBXContainerItemProxy */;
+		};
 		F84E724320E2C99900E5C6C3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = F8545973208FA2ED00D37243 /* mPower2TestApp */;
@@ -1317,7 +1334,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KA9Z8R6M6K;
 				INFOPLIST_FILE = mPower2TestApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.mPower2TestApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1336,7 +1353,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KA9Z8R6M6K;
 				INFOPLIST_FILE = mPower2TestApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.mPower2TestApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1512,6 +1529,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KA9Z8R6M6K;
 				INFOPLIST_FILE = mPower2Tests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.mPower2Tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1529,6 +1547,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KA9Z8R6M6K;
 				INFOPLIST_FILE = mPower2Tests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.mPower2Tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

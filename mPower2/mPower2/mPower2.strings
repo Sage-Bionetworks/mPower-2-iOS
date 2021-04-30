@@ -162,6 +162,7 @@
 "HISTORY_ITEM_TAP_TITLE" = "Tap Count";
 "HISTORY_ITEM_WALK_TITLE" = "Walk and Balance";
 "HISTORY_ITEM_TREMOR_TITLE" = "Tremor Test";
+"HISTORY_ITEM_HEART_SNAPSHOT_TITLE" = "Heart Snapshot";
 "HISTORY_ITEM_TAP_LEFT" = "Left Hand: %d";
 "HISTORY_ITEM_TAP_RIGHT" = "Right Hand: %d";
 

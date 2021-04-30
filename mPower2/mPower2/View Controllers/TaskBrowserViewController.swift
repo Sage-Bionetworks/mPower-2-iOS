@@ -35,6 +35,7 @@ import UIKit
 import Research
 import MotorControl
 import BridgeApp
+import CardiorespiratoryFitness
 
 protocol TaskBrowserViewControllerDelegate {
     func taskBrowserToggleVisibility()
@@ -69,7 +70,15 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
     }
     
     open var tasks: [ScheduledTask] {
-        return selectedScheduleManager?.orderedTasks ?? []
+        var tasks = selectedScheduleManager?.orderedTasks ?? []
+        
+        // The measuring group should also include the heart snapshot at the end
+        if (selectedScheduleManager?.activityGroup?.identifier ==
+                RSDIdentifier.measuringTaskGroup.identifier) {
+            tasks.append(ScheduledTask(taskInfo: CRFTaskInfo(CRFTaskIdentifier.heartSnapshot)))
+        }
+        
+        return tasks
     }
     
     func scheduleManager(with identifier: String) -> ActivityGroupScheduleManager? {

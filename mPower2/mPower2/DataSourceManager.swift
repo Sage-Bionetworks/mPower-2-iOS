@@ -51,7 +51,7 @@ extension RSDIdentifier {
     static let tremorTask: RSDIdentifier = MCTTaskIdentifier.tremor.identifier
     static let walkAndBalanceTask: RSDIdentifier = MCTTaskIdentifier.walkAndBalance.identifier
     static let heartSnapshotTask: RSDIdentifier = CRFTaskIdentifier.heartSnapshot.identifierValue
-    static let measuringTasks: [RSDIdentifier] = [.tappingTask, .tremorTask, .walkAndBalanceTask, .heartSnapshotTask]
+    static let measuringTasks: [RSDIdentifier] = [.tappingTask, .tremorTask, .walkAndBalanceTask]
     
     static let studyBurstCompletedTask: RSDIdentifier = "study-burst-task"
     static let demographics: RSDIdentifier = "Demographics"

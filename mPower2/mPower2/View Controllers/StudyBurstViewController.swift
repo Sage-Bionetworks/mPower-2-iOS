@@ -237,9 +237,12 @@ class StudyBurstTaskBrowserViewController: TaskBrowserViewController {
         
         cell?.title = task.title
         cell?.image = nil
-        
-        
-        let isCompleted = (scheduledTask.finishedOn != nil)
+                
+        var isCompleted = (scheduledTask.finishedOn != nil)
+        if (scheduledTask.identifier == RSDIdentifier.heartSnapshotTask.identifier) {
+            let manager = StudyBurstScheduleManager.shared
+            isCompleted = manager.isHeartSnapshotFinished()
+        }
         let usesFullColorImage = isCompleted || (indexPath.row == self.nextTaskIndex())
         cell?.isCompleted = isCompleted
         task.imageVendor?.fetchImage(for: collectionView.layoutAttributesForItem(at: indexPath)?.size ?? .zero) { (_, img) in

@@ -236,6 +236,12 @@ class HistoryDataManager : SBAReportManager {
             item.imageName = "TremorTaskIcon"
             return item
             
+        case .heartSnapshotTask:
+            let item = MeasurementHistoryItem(context: context, report: report)
+            item.title = Localization.localizedString("HISTORY_ITEM_HEART_SNAPSHOT_TITLE")
+            item.imageName = "heartSnapshotIcon"
+            return item
+            
         default:
             assertionFailure("WARNING! Unknown report identifier: \(reportIdentifier)")
             return nil
