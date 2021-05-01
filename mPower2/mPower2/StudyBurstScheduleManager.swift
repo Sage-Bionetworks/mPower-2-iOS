@@ -122,6 +122,10 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     
     static var shared = StudyBurstScheduleManager()
     
+    // Bridge doesn't support the concept of a skipped task that we can store, so
+    // instead we'll track it locally
+    open var skippedTasks: [RSDTaskInfo] = []
+    
     /// The configuration is set up either by the bridge configuration or using defaults defined internally.
     lazy var studyBurst: StudyBurstConfiguration! = {
         return (SBABridgeConfiguration.shared as? MP2BridgeConfiguration)?.studyBurst ?? StudyBurstConfiguration()

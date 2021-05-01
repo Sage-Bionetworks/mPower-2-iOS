@@ -89,6 +89,12 @@ class StudyBurstViewController: UIViewController {
         // Setup our next button
         navFooterView.nextButton?.addTarget(self, action: #selector(nextHit(sender:)), for: .touchUpInside)
         
+        // Setup skip button
+        navFooterView.addSkipButtonIfNeeded()
+        navFooterView.isSkipHidden = false
+        navFooterView.skipButton?.setTitle(Localization.localizedString("SKIP_BUTTON"), for: .normal)
+        navFooterView.skipButton?.addTarget(self, action: #selector(skipHit(sender:)), for: .touchUpInside)
+        
         // Update progress circle
         progressCircleView.progress = studyBurstManager.progress
         progressCircleView.displayDay(count: studyBurstManager.dayCount ?? 1)
@@ -141,6 +147,17 @@ class StudyBurstViewController: UIViewController {
             taskBrowserVC?.startNextTask()
         }
     }
+    
+    @objc func skipHit(sender: Any) {
+        // Skip the current activity, then if they are done show the Completion VC, otherwise show the next task
+        
+        if studyBurstManager?.isCompletedForToday ?? false {
+            self.navigationController?.popToRootViewController(animated: true)
+        }
+        else {
+            taskBrowserVC?.skipCurrentTask()
+        }
+    }
 }
 
 extension StudyBurstViewController: StudyBurstProgressExpirationLabelDelegate {
@@ -156,6 +173,9 @@ extension StudyBurstViewController: TaskBrowserViewControllerDelegate {
         delegate?.studyBurstDidFinish(task: task, reason: reason)
         progressLabel.updateStudyBurstExpirationTime(studyBurstManager.expiresOn)
         progressCircleView.progress = studyBurstManager.progress
+    }
+    func taskBrowserSkippedTask(task: RSDTaskViewModel) {
+        
     }
     func taskBrowserToggleVisibility() {
         // Nothing
@@ -180,7 +200,8 @@ extension StudyBurstViewController: TaskBrowserViewControllerDelegate {
 class StudyBurstTaskBrowserViewController: TaskBrowserViewController {
     
     func nextTaskIndex() -> Int {
-        return tasks.firstIndex(where: { $0.finishedOn == nil }) ?? 0
+        return tasks.firstIndex(where: { $0.finishedOn == nil && !self.wasTaskSkipped(task: $0.taskInfo)}) ?? 0
+        // Note: this returning 0 might be contributing to Step-24 Bug Fix 3
     }
     
     // MARK: Instance methods
@@ -189,6 +210,17 @@ class StudyBurstTaskBrowserViewController: TaskBrowserViewController {
         let idx = nextTaskIndex()
         guard tasks.count > idx else { return }
         startTask(for: tasks[idx].taskInfo)
+    }
+    
+    public func skipCurrentTask() {
+        // Get the next incomplete task and skip it.
+        let idx = nextTaskIndex()
+        guard tasks.count > idx else { return }
+        skipTask(for: tasks[idx].taskInfo)
+    }
+    
+    func wasTaskSkipped(task: RSDTaskInfo) -> Bool {
+        StudyBurstScheduleManager.shared.skippedTasks.contains(where: { $0.identifier == task.identifier })
     }
     
     // MARK: Overrides
@@ -240,8 +272,10 @@ class StudyBurstTaskBrowserViewController: TaskBrowserViewController {
         
         
         let isCompleted = (scheduledTask.finishedOn != nil)
-        let usesFullColorImage = isCompleted || (indexPath.row == self.nextTaskIndex())
-        cell?.isCompleted = isCompleted
+        let isSkipped = wasTaskSkipped(task: task)
+        
+        let usesFullColorImage = ((!isSkipped) && (isCompleted || (indexPath.row == self.nextTaskIndex())))
+        cell?.isCompleted = (!isSkipped && isCompleted)
         task.imageVendor?.fetchImage(for: collectionView.layoutAttributesForItem(at: indexPath)?.size ?? .zero) { (_, img) in
                 
                 // If the task is completed or is the first incomplete task, we show the image as normal,
