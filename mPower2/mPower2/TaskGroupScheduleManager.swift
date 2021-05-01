@@ -64,7 +64,7 @@ public class ActivityGroupScheduleManager : SBAScheduleManager {
     /// List of the tasks including when the task was last finished. Returns `nil` if this is not a
     /// measurement task.
     var orderedTasks: [ScheduledTask] {
-        if _orderedTasks == nil || shouldRefreshTasks {
+        if _orderedTasks == nil || shouldRefreshTasks || _orderedTasks.count == 0 {
             guard let tasks = self.activityGroup?.tasks else {
                 debugPrint("WARNING! No tasks are in the activity group.")
                 return []
