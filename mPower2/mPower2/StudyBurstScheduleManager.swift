@@ -948,7 +948,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         }
         else if missedDaysCount <= 10 {
             titleKey = "STUDY_BURST_TITLE_MISSED_4-10_RANDOM_\(Int.random(in: 0..<6))"
-            messageKey = "STUDY_BURST_TITLE_MISSED_4-10_RANDOM_\(Int.random(in: 0..<9))"
+            messageKey = "STUDY_BURST_MESSAGE_MISSED_4-10_RANDOM_\(Int.random(in: 0..<9))"
         }
         else {
             titleKey = "STUDY_BURST_TITLE_MISSED>10"
