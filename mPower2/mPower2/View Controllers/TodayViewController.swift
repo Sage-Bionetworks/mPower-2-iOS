@@ -261,7 +261,10 @@ class TodayViewController: UIViewController {
                     actionBarDetailsLabel.updateStudyBurstExpirationTime(expiresOn)
                 }
                 else {
-                    let remainingCount = studyBurstManager.totalActivitiesCount - studyBurstManager.finishedCount
+                    var remainingCount = studyBurstManager.totalActivitiesCount - studyBurstManager.finishedCount
+                    if (!studyBurstManager.isHeartSnapshotFinished()) {
+                        remainingCount += 1
+                    }
                     let formatString : String = NSLocalizedString("ACTIVITIES_TO_DO",
                                                                   comment: "Detail for the number of activities remaining.")
                     actionBarDetailsLabel.text = String.localizedStringWithFormat(formatString, remainingCount)
