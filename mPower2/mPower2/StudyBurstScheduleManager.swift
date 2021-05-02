@@ -656,12 +656,13 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     
     /// Returns if the heart snapshot has been finished for the current study burst
     func isHeartSnapshotFinished() -> Bool {
-        if !self.hasActiveStudyBurst {
+        guard self.hasActiveStudyBurst,
+              let dayCount = self.dayCount else {
             return true
         }
-        guard let dayCount = self.dayCount,
-            let lastFinishedDate = self.lastHeartSnapshotFinishedDate() else {
-            return true
+        // We have a study burst, but have not finished a heart snapshot yet
+        guard let lastFinishedDate = self.lastHeartSnapshotFinishedDate() else {
+            return false
         }
         let studyBurstStart = self.now().addingNumberOfDays(-dayCount).startOfDay()
         return lastFinishedDate > studyBurstStart
