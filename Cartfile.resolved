@@ -1,5 +1,5 @@
 github "Sage-Bionetworks/Bridge-iOS-SDK" "4.4.83"
 github "Sage-Bionetworks/BridgeApp-Apple-SDK" "v3.1.22"
-github "Sage-Bionetworks/CardiorespiratoryFitness-iOS" "1.4.18"
+github "Sage-Bionetworks/CardiorespiratoryFitness-iOS" "1.5.19"
 github "Sage-Bionetworks/MotorControl-iOS" "v1.7.38"
 github "Sage-Bionetworks/SageResearch" "v2.8.85"
