@@ -37,7 +37,9 @@ import BridgeApp
 class MP2SurveyConfiguration : SBASurveyConfiguration {
     
     let motivationStepIdentifierPrefix = "motivation"
-    let requiredStepIdentifiers = ["birthYear", "sex", "diagnosis"]
+    public static let birthYearStepId = "birthYear"
+    public static let sexStepId = "sex"
+    let requiredStepIdentifiers = [birthYearStepId, sexStepId, "diagnosis"]
     
     override func shouldHideAction(for actionType: RSDUIActionType, on step: RSDStep, callingObject: Any?) -> Bool? {
         switch actionType {

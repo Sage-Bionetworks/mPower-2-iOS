@@ -34,7 +34,7 @@
 import Foundation
 import BridgeApp
 import UserNotifications
-
+import CardiorespiratoryFitness
 
 /// The study burst configuration is a Decodable that can be added to the `AppConfig.clientData`.
 public struct StudyBurstConfiguration : Codable {
@@ -448,7 +448,31 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         }
         
         let path = self.instantiateTaskViewModel(for: task)
+        
+        
+        if (steps.contains(where: { $0.identifier == CRFDemographicsKeys.birthYear.rawValue })) {
+            previousCrfResults()?.forEach({
+                path.taskViewModel.append(previousResult: $0)
+            })
+        }
+        
         return path.taskViewModel
+    }
+    
+    /// Returns the birth year and sex answer results ready to be added as previous results to a task
+    func previousCrfResults() -> [RSDResult]? {
+        // Must have both birthYear and sex to create the CRF task data
+        if let yearAnswerStr = SBAProfileDataSourceObject.shared.profileTableItem(at: ProfileTableViewController.birthYearIndexPath)?.detail,
+           let yearInt = Int(yearAnswerStr),
+           let sexAnswerStr = SBAProfileDataSourceObject.shared.profileTableItem(at: ProfileTableViewController.sexIndexPath)?.detail {
+            
+            return [
+                RSDAnswerResultObject(identifier: CRFDemographicsKeys.sex.stringValue, answerType: .string, value: sexAnswerStr),
+                RSDAnswerResultObject(identifier: CRFDemographicsKeys.birthYear.stringValue, answerType: .integer, value: yearInt)
+            ]
+        }
+        
+        return nil
     }
     
     func motivationTaskViewModel() -> RSDTaskViewModel? {

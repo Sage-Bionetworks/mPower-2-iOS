@@ -42,6 +42,10 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
     
     static let settingsViewControllerSegueId = "SettingsViewControllerSegue"
     
+    // Hard-coded to match Config Element on bridge
+    static let birthYearIndexPath = IndexPath(row: 1, section: 0)
+    static let sexIndexPath = IndexPath(row: 2, section: 0)
+    
     var webViewControllerStoryboardId = "ProfileHTMLViewController"
     var withdrawalViewControllerStoryboardId = "WithdrawalViewController"
     var subProfileViewControllerStoryboardId = "SubProfileTableViewController"
