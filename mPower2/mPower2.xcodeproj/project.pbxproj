@@ -333,6 +333,7 @@
 		80E3D7362279383B0087FCA2 /* PassiveDataPermissionStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PassiveDataPermissionStepViewController.swift; path = "View Controllers/PassiveDataPermissionStepViewController.swift"; sourceTree = "<group>"; };
 		80F3739B20FC32D200A565E0 /* VersionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionLabel.swift; sourceTree = "<group>"; };
 		B587AC07206D696800542548 /* UIView+mPowerTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+mPowerTheme.swift"; sourceTree = "<group>"; };
+		CB1F5EDB264385E200A40870 /* HistoryV2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HistoryV2.xcdatamodel; sourceTree = "<group>"; };
 		CB5E16EE210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TrackedItemsIntroductionStepViewController.swift; path = "View Controllers/TrackedItemsIntroductionStepViewController.swift"; sourceTree = "<group>"; };
 		CB6196512109473900F2E3EA /* TrackedItemsIntroductionStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TrackedItemsIntroductionStepObject.swift; path = Model/TrackedItemsIntroductionStepObject.swift; sourceTree = "<group>"; };
 		CB73F7A126309DFA00969688 /* CardiorespiratoryFitness.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CardiorespiratoryFitness.xcodeproj; path = "../Carthage/Checkouts/CardiorespiratoryFitness-iOS/CardiorespiratoryFitness/CardiorespiratoryFitness.xcodeproj"; sourceTree = "<group>"; };
@@ -1614,7 +1615,7 @@
 				FF3EE851236A0BE40024B249 /* HistoryV1.xcdatamodel */,
 				FF5010FC22DED70B0035E83C /* History.xcdatamodel */,
 			);
-			currentVersion = FF5010FC22DED70B0035E83C /* History.xcdatamodel */;
+			currentVersion = CB1F5EDB264385E200A40870 /* HistoryV2.xcdatamodel */;
 			path = History.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
