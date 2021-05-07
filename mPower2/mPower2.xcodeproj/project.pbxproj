@@ -71,6 +71,8 @@
 		80E3D7372279383B0087FCA2 /* PassiveDataPermissionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E3D7362279383B0087FCA2 /* PassiveDataPermissionStepViewController.swift */; };
 		80F3739C20FC32D200A565E0 /* VersionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F3739B20FC32D200A565E0 /* VersionLabel.swift */; };
 		B587AC08206D696800542548 /* UIView+mPowerTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B587AC07206D696800542548 /* UIView+mPowerTheme.swift */; };
+		CB37C6142645B30B00E85452 /* Research_UnitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C882227E278800DD4692 /* Research_UnitTest.framework */; };
+		CB37C6152645B30B00E85452 /* Research_UnitTest.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C882227E278800DD4692 /* Research_UnitTest.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CB5B4957263CC4F100DD9093 /* CardiorespiratoryFitness.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB73F7A726309DFA00969688 /* CardiorespiratoryFitness.framework */; };
 		CB5B4958263CC4F100DD9093 /* CardiorespiratoryFitness.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CB73F7A726309DFA00969688 /* CardiorespiratoryFitness.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CB5E16EF210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5E16EE210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift */; };
@@ -265,6 +267,7 @@
 				F82A4AD32297054600BEBE3C /* ResearchMotion.framework in Embed Frameworks */,
 				FF68A758230DC6AC00C066BB /* BridgeAppUI.framework in Embed Frameworks */,
 				F82A4AD62297054600BEBE3C /* ResearchLocation.framework in Embed Frameworks */,
+				CB37C6152645B30B00E85452 /* Research_UnitTest.framework in Embed Frameworks */,
 				F8A5C873227D08D100DD4692 /* Research.framework in Embed Frameworks */,
 				CB5B4958263CC4F100DD9093 /* CardiorespiratoryFitness.framework in Embed Frameworks */,
 				F8A5C871227D08D100DD4692 /* ResearchUI.framework in Embed Frameworks */,
@@ -439,6 +442,7 @@
 				F82A4AD22297054600BEBE3C /* ResearchMotion.framework in Frameworks */,
 				FF68A757230DC6AC00C066BB /* BridgeAppUI.framework in Frameworks */,
 				F82A4AD52297054600BEBE3C /* ResearchLocation.framework in Frameworks */,
+				CB37C6142645B30B00E85452 /* Research_UnitTest.framework in Frameworks */,
 				F8A5C872227D08D100DD4692 /* Research.framework in Frameworks */,
 				CB5B4957263CC4F100DD9093 /* CardiorespiratoryFitness.framework in Frameworks */,
 				F8A5C870227D08D100DD4692 /* ResearchUI.framework in Frameworks */,

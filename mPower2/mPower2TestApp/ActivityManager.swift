@@ -215,6 +215,14 @@ extension StudySetup {
                    timeUntilExpires: 0,
                    dataGroups: ["gr_SC_DB","gr_BR_AD","gr_ST_T","gr_DT_F"])
     
+    static let day1_startupState_HeartSnapshot =
+        StudySetup(0, studyBurstDay: 0,
+                   studyBurstFinishedOnDays: [],
+                   studyBurstSurveyFinishedOnDays: [:],
+                   finishedTodayTasks: [],
+                   dataGroups: ["show_heartsnapshot"],
+                   heartSnapshotCompletedDaysAgo: 100)
+    
     static let day1_noTasksFinished =
         StudySetup(0, studyBurstDay: 0,
                    studyBurstFinishedOnDays: [],
