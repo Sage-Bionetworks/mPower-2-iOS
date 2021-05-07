@@ -176,6 +176,21 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
         self.present(vc, animated: true, completion: nil)
     }
     
+    func skipTask(for taskInfo: RSDTaskInfo) {
+        // Instead of launching into the task, skip it and update the delegate
+        let (taskViewModel, _) = selectedScheduleManager.instantiateTaskViewModel(for: taskInfo)
+
+        // Add this to the list of skipped tasks we are tracking locally
+        StudyBurstScheduleManager.shared.skipTask(task: taskInfo)
+
+        // Tell delegate task was finished (albeit, skipped)
+        self.delegate?.taskBrowserDidFinish(task: taskViewModel, reason: RSDTaskFinishReason.completed)
+
+        // reload collection view
+        self.collectionView.reloadData()
+        self.unlockMessageLabel?.isHidden = areTasksEnabled
+    }
+    
     // MARK: Instance methods
     public func showSelectionIndicator(visible: Bool) {
         // Iterate all of our tab views and change alpha

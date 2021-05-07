@@ -261,7 +261,7 @@ class TodayViewController: UIViewController {
                     actionBarDetailsLabel.updateStudyBurstExpirationTime(expiresOn)
                 }
                 else {
-                    var remainingCount = studyBurstManager.totalActivitiesCount - studyBurstManager.finishedCount
+                    var remainingCount = studyBurstManager.totalActivitiesCount - studyBurstManager.finishedOrSkippedCount
                     if (!studyBurstManager.isHeartSnapshotFinished()) {
                         remainingCount += 1
                     }
