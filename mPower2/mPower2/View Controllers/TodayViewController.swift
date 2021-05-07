@@ -262,7 +262,8 @@ class TodayViewController: UIViewController {
                 }
                 else {
                     var remainingCount = studyBurstManager.totalActivitiesCount - studyBurstManager.finishedCount
-                    if (!studyBurstManager.isHeartSnapshotFinished()) {
+                    if (studyBurstManager.shouldShowHeartSnapshot &&
+                            !studyBurstManager.isHeartSnapshotFinished()) {
                         remainingCount += 1
                     }
                     let formatString : String = NSLocalizedString("ACTIVITIES_TO_DO",

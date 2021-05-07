@@ -217,7 +217,17 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     
     /// What is the current progress on required activities?
     public var progress : CGFloat {
-        return CGFloat(finishedCount) / CGFloat(totalActivitiesCount)
+        var numerator = finishedCount
+        var denominator = totalActivitiesCount
+
+        if (self.shouldShowHeartSnapshot) {
+            denominator += 1
+            if (isHeartSnapshotFinished()) {
+                numerator += 1
+            }
+        }
+
+        return CGFloat(numerator) / CGFloat(denominator)
     }
     
     /// Is the study burst completed for today?
@@ -227,8 +237,8 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         }
         // Make sure both daily tasks and one-time tasks are complete
         let dailyTasksCompletedForToday = (finishedCount == totalActivitiesCount)
-        let oneTimeBurstTaskComplete = isHeartSnapshotFinished()
-        return dailyTasksCompletedForToday && oneTimeBurstTaskComplete
+        let heartSnapshotHiddenOrComplete = (!self.shouldShowHeartSnapshot || isHeartSnapshotFinished())
+        return dailyTasksCompletedForToday && heartSnapshotHiddenOrComplete
     }
     
     /// How many of the tasks are finished?
@@ -265,7 +275,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     /// Is this the final study burst task for today?
     public func isFinalTask(_ taskIdentifier: String) -> Bool {
         // The heart snapshot is the final task if it hasn't been completed yet
-        if (!isHeartSnapshotFinished()) {
+        if (self.shouldShowHeartSnapshot && !isHeartSnapshotFinished()) {
             return taskIdentifier == RSDIdentifier.heartSnapshotTask.identifier
         }
         // Otherwise, the final task is the last one in the measuring group

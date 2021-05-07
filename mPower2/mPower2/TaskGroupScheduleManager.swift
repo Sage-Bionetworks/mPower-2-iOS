@@ -62,6 +62,8 @@ class ScheduledTask : NSObject {
 
 public class ActivityGroupScheduleManager : SBAScheduleManager {
     
+    public static let SHOW_HEART_SNAPSHOT_DATA_GROUP = "show_heartsnapshot"
+    
     /// List of the tasks including when the task was last finished. Returns `nil` if this is not a
     /// measurement task.
     var orderedTasks: [ScheduledTask] {
@@ -84,6 +86,11 @@ public class ActivityGroupScheduleManager : SBAScheduleManager {
         return _orderedTasks
     }
     private var _orderedTasks: [ScheduledTask]!
+    
+    open var shouldShowHeartSnapshot: Bool {
+        return self.participant?.dataGroups?.contains(
+            TaskGroupScheduleManager.SHOW_HEART_SNAPSHOT_DATA_GROUP) ?? false
+    }
     
     /// Should the tasks be refreshed?
     var shouldRefreshTasks: Bool {
