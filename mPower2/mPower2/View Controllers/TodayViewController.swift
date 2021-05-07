@@ -59,6 +59,8 @@ class TodayViewController: UIViewController {
     @IBOutlet weak var taskBrowserContainerView: UIView!
     @IBOutlet weak var taskBrowserTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var headerViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var actionBarArrow: UIImageView!
+    
     
     var taskBrowserVC: TaskBrowserViewController?
     var tableSetupDone = false
