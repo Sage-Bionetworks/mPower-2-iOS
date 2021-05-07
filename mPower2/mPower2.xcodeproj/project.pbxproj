@@ -1612,6 +1612,7 @@
 		FF5010FB22DED70B0035E83C /* History.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				CB1F5EDB264385E200A40870 /* HistoryV2.xcdatamodel */,
 				FF3EE851236A0BE40024B249 /* HistoryV1.xcdatamodel */,
 				FF5010FC22DED70B0035E83C /* History.xcdatamodel */,
 			);
