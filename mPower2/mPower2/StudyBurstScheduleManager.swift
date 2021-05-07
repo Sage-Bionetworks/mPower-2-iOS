@@ -849,6 +849,16 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         return Calendar(identifier: .iso8601).dateComponents([.hour, .minute], from: reminderTime)
     }
     
+    func getDaysUntilNextStudyBurst() -> Int {
+        if (hasStudyBurst) {
+            // We are in the middle of a study burst already
+            return 0
+        } else {
+            // Todo add real logic here
+            return 20
+        }
+    }
+    
     func getLocalNotifications(after reminderTime: DateComponents, with pendingRequests: [UNNotificationRequest]) -> (add: [UNNotificationRequest], removeIds: [String]) {
         
         let studyBurstMarkerId = self.studyBurst.identifier
