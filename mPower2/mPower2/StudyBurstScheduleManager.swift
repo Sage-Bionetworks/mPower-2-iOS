@@ -859,13 +859,38 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         return Calendar(identifier: .iso8601).dateComponents([.hour, .minute], from: reminderTime)
     }
     
-    func getDaysUntilNextStudyBurst() -> Int {
+    func getDaysSinceFirstScheduledActivity() -> Int? {
+        let taskPredicate = SBBScheduledActivity.activityIdentifierPredicate(with: self.studyBurst.identifier)
+        
+        do {
+            let nextSchedules = try self.activityManager.getCachedSchedules(using: taskPredicate,
+                                                                        sortDescriptors: [SBBScheduledActivity.scheduledOnSortDescriptor(ascending: true)],
+                                                                        fetchLimit: UInt(1))
+            if let firstDay = nextSchedules.first?.scheduledOn {
+                let diffInDays = Calendar.current.dateComponents([.day], from: firstDay.startOfDay(), to: Date().startOfDay()).day!
+                return diffInDays
+            }
+        }
+        catch let err {
+            assertionFailure("Failed to get cached schedules. \(err)")
+        }
+        return nil
+    }
+    
+    func getDaysUntilNextStudyBurst() -> Int? {
         if (hasStudyBurst) {
             // We are in the middle of a study burst already
             return 0
         } else {
-            // Todo add real logic here
-            return 20
+            // We aren't in a study burst, so figure out how long until the next one
+            if let daysSinceStart = getDaysSinceFirstScheduledActivity() {
+                // Each study burst happens 91 days after the first day
+                let daysUntilNextBurst = 91 - (daysSinceStart % 91)
+                return daysUntilNextBurst
+            } else {
+                // There was some sort of error
+                return nil
+            }
         }
     }
     

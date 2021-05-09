@@ -273,12 +273,16 @@ class TodayViewController: UIViewController {
         } else {
             // There is no current survey or study burst, so show the days until next study burst experience
             self.actionBarArrow.isHidden = true
-            let daysUntilNextBurst = studyBurstManager.getDaysUntilNextStudyBurst()
             actionBarTitleLabel.text = Localization.localizedString("STUDY_BURST_ACTION_BAR_TITLE")
-            if (daysUntilNextBurst == 1) {
-                actionBarDetailsLabel.text = Localization.localizedString("1_DAY_UNTIL_NEXT_BURST")
+            if let daysUntilNextBurst = studyBurstManager.getDaysUntilNextStudyBurst() {
+                if (daysUntilNextBurst == 1) {
+                    actionBarDetailsLabel.text = Localization.localizedString("1_DAY_UNTIL_NEXT_BURST")
+                } else {
+                    actionBarDetailsLabel.text = String.localizedStringWithFormat(Localization.localizedString("%D_DAYS_UNTIL_NEXT_BURST"), daysUntilNextBurst)
+                }
             } else {
-                actionBarDetailsLabel.text = String.localizedStringWithFormat(Localization.localizedString("%D_DAYS_UNTIL_NEXT_BURST"), daysUntilNextBurst)
+                // There was some sort of error calculating the days until the next study burst, so put in a filler string
+                actionBarDetailsLabel.text = Localization.localizedString("NO_ACTIVE_STUDY_BURST")
             }
         }
     }
@@ -302,7 +306,8 @@ class TodayViewController: UIViewController {
             progressCircleView.progress = studyBurstManager.progress
         }
         else {
-            progressCircleView.isHidden = true
+            progressCircleView.progress = 0
+            progressCircleView.dayCountLabel.text = ""
         }
     }
     
