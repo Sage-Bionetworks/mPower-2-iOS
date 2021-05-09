@@ -163,6 +163,9 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         return dayCount != nil
     }
     
+    let kSkippedTaskDateIdentifier: String = "SkippedTaskDateIdentifier"
+    let kSkippedTaskArrayIdentifier: String = "SkippedTaskArrayIdentifier"
+    
     /// The maximum number of days in a study burst.
     public private(set) var maxDaysCount : Int = 19
     
@@ -217,7 +220,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     
     /// What is the current progress on required activities?
     public var progress : CGFloat {
-        var numerator = finishedCount
+        var numerator = finishedOrSkippedCount
         var denominator = totalActivitiesCount
 
         if (self.shouldShowHeartSnapshot) {
@@ -236,14 +239,25 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
             return true
         }
         // Make sure both daily tasks and one-time tasks are complete
-        let dailyTasksCompletedForToday = (finishedCount == totalActivitiesCount)
+        let dailyTasksCompletedForToday = (finishedOrSkippedCount == totalActivitiesCount)
         let heartSnapshotHiddenOrComplete = (!self.shouldShowHeartSnapshot || isHeartSnapshotFinished())
         return dailyTasksCompletedForToday && heartSnapshotHiddenOrComplete
     }
     
-    /// How many of the tasks are finished?
-    var finishedCount : Int {
-        return self.orderedTasks.reduce(0, { $0 + ($1.finishedOn != nil ? 1 : 0) })
+    /// How many of the tasks were either finished or skipped?
+    var finishedOrSkippedCount : Int {
+        return (self.orderedTasks.reduce(0, { $0 + ($1.finishedOn != nil ? 1 : 0) }) + self.skippedCount)
+    }
+    
+    /// How many of the tasks are skipped?
+    var skippedCount : Int {
+        if let date = UserDefaults.standard.object(forKey: kSkippedTaskDateIdentifier) as? Date {
+            if (date.isToday) {
+                if let strings = UserDefaults.standard.object(forKey: kSkippedTaskArrayIdentifier) as? [String] {
+                    return strings.count
+                } else { return 0 }
+            } else { return 0}
+        } else { return 0 }
     }
     
     /// Has the user been shown the motivation survey?
@@ -280,6 +294,55 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         }
         // Otherwise, the final task is the last one in the measuring group
         return taskIdentifier == self.orderedTasks.last?.identifier
+    }
+    
+    /// Was this task skipped already today?
+    func taskSkipped(task: RSDTaskInfo) -> Bool {
+        // Check if there was a task skipped already today, and if so, if the
+        // supplied task was one of the ones skipped.
+        if let date = UserDefaults.standard.object(forKey: kSkippedTaskDateIdentifier) as? Date {
+            if (date.isToday) {
+                // There was a task skipped today, let's see if it was this task
+                if let strings = UserDefaults.standard.object(forKey: kSkippedTaskArrayIdentifier) as? [String] {
+                    if (strings.contains(task.identifier)) {
+                        return true
+                    } else {
+                        return false
+                    }
+                } else {
+                    return false
+                }
+            } else {
+                return false
+            }
+        } else {
+            return false
+        }
+    }
+    
+    /// Mark task as skipped
+    func skipTask(task: RSDTaskInfo) {
+        // First check the date of the most recently skipped task.
+        let date = UserDefaults.standard.object(forKey: kSkippedTaskDateIdentifier) as? Date
+        if (date == nil || !date!.isToday) {
+            // This is our first skipped task today, so save current date and only this task
+            let taskArray = [task.identifier]
+            UserDefaults.standard.setValue(Date(), forKey: kSkippedTaskDateIdentifier)
+            UserDefaults.standard.set(taskArray, forKey: kSkippedTaskArrayIdentifier)
+        } else {
+            // We've already saved a task today, so add this identifier to the array of skipped tasks for today
+            if var taskArray = UserDefaults.standard.object(forKey: kSkippedTaskArrayIdentifier) as? [String] {
+                if (!taskArray.contains(task.identifier)) {
+                    // Add it and save it
+                    taskArray.append(task.identifier)
+                    UserDefaults.standard.set(taskArray, forKey: kSkippedTaskArrayIdentifier)
+                }
+            } else {
+                // Some issue getting the array, so let's save a new one with just this identifier
+                let taskArray = [task.identifier]
+                UserDefaults.standard.set(taskArray, forKey: kSkippedTaskArrayIdentifier)
+            }
+        }
     }
     
     /// Total number of activities
@@ -453,7 +516,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         let task = RSDTaskObject(identifier: kCompletionTaskIdentifier, stepNavigator: navigator)
         
         // Hide cancel if this is for the initial surveys displayed before the first study burst.
-        if self.dayCount == 1, self.finishedCount == 0 {
+        if self.dayCount == 1, self.finishedOrSkippedCount == 0 {
             task.shouldHideActions = [.navigation(.cancel)]
         }
         
@@ -557,7 +620,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         if let studyMarker = self.getStudyBurst() {
             refreshOrderedTasks()
             // If a study marker was found, then look to see if the study burst is complete and mark it.
-            if !studyMarker.isCompleted, self.totalActivitiesCount == self.finishedCount {
+            if !studyMarker.isCompleted, self.totalActivitiesCount == self.finishedOrSkippedCount {
                 self.markCompleted(studyMarker: studyMarker)
             }
         }

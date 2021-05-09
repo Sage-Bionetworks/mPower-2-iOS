@@ -138,6 +138,7 @@
 
 // Button Titles
 "SUMBIT_BUTTON" = "Submit";
+"SKIP_BUTTON" = "Skip Activity";
 
 // Profile
 "PARTICIPATION_ENROLLED_%@" = "Enrolled in %@ study";            // Participation title when enrolled
