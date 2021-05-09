@@ -76,6 +76,7 @@
 "1_DAY_UNTIL_NEXT_BURST" = "1 day until next Study Burst";
 "%D_DAYS_UNTIL_NEXT_BURST" = "%d days until next Study Burst";
 "NO_ACTIVE_STUDY_BURST" = "No study burst current active";
+"ALL_ACTIVITIES_COMPLETE_BURST" = "Study Burst Activities Complete";
 
 
 // Study burst title and message (missed < 3 days)

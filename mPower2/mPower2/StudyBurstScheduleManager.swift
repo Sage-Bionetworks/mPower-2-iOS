@@ -308,7 +308,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
               date.isToday else {
             return nil
         }
-        // There was a task skipped today, let's see if it was this task
+        // There was a task skipped today, so return today's skipped tasks
         return UserDefaults.standard.object(forKey: kSkippedTaskArrayIdentifier) as? [String]
     }
     

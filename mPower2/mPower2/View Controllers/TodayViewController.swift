@@ -270,6 +270,11 @@ class TodayViewController: UIViewController {
                 actionBarTitleLabel.text = actionBarItem.title
                 actionBarDetailsLabel.text = actionBarItem.detail
             }
+        }  else if studyBurstManager.hasStudyBurst {
+            // There's an active study burst but all the activites are complete
+            self.actionBarArrow.isHidden = true
+            actionBarTitleLabel.text = Localization.localizedString("STUDY_BURST_ACTION_BAR_TITLE")
+            actionBarDetailsLabel.text = Localization.localizedString("ALL_ACTIVITIES_COMPLETE_BURST")
         } else {
             // There is no current survey or study burst, so show the days until next study burst experience
             self.actionBarArrow.isHidden = true
