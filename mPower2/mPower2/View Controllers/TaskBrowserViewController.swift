@@ -74,7 +74,8 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
         
         // The measuring group should also include the heart snapshot at the end
         if (selectedScheduleManager?.activityGroup?.identifier ==
-                RSDIdentifier.measuringTaskGroup.identifier) {
+                RSDIdentifier.measuringTaskGroup.identifier &&
+                selectedScheduleManager?.shouldShowHeartSnapshot ?? false) {
             tasks.append(ScheduledTask(taskInfo: CRFTaskInfo(CRFTaskIdentifier.heartSnapshot)))
         }
         

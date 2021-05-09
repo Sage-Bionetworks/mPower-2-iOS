@@ -52,7 +52,11 @@ class SignInTaskViewController: RSDTaskViewController, SignInDelegate {
         return phoneNumber
     }
     
-    var regionCode: String? = "US" // TODO: emm 2018-04-25 Handle non-US phone numbers for international studies
+    public static let US_REGION_CODE = "US"
+    public static let NETHERLANDS_REGION_CODE = "NL"
+    
+    /// The ISO country code for the region the user's phone number is in, defaults to US
+    var regionCode: String? = US_REGION_CODE
 
     init() {
         if #available(iOS 12.0, *) {
@@ -107,9 +111,19 @@ class SignInTaskViewController: RSDTaskViewController, SignInDelegate {
         signUp.phone!.number = phoneNumber
         signUp.phone!.regionCode = regionCode
         
+        var dataGroups = Set<String>()
         // Assign the engagement data groups.
         if let engagementGroups = (SBABridgeConfiguration.shared as? MP2BridgeConfiguration)?.studyBurst.randomEngagementGroups() {
-            signUp.dataGroups = engagementGroups
+            dataGroups = dataGroups.union(engagementGroups)
+        }
+        
+        // Heart Snapshot tasks are only enabled for the Netherlands region
+        if (self.regionCode == SignInTaskViewController.NETHERLANDS_REGION_CODE) {
+            dataGroups = dataGroups.union(["show_heartsnapshot"])
+        }
+        
+        if (!dataGroups.isEmpty) {
+            signUp.dataGroups = dataGroups
         }
         
         BridgeSDK.authManager.signUpStudyParticipant(signUp, completion: { (task, result, error) in
