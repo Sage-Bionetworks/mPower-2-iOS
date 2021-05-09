@@ -283,7 +283,9 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     /// Is this the final study burst task for today?
     public func isFinalTask(_ taskIdentifier: String) -> Bool {
         // The heart snapshot is the final task if it hasn't been completed yet
-        if (self.shouldShowHeartSnapshot && !isHeartSnapshotFinished()) {
+        // or if it was completed or skipped today
+        if (self.shouldShowHeartSnapshot &&
+                (!isHeartSnapshotFinished() || wasHeartSnapshotFinishedToday())) {
             return taskIdentifier == RSDIdentifier.heartSnapshotTask.identifier
         }
         // Otherwise, the final task is the last one in the measuring group
@@ -312,6 +314,12 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     
     /// Mark task as skipped
     func skipTask(task: RSDTaskInfo) {
+        // Heart snapshot is skipped differently
+        if (task.identifier == RSDIdentifier.heartSnapshotTask.identifier) {
+            self.saveLastHeartSnapshotFininshedDate()
+            return
+        }
+        
         // Always reset todays skipped date
         UserDefaults.standard.setValue(Date(), forKey: kSkippedTaskDateIdentifier)
         
@@ -744,6 +752,14 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         }
         let studyBurstStart = self.now().addingNumberOfDays(-dayCount).startOfDay()
         return lastFinishedDate > studyBurstStart
+    }
+        
+    /// Returns if the heart snapshot was finished today, false for all other scenarios
+    func wasHeartSnapshotFinishedToday() -> Bool {
+        guard isHeartSnapshotFinished() else {
+            return false
+        }
+        return self.lastHeartSnapshotFinishedDate()?.isToday ?? false
     }
     
     open func lastHeartSnapshotFinishedDate() -> Date? {
