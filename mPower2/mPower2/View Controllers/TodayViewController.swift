@@ -59,6 +59,8 @@ class TodayViewController: UIViewController {
     @IBOutlet weak var taskBrowserContainerView: UIView!
     @IBOutlet weak var taskBrowserTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var headerViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var actionBarArrow: UIImageView!
+    
     
     var taskBrowserVC: TaskBrowserViewController?
     var tableSetupDone = false
@@ -242,15 +244,8 @@ class TodayViewController: UIViewController {
     }
     
     func updateActionBar() {
-        
-        // If we should not show it, then make it's height 0, otherwise remove
-        // the height constraint
-        let previousConstraint = actionBarView.rsd_constraint(for: .height, relation: .equal)
         if shouldShowActionBar {
-            if let heightConstraint = previousConstraint {
-                NSLayoutConstraint.deactivate([heightConstraint])
-            }
-            
+            self.actionBarArrow.isHidden = false
             if let schedule = surveyManager.scheduledActivities.first {
                 actionBarTitleLabel.text = schedule.activity.title
                 actionBarDetailsLabel.text = schedule.activity.detail
@@ -275,9 +270,20 @@ class TodayViewController: UIViewController {
                 actionBarTitleLabel.text = actionBarItem.title
                 actionBarDetailsLabel.text = actionBarItem.detail
             }
-        }
-        else if (previousConstraint == nil) {
-            actionBarView.rsd_makeHeight(.equal, 0.0)
+        } else {
+            // There is no current survey or study burst, so show the days until next study burst experience
+            self.actionBarArrow.isHidden = true
+            actionBarTitleLabel.text = Localization.localizedString("STUDY_BURST_ACTION_BAR_TITLE")
+            if let daysUntilNextBurst = studyBurstManager.getDaysUntilNextStudyBurst() {
+                if (daysUntilNextBurst == 1) {
+                    actionBarDetailsLabel.text = Localization.localizedString("1_DAY_UNTIL_NEXT_BURST")
+                } else {
+                    actionBarDetailsLabel.text = String.localizedStringWithFormat(Localization.localizedString("%D_DAYS_UNTIL_NEXT_BURST"), daysUntilNextBurst)
+                }
+            } else {
+                // There was some sort of error calculating the days until the next study burst, so put in a filler string
+                actionBarDetailsLabel.text = Localization.localizedString("NO_ACTIVE_STUDY_BURST")
+            }
         }
     }
     
@@ -300,7 +306,8 @@ class TodayViewController: UIViewController {
             progressCircleView.progress = studyBurstManager.progress
         }
         else {
-            progressCircleView.isHidden = true
+            progressCircleView.progress = 0
+            progressCircleView.dayCountLabel.text = ""
         }
     }
     
@@ -376,6 +383,10 @@ class TodayViewController: UIViewController {
     
     // MARK: Actions
     @IBAction func actionBarTapped(_ sender: Any) {
+        if (actionBarArrow.isHidden) {
+            // Not currently supposed to be active, so do nothing
+            return
+        }
         self.showActionBarFlow(true)
     }
     

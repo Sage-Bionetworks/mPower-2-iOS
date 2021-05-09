@@ -73,6 +73,10 @@
 // Study Burst titles
 "STUDY_BURST_DAY" = "Day";
 "STUDY_BURST_ACTION_BAR_TITLE" = "Study Burst";
+"1_DAY_UNTIL_NEXT_BURST" = "1 day until next Study Burst";
+"%D_DAYS_UNTIL_NEXT_BURST" = "%d days until next Study Burst";
+"NO_ACTIVE_STUDY_BURST" = "No study burst current active";
+
 
 // Study burst title and message (missed < 3 days)
 "STUDY_BURST_TITLE_DAY_1" = "This is your time!";
