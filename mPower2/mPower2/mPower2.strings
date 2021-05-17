@@ -73,6 +73,11 @@
 // Study Burst titles
 "STUDY_BURST_DAY" = "Day";
 "STUDY_BURST_ACTION_BAR_TITLE" = "Study Burst";
+"1_DAY_UNTIL_NEXT_BURST" = "1 day until next Study Burst";
+"%D_DAYS_UNTIL_NEXT_BURST" = "%d days until next Study Burst";
+"NO_ACTIVE_STUDY_BURST" = "No study burst currently active";
+"ALL_ACTIVITIES_COMPLETE_BURST" = "Study Burst Activities Complete";
+
 
 // Study burst title and message (missed < 3 days)
 "STUDY_BURST_TITLE_DAY_1" = "This is your time!";
@@ -134,6 +139,7 @@
 
 // Button Titles
 "SUMBIT_BUTTON" = "Submit";
+"SKIP_BUTTON" = "Skip Activity";
 
 // Profile
 "PARTICIPATION_ENROLLED_%@" = "Enrolled in %@ study";            // Participation title when enrolled
@@ -162,6 +168,7 @@
 "HISTORY_ITEM_TAP_TITLE" = "Tap Count";
 "HISTORY_ITEM_WALK_TITLE" = "Walk and Balance";
 "HISTORY_ITEM_TREMOR_TITLE" = "Tremor Test";
+"HISTORY_ITEM_HEART_SNAPSHOT_TITLE" = "Heart Snapshot";
 "HISTORY_ITEM_TAP_LEFT" = "Left Hand: %d";
 "HISTORY_ITEM_TAP_RIGHT" = "Right Hand: %d";
 
@@ -169,3 +176,6 @@
 "Tapping_TEXT" = "In this activity we will measure your finger tapping speed with each hand; this may reflect severity of motor systems in Parkinson's Disease.";
 
 "MAILTO_FAILED_MESSAGE_%@" = "Send feedback to %@";
+
+// CRF Strings
+"CRF_HEART_SNAPSHOT" = "Heart Snapshot";

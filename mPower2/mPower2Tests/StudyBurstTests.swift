@@ -101,6 +101,63 @@ class StudyBurstManagerTests: StudyBurstTests {
         XCTAssertEqual(scheduleManager.pastSurveys.count, 0)
         XCTAssertNotNil(scheduleManager.todayCompletionTask)
         
+        // No heart snapshot, so last task is tremor
+        XCTAssertFalse(scheduleManager.isFinalTask(RSDIdentifier.heartSnapshot.stringValue))
+        XCTAssertFalse(scheduleManager.orderedTasks.contains(where: {
+            $0.identifier == RSDIdentifier.heartSnapshot.stringValue
+        }))
+        
+        let orderedTasks = scheduleManager.orderedTasks
+        let noneFinished = orderedTasks.reduce(true, { $0 && ($1.finishedOn == nil) })
+        XCTAssertTrue(noneFinished)
+        
+        let demographics = scheduleManager.scheduledActivities.filter {
+            $0.activityIdentifier == RSDIdentifier.demographics.stringValue
+        }
+        XCTAssertEqual(demographics.count, 1)
+        
+        let completionTask = scheduleManager.engagementTaskViewModel()
+        XCTAssertNotNil(completionTask, "scheduleManager.engagementTaskViewModel()")
+        
+        XCTAssertNil(scheduleManager.actionBarItem, "scheduleManager.actionBarItem")
+        
+        let thisDay = scheduleManager.calculateThisDay()
+        XCTAssertEqual(thisDay, 1)
+        
+        let pastTasks = scheduleManager.getPastTasks(for: thisDay)
+        XCTAssertEqual(pastTasks.count, 0)
+        
+        XCTAssertNotNil(scheduleManager.todayCompletionTask, "scheduleManager.todayCompletionTask")
+        let todayCompletionTask = scheduleManager.getTodayCompletionTask(for: thisDay)
+        XCTAssertNotNil(todayCompletionTask, "scheduleManager.getTodayCompletionTask(for: thisDay)")
+        
+        let unfinishedSchedule = scheduleManager.getUnfinishedSchedule()
+        XCTAssertNil(unfinishedSchedule, "scheduleManager.getUnfinishedSchedule(from: pastTasks)")
+    }
+    
+    func testStudyBurst_Day1_StartState_HeartSnapshot() {
+        
+        let scheduleManager = TestStudyBurstScheduleManager(.day1_startupState_HeartSnapshot)
+        guard loadSchedules(scheduleManager) else {
+            XCTFail("Failed to load the schedules and reports.")
+            return
+        }
+
+        XCTAssertNil(scheduleManager.updateFailed_error)
+        XCTAssertNotNil(scheduleManager.update_fetchedActivities)
+        XCTAssertNotNil(scheduleManager.activityGroup)
+        XCTAssertEqual(scheduleManager.dayCount, 1)
+        XCTAssertTrue(scheduleManager.hasStudyBurst)
+        XCTAssertFalse(scheduleManager.isCompletedForToday)
+        XCTAssertFalse(scheduleManager.isLastDay)
+        XCTAssertEqual(scheduleManager.calculateThisDay(), 1)
+        XCTAssertEqual(scheduleManager.pastSurveys.count, 0)
+        XCTAssertNotNil(scheduleManager.todayCompletionTask)
+        
+        // Business logic is that heart snapshot shows up once for the whole study burst,
+        // and it will be last, not tremor, on day 1 when only 2 tasks are complete
+        XCTAssertTrue(scheduleManager.isFinalTask(RSDIdentifier.heartSnapshot.stringValue))
+        
         let orderedTasks = scheduleManager.orderedTasks
         let noneFinished = orderedTasks.reduce(true, { $0 && ($1.finishedOn == nil) })
         XCTAssertTrue(noneFinished)
@@ -232,6 +289,7 @@ class StudyBurstManagerTests: StudyBurstTests {
         XCTAssertEqual(scheduleManager.calculateThisDay(), 1)
         XCTAssertEqual(scheduleManager.pastSurveys.count, 0)
         XCTAssertFalse(scheduleManager.isFinalTask(RSDIdentifier.tappingTask.stringValue))
+
         XCTAssertTrue(scheduleManager.isFinalTask(RSDIdentifier.tremorTask.stringValue))
         
         let orderedTasks = scheduleManager.orderedTasks
@@ -853,6 +911,10 @@ protocol TestScheduleManager : class {
 
 let referenceDate = Date(timeIntervalSince1970: 0)
 
+extension RSDIdentifier {
+    public static let heartSnapshot = RSDIdentifier(rawValue: "HeartSnapshot")
+}
+
 class TestStudyBurstScheduleManager : StudyBurstScheduleManager, TestScheduleManager {
     
     init(_ studySetup: StudySetup, now: Date? = nil, taskOrderTimestamp: Date? = referenceDate) {
@@ -868,6 +930,8 @@ class TestStudyBurstScheduleManager : StudyBurstScheduleManager, TestScheduleMan
         self._activityManager.studySetup = setup
         self._activityManager.buildSchedules(with: self._participantManager)
         self._participantManager.setup(with: setup)
+        
+        self.showHs = setup.dataGroups.contains(TaskGroupScheduleManager.SHOW_HEART_SNAPSHOT_DATA_GROUP)
     }
     
     let _activityManager = ActivityManager()
@@ -892,6 +956,11 @@ class TestStudyBurstScheduleManager : StudyBurstScheduleManager, TestScheduleMan
     
     override var participantManager: SBBParticipantManagerProtocol {
         return _participantManager
+    }
+    
+    private var showHs = false
+    override open var shouldShowHeartSnapshot: Bool {
+        return showHs
     }
     
     var updateFinishedBlock: (() -> Void)?
@@ -928,5 +997,9 @@ class TestStudyBurstScheduleManager : StudyBurstScheduleManager, TestScheduleMan
         self.sendUpdated_schedules = schedules
         self.sendUpdated_taskPath = taskViewModel
         super.sendUpdated(for: schedules, taskViewModel: taskViewModel)
+    }
+    
+    override open func lastHeartSnapshotFinishedDate() -> Date? {
+        return _now.addingNumberOfDays(-studySetup.heartSnapshotCompletedDaysAgo)
     }
 }

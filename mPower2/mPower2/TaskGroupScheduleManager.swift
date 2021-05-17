@@ -34,6 +34,7 @@
 import Foundation
 import BridgeAppUI
 import DataTracking
+import CardiorespiratoryFitness
 
 let kActivityTrackingIdentifier = "ActivityTracking"
 let kMedicationTimingKey = "medicationTiming"
@@ -61,10 +62,14 @@ class ScheduledTask : NSObject {
 
 public class ActivityGroupScheduleManager : SBAScheduleManager {
     
+    public static let SHOW_HEART_SNAPSHOT_DATA_GROUP = "show_heartsnapshot"
+    
     /// List of the tasks including when the task was last finished. Returns `nil` if this is not a
     /// measurement task.
     var orderedTasks: [ScheduledTask] {
-        if _orderedTasks == nil || shouldRefreshTasks {
+        // If the ordered tasks are nil or empty, we never retrieved them properly,
+        // as there should always be 3 measuring tasks
+        if _orderedTasks == nil || _orderedTasks.isEmpty || shouldRefreshTasks {
             guard let tasks = self.activityGroup?.tasks else {
                 debugPrint("WARNING! No tasks are in the activity group.")
                 return []
@@ -72,7 +77,7 @@ public class ActivityGroupScheduleManager : SBAScheduleManager {
             
             // Order the tasks
             let storedOrder = taskSortOrder
-            _orderedTasks = storedOrder.compactMap { (identifier) -> ScheduledTask? in
+            _orderedTasks = storedOrder.compactMap { (identifier) -> ScheduledTask? in    
                 guard let taskInfo = tasks.first(where: { $0.identifier == identifier }) else { return nil }
                 return ScheduledTask(taskInfo: taskInfo)
             }
@@ -81,6 +86,11 @@ public class ActivityGroupScheduleManager : SBAScheduleManager {
         return _orderedTasks
     }
     private var _orderedTasks: [ScheduledTask]!
+    
+    open var shouldShowHeartSnapshot: Bool {
+        return self.participant?.dataGroups?.contains(
+            TaskGroupScheduleManager.SHOW_HEART_SNAPSHOT_DATA_GROUP) ?? false
+    }
     
     /// Should the tasks be refreshed?
     var shouldRefreshTasks: Bool {
@@ -152,6 +162,9 @@ public class ActivityGroupScheduleManager : SBAScheduleManager {
             scheduledTask.startedOn = taskResult.startDate
             scheduledTask.finishedOn = taskResult.endDate
         }
+        if (taskController.task.identifier == RSDIdentifier.heartSnapshotTask.identifier) {
+            StudyBurstScheduleManager.shared.saveLastHeartSnapshotFininshedDate()
+        }
         super.taskController(taskController, readyToSave: taskViewModel)
     }
     
@@ -188,6 +201,13 @@ public class TaskGroupScheduleManager : ActivityGroupScheduleManager {
         else {
             return true
         }
+    }
+    
+    open override func report(with activityIdentifier: String) -> SBAReport? {
+        if (activityIdentifier == RSDIdentifier.heartSnapshotTask.identifier) {
+            return createCRFTaskData()
+        }
+        return super.report(with: activityIdentifier)
     }
     
     override public func instantiateTaskViewModel(for taskInfo: RSDTaskInfo, in activityGroup: SBAActivityGroup? = nil) -> (taskViewModel: RSDTaskViewModel, referenceSchedule: SBBScheduledActivity?) {
@@ -271,6 +291,9 @@ public class TaskGroupScheduleManager : ActivityGroupScheduleManager {
         if let result = taskViewModel.taskResult.findAnswerResult(with: kMedicationTimingKey) {
             _medicationTimingResult = result
         }
+        if (taskController.task.identifier == RSDIdentifier.heartSnapshotTask.identifier) {
+            StudyBurstScheduleManager.shared.saveLastHeartSnapshotFininshedDate()
+        }
         super.taskController(taskController, readyToSave: taskViewModel)
     }
     
@@ -308,6 +331,28 @@ public class TaskGroupScheduleManager : ActivityGroupScheduleManager {
         let tasks: [RSDIdentifier] = [.medicationTask, .tremorTask, .tappingTask, .walkAndBalanceTask]
         return tasks.map { ReportQuery(reportKey: $0, queryType: .mostRecent, dateRange: nil) }
     }
+    
+    /// Returns the birth year and sex answer results ready to be added as previous results to a task
+    func createCRFTaskData() -> SBAReport? {
+        // Must have both birthYear and sex to create the CRF task data
+        if let yearAnswerStr = SBAProfileDataSourceObject.shared.profileTableItem(at: ProfileTableViewController.birthYearIndexPath)?.detail,
+           let yearInt = Int(yearAnswerStr),
+           let sexAnswerStr = SBAProfileDataSourceObject.shared.profileTableItem(at: ProfileTableViewController.sexIndexPath)?.detail {
+            
+            let json = [CRFDemographicsKeys.sex.stringValue : sexAnswerStr,
+                        CRFDemographicsKeys.birthYear.stringValue : yearInt] as RSDJSONSerializable
+            
+            return SBAReport(identifier: RSDIdentifier.heartSnapshotTask.identifier, date: Date(), json: json)
+        }
+        
+        return nil
+    }
+}
+
+struct CRFTaskData: RSDTaskData {
+    var identifier: String
+    var timestampDate: Date?
+    var json: RSDJSONSerializable
 }
 
 extension SBAReportManager {

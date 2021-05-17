@@ -44,7 +44,8 @@ public struct StudySetup {
          studyBurstSurveyFinishedOnDays: [RSDIdentifier : Int] = [:],
          finishedTodayTasks: [RSDIdentifier] = [.tappingTask, .walkAndBalanceTask],
          timeUntilExpires: TimeInterval = 15 * 60,
-         dataGroups: [String] = ["gr_SC_DB","gr_BR_II","gr_ST_T","gr_DT_T"]) {
+         dataGroups: [String] = ["gr_SC_DB","gr_BR_II","gr_ST_T","gr_DT_T"],
+         heartSnapshotCompletedDaysAgo: Int = 0) {
         
         self.studyBurstDay = studyBurstDay
         self.studyBurstFinishedOnDays = studyBurstFinishedOnDays
@@ -53,6 +54,7 @@ public struct StudySetup {
         self.timeUntilExpires = timeUntilExpires
         self.dataGroups = dataGroups
         self.studyBurstIndex = studyBurstIndex
+        self.heartSnapshotCompletedDaysAgo = heartSnapshotCompletedDaysAgo
     }
     
     /// First name of the participant.
@@ -89,6 +91,9 @@ public struct StudySetup {
     
     /// Should the task order be set up for this test?
     var taskOrderTimestamp: Date? = Date()
+    
+    /// The number of days ago that the heart snapshot was completed
+    var heartSnapshotCompletedDaysAgo: Int
     
     /// First day of the current study burst.
     var studyBurstDayOne: Date {
@@ -210,23 +215,34 @@ extension StudySetup {
                    timeUntilExpires: 0,
                    dataGroups: ["gr_SC_DB","gr_BR_AD","gr_ST_T","gr_DT_F"])
     
+    static let day1_startupState_HeartSnapshot =
+        StudySetup(0, studyBurstDay: 0,
+                   studyBurstFinishedOnDays: [],
+                   studyBurstSurveyFinishedOnDays: [:],
+                   finishedTodayTasks: [],
+                   dataGroups: ["show_heartsnapshot"],
+                   heartSnapshotCompletedDaysAgo: 100)
+    
     static let day1_noTasksFinished =
         StudySetup(0, studyBurstDay: 0,
                    studyBurstFinishedOnDays: [],
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 0),
-                   finishedTodayTasks: [])
+                   finishedTodayTasks: [],
+                   heartSnapshotCompletedDaysAgo: 100)
     
     static let day1_twoTasksFinished =
         StudySetup(0, studyBurstDay: 0,
                    studyBurstFinishedOnDays: [],
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 0),
-                   finishedTodayTasks: [.walkAndBalanceTask, .tappingTask])
+                   finishedTodayTasks: [.walkAndBalanceTask, .tappingTask],
+                   heartSnapshotCompletedDaysAgo: 100)
     
     static let day1_tasksFinished_surveysNotFinished =
         StudySetup(0, studyBurstDay: 0,
                    studyBurstFinishedOnDays: [],
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 0),
-                   finishedTodayTasks: RSDIdentifier.measuringTasks)
+                   finishedTodayTasks: RSDIdentifier.measuringTasks,
+                   heartSnapshotCompletedDaysAgo: 0)
     
     static let day1_tasksFinished_surveysNotFinished_BRII_DTT =
         StudySetup(0, studyBurstDay: 0,
@@ -280,7 +296,8 @@ extension StudySetup {
                    studyBurstFinishedOnDays: [0],
                    studyBurstSurveyFinishedOnDays: previousFinishedSurveys(for: 1),
                    finishedTodayTasks: [.walkAndBalanceTask, .tappingTask],
-                   timeUntilExpires: -2 * 60 * 60)
+                   timeUntilExpires: -2 * 60 * 60,
+                   heartSnapshotCompletedDaysAgo: 100)
     
     static let day2_nothingFinished =
         StudySetup(0, studyBurstDay: 1,

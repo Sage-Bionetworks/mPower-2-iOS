@@ -117,3 +117,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
+extension RSDDesignSystem {
+    public static let shared = RSDDesignSystem()
+}

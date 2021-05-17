@@ -117,7 +117,7 @@ class StudyBurstViewControllerTests: StudyBurstTests {
         XCTAssertTrue(scheduleManager.hasExpired)
         XCTAssertNotNil(scheduleManager.expiresOn)
         XCTAssertEqual(scheduleManager.totalActivitiesCount, 3)
-        XCTAssertEqual(scheduleManager.finishedCount, 2)
+        XCTAssertEqual(scheduleManager.finishedOrSkippedCount, 2)
         
         // Set the shared study burst manager b/c that's what the vc looks at
         StudyBurstScheduleManager.shared = scheduleManager
@@ -145,7 +145,7 @@ class StudyBurstViewControllerTests: StudyBurstTests {
         XCTAssertFalse(scheduleManager.hasExpired)
         XCTAssertNil(scheduleManager.expiresOn)
         XCTAssertEqual(scheduleManager.totalActivitiesCount, 3)
-        XCTAssertEqual(scheduleManager.finishedCount, 0)
+        XCTAssertEqual(scheduleManager.finishedOrSkippedCount, 0)
         
         // Set the shared study burst manager b/c that's what the vc looks at
         StudyBurstScheduleManager.shared = scheduleManager

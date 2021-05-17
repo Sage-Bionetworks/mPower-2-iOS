@@ -79,7 +79,7 @@ class HistoryDataManager : SBAReportManager {
     /// changed today. It also looks at past reports if and only if it needs to add them to the
     /// local store.
     override func reportQueries() -> [ReportQuery] {
-        let tasks = Set(RSDIdentifier.dataTrackingTasks).union(RSDIdentifier.measuringTasks)
+        let tasks = Set(RSDIdentifier.dataTrackingTasks).union(RSDIdentifier.measuringTasks).union([RSDIdentifier.heartSnapshotTask])
         if persistentContainer == nil {
             return tasks.map { ReportQuery(reportKey: $0, queryType: .today, dateRange: nil) }
         }
@@ -148,6 +148,9 @@ class HistoryDataManager : SBAReportManager {
                         
                     case .triggersTask:
                         try self.mergeTriggers(from: filteredReports, in: context)
+                        
+                    case .heartSnapshotTask:
+                        try self.mergeHeartSnapshotTasks(from: filteredReports, in: context)
                         
                     default:
                         try self.mergeMeasurementTasks(from: filteredReports, in: context)
@@ -250,6 +253,61 @@ class HistoryDataManager : SBAReportManager {
             tappingItem.rightTapCount = (json[MCTHandSelection.right.rawValue] as? NSNumber)?.int16Value ?? 0
         }
         item.medicationTiming = json[kMedicationTimingKey] as? String
+    }
+
+    func mergeHeartSnapshotTasks(from reports: [SBAReport], in context: NSManagedObjectContext) throws {
+        guard reports.count > 0 else { return }
+
+        // Get existing items.
+        let reportIdentifier = RSDIdentifier(rawValue: reports.first!.identifier)
+        let request: NSFetchRequest<HeartSnapshotHistoryItem> = (reportIdentifier == .tappingTask) ?
+            HeartSnapshotHistoryItem.fetchRequest() :
+            HeartSnapshotHistoryItem.fetchRequest()
+        request.includesSubentities = true
+        request.sortDescriptors = fetchReportSortDescriptors()
+        request.predicate = fetchReportPredicate(for: reports)
+        request.includesPendingChanges = true
+        request.includesSubentities = true
+        let results = try context.fetch(request)
+
+        // Parse the reports and insert new items.
+        reports.forEach { report in
+            // heart snapshot tasks are read-only so if the report is already added then there is no
+            // more work to be done.
+            guard let item = findHeartSnapshotHistoryItem(in: results, for: report) ??
+                createHeartSnapshotHistoryItem(in: context, for: report)
+                else {
+                    print("WARNING! Could not create a history item for \(report)")
+                    return
+            }
+            self.updateHeartSnapshotScoring(item: item, report: report)
+        }// reports
+    }
+
+    func findHeartSnapshotHistoryItem(in results: [HeartSnapshotHistoryItem], for report: SBAReport) -> HeartSnapshotHistoryItem? {
+        return results.first { report.date.matches($0.reportDate) }
+    }
+
+    func createHeartSnapshotHistoryItem(in context: NSManagedObjectContext, for report: SBAReport) -> HeartSnapshotHistoryItem? {
+        let reportIdentifier = RSDIdentifier(rawValue: report.identifier)
+        switch reportIdentifier {
+        case .heartSnapshotTask:
+            let item = HeartSnapshotHistoryItem(context: context, report: report)
+            item.title = Localization.localizedString("HISTORY_ITEM_HEART_SNAPSHOT_TITLE")
+            item.imageName = "HeartSnapshotTaskIcon"
+            return item
+        default:
+            assertionFailure("WARNING! Unknown report identifier: \(reportIdentifier)")
+            return nil
+        }
+    }
+    
+    func updateHeartSnapshotScoring(item: HeartSnapshotHistoryItem, report: SBAReport) {
+        guard let json = report.clientData as? [String : Any] else { return }
+        if let hrDict = json["hr"] as? [String: Any],
+           let vo2Max = (hrDict["vo2_max"] as? NSNumber)?.int16Value {
+            item.vo2_max = vo2Max
+        }
     }
     
     func mergeMedications(from reports: [SBAReport], in context: NSManagedObjectContext) throws {

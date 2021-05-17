@@ -253,6 +253,10 @@ class HistoryFeedTableViewCell : HistoryFeedBaseTableViewCell {
                 let spacer = left.isEmpty || right.isEmpty ? "" : ", "
                 taskDetailLabel.text = "\(right)\(spacer)\(left)"
             }
+            else if let heartSnapshotItem = item as? HeartSnapshotHistoryItem,
+                    (heartSnapshotItem.vo2_max > 0) {
+                taskDetailLabel.text = "V02 Max: \(heartSnapshotItem.vo2_max)"
+            }
             else {
                 // No other task items support the detail at this time.
                 taskDetailLabel.text = nil

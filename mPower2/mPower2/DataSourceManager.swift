@@ -34,6 +34,7 @@
 import Foundation
 import BridgeApp
 import MotorControl
+import CardiorespiratoryFitness
 
 extension RSDIdentifier {
     
@@ -49,6 +50,7 @@ extension RSDIdentifier {
     static let tappingTask: RSDIdentifier =  MCTTaskIdentifier.tapping.identifier
     static let tremorTask: RSDIdentifier = MCTTaskIdentifier.tremor.identifier
     static let walkAndBalanceTask: RSDIdentifier = MCTTaskIdentifier.walkAndBalance.identifier
+    static let heartSnapshotTask: RSDIdentifier = CRFTaskIdentifier.heartSnapshot.identifierValue
     static let measuringTasks: [RSDIdentifier] = [.tappingTask, .tremorTask, .walkAndBalanceTask]
     
     static let studyBurstCompletedTask: RSDIdentifier = "study-burst-task"

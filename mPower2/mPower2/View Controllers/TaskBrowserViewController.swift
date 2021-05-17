@@ -35,6 +35,7 @@ import UIKit
 import Research
 import MotorControl
 import BridgeApp
+import CardiorespiratoryFitness
 
 protocol TaskBrowserViewControllerDelegate {
     func taskBrowserToggleVisibility()
@@ -69,7 +70,16 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
     }
     
     open var tasks: [ScheduledTask] {
-        return selectedScheduleManager?.orderedTasks ?? []
+        var tasks = selectedScheduleManager?.orderedTasks ?? []
+        
+        // The measuring group should also include the heart snapshot at the end
+        if (selectedScheduleManager?.activityGroup?.identifier ==
+                RSDIdentifier.measuringTaskGroup.identifier &&
+                selectedScheduleManager?.shouldShowHeartSnapshot ?? false) {
+            tasks.append(ScheduledTask(taskInfo: CRFTaskInfo(CRFTaskIdentifier.heartSnapshot)))
+        }
+        
+        return tasks
     }
     
     func scheduleManager(with identifier: String) -> ActivityGroupScheduleManager? {
@@ -165,6 +175,21 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
         let vc = RSDTaskViewController(taskViewModel: taskViewModel)
         vc.delegate = self
         self.present(vc, animated: true, completion: nil)
+    }
+    
+    func skipTask(for taskInfo: RSDTaskInfo) {
+        // Instead of launching into the task, skip it and update the delegate
+        let (taskViewModel, _) = selectedScheduleManager.instantiateTaskViewModel(for: taskInfo)
+
+        // Add this to the list of skipped tasks we are tracking locally
+        StudyBurstScheduleManager.shared.skipTask(task: taskInfo)
+
+        // Tell delegate task was finished (albeit, skipped)
+        self.delegate?.taskBrowserDidFinish(task: taskViewModel, reason: RSDTaskFinishReason.completed)
+
+        // reload collection view
+        self.collectionView.reloadData()
+        self.unlockMessageLabel?.isHidden = areTasksEnabled
     }
     
     // MARK: Instance methods
@@ -299,8 +324,15 @@ extension TaskBrowserViewController: UICollectionViewDelegate, UICollectionViewD
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: collectionCellIdentifier, for: indexPath) as? TaskCollectionViewCell
         let scheduledTask = tasks[indexPath.row]
         let task = scheduledTask.taskInfo
-        cell?.image = task.iconWhite
-        cell?.title = task.title?.uppercased()
+        if (scheduledTask.identifier == RSDIdentifier.heartSnapshotTask.identifier) {
+            task.imageVendor?.fetchImage(for: CGSize(width: 100, height: 100), callback: { (imageName, image) in
+                cell?.image = image
+            })
+            cell?.title = Localization.localizedString("CRF_HEART_SNAPSHOT").uppercased()
+        } else {
+            cell?.image = task.iconWhite
+            cell?.title = task.title?.uppercased()
+        }
         cell?.alpha = areTasksEnabled ? 1.0 : 0.35
         cell?.isCompleted = false
         return cell ?? UICollectionViewCell()

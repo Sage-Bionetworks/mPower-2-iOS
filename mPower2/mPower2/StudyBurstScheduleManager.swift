@@ -34,7 +34,7 @@
 import Foundation
 import BridgeApp
 import UserNotifications
-
+import CardiorespiratoryFitness
 
 /// The study burst configuration is a Decodable that can be added to the `AppConfig.clientData`.
 public struct StudyBurstConfiguration : Codable {
@@ -163,6 +163,9 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         return dayCount != nil
     }
     
+    let kSkippedTaskDateIdentifier: String = "SkippedTaskDateIdentifier"
+    let kSkippedTaskArrayIdentifier: String = "SkippedTaskArrayIdentifier"
+    
     /// The maximum number of days in a study burst.
     public private(set) var maxDaysCount : Int = 19
     
@@ -217,17 +220,38 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     
     /// What is the current progress on required activities?
     public var progress : CGFloat {
-        return CGFloat(finishedCount) / CGFloat(totalActivitiesCount)
+        var numerator = finishedOrSkippedCount
+        var denominator = totalActivitiesCount
+
+        if (self.shouldShowHeartSnapshot) {
+            denominator += 1
+            if (isHeartSnapshotFinished()) {
+                numerator += 1
+            }
+        }
+
+        return CGFloat(numerator) / CGFloat(denominator)
     }
     
     /// Is the study burst completed for today?
     public var isCompletedForToday : Bool {
-        return !hasStudyBurst || (finishedCount == totalActivitiesCount)
+        guard hasStudyBurst else {
+            return true
+        }
+        // Make sure both daily tasks and one-time tasks are complete
+        let dailyTasksCompletedForToday = (finishedOrSkippedCount == totalActivitiesCount)
+        let heartSnapshotHiddenOrComplete = (!self.shouldShowHeartSnapshot || isHeartSnapshotFinished())
+        return dailyTasksCompletedForToday && heartSnapshotHiddenOrComplete
     }
     
-    /// How many of the tasks are finished?
-    var finishedCount : Int {
-        return self.orderedTasks.reduce(0, { $0 + ($1.finishedOn != nil ? 1 : 0) })
+    /// How many of the tasks were either finished or skipped?
+    var finishedOrSkippedCount : Int {
+        return (self.orderedTasks.reduce(0, { $0 + ($1.finishedOn != nil ? 1 : 0) }) + self.skippedCount)
+    }
+    
+    /// How many of the tasks are skipped?  Make sure identifiers are a unique set.
+    var skippedCount : Int {
+        return Set(self.todaysSkippedTasks() ?? []).count
     }
     
     /// Has the user been shown the motivation survey?
@@ -258,7 +282,56 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     
     /// Is this the final study burst task for today?
     public func isFinalTask(_ taskIdentifier: String) -> Bool {
+        // The heart snapshot is the final task if it hasn't been completed yet
+        // or if it was completed or skipped today
+        if (self.shouldShowHeartSnapshot &&
+                (!isHeartSnapshotFinished() || wasHeartSnapshotFinishedToday())) {
+            return taskIdentifier == RSDIdentifier.heartSnapshotTask.identifier
+        }
+        // Otherwise, the final task is the last one in the measuring group
         return taskIdentifier == self.orderedTasks.last?.identifier
+    }
+    
+    /// Was this task skipped already today?
+    func taskSkipped(task: RSDTaskInfo) -> Bool {
+        guard let skippedTaskIds = self.todaysSkippedTasks() else {
+            return false
+        }
+        return skippedTaskIds.contains(task.identifier)
+    }
+    
+    /// The list of skipped task identifiers for today, nil or empty if none available
+    func todaysSkippedTasks() -> [String]? {
+        // Check if there was a task skipped already today, and if so, if the
+        // supplied task was one of the ones skipped.
+        guard let date = UserDefaults.standard.object(forKey: kSkippedTaskDateIdentifier) as? Date,
+              date.isToday else {
+            return nil
+        }
+        // There was a task skipped today, so return today's skipped tasks
+        return UserDefaults.standard.object(forKey: kSkippedTaskArrayIdentifier) as? [String]
+    }
+    
+    /// Mark task as skipped
+    func skipTask(task: RSDTaskInfo) {
+        // Heart snapshot is skipped differently
+        if (task.identifier == RSDIdentifier.heartSnapshotTask.identifier) {
+            self.saveLastHeartSnapshotFininshedDate()
+            return
+        }
+        
+        // Always reset todays skipped date
+        UserDefaults.standard.setValue(Date(), forKey: kSkippedTaskDateIdentifier)
+        
+        // Check for no existing skipped tasks for today
+        guard var skippedTaskIds = self.todaysSkippedTasks() else {
+            UserDefaults.standard.set([task.identifier], forKey: kSkippedTaskArrayIdentifier)
+            return
+        }
+        
+        // Add the task to the existing set of todays skipped identifiers
+        skippedTaskIds.append(task.identifier)
+        UserDefaults.standard.set(skippedTaskIds, forKey: kSkippedTaskArrayIdentifier)
     }
     
     /// Total number of activities
@@ -432,12 +505,36 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         let task = RSDTaskObject(identifier: kCompletionTaskIdentifier, stepNavigator: navigator)
         
         // Hide cancel if this is for the initial surveys displayed before the first study burst.
-        if self.dayCount == 1, self.finishedCount == 0 {
+        if self.dayCount == 1, self.finishedOrSkippedCount == 0 {
             task.shouldHideActions = [.navigation(.cancel)]
         }
         
         let path = self.instantiateTaskViewModel(for: task)
+        
+        
+        if (steps.contains(where: { $0.identifier == CRFDemographicsKeys.birthYear.rawValue })) {
+            previousCrfResults()?.forEach({
+                path.taskViewModel.append(previousResult: $0)
+            })
+        }
+        
         return path.taskViewModel
+    }
+    
+    /// Returns the birth year and sex answer results ready to be added as previous results to a task
+    func previousCrfResults() -> [RSDResult]? {
+        // Must have both birthYear and sex to create the CRF task data
+        if let yearAnswerStr = SBAProfileDataSourceObject.shared.profileTableItem(at: ProfileTableViewController.birthYearIndexPath)?.detail,
+           let yearInt = Int(yearAnswerStr),
+           let sexAnswerStr = SBAProfileDataSourceObject.shared.profileTableItem(at: ProfileTableViewController.sexIndexPath)?.detail {
+            
+            return [
+                RSDAnswerResultObject(identifier: CRFDemographicsKeys.sex.stringValue, answerType: .string, value: sexAnswerStr),
+                RSDAnswerResultObject(identifier: CRFDemographicsKeys.birthYear.stringValue, answerType: .integer, value: yearInt)
+            ]
+        }
+        
+        return nil
     }
     
     func motivationTaskViewModel() -> RSDTaskViewModel? {
@@ -512,7 +609,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         if let studyMarker = self.getStudyBurst() {
             refreshOrderedTasks()
             // If a study marker was found, then look to see if the study burst is complete and mark it.
-            if !studyMarker.isCompleted, self.totalActivitiesCount == self.finishedCount {
+            if !studyMarker.isCompleted, self.totalActivitiesCount == self.finishedOrSkippedCount {
                 self.markCompleted(studyMarker: studyMarker)
             }
         }
@@ -641,6 +738,36 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         }
         
         return studyMarker
+    }
+    
+    /// Returns if the heart snapshot has been finished for the current study burst
+    func isHeartSnapshotFinished() -> Bool {
+        guard self.hasActiveStudyBurst,
+              let dayCount = self.dayCount else {
+            return true
+        }
+        // We have a study burst, but have not finished a heart snapshot yet
+        guard let lastFinishedDate = self.lastHeartSnapshotFinishedDate() else {
+            return false
+        }
+        let studyBurstStart = self.now().addingNumberOfDays(-dayCount).startOfDay()
+        return lastFinishedDate > studyBurstStart
+    }
+        
+    /// Returns if the heart snapshot was finished today, false for all other scenarios
+    func wasHeartSnapshotFinishedToday() -> Bool {
+        guard isHeartSnapshotFinished() else {
+            return false
+        }
+        return self.lastHeartSnapshotFinishedDate()?.isToday ?? false
+    }
+    
+    open func lastHeartSnapshotFinishedDate() -> Date? {
+        return UserDefaults.standard.object(forKey: "lastHeartSnapshotFinishedDate") as? Date
+    }
+    
+    func saveLastHeartSnapshotFininshedDate() {
+        UserDefaults.standard.set(Date(), forKey: "lastHeartSnapshotFinishedDate")
     }
 
     func calculateThisDay() -> Int {
@@ -790,6 +917,41 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
                 return nil
         }
         return Calendar(identifier: .iso8601).dateComponents([.hour, .minute], from: reminderTime)
+    }
+    
+    func getDaysSinceFirstScheduledActivity() -> Int? {
+        let taskPredicate = SBBScheduledActivity.activityIdentifierPredicate(with: self.studyBurst.identifier)
+        
+        do {
+            let nextSchedules = try self.activityManager.getCachedSchedules(using: taskPredicate,
+                                                                        sortDescriptors: [SBBScheduledActivity.scheduledOnSortDescriptor(ascending: true)],
+                                                                        fetchLimit: UInt(1))
+            if let firstDay = nextSchedules.first?.scheduledOn {
+                let diffInDays = Calendar.current.dateComponents([.day], from: firstDay.startOfDay(), to: Date().startOfDay()).day!
+                return diffInDays
+            }
+        }
+        catch let err {
+            assertionFailure("Failed to get cached schedules. \(err)")
+        }
+        return nil
+    }
+    
+    func getDaysUntilNextStudyBurst() -> Int? {
+        if (hasStudyBurst) {
+            // We are in the middle of a study burst already
+            return 0
+        } else {
+            // We aren't in a study burst, so figure out how long until the next one
+            if let daysSinceStart = getDaysSinceFirstScheduledActivity() {
+                // Each study burst happens 91 days after the first day
+                let daysUntilNextBurst = 91 - (daysSinceStart % 91)
+                return daysUntilNextBurst
+            } else {
+                // There was some sort of error
+                return nil
+            }
+        }
     }
     
     func getLocalNotifications(after reminderTime: DateComponents, with pendingRequests: [UNNotificationRequest]) -> (add: [UNNotificationRequest], removeIds: [String]) {
@@ -944,7 +1106,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         }
         else if missedDaysCount <= 10 {
             titleKey = "STUDY_BURST_TITLE_MISSED_4-10_RANDOM_\(Int.random(in: 0..<6))"
-            messageKey = "STUDY_BURST_TITLE_MISSED_4-10_RANDOM_\(Int.random(in: 0..<9))"
+            messageKey = "STUDY_BURST_MESSAGE_MISSED_4-10_RANDOM_\(Int.random(in: 0..<9))"
         }
         else {
             titleKey = "STUDY_BURST_TITLE_MISSED>10"
