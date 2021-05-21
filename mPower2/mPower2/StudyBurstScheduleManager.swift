@@ -194,7 +194,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     /// When does the study burst expire?
     public var expiresOn : Date? {
         // Look to see that the first task has been started and that the study burst is not completed.
-        guard !isCompletedForToday, let timestamp = orderedTasks.first?.finishedOn
+        guard !isCompletedForToday, let timestamp = orderedTasks.first(where: { $0.finishedOn != nil })?.finishedOn
             else {
                 return nil
         }
