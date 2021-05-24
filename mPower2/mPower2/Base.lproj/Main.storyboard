@@ -872,12 +872,6 @@
                                     <outlet property="delegate" destination="PKv-Pu-C7V" id="QJ9-L3-1Aj"/>
                                 </connections>
                             </collectionView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="These activities unlock after you do the Study Burst!" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JLz-BD-rOx">
-                                <rect key="frame" x="32" y="89" width="256" height="42.5"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4t7-fK-JHi">
                                 <rect key="frame" x="0.0" y="50" width="320" height="1"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -895,14 +889,11 @@
                             <constraint firstItem="Com-xo-4ZH" firstAttribute="bottom" secondItem="hIW-6W-32N" secondAttribute="bottom" id="Dey-MW-GOe"/>
                             <constraint firstItem="i2I-RR-3B8" firstAttribute="leading" secondItem="hIW-6W-32N" secondAttribute="leading" id="I4Y-pD-psC"/>
                             <constraint firstItem="i2I-RR-3B8" firstAttribute="trailing" secondItem="hIW-6W-32N" secondAttribute="trailing" id="IBs-gi-RCI"/>
-                            <constraint firstItem="JLz-BD-rOx" firstAttribute="leading" secondItem="hIW-6W-32N" secondAttribute="leading" constant="32" id="Jb4-Nz-gNS"/>
                             <constraint firstAttribute="trailing" secondItem="4t7-fK-JHi" secondAttribute="trailing" id="Qns-wG-Rvd"/>
-                            <constraint firstItem="JLz-BD-rOx" firstAttribute="centerY" secondItem="hIW-6W-32N" secondAttribute="centerY" constant="10" id="TrY-W5-i4a"/>
                             <constraint firstItem="4t7-fK-JHi" firstAttribute="top" secondItem="i2I-RR-3B8" secondAttribute="bottom" id="Tzn-sc-rTY"/>
                             <constraint firstItem="Com-xo-4ZH" firstAttribute="leading" secondItem="hIW-6W-32N" secondAttribute="leading" id="VRg-ee-TAP"/>
                             <constraint firstItem="Com-xo-4ZH" firstAttribute="trailing" secondItem="hIW-6W-32N" secondAttribute="trailing" id="Xdc-Pm-OvE"/>
                             <constraint firstAttribute="trailing" secondItem="Dm2-ie-jnH" secondAttribute="trailing" id="cqK-01-aky"/>
-                            <constraint firstItem="JLz-BD-rOx" firstAttribute="centerX" secondItem="hIW-6W-32N" secondAttribute="centerX" id="kKi-Dm-K95"/>
                             <constraint firstItem="4t7-fK-JHi" firstAttribute="leading" secondItem="hIW-6W-32N" secondAttribute="leading" id="lIc-BX-8JG"/>
                             <constraint firstItem="Dm2-ie-jnH" firstAttribute="top" secondItem="hIW-6W-32N" secondAttribute="top" constant="-5" id="mOP-ev-Cwu"/>
                         </constraints>
@@ -914,7 +905,6 @@
                         <outlet property="shadowView" destination="Dm2-ie-jnH" id="91P-0B-XMK"/>
                         <outlet property="tabButtonStackView" destination="i2I-RR-3B8" id="Nn8-UJ-RdV"/>
                         <outlet property="tabsViewHeightConstraint" destination="j51-DJ-v5A" id="zJk-UC-JGh"/>
-                        <outlet property="unlockMessageLabel" destination="JLz-BD-rOx" id="c4c-sH-BFk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zol-St-CE5" userLabel="First Responder" sceneMemberID="firstResponder"/>
