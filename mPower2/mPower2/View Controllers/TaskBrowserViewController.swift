@@ -244,11 +244,6 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
             }
         }
     }
-    
-    var areTasksEnabled: Bool {
-        return StudyBurstScheduleManager.shared.isCompletedForToday ||
-            (selectedScheduleManager.activityGroup!.identifier == RSDIdentifier.trackingTaskGroup)
-    }
 }
 
 extension TaskBrowserViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -321,7 +316,6 @@ extension TaskBrowserViewController: UICollectionViewDelegate, UICollectionViewD
             cell?.image = task.iconWhite
             cell?.title = task.title?.uppercased()
         }
-        cell?.alpha = areTasksEnabled ? 1.0 : 0.35
         cell?.isCompleted = false
         return cell ?? UICollectionViewCell()
     }
