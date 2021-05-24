@@ -246,7 +246,8 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     
     /// How many of the tasks were either finished or skipped?
     var finishedOrSkippedCount : Int {
-        return (self.orderedTasks.reduce(0, { $0 + ($1.finishedOn != nil ? 1 : 0) }) + self.skippedCount)
+        let skippedTasks = self.todaysSkippedTasks() ?? []
+        return self.orderedTasks.reduce(0, { $0 + ($1.finishedOn != nil || skippedTasks.contains($1.identifier) ? 1 : 0)})
     }
     
     /// How many of the tasks are skipped?  Make sure identifiers are a unique set.
