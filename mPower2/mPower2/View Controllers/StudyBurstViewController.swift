@@ -262,16 +262,14 @@ class StudyBurstTaskBrowserViewController: TaskBrowserViewController {
         
         cell?.title = task.title
         cell?.image = nil
-        
-        let isSkipped = studyBurstScheduleManager.taskSkipped(task: task)
                 
         var isCompleted = (scheduledTask.finishedOn != nil)
         if (scheduledTask.identifier == RSDIdentifier.heartSnapshotTask.identifier) {
             let manager = StudyBurstScheduleManager.shared
             isCompleted = manager.isHeartSnapshotFinished()
         }
-        let usesFullColorImage = ((!isSkipped) && (isCompleted || (indexPath.row == self.nextTaskIndex())))
-        cell?.isCompleted = (!isSkipped && isCompleted)
+        let usesFullColorImage = (isCompleted || (indexPath.row == self.nextTaskIndex()))
+        cell?.isCompleted = isCompleted
         task.imageVendor?.fetchImage(for: collectionView.layoutAttributesForItem(at: indexPath)?.size ?? .zero) { (_, img) in
                 
                 // If the task is completed or is the first incomplete task, we show the image as normal,

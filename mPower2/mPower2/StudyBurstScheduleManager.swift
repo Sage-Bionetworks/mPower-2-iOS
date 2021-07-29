@@ -194,7 +194,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     /// When does the study burst expire?
     public var expiresOn : Date? {
         // Look to see that the first task has been started and that the study burst is not completed.
-        guard !isCompletedForToday, let timestamp = orderedTasks.first?.finishedOn
+        guard !isCompletedForToday, let timestamp = orderedTasks.first(where: { $0.finishedOn != nil })?.finishedOn
             else {
                 return nil
         }
@@ -246,7 +246,8 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     
     /// How many of the tasks were either finished or skipped?
     var finishedOrSkippedCount : Int {
-        return (self.orderedTasks.reduce(0, { $0 + ($1.finishedOn != nil ? 1 : 0) }) + self.skippedCount)
+        let skippedTasks = self.todaysSkippedTasks() ?? []
+        return self.orderedTasks.reduce(0, { $0 + ($1.finishedOn != nil || skippedTasks.contains($1.identifier) ? 1 : 0)})
     }
     
     /// How many of the tasks are skipped?  Make sure identifiers are a unique set.
@@ -320,18 +321,20 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
             return
         }
         
-        // Always reset todays skipped date
-        UserDefaults.standard.setValue(Date(), forKey: kSkippedTaskDateIdentifier)
-        
         // Check for no existing skipped tasks for today
         guard var skippedTaskIds = self.todaysSkippedTasks() else {
+            // Nothing skipped so far today, so set the date to today and store the skipped task id
+            UserDefaults.standard.setValue(Date(), forKey: kSkippedTaskDateIdentifier)
             UserDefaults.standard.set([task.identifier], forKey: kSkippedTaskArrayIdentifier)
             return
         }
         
-        // Add the task to the existing set of todays skipped identifiers
-        skippedTaskIds.append(task.identifier)
-        UserDefaults.standard.set(skippedTaskIds, forKey: kSkippedTaskArrayIdentifier)
+        // There was something skipped today, so add the task to the array of skipped task identifiers if it isn't
+        // there already
+        if (!skippedTaskIds.contains(task.identifier)) {
+            skippedTaskIds.append(task.identifier)
+            UserDefaults.standard.set(skippedTaskIds, forKey: kSkippedTaskArrayIdentifier)
+        }
     }
     
     /// Total number of activities
