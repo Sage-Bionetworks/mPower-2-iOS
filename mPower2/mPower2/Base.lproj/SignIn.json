@@ -39,7 +39,7 @@
                                 "type":"string",
                                 "textFieldOptions":{
                                     "keyboardType":"phonePad",
-                                    "textValidator":"^\\d{10}$",
+                                    "textValidator":"^.{10,}$",
                                     "invalidMessage":"Please enter your full 10-digit phone number."
                                 },
                                 "uiHint":"textfield",

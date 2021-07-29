@@ -53,10 +53,22 @@ class SignInTaskViewController: RSDTaskViewController, SignInDelegate {
     }
     
     public static let US_REGION_CODE = "US"
+    public static let US_COUNTRY_CODE = "+1"
+    
     public static let NETHERLANDS_REGION_CODE = "NL"
+    public static let NETHERLANDS_COUNTRY_CODE = "+31"
     
     /// The ISO country code for the region the user's phone number is in, defaults to US
     var regionCode: String? = US_REGION_CODE
+    
+    var countryCode: String? {
+        switch regionCode {
+        case SignInTaskViewController.NETHERLANDS_REGION_CODE:
+            return SignInTaskViewController.NETHERLANDS_COUNTRY_CODE
+        default:
+            return SignInTaskViewController.US_COUNTRY_CODE
+        }
+    }
 
     init() {
         if #available(iOS 12.0, *) {

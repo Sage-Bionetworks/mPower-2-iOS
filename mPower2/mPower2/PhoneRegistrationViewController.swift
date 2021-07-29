@@ -52,6 +52,19 @@ extension UIResponder {
 }
 
 class PhoneRegistrationViewController: RSDTableStepViewController {
+    
+    override open func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        guard let taskController = self.stepViewModel.rootPathComponent.taskController as? SignInTaskViewController,
+              let phoneNumberCell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? ResearchUI.RSDStepTextFieldFeaturedCell else {
+            return
+        }
+        
+        if (phoneNumberCell.textField.text?.isEmpty ?? false) {
+            phoneNumberCell.textField.text = taskController.countryCode
+        }
+    }
 
     override func goForward() {
         guard validateAndSave()
