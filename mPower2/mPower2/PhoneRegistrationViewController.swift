@@ -52,6 +52,19 @@ extension UIResponder {
 }
 
 class PhoneRegistrationViewController: RSDTableStepViewController {
+    
+    override open func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        guard let taskController = self.stepViewModel.rootPathComponent.taskController as? SignInTaskViewController,
+              let phoneNumberCell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? ResearchUI.RSDStepTextFieldFeaturedCell else {
+            return
+        }
+        
+        if (phoneNumberCell.textField.text?.isEmpty ?? false) {
+            phoneNumberCell.textField.text = taskController.countryCode
+        }
+    }
 
     override func goForward() {
         guard validateAndSave()
@@ -98,7 +111,7 @@ class PhoneRegistrationViewController: RSDTableStepViewController {
             
             // 400 is the response for an invalid phone number
             if err.code == 400 {
-                self.presentAlertWithOk(title: "Wrong Number", message: "The phone number you entered is not valid. Please enter a valid U.S. phone number.", actionHandler: { (_) in
+                self.presentAlertWithOk(title: "Wrong Number", message: "Please enter a valid phone number.", actionHandler: { (_) in
                     restoreResponder()
                 })
             } else {

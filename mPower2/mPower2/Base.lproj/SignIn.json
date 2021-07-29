@@ -38,9 +38,7 @@
                 "inputFields": [{
                                 "type":"string",
                                 "textFieldOptions":{
-                                    "keyboardType":"phonePad",
-                                    "textValidator":"^\\d{10}$",
-                                    "invalidMessage":"Please enter your full 10-digit phone number."
+                                    "keyboardType":"phonePad"
                                 },
                                 "uiHint":"textfield",
                                 "placeholder":"Phone number"
