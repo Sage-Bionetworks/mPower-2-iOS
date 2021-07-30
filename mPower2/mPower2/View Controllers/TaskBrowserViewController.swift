@@ -105,17 +105,12 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
     @IBOutlet weak var ruleView: UIView!
     @IBOutlet weak var shadowView: RSDShadowGradient!
     @IBOutlet weak var tabsViewHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var unlockMessageLabel: UILabel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        unlockMessageLabel?.isHidden = areTasksEnabled
-    }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -141,10 +136,6 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
 
         // Hide or show our shadow and rule views
         shadowView.isHidden = !shouldShowTopShadow
-        
-        unlockMessageLabel?.text = Localization.localizedString("UNLOCK_MESSAGE_FINISH_STUDY_BURST")
-        unlockMessageLabel?.textColor = designSystem.colorRules.textColor(on: designSystem.colorRules.backgroundLight, for: .largeHeader)
-        unlockMessageLabel?.isHidden = true
 
         // Reload our data
         collectionView.reloadData()
@@ -189,7 +180,6 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
 
         // reload collection view
         self.collectionView.reloadData()
-        self.unlockMessageLabel?.isHidden = areTasksEnabled
     }
     
     // MARK: Instance methods
@@ -216,7 +206,6 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
         
         // Reload the collection view
         self.collectionView.reloadData()
-        self.unlockMessageLabel?.isHidden = areTasksEnabled
     }
     
     func taskController(_ taskController: RSDTaskController, readyToSave taskViewModel: RSDTaskViewModel) {
@@ -240,7 +229,6 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
             // Save our selected task group and reload collection
             selectedScheduleManager = newManager
             collectionView.reloadData()
-            unlockMessageLabel?.isHidden = areTasksEnabled
             
             // Now update the isSelected value of all the tabs
             tabButtonStackView.arrangedSubviews.forEach {
@@ -255,11 +243,6 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
                 delegate.taskBrowserTabSelected()
             }
         }
-    }
-    
-    var areTasksEnabled: Bool {
-        return StudyBurstScheduleManager.shared.isCompletedForToday ||
-            (selectedScheduleManager.activityGroup!.identifier == RSDIdentifier.trackingTaskGroup)
     }
 }
 
@@ -333,7 +316,6 @@ extension TaskBrowserViewController: UICollectionViewDelegate, UICollectionViewD
             cell?.image = task.iconWhite
             cell?.title = task.title?.uppercased()
         }
-        cell?.alpha = areTasksEnabled ? 1.0 : 0.35
         cell?.isCompleted = false
         return cell ?? UICollectionViewCell()
     }
