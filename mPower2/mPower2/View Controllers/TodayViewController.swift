@@ -80,6 +80,10 @@ class TodayViewController: UIViewController {
     }()
     
     // MARK: View lifecycle
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        .portrait
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

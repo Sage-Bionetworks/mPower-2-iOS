@@ -40,6 +40,10 @@ class WithdrawalViewController: UIViewController, RSDTaskViewControllerDelegate 
     @IBOutlet var backButton: UIButton!
     @IBOutlet var withdrawalButton: RSDRoundedButton!
     
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        .portrait
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
