@@ -209,6 +209,8 @@
 		FFCEF49427556EEF00D376E6 /* CardiorespiratoryFitness.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FFCEF49227556EEF00D376E6 /* CardiorespiratoryFitness.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FFCEF49627556EFA00D376E6 /* CardiorespiratoryFitness.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFCEF49527556EFA00D376E6 /* CardiorespiratoryFitness.framework */; };
 		FFCEF49727556EFA00D376E6 /* CardiorespiratoryFitness.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FFCEF49527556EFA00D376E6 /* CardiorespiratoryFitness.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FFCEF49F27557F2C00D376E6 /* ActionBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCEF49E27557F2C00D376E6 /* ActionBannerView.swift */; };
+		FFCEF4A027557F3000D376E6 /* ActionBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCEF49E27557F2C00D376E6 /* ActionBannerView.swift */; };
 		FFDFF1F12368CE460094151B /* PrivacyPolicy.html in Resources */ = {isa = PBXBuildFile; fileRef = FFDFF1F02368CE450094151B /* PrivacyPolicy.html */; };
 		FFDFF1F22368CE460094151B /* PrivacyPolicy.html in Resources */ = {isa = PBXBuildFile; fileRef = FFDFF1F02368CE450094151B /* PrivacyPolicy.html */; };
 		FFE3FCCB2370C14A00E743A2 /* StudyInformation.html in Resources */ = {isa = PBXBuildFile; fileRef = FFE3FCCA2370C14A00E743A2 /* StudyInformation.html */; };
@@ -408,6 +410,7 @@
 		FFCEF48D27556E1A00D376E6 /* ResearchV2UI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchV2UI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFCEF49227556EEF00D376E6 /* CardiorespiratoryFitness.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CardiorespiratoryFitness.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFCEF49527556EFA00D376E6 /* CardiorespiratoryFitness.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CardiorespiratoryFitness.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFCEF49E27557F2C00D376E6 /* ActionBannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionBannerView.swift; sourceTree = "<group>"; };
 		FFDFF1F02368CE450094151B /* PrivacyPolicy.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = PrivacyPolicy.html; sourceTree = "<group>"; };
 		FFE3FCCA2370C14A00E743A2 /* StudyInformation.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = StudyInformation.html; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -502,6 +505,7 @@
 			isa = PBXGroup;
 			children = (
 				60E87025212B8EFF0073C69C /* Profile */,
+				FFCEF49E27557F2C00D376E6 /* ActionBannerView.swift */,
 				0349535420981C89006A05B1 /* ProgressCircleView.swift */,
 				80F3739B20FC32D200A565E0 /* VersionLabel.swift */,
 			);
@@ -1041,6 +1045,7 @@
 				F8CE28AC21221362007765F1 /* MP2ReminderManager.swift in Sources */,
 				60E87023212B8E940073C69C /* ProfileTableViewController.swift in Sources */,
 				F85459B6208FA77400D37243 /* UIColor+mPowerTheme.swift in Sources */,
+				FFCEF4A027557F3000D376E6 /* ActionBannerView.swift in Sources */,
 				F8078F4420AE078A00757F42 /* DataSourceManager.swift in Sources */,
 				F8C58DFC20AFA2FD001C7B7F /* ActivityManager.swift in Sources */,
 				FF50110422DEE81B0035E83C /* HistoryItem+Custom.swift in Sources */,
@@ -1110,6 +1115,7 @@
 				F82AE7B62063160B00952D74 /* UIColor+mPowerTheme.swift in Sources */,
 				FF50110322DEE81B0035E83C /* HistoryItem+Custom.swift in Sources */,
 				F8078F4320ADFA6A00757F42 /* DataSourceManager.swift in Sources */,
+				FFCEF49F27557F2C00D376E6 /* ActionBannerView.swift in Sources */,
 				FF50110022DEE7E60035E83C /* HistoryDataManager.swift in Sources */,
 				603B7BC320913B1A00794B7C /* PhoneRegistrationViewController.swift in Sources */,
 				F8502064211A4E8F0094E05F /* MP2SurveyConfiguration.swift in Sources */,

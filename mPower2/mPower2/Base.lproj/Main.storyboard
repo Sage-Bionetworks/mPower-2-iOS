@@ -532,7 +532,6 @@
                                                         <constraint firstAttribute="height" constant="29" id="oRi-9e-EU4"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="24"/>
-                                                    <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What would you like to do today?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4hg-YA-Q5T">
@@ -649,7 +648,7 @@
                                     <segue destination="PKv-Pu-C7V" kind="embed" identifier="TaskBrowserSegue" id="Df0-8n-328"/>
                                 </connections>
                             </containerView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CJS-by-dpw" customClass="RoundedCornerView" customModule="mPower2" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CJS-by-dpw" customClass="ActionBannerView" customModule="mPower2" customModuleProvider="target">
                                 <rect key="frame" x="55" y="25" width="245" height="60"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Chevron" translatesAutoresizingMaskIntoConstraints="NO" id="J8A-ze-t6h">
@@ -665,8 +664,8 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4 ACTIVITIES TO DO" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="31u-h4-Koc" customClass="StudyBurstProgressExpirationLabel" customModule="mPower2" customModuleProvider="target">
-                                        <rect key="frame" x="50" y="33" width="161" height="14.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="4 ACTIVITIES TO DO" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="31u-h4-Koc" customClass="StudyBurstProgressExpirationLabel" customModule="mPower2" customModuleProvider="target">
+                                        <rect key="frame" x="50" y="37" width="161" height="14.5"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="12"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -690,6 +689,8 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
+                                    <outlet property="detailsLabel" destination="31u-h4-Koc" id="bqX-1O-3Ri"/>
+                                    <outlet property="titleLabel" destination="16e-GU-lCY" id="ck5-GF-pM2"/>
                                     <outletCollection property="gestureRecognizers" destination="uHQ-O8-6dr" appends="YES" id="dF9-9i-Iqm"/>
                                 </connections>
                             </view>
