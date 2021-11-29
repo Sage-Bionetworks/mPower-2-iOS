@@ -18,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="51B-67-oY7" customClass="RSDNavigationHeaderView" customModule="ResearchUI">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="51B-67-oY7" customClass="RSDNavigationHeaderView" customModule="ResearchV2UI">
                                 <rect key="frame" x="0.0" y="20" width="320" height="397"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YvC-gg-8cv">
@@ -60,10 +60,10 @@
                                     <outlet property="titleLabel" destination="kPK-zi-NQm" id="a4P-He-pEJ"/>
                                 </connections>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xuK-qy-WCW" customClass="RSDStatusBarBackgroundView" customModule="ResearchUI">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xuK-qy-WCW" customClass="RSDStatusBarBackgroundView" customModule="ResearchV2UI">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="20"/>
                             </view>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CrL-HL-9j9" customClass="RSDGenericNavigationFooterView" customModule="ResearchUI">
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CrL-HL-9j9" customClass="RSDGenericNavigationFooterView" customModule="ResearchV2UI">
                                 <rect key="frame" x="0.0" y="474" width="320" height="94"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <userDefinedRuntimeAttributes>
@@ -104,11 +104,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cip-rQ-vI1" userLabel="Status Background" customClass="RSDStatusBarBackgroundView" customModule="ResearchUI">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cip-rQ-vI1" userLabel="Status Background" customClass="RSDStatusBarBackgroundView" customModule="ResearchV2UI">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="20"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nBS-5w-xU9" customClass="RSDNavigationHeaderView" customModule="ResearchUI">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nBS-5w-xU9" customClass="RSDNavigationHeaderView" customModule="ResearchV2UI">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="1000" text="Your link is on its way!" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o3f-jn-lwu">
@@ -120,7 +120,7 @@
                                         <color key="textColor" red="0.25490196079999999" green="0.28235294119999998" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pPg-EO-a3r" customClass="RSDUnderlinedButton" customModule="ResearchUI">
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pPg-EO-a3r" customClass="RSDUnderlinedButton" customModule="ResearchV2UI">
                                         <rect key="frame" x="115" y="520" width="90" height="30"/>
                                         <state key="normal" title="(Resend link)"/>
                                         <connections>
@@ -151,7 +151,7 @@
                                                     <outlet property="delegate" destination="EgZ-vC-TR2" id="ehk-Mz-Mzr"/>
                                                 </connections>
                                             </textField>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hDj-kc-Bhf" customClass="RSDRoundedButton" customModule="ResearchUI">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hDj-kc-Bhf" customClass="RSDRoundedButton" customModule="ResearchV2UI">
                                                 <rect key="frame" x="0.0" y="91.5" width="272" height="52"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="52" id="FfM-UY-Lm3"/>
@@ -189,7 +189,7 @@
                                                 <color key="textColor" red="0.25490196079999999" green="0.28235294119999998" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N3i-NW-eXC" customClass="RSDUnderlinedButton" customModule="ResearchUI">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N3i-NW-eXC" customClass="RSDUnderlinedButton" customModule="ResearchV2UI">
                                                 <rect key="frame" x="152" y="1" width="30" height="30"/>
                                                 <state key="normal" title="edit"/>
                                                 <connections>
