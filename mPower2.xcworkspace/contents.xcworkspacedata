@@ -5,6 +5,9 @@
       location = "container:mPower2/mPower2.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:Carthage/Checkouts/CardiorespiratoryFitness-iOS/CardiorespiratoryFitness/CardiorespiratoryFitness.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Carthage/Checkouts/Bridge-iOS-SDK/BridgeSDK.xcodeproj">
    </FileRef>
    <FileRef

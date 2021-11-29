@@ -32,8 +32,8 @@
 //
 
 import UIKit
-import Research
-import ResearchUI
+import ResearchV2
+import ResearchV2UI
 import BridgeSDK
 
 // https://stackoverflow.com/a/27140764
@@ -57,7 +57,7 @@ class PhoneRegistrationViewController: RSDTableStepViewController {
         super.viewDidLayoutSubviews()
         
         guard let taskController = self.stepViewModel.rootPathComponent.taskController as? SignInTaskViewController,
-              let phoneNumberCell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? ResearchUI.RSDStepTextFieldFeaturedCell else {
+              let phoneNumberCell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? ResearchV2UI.RSDStepTextFieldFeaturedCell else {
             return
         }
         

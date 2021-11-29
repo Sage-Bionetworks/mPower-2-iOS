@@ -31,7 +31,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Research
+import ResearchV2
 import BridgeAppUI
 import CoreLocation
 import CoreMotion

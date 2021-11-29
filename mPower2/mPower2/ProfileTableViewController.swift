@@ -33,7 +33,7 @@
 
 import UIKit
 import BridgeApp
-import ResearchUI
+import ResearchV2UI
 
 class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDelegate {
     

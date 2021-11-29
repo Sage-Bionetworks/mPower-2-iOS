@@ -34,7 +34,7 @@
 import XCTest
 @testable import mPower2TestApp
 @testable import BridgeApp
-import Research
+import ResearchV2
 
 class StudyBurstViewControllerTests: StudyBurstTests {
     

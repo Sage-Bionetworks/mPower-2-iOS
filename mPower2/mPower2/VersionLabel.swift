@@ -32,7 +32,7 @@
 //
 
 import UIKit
-import Research
+import ResearchV2
 
 /// A UILabel subclass for displaying the app name, version, and build number.
 @IBDesignable

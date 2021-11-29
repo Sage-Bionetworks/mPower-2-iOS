@@ -31,9 +31,9 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import ResearchUI
+import ResearchV2UI
 import WebKit
-import Research
+import ResearchV2
 import BridgeSDK
 import BridgeApp
 

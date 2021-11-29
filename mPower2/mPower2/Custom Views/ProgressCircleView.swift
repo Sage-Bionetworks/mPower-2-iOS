@@ -32,7 +32,7 @@
 //
 
 import UIKit
-import ResearchUI
+import ResearchV2UI
 
 @IBDesignable class ProgressCircleView: UIView {
     

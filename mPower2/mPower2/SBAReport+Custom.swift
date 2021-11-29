@@ -33,7 +33,7 @@
 
 import Foundation
 import BridgeApp
-import Research
+import ResearchV2
 
 extension SBAReport {
     

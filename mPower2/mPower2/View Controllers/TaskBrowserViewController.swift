@@ -32,7 +32,7 @@
 //
 
 import UIKit
-import Research
+import ResearchV2
 import MotorControl
 import BridgeApp
 import CardiorespiratoryFitness

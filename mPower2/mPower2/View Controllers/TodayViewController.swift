@@ -33,8 +33,8 @@
 
 import UIKit
 import MotorControl
-import Research
-import ResearchUI
+import ResearchV2
+import ResearchV2UI
 import BridgeApp
 
 @IBDesignable

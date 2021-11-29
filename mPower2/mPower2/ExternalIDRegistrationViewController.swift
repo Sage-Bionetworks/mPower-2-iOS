@@ -32,8 +32,8 @@
 //
 
 import UIKit
-import ResearchUI
-import Research
+import ResearchV2UI
+import ResearchV2
 import BridgeSDK
 import BridgeApp
 

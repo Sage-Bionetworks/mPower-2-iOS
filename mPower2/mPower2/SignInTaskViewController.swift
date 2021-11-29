@@ -31,8 +31,8 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-import Research
-import ResearchUI
+import ResearchV2
+import ResearchV2UI
 import BridgeSDK
 import BridgeApp
 import CoreTelephony
