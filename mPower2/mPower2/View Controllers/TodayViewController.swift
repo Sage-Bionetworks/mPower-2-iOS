@@ -301,7 +301,7 @@ class TodayViewController: UIViewController {
         if self.surveyManager.hasSurvey {
             progressCircleView.isHidden = false
             progressCircleView.progress = 0.5
-            let healthIcon = UIImage(named: "activitiesTaskIcon")
+            let healthIcon = UIImage(named: "ActivitiesTaskIcon")
             progressCircleView.displayIcon(image: healthIcon)
         }
         else if self.studyBurstManager.hasActiveStudyBurst {
@@ -312,11 +312,14 @@ class TodayViewController: UIViewController {
             else if let day = studyBurstManager.dayCount {
                 progressCircleView.displayDay(count: day)
             }
+            else {
+                progressCircleView.displayEmpty()
+            }
             progressCircleView.progress = studyBurstManager.progress
         }
         else {
             progressCircleView.progress = 0
-            progressCircleView.dayCountLabel.text = ""
+            progressCircleView.displayEmpty()
         }
     }
     
