@@ -126,7 +126,7 @@ class WithdrawalViewController: UIViewController, RSDTaskViewControllerDelegate 
                     #if DEBUG
                     print("Error attempting to withdraw consent:\n\(String(describing: error))\nresponse body:\n\(String(describing: response))")
                     #endif
-                    self.presentAlertWithOk(title: Localization.localizedString("WITHDRAWAL_ERROR_ALERT_TITLE"),
+                    (self as ResearchV2UI.RSDAlertPresenter).presentAlertWithOk(title: Localization.localizedString("WITHDRAWAL_ERROR_ALERT_TITLE"),
                                             message: Localization.localizedString("WITHDRAWAL_ERROR_ALERT_MESSAGE_BODY"),
                                             actionHandler: { (_) in
                                                 DispatchQueue.main.async {
@@ -136,7 +136,7 @@ class WithdrawalViewController: UIViewController, RSDTaskViewControllerDelegate 
                                                 
                     })
                 } else {
-                    self.presentAlertWithOk(title: Localization.localizedString("WITHDRAWAL_SUCCESS_ALERT_TITLE"),
+                    (self as ResearchV2UI.RSDAlertPresenter).presentAlertWithOk(title: Localization.localizedString("WITHDRAWAL_SUCCESS_ALERT_TITLE"),
                                             message: Localization.localizedString("WITHDRAWAL_SUCCESS_ALERT_MESSAGE_BODY"),
                                             actionHandler: { (_) in
                                                 BridgeSDK.authManager.signOut(completion: { (_, _, error) in

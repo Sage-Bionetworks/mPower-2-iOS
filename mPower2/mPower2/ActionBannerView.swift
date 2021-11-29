@@ -37,11 +37,11 @@ import ResearchV2UI
 // Use this just so the corner radius show's up in Interface Builder
 @IBDesignable
 class ActionBannerView: UIView {
-    @IBInspectable var cornerRadius: CGFloat = 0.0 {
-        didSet {
-            layer.cornerRadius = cornerRadius
-        }
-    }
+//    @IBInspectable var cornerRadius: CGFloat = 0.0 {
+//        didSet {
+//            layer.cornerRadius = cornerRadius
+//        }
+//    }
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var detailsLabel: StudyBurstProgressExpirationLabel!

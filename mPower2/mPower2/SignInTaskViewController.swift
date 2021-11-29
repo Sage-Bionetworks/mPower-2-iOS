@@ -195,7 +195,7 @@ class SignInTaskViewController: RSDTaskViewController, SignInDelegate {
                     if (error! as NSError).code == SBBErrorCode.serverNotAuthenticated.rawValue {
                         message = Localization.localizedString("SIGN_IN_ERROR_BODY_USED_TOKEN")
                     }
-                    self.presentAlertWithOk(title: title, message: message, actionHandler: { (_) in
+                    (self as ResearchV2UI.RSDAlertPresenter).presentAlertWithOk(title: title, message: message, actionHandler: { (_) in
                         self.afterSignIn(succeeded: false)
                     })
                 }

@@ -158,4 +158,15 @@ public class MTBAssessmentViewController : UIViewController {
     }
 }
 
+public enum MTBIdentifier : String, CaseIterable {
+    case numberMatch = "Number Match"
+    case mfs = "MFS pilot 2"
+    case dccs = "Dimensional Change Card Sort"
+    case fnamea = "FNAME Learning Form 1"
+    case flanker = "Flanker Inhibitory Control"
+    case fnameb = "FNAME Test Form 1"
+    case psm = "Picture Sequence MemoryV1"
+    case spelling = "MTB Spelling Form 1"
+    case vocabulary = "Vocabulary Form 1"
+}
 

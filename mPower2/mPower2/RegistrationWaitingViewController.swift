@@ -165,11 +165,11 @@ class RegistrationWaitingViewController: RSDStepViewController, UITextFieldDeleg
                 
                 // 400 is the response for an invalid phone number.
                 if err.code == 400 {
-                    self.presentAlertWithOk(title: "Wrong Number", message: "The phone number you entered is not valid. Please enter a valid U.S. phone number.", actionHandler: { (_) in
+                    (self as ResearchV2UI.RSDAlertPresenter).presentAlertWithOk(title: "Wrong Number", message: "The phone number you entered is not valid. Please enter a valid U.S. phone number.", actionHandler: { (_) in
                         self.didTapChangeMobileButton(self)
                     })
                 } else {
-                    self.presentAlertWithOk(title: "Error", message: "The server returned an error: \(err)", actionHandler: { (_) in
+                    (self as ResearchV2UI.RSDAlertPresenter).presentAlertWithOk(title: "Error", message: "The server returned an error: \(err)", actionHandler: { (_) in
                         self.didTapChangeMobileButton(self)
                     })
                 }
@@ -226,11 +226,11 @@ class RegistrationWaitingViewController: RSDStepViewController, UITextFieldDeleg
             
             // 400 is the response for an invalid phone number.
             if err.code == 400 {
-                self.presentAlertWithOk(title: "Wrong Number", message: "The phone number you entered is not valid. Please enter a valid U.S. phone number.", actionHandler: { (_) in
+                (self as ResearchV2UI.RSDAlertPresenter).presentAlertWithOk(title: "Wrong Number", message: "The phone number you entered is not valid. Please enter a valid U.S. phone number.", actionHandler: { (_) in
                     self.didTapChangeMobileButton(self)
                 })
             } else {
-                self.presentAlertWithOk(title: "Error", message: "The server returned an error: \(err)", actionHandler: { (_) in
+                (self as ResearchV2UI.RSDAlertPresenter).presentAlertWithOk(title: "Error", message: "The server returned an error: \(err)", actionHandler: { (_) in
                     self.didTapChangeMobileButton(self)
                 })
             }

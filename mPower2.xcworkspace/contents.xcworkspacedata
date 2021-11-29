@@ -19,4 +19,7 @@
    <FileRef
       location = "group:Carthage/Checkouts/SageResearch/Research/Research.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:MobileToolboxWrapper/MobileToolboxWrapper.xcodeproj">
+   </FileRef>
 </Workspace>

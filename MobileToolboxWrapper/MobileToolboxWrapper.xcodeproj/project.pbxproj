@@ -30,6 +30,7 @@
 		FF79502B273A0252007F6269 /* MobileToolboxWrapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MobileToolboxWrapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF79502E273A0252007F6269 /* MobileToolboxWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MobileToolboxWrapper.h; sourceTree = "<group>"; };
 		FF795039273A03BA007F6269 /* MobileToolboxWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileToolboxWrapper.swift; sourceTree = "<group>"; };
+		FFCEF4A72756B01F00D376E6 /* ResearchV2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchV2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +74,7 @@
 		FF795036273A0342007F6269 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FFCEF4A72756B01F00D376E6 /* ResearchV2.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

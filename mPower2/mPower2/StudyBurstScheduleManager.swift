@@ -683,8 +683,8 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
             self.orderedTasks.forEach {
                 let identifier = $0.identifier
                 guard let finishedOn = $0.finishedOn else { return }
-                json["\(identifier).startDate"] = ($0.startedOn ?? today()).jsonObject()
-                json["\(identifier).endDate"] = finishedOn.jsonObject()
+                json["\(identifier).startDate"] = (($0.startedOn ?? today()) as RSDJSONValue).jsonObject()
+                json["\(identifier).endDate"] = (finishedOn as RSDJSONValue).jsonObject()
                 json["\(identifier).scheduleGuid"] = $0.scheduleGuid
             }
             archive.insertDictionary(intoArchive: json, filename: "tasks", createdOn: finishedOn)
@@ -1031,7 +1031,7 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     }
     
     func getLocalNotificationIdentifier(for schedule: SBBScheduledActivity, at time: DateComponents) -> String {
-        let timeIdentifier = time.jsonObject()
+        let timeIdentifier = (time as RSDJSONValue).jsonObject()
         return "\(schedule.guid) \(timeIdentifier)"
     }
     

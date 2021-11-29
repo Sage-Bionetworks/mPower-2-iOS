@@ -122,7 +122,7 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
     
     func setupView() {
         
-        let designSystem = RSDDesignSystem()
+        let _ = RSDDesignSystem()
         
         // Remove existing managed subviews from tabBar stackView
         tabButtonStackView.arrangedSubviews.forEach({ $0.removeFromSuperview() })
@@ -522,11 +522,11 @@ class TaskCollectionViewCell: UICollectionViewCell {
  }
 
 // Use this just so the corner radius show's up in Interface Builder
-@IBDesignable
-class RoundedCornerView: UIView {
-    @IBInspectable var cornerRadius: CGFloat = 0.0 {
-        didSet {
-            layer.cornerRadius = cornerRadius
-        }
-    }
-}
+//@IBDesignable
+//class RoundedCornerView: UIView {
+//    @IBInspectable var cornerRadius: CGFloat = 0.0 {
+//        didSet {
+//            layer.cornerRadius = cornerRadius
+//        }
+//    }
+//}

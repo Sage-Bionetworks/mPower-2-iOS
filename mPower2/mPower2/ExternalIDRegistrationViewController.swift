@@ -99,7 +99,7 @@ class ExternalIDRegistrationViewController: RSDTableStepViewController {
                 if error == nil || (error! as NSError).code == SBBErrorCode.serverPreconditionNotMet.rawValue {
                     super.goForward()
                 } else {
-                    self.presentAlertWithOk(title: "Error attempting sign in", message: error!.localizedDescription, actionHandler: nil)
+                    (self as ResearchV2UI.RSDAlertPresenter).presentAlertWithOk(title: "Error attempting sign in", message: error!.localizedDescription, actionHandler: nil)
                     // TODO: emm 2018-04-25 handle error from Bridge
                     // 400 is the response for an invalid external ID
                     debugPrint("Error attempting to sign up and sign in:\n\(String(describing: error))\n\nResult:\n\(String(describing: result))")
