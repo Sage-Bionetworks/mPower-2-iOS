@@ -80,7 +80,8 @@ class MobileToolboxConfig {
     let offMainQueue = DispatchQueue(label: "org.sagebionetworks.mPower.MobileToolboxConfig")
     
     func saveAssessment(_ result: MTBAssessmentResult) {
-        let identifier = result.schemaIdentifier ?? result.identifier
+        // Send all data from Mobile Toolbox to the same Synapse table and let researchers process it
+        let identifier = "MobileToolbox" //result.schemaIdentifier ?? result.identifier
         let archive = SBBDataArchive(reference: identifier, jsonValidationMapping: nil)
         if let schemaRevision = SBABridgeConfiguration.shared.schemaInfo(for: identifier)?.schemaVersion {
             archive.setArchiveInfoObject(NSNumber(value: schemaRevision), forKey: "schemaRevision")
