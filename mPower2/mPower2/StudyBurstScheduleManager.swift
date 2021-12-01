@@ -221,23 +221,8 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     
     /// What is the current progress on required activities?
     public var progress : CGFloat {
-        var numerator = finishedOrSkippedCount
-        var denominator = totalActivitiesCount
-
-        if (self.shouldShowHeartSnapshot) {
-            denominator += 1
-            if (isHeartSnapshotFinished()) {
-                numerator += 1
-            }
-        }
-        
-        if MobileToolboxConfig.shared.taskFinishedToday() {
-            return 1
-        }
-        else if MobileToolboxConfig.shared.nextTask() != nil {
-            denominator += 1
-        }
-
+        let numerator = finishedOrSkippedCount
+        let denominator = totalActivitiesCount
         return CGFloat(numerator) / CGFloat(denominator)
     }
     
@@ -247,16 +232,20 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
             return true
         }
         // Make sure both daily tasks and one-time tasks are complete
-        let dailyTasksCompletedForToday = (finishedOrSkippedCount == totalActivitiesCount)
+        let dailyTasksCompletedForToday = (finishedOrSkippedCount >= totalActivitiesCount)
         let heartSnapshotHiddenOrComplete = (!self.shouldShowHeartSnapshot || isHeartSnapshotFinished())
-        let mtbFinishedOrNil = MobileToolboxConfig.shared.nextTask() == nil
-        return dailyTasksCompletedForToday && heartSnapshotHiddenOrComplete && mtbFinishedOrNil
+        return dailyTasksCompletedForToday && heartSnapshotHiddenOrComplete
     }
     
     /// How many of the tasks were either finished or skipped?
     var finishedOrSkippedCount : Int {
         let skippedTasks = self.todaysSkippedTasks() ?? []
-        return self.orderedTasks.reduce(0, { $0 + ($1.finishedOn != nil || skippedTasks.contains($1.identifier) ? 1 : 0)})
+        var count = self.orderedTasks.reduce(0, { $0 + ($1.finishedOn != nil || skippedTasks.contains($1.identifier) ? 1 : 0)})
+        if (self.shouldShowHeartSnapshot && isHeartSnapshotFinished()) ||
+            MobileToolboxConfig.shared.taskFinishedToday() {
+            count += 1
+        }
+        return count
     }
     
     /// How many of the tasks are skipped?  Make sure identifiers are a unique set.
@@ -293,17 +282,23 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     /// Is this the final study burst task for today?
     public func isFinalTask(_ taskIdentifier: String) -> Bool {
         // The heart snapshot is the final task if it hasn't been completed yet
-        // or if it was completed or skipped today
+        // or if it was completed or skipped today.
+        // Note: syoung 12/01/2021 This appears to be broken for the case where
+        // the participant skips the last task that is included in the ordered
+        // tasks because this task is tacked on to the view and not included
+        // in that list. Maybe that's intended behavior that was tested by someone?
         if (self.shouldShowHeartSnapshot &&
                 (!isHeartSnapshotFinished() || wasHeartSnapshotFinishedToday())) {
             return taskIdentifier == RSDIdentifier.heartSnapshotTask.identifier
         }
-        else if let _ = MTBIdentifier(rawValue: taskIdentifier) {
+        else if MobileToolboxConfig.shared.shouldShowTaskToday() {
             // Cognition task is always last
-            return true
+            return taskIdentifier == RSDIdentifier.cognitionTask.identifier
         }
-        // Otherwise, the final task is the last one in the measuring group
-        return taskIdentifier == self.orderedTasks.last?.identifier
+        else {
+            // Otherwise, the final task is the last one in the measuring group
+            return taskIdentifier == self.orderedTasks.last?.identifier
+        }
     }
     
     /// Was this task skipped already today?
@@ -352,7 +347,14 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
     
     /// Total number of activities
     public var totalActivitiesCount : Int {
-        return (activityGroup?.activityIdentifiers.count ?? 1)
+        var count = (activityGroup?.activityIdentifiers.count ?? 1)
+        if (self.shouldShowHeartSnapshot) {
+            count += 1
+        }
+        else if MobileToolboxConfig.shared.taskFinishedToday() || MobileToolboxConfig.shared.nextTask() != nil {
+            count += 1
+        }
+        return count
     }
     
     /// Subset of the past survey schedules that were not finished on the day they were scheduled.

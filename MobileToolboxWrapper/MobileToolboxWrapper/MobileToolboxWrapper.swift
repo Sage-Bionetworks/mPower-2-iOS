@@ -61,6 +61,15 @@ public struct MTBAssessmentResult {
     public let json: Data
 }
 
+var resourcesInitialized = false
+func initializeResourcesIfNeeded() {
+    guard !resourcesInitialized else { return }
+    resourcesInitialized = true
+    resourceLoader = ResourceLoader()
+    LocalizationBundle.registerDefaultBundlesIfNeeded()
+    AppOrientationLockUtility.defaultOrientationLock = .portrait
+}
+
 public class MTBAssessmentViewController : UIViewController {
     
     public weak var delegate: MTBAssessmentViewControllerDelegate!
@@ -74,6 +83,7 @@ public class MTBAssessmentViewController : UIViewController {
     public var result: MTBAssessmentResult?
     
     public init(identifier: MTBIdentifier, scheduleIdentifier: String? = nil) throws {
+        initializeResourcesIfNeeded()
         let taskVendor = MSSTaskVender(taskConfigLoader: MTBStaticTaskConfigLoader.default)
         self.taskVC = try taskVendor.taskViewController(for: identifier.rawValue, scheduleIdentifier: scheduleIdentifier)
         self.identifier = identifier
@@ -88,6 +98,11 @@ public class MTBAssessmentViewController : UIViewController {
     
     private var taskVC: RSDTaskViewController
     private var taskDelegate: TaskViewControllerDelegate!
+    
+    public override var modalPresentationStyle: UIModalPresentationStyle {
+        get { .fullScreen }
+        set {}
+    }
     
     override public var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         (self.taskVC.task as? MSSAssessmentTaskObject)?.taskOrientation ?? .portrait

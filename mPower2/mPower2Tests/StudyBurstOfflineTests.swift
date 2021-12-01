@@ -42,6 +42,7 @@ class StudyBurstOfflineTests: XCTestCase {
     override func setUp() {
         RSDFactory.shared = MP2Factory()
         StudyBurstScheduleManager.flushDefaults()
+        MobileToolboxConfig.shared.mtbIdentifiers = []
     }
 
     override func tearDown() {

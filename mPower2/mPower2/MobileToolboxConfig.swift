@@ -37,6 +37,7 @@ import ResearchV2
 import UIKit
 import BridgeSDK
 import BridgeApp
+import SwiftUI
 
 fileprivate let kLastMTBIdentifierKey = "LastMTBIdentifier"
 fileprivate let kLastMTBFinishedDateKey = "LastMTBFinishedDate"
@@ -44,23 +45,36 @@ fileprivate let kLastMTBFinishedDateKey = "LastMTBFinishedDate"
 class MobileToolboxConfig {
     static let shared: MobileToolboxConfig = .init()
     private init() {}
-    
+        
     var mtbIdentifiers: [MTBIdentifier] = [
         .numberMatch,
         .mfs,
         .dccs]
     
+    func shouldShowTaskToday() -> Bool {
+        // Exit early if we are not in a study burst.
+        guard StudyBurstScheduleManager.shared.hasStudyBurst else { return false }
+        let next = nextTaskInCurrentStudyBurst()
+        return next.identifier != nil || (next.timestamp?.isToday == true)
+    }
+    
     func nextTask() -> MTBIdentifier? {
+        // Exit early if we are not in a study burst.
+        guard StudyBurstScheduleManager.shared.hasStudyBurst else { return nil }
+        
+        // Show whatever the next cognition task is (if there is one).
+        return nextTaskInCurrentStudyBurst().identifier
+    }
+    
+    /// Get the last task finished within this study burst.
+    private func nextTaskInCurrentStudyBurst() -> (identifier: MTBIdentifier?, timestamp: Date?) {
         guard let lastFinished = lastFinishedDate(),
               lastFinished.addingNumberOfDays(20) > Date(),
               let lastIdentifier = lastFinishedIdentifier()
         else {
-            return mtbIdentifiers.first
+            return (mtbIdentifiers.first, nil)
         }
-        if lastFinished.isToday {
-            return nil
-        }
-        return mtbIdentifiers.rsd_next(after: { lastIdentifier == $0 })
+        return (mtbIdentifiers.next(lastIdentifier), lastFinished)
     }
     
     func taskFinishedToday() -> Bool {
@@ -80,12 +94,14 @@ class MobileToolboxConfig {
     let offMainQueue = DispatchQueue(label: "org.sagebionetworks.mPower.MobileToolboxConfig")
     
     func saveAssessment(_ result: MTBAssessmentResult) {
-        // Send all data from Mobile Toolbox to the same Synapse table and let researchers process it
+        // Send all data from Mobile Toolbox to the same Synapse table and let researchers
+        // process it. For now, leaving in the implementation that directs the results to
+        // a different table based on the schema identifier. syoung 12/01/2021
         let identifier = "MobileToolbox" //result.schemaIdentifier ?? result.identifier
         let archive = SBBDataArchive(reference: identifier, jsonValidationMapping: nil)
-        if let schemaRevision = SBABridgeConfiguration.shared.schemaInfo(for: identifier)?.schemaVersion {
-            archive.setArchiveInfoObject(NSNumber(value: schemaRevision), forKey: "schemaRevision")
-        }
+        //        if let schemaRevision = SBABridgeConfiguration.shared.schemaInfo(for: identifier)?.schemaVersion {
+        //            archive.setArchiveInfoObject(NSNumber(value: schemaRevision), forKey: "schemaRevision")
+        //        }
         archive.insertData(intoArchive: result.json, filename: result.filename, createdOn: result.timestamp)
         if result.filename == "taskData" {
             archive.insertData(intoArchive: result.json, filename: "\(result.filename).json", createdOn: result.timestamp)
@@ -122,35 +138,20 @@ extension MobileToolboxWrapper.FinishedState {
     }
 }
 
+extension Sequence where Element : Equatable {
+    fileprivate func next(_ element: Element) -> Element? {
+        rsd_next(after: { element == $0 })
+    }
+}
+
 extension MTBIdentifier : ResearchV2.RSDTaskInfo {
     
     public var identifier: String {
-        self.rawValue
+        RSDIdentifier.cognitionTask.identifier
     }
     
     public var title: String? {
-        switch self {
-        case .numberMatch:
-            return NSLocalizedString("Number-Symbol Match", comment: "\(self.rawValue)")
-        case .mfs:
-            return NSLocalizedString("Sequences", comment: "\(self.rawValue)")
-        case .dccs:
-            return NSLocalizedString("Shape-Color Sorting", comment: "\(self.rawValue)")
-        case .fnamea:
-            return NSLocalizedString("Faces & Names A", comment: "\(self.rawValue)")
-        case .fnameb:
-            return NSLocalizedString("Faces & Names B", comment: "\(self.rawValue)")
-        case .flanker:
-            return NSLocalizedString("Arrow Matching", comment: "\(self.rawValue)")
-        case .psm:
-            return NSLocalizedString("Arranging Pictures", comment: "\(self.rawValue)")
-        case .spelling:
-            return NSLocalizedString("Spelling", comment: "\(self.rawValue)")
-        case .vocabulary:
-            return NSLocalizedString("Word Meaning", comment: "\(self.rawValue)")
-        @unknown default:
-            return self.rawValue
-        }
+        NSLocalizedString("Cognition", comment: "Title for the cognition tasks")
     }
     
     public var estimatedMinutes: Int {
@@ -162,7 +163,7 @@ extension MTBIdentifier : ResearchV2.RSDTaskInfo {
     }
     
     public var imageVendor: ResearchV2.RSDImageVendor? {
-        UIImage(named: "CognitionTaskIcon")
+        UIImage(named: "\(identifier)TaskIcon")
     }
     
     public var subtitle: String? {

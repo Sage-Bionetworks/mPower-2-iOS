@@ -191,17 +191,14 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
             MobileToolboxConfig.shared.finishedAssessment(mtbIdentifier, reason: .skipped)
             
             // Inform our delegate that we finished a task
-            self.delegate?.taskBrowserDidFinish(taskIdentifier: mtbIdentifier.rawValue, reason: .completed)
+            self.delegate?.taskBrowserDidFinish(taskIdentifier: mtbIdentifier.identifier, reason: .completed)
         }
         else {
-            // Instead of launching into the task, skip it and update the delegate
-            let (taskViewModel, _) = selectedScheduleManager.instantiateTaskViewModel(for: taskInfo)
-
             // Add this to the list of skipped tasks we are tracking locally
             StudyBurstScheduleManager.shared.skipTask(task: taskInfo)
 
             // Tell delegate task was finished (albeit, skipped)
-            self.delegate?.taskBrowserDidFinish(taskIdentifier: taskViewModel.identifier, reason: RSDTaskFinishReason.completed)
+            self.delegate?.taskBrowserDidFinish(taskIdentifier: taskInfo.identifier, reason: RSDTaskFinishReason.completed)
         }
 
         // reload collection view
@@ -279,7 +276,7 @@ extension TaskBrowserViewController: MTBAssessmentViewControllerDelegate {
         MobileToolboxConfig.shared.finishedAssessment(assessmentController.identifier, reason: reason)
         
         // Inform our delegate that we finished a task
-        self.delegate?.taskBrowserDidFinish(taskIdentifier: assessmentController.identifier.rawValue, reason: reason.rsdV2Reason)
+        self.delegate?.taskBrowserDidFinish(taskIdentifier: assessmentController.identifier.identifier, reason: reason.rsdV2Reason)
         
         // Dismiss the view controller
         assessmentController.dismiss(animated: true, completion: nil)
