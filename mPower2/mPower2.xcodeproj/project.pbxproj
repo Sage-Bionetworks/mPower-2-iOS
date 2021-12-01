@@ -197,10 +197,6 @@
 		FF68A75B230DC6AC00C066BB /* DataTracking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF68A759230DC6AC00C066BB /* DataTracking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FF9EEE5922E13040007375E6 /* HistoryFeedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9EEE5822E13040007375E6 /* HistoryFeedTableViewController.swift */; };
 		FF9EEE5A22E13040007375E6 /* HistoryFeedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9EEE5822E13040007375E6 /* HistoryFeedTableViewController.swift */; };
-		FFCEF48827556E0800D376E6 /* ResearchV2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFCEF48627556E0800D376E6 /* ResearchV2.framework */; };
-		FFCEF48927556E0800D376E6 /* ResearchV2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FFCEF48627556E0800D376E6 /* ResearchV2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FFCEF48A27556E0800D376E6 /* ResearchV2UI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFCEF48727556E0800D376E6 /* ResearchV2UI.framework */; };
-		FFCEF48B27556E0800D376E6 /* ResearchV2UI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FFCEF48727556E0800D376E6 /* ResearchV2UI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FFCEF48E27556E1A00D376E6 /* ResearchV2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFCEF48C27556E1A00D376E6 /* ResearchV2.framework */; };
 		FFCEF48F27556E1A00D376E6 /* ResearchV2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FFCEF48C27556E1A00D376E6 /* ResearchV2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FFCEF49027556E1A00D376E6 /* ResearchV2UI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFCEF48D27556E1A00D376E6 /* ResearchV2UI.framework */; };
@@ -217,6 +213,10 @@
 		FFCEF4A62755818B00D376E6 /* MobileToolboxWrapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FFCEF4A42755818B00D376E6 /* MobileToolboxWrapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FFCEF4B22756CAB400D376E6 /* MobileToolboxConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCEF4B12756CAB400D376E6 /* MobileToolboxConfig.swift */; };
 		FFCEF4B32756CAB400D376E6 /* MobileToolboxConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCEF4B12756CAB400D376E6 /* MobileToolboxConfig.swift */; };
+		FFCEF4B8275834BD00D376E6 /* ResearchV2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFCEF48627556E0800D376E6 /* ResearchV2.framework */; };
+		FFCEF4B9275834BD00D376E6 /* ResearchV2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FFCEF48627556E0800D376E6 /* ResearchV2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FFCEF4BA275834BD00D376E6 /* ResearchV2UI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFCEF48727556E0800D376E6 /* ResearchV2UI.framework */; };
+		FFCEF4BB275834BD00D376E6 /* ResearchV2UI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FFCEF48727556E0800D376E6 /* ResearchV2UI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FFDFF1F12368CE460094151B /* PrivacyPolicy.html in Resources */ = {isa = PBXBuildFile; fileRef = FFDFF1F02368CE450094151B /* PrivacyPolicy.html */; };
 		FFDFF1F22368CE460094151B /* PrivacyPolicy.html in Resources */ = {isa = PBXBuildFile; fileRef = FFDFF1F02368CE450094151B /* PrivacyPolicy.html */; };
 		FFE3FCCB2370C14A00E743A2 /* StudyInformation.html in Resources */ = {isa = PBXBuildFile; fileRef = FFE3FCCA2370C14A00E743A2 /* StudyInformation.html */; };
@@ -281,13 +281,13 @@
 				F8A5C864227D08BC00DD4692 /* MotorControl.framework in Embed Frameworks */,
 				F8A5C85E227D08BC00DD4692 /* BridgeSDK.framework in Embed Frameworks */,
 				FFCEF4A32755818200D376E6 /* MobileToolboxWrapper.framework in Embed Frameworks */,
-				FFCEF48927556E0800D376E6 /* ResearchV2.framework in Embed Frameworks */,
 				F8A5C861227D08BC00DD4692 /* BridgeApp.framework in Embed Frameworks */,
-				FFCEF48B27556E0800D376E6 /* ResearchV2UI.framework in Embed Frameworks */,
+				FFCEF4B9275834BD00D376E6 /* ResearchV2.framework in Embed Frameworks */,
 				F82A4ADC229706BF00BEBE3C /* ResearchLocation.framework in Embed Frameworks */,
 				F82A4AD9229706BF00BEBE3C /* ResearchMotion.framework in Embed Frameworks */,
 				FF68A752230DC69E00C066BB /* BridgeAppUI.framework in Embed Frameworks */,
 				FF68A755230DC69E00C066BB /* DataTracking.framework in Embed Frameworks */,
+				FFCEF4BB275834BD00D376E6 /* ResearchV2UI.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -464,13 +464,13 @@
 				F8A5C863227D08BC00DD4692 /* MotorControl.framework in Frameworks */,
 				F8A5C85D227D08BC00DD4692 /* BridgeSDK.framework in Frameworks */,
 				FFCEF4A22755818200D376E6 /* MobileToolboxWrapper.framework in Frameworks */,
-				FFCEF48827556E0800D376E6 /* ResearchV2.framework in Frameworks */,
 				F8A5C860227D08BC00DD4692 /* BridgeApp.framework in Frameworks */,
-				FFCEF48A27556E0800D376E6 /* ResearchV2UI.framework in Frameworks */,
+				FFCEF4B8275834BD00D376E6 /* ResearchV2.framework in Frameworks */,
 				F82A4ADB229706BF00BEBE3C /* ResearchLocation.framework in Frameworks */,
 				F82A4AD8229706BF00BEBE3C /* ResearchMotion.framework in Frameworks */,
 				FF68A751230DC69E00C066BB /* BridgeAppUI.framework in Frameworks */,
 				FF68A754230DC69E00C066BB /* DataTracking.framework in Frameworks */,
+				FFCEF4BA275834BD00D376E6 /* ResearchV2UI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
