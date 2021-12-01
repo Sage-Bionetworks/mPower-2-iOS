@@ -35,19 +35,90 @@ import Foundation
 import MobileToolboxWrapper
 import ResearchV2
 import UIKit
+import BridgeSDK
+import BridgeApp
+
+fileprivate let kLastMTBIdentifierKey = "LastMTBIdentifier"
+fileprivate let kLastMTBFinishedDateKey = "LastMTBFinishedDate"
 
 class MobileToolboxConfig {
     static let shared: MobileToolboxConfig = .init()
     private init() {}
     
-    private var mtbIdentifiers: [MTBIdentifier] = [
+    var mtbIdentifiers: [MTBIdentifier] = [
         .numberMatch,
         .mfs,
         .dccs]
     
-    var excludeDataGroups: [String] = [
-        TaskGroupScheduleManager.SHOW_HEART_SNAPSHOT_DATA_GROUP
-    ]
+    func nextTask() -> MTBIdentifier? {
+        guard let lastFinished = lastFinishedDate(),
+              lastFinished.addingNumberOfDays(20) > Date(),
+              let lastIdentifier = lastFinishedIdentifier()
+        else {
+            return mtbIdentifiers.first
+        }
+        if lastFinished.isToday {
+            return nil
+        }
+        return mtbIdentifiers.rsd_next(after: { lastIdentifier == $0 })
+    }
+    
+    func taskFinishedToday() -> Bool {
+        lastFinishedDate()?.isToday ?? false
+    }
+
+    func finishedAssessment(_ mtbIdentifier: MTBIdentifier, reason: MobileToolboxWrapper.FinishedState) {
+        switch reason {
+        case .completed, .skipped:
+            saveLastFininshedDate(for: mtbIdentifier)
+        default:
+            break
+        }
+    }
+    
+    /// A serial queue used to manage data crunching.
+    let offMainQueue = DispatchQueue(label: "org.sagebionetworks.mPower.MobileToolboxConfig")
+    
+    func saveAssessment(_ result: MTBAssessmentResult) {
+        let identifier = result.schemaIdentifier ?? result.identifier
+        let archive = SBBDataArchive(reference: identifier, jsonValidationMapping: nil)
+        if let schemaRevision = SBABridgeConfiguration.shared.schemaInfo(for: identifier)?.schemaVersion {
+            archive.setArchiveInfoObject(NSNumber(value: schemaRevision), forKey: "schemaRevision")
+        }
+        archive.insertData(intoArchive: result.json, filename: result.filename, createdOn: result.timestamp)
+        if result.filename == "taskData" {
+            archive.insertData(intoArchive: result.json, filename: "\(result.filename).json", createdOn: result.timestamp)
+        }
+        offMainQueue.async {
+            archive.encryptAndUploadArchive()
+        }
+    }
+    
+    func lastFinishedDate() -> Date? {
+        UserDefaults.standard.object(forKey: kLastMTBFinishedDateKey) as? Date
+    }
+    
+    func lastFinishedIdentifier() -> MTBIdentifier? {
+        UserDefaults.standard.string(forKey: kLastMTBIdentifierKey).flatMap { .init(rawValue: $0) }
+    }
+    
+    func saveLastFininshedDate(for mtbIdentifier: MTBIdentifier) {
+        UserDefaults.standard.set(mtbIdentifier.rawValue, forKey: kLastMTBIdentifierKey)
+        UserDefaults.standard.set(Date(), forKey: kLastMTBFinishedDateKey)
+    }
+}
+
+extension MobileToolboxWrapper.FinishedState {
+    var rsdV2Reason: ResearchV2.RSDTaskFinishReason {
+        switch self {
+        case .completed, .skipped:
+            return .completed
+        case .saved:
+            return .saved
+        default:
+            return .discarded
+        }
+    }
 }
 
 extension MTBIdentifier : ResearchV2.RSDTaskInfo {

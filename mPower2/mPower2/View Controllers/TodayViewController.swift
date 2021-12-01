@@ -488,8 +488,8 @@ extension TodayViewController: StudyBurstProgressExpirationLabelDelegate {
 }
 
 extension TodayViewController: StudyBurstViewControllerDelegate {
-    func studyBurstDidFinish(task: RSDTaskViewModel, reason: RSDTaskFinishReason) {
-        if reason == .completed, studyBurstManager.isFinalTask(task.identifier) {
+    func studyBurstDidFinish(taskIdentifier: String, reason: RSDTaskFinishReason) {
+        if reason == .completed, studyBurstManager.isFinalTask(taskIdentifier) {
             showStudyBurstCompletionTask()
         }
     }
@@ -608,8 +608,8 @@ extension TodayViewController: TaskBrowserViewControllerDelegate {
         // nothing
     }
     
-    func taskBrowserDidFinish(task: RSDTaskViewModel, reason: RSDTaskFinishReason) {
-        if reason == .completed, studyBurstManager.isFinalTask(task.identifier) {
+    func taskBrowserDidFinish(taskIdentifier: String, reason: RSDTaskFinishReason) {
+        if reason == .completed, studyBurstManager.isFinalTask(taskIdentifier) {
             showStudyBurstCompletionTask()
         }
     }

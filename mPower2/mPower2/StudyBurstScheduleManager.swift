@@ -35,6 +35,7 @@ import Foundation
 import BridgeApp
 import UserNotifications
 import CardiorespiratoryFitness
+import MobileToolboxWrapper
 
 /// The study burst configuration is a Decodable that can be added to the `AppConfig.clientData`.
 public struct StudyBurstConfiguration : Codable {
@@ -229,6 +230,13 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
                 numerator += 1
             }
         }
+        
+        if MobileToolboxConfig.shared.taskFinishedToday() {
+            return 1
+        }
+        else if MobileToolboxConfig.shared.nextTask() != nil {
+            denominator += 1
+        }
 
         return CGFloat(numerator) / CGFloat(denominator)
     }
@@ -241,7 +249,8 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         // Make sure both daily tasks and one-time tasks are complete
         let dailyTasksCompletedForToday = (finishedOrSkippedCount == totalActivitiesCount)
         let heartSnapshotHiddenOrComplete = (!self.shouldShowHeartSnapshot || isHeartSnapshotFinished())
-        return dailyTasksCompletedForToday && heartSnapshotHiddenOrComplete
+        let mtbFinishedOrNil = MobileToolboxConfig.shared.nextTask() == nil
+        return dailyTasksCompletedForToday && heartSnapshotHiddenOrComplete && mtbFinishedOrNil
     }
     
     /// How many of the tasks were either finished or skipped?
@@ -288,6 +297,10 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         if (self.shouldShowHeartSnapshot &&
                 (!isHeartSnapshotFinished() || wasHeartSnapshotFinishedToday())) {
             return taskIdentifier == RSDIdentifier.heartSnapshotTask.identifier
+        }
+        else if let _ = MTBIdentifier(rawValue: taskIdentifier) {
+            // Cognition task is always last
+            return true
         }
         // Otherwise, the final task is the last one in the measuring group
         return taskIdentifier == self.orderedTasks.last?.identifier

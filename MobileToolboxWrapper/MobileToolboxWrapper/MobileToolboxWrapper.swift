@@ -54,6 +54,8 @@ public enum FinishedState : Int {
 
 public struct MTBAssessmentResult {
     public let identifier: String
+    public let schemaIdentifier: String?
+    public let scheduleIdentifier: String?
     public let filename: String
     public let timestamp: Date
     public let json: Data
@@ -63,9 +65,7 @@ public class MTBAssessmentViewController : UIViewController {
     
     public weak var delegate: MTBAssessmentViewControllerDelegate!
     
-    public var identifier: String {
-        self.taskVC.taskViewModel.identifier
-    }
+    public let identifier: MTBIdentifier
     
     public var scheduleIdentifier : String? {
         self.taskVC.taskViewModel.scheduleIdentifier
@@ -73,9 +73,10 @@ public class MTBAssessmentViewController : UIViewController {
     
     public var result: MTBAssessmentResult?
     
-    public init(identifier: String, scheduleIdentifier: String? = nil) throws {
+    public init(identifier: MTBIdentifier, scheduleIdentifier: String? = nil) throws {
         let taskVendor = MSSTaskVender(taskConfigLoader: MTBStaticTaskConfigLoader.default)
-        self.taskVC = try taskVendor.taskViewController(for: identifier, scheduleIdentifier: scheduleIdentifier)
+        self.taskVC = try taskVendor.taskViewController(for: identifier.rawValue, scheduleIdentifier: scheduleIdentifier)
+        self.identifier = identifier
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -145,7 +146,9 @@ public class MTBAssessmentViewController : UIViewController {
             }
             do {
                 guard let archiveData = try archivable.buildArchiveData() else { return }
-                owner.result = .init(identifier: archiveData.manifest.identifier ?? taskViewModel.identifier,
+                owner.result = .init(identifier: taskViewModel.identifier,
+                                     schemaIdentifier: taskViewModel.task?.schemaInfo?.schemaIdentifier,
+                                     scheduleIdentifier: taskViewModel.scheduleIdentifier,
                                      filename: archiveData.manifest.filename,
                                      timestamp: archiveData.manifest.timestamp,
                                      json: archiveData.data)
