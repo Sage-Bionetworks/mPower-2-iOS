@@ -95,13 +95,13 @@ class MobileToolboxConfig {
     
     func saveAssessment(_ result: MTBAssessmentResult) {
         // Send all data from Mobile Toolbox to the same Synapse table and let researchers
-        // process it. For now, leaving in the implementation that directs the results to
-        // a different table based on the schema identifier. syoung 12/01/2021
+        // process it. For now, leave in the commented-out implementation that directs the
+        // results to a different table based on the schema identifier. syoung 12/01/2021
         let identifier = "MobileToolbox" //result.schemaIdentifier ?? result.identifier
         let archive = SBBDataArchive(reference: identifier, jsonValidationMapping: nil)
-        //        if let schemaRevision = SBABridgeConfiguration.shared.schemaInfo(for: identifier)?.schemaVersion {
-        //            archive.setArchiveInfoObject(NSNumber(value: schemaRevision), forKey: "schemaRevision")
-        //        }
+        if let schemaRevision = SBABridgeConfiguration.shared.schemaInfo(for: identifier)?.schemaVersion {
+            archive.setArchiveInfoObject(NSNumber(value: schemaRevision), forKey: "schemaRevision")
+        }
         archive.insertData(intoArchive: result.json, filename: result.filename, createdOn: result.timestamp)
         if result.filename == "taskData" {
             archive.insertData(intoArchive: result.json, filename: "\(result.filename).json", createdOn: result.timestamp)
