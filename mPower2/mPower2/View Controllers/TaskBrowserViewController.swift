@@ -565,12 +565,13 @@ class TaskCollectionViewCell: UICollectionViewCell {
     }
  }
 
-// Use this just so the corner radius show's up in Interface Builder
-//@IBDesignable
-//class RoundedCornerView: UIView {
+// Use this just so the corner radius shows up in Interface Builder
+@IBDesignable
+class RoundedCornerView: UIView {
+    // Commented out b/c this conflicts with the extension on UIView defined in MobileToolbox framework. syoung 12/02/2021
 //    @IBInspectable var cornerRadius: CGFloat = 0.0 {
 //        didSet {
 //            layer.cornerRadius = cornerRadius
 //        }
 //    }
-//}
+}
