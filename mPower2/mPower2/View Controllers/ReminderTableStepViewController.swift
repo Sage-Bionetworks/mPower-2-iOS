@@ -86,7 +86,7 @@ class ReminderTableStepViewController: RSDTableStepViewController {
                 DispatchQueue.main.async {
                     if !granted {
                         // TODO: syoung 07/19/2018 Localize and word-smith
-                        self.presentAlertWithOk(title: nil, message: "You have turned off notifications. To allow us to remind you about your Study Bursts, you will need to change this from the Settings app.", actionHandler: { (_) in
+                        (self as ResearchV2UI.RSDAlertPresenter).presentAlertWithOk(title: nil, message: "You have turned off notifications. To allow us to remind you about your Study Bursts, you will need to change this from the Settings app.", actionHandler: { (_) in
                             super.goForward()
                         })
                     }

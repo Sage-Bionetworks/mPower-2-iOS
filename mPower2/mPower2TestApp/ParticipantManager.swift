@@ -278,7 +278,7 @@ public class ParticipantManager : NSObject, SBBParticipantManagerProtocol {
         
         let reportData = SBBReportData(dictionaryRepresentation: [:])!
         reportData.data = reportJSON
-        reportData.dateTime = dateTime.jsonObject() as? String
+        reportData.dateTime = (dateTime as ResearchV2.RSDJSONValue).jsonObject() as? String
         
         return self.save(reportData, forReport: identifier)
     }
@@ -287,7 +287,7 @@ public class ParticipantManager : NSObject, SBBParticipantManagerProtocol {
         
         let reportData = SBBReportData(dictionaryRepresentation: [:])!
         reportData.data = reportJSON
-        reportData.localDate = dateComponents.jsonObject() as? String
+        reportData.localDate = (dateComponents as ResearchV2.RSDJSONValue).jsonObject() as? String
         
         return self.save(reportData, forReport: identifier)
     }

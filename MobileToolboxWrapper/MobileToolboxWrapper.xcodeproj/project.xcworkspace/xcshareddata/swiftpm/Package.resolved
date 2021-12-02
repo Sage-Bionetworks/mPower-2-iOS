@@ -1,0 +1,79 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "CodableCSV",
+        "repositoryURL": "https://github.com/MobileToolbox/CodableCSV.git",
+        "state": {
+          "branch": null,
+          "revision": "d73cd4f976c52f6ec71493ac69b535c50b58152c",
+          "version": "0.6.6"
+        }
+      },
+      {
+        "package": "JsonModel",
+        "repositoryURL": "https://github.com/Sage-Bionetworks/JsonModel-Swift.git",
+        "state": {
+          "branch": null,
+          "revision": "3bb51b58f22e9c3bdc54ebc01137f669aed30f8b",
+          "version": "1.2.3"
+        }
+      },
+      {
+        "package": "MobilePassiveData",
+        "repositoryURL": "https://github.com/Sage-Bionetworks/MobilePassiveData-SDK.git",
+        "state": {
+          "branch": null,
+          "revision": "8bcd6fb0f630f673436ffee987367798580cb02d",
+          "version": "1.1.3"
+        }
+      },
+      {
+        "package": "MobileToolboxKit",
+        "repositoryURL": "https://github.com/MobileToolbox/MobileToolbox.git",
+        "state": {
+          "branch": null,
+          "revision": "4980b7d8be1476f119243362d0eb69ce007161e1",
+          "version": null
+        }
+      },
+      {
+        "package": "MSSEngineKit",
+        "repositoryURL": "https://github.com/MobileToolbox/MSSEngineKit.git",
+        "state": {
+          "branch": null,
+          "revision": "a2824eb8a39c10cf6312d3efdce07e88f53a3b8b",
+          "version": "1.0.3"
+        }
+      },
+      {
+        "package": "MobileToolboxResources",
+        "repositoryURL": "https://github.com/MobileToolbox/resources.git",
+        "state": {
+          "branch": null,
+          "revision": "13377c36d55db9e59b3a8809c9249c3eb6b9103d",
+          "version": "1.2.0"
+        }
+      },
+      {
+        "package": "SageResearch",
+        "repositoryURL": "https://github.com/Sage-Bionetworks/SageResearch.git",
+        "state": {
+          "branch": null,
+          "revision": "316f65c58b51f43c89a9fb65b5d9d58f845520d8",
+          "version": "4.2.3"
+        }
+      },
+      {
+        "package": "ToolboxKit",
+        "repositoryURL": "https://github.com/MobileToolbox/ToolboxKit.git",
+        "state": {
+          "branch": null,
+          "revision": "6e485ca259c34c5f4dbae2aa060f31f81986b481",
+          "version": "0.13.2"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

@@ -73,12 +73,8 @@
 		B587AC08206D696800542548 /* UIView+mPowerTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B587AC07206D696800542548 /* UIView+mPowerTheme.swift */; };
 		CB37C6142645B30B00E85452 /* Research_UnitTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C882227E278800DD4692 /* Research_UnitTest.framework */; };
 		CB37C6152645B30B00E85452 /* Research_UnitTest.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C882227E278800DD4692 /* Research_UnitTest.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		CB5B4957263CC4F100DD9093 /* CardiorespiratoryFitness.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB73F7A726309DFA00969688 /* CardiorespiratoryFitness.framework */; };
-		CB5B4958263CC4F100DD9093 /* CardiorespiratoryFitness.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CB73F7A726309DFA00969688 /* CardiorespiratoryFitness.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CB5E16EF210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5E16EE210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift */; };
 		CB6196522109473900F2E3EA /* TrackedItemsIntroductionStepObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6196512109473900F2E3EA /* TrackedItemsIntroductionStepObject.swift */; };
-		CB73F7AA26309E0600969688 /* CardiorespiratoryFitness.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB73F7A726309DFA00969688 /* CardiorespiratoryFitness.framework */; };
-		CB73F7AB26309E0600969688 /* CardiorespiratoryFitness.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CB73F7A726309DFA00969688 /* CardiorespiratoryFitness.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8078F3F20ADF1DC00757F42 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8078F2920ADF1DC00757F42 /* AppDelegate.swift */; };
 		F8078F4320ADFA6A00757F42 /* DataSourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8078F4220ADFA6A00757F42 /* DataSourceManager.swift */; };
 		F8078F4420AE078A00757F42 /* DataSourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8078F4220ADFA6A00757F42 /* DataSourceManager.swift */; };
@@ -150,14 +146,6 @@
 		F8A5C861227D08BC00DD4692 /* BridgeApp.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C85F227D08BC00DD4692 /* BridgeApp.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8A5C863227D08BC00DD4692 /* MotorControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C862227D08BC00DD4692 /* MotorControl.framework */; };
 		F8A5C864227D08BC00DD4692 /* MotorControl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C862227D08BC00DD4692 /* MotorControl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F8A5C866227D08BC00DD4692 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C865227D08BC00DD4692 /* Research.framework */; };
-		F8A5C867227D08BC00DD4692 /* Research.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C865227D08BC00DD4692 /* Research.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F8A5C869227D08BC00DD4692 /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C868227D08BC00DD4692 /* ResearchUI.framework */; };
-		F8A5C86A227D08BC00DD4692 /* ResearchUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C868227D08BC00DD4692 /* ResearchUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F8A5C870227D08D100DD4692 /* ResearchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C868227D08BC00DD4692 /* ResearchUI.framework */; };
-		F8A5C871227D08D100DD4692 /* ResearchUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C868227D08BC00DD4692 /* ResearchUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F8A5C872227D08D100DD4692 /* Research.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C865227D08BC00DD4692 /* Research.framework */; };
-		F8A5C873227D08D100DD4692 /* Research.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C865227D08BC00DD4692 /* Research.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8A5C874227D08D100DD4692 /* MotorControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C862227D08BC00DD4692 /* MotorControl.framework */; };
 		F8A5C875227D08D100DD4692 /* MotorControl.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C862227D08BC00DD4692 /* MotorControl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8A5C876227D08D100DD4692 /* BridgeApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8A5C85F227D08BC00DD4692 /* BridgeApp.framework */; };
@@ -209,6 +197,26 @@
 		FF68A75B230DC6AC00C066BB /* DataTracking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FF68A759230DC6AC00C066BB /* DataTracking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FF9EEE5922E13040007375E6 /* HistoryFeedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9EEE5822E13040007375E6 /* HistoryFeedTableViewController.swift */; };
 		FF9EEE5A22E13040007375E6 /* HistoryFeedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9EEE5822E13040007375E6 /* HistoryFeedTableViewController.swift */; };
+		FFCEF48E27556E1A00D376E6 /* ResearchV2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFCEF48C27556E1A00D376E6 /* ResearchV2.framework */; };
+		FFCEF48F27556E1A00D376E6 /* ResearchV2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FFCEF48C27556E1A00D376E6 /* ResearchV2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FFCEF49027556E1A00D376E6 /* ResearchV2UI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFCEF48D27556E1A00D376E6 /* ResearchV2UI.framework */; };
+		FFCEF49127556E1A00D376E6 /* ResearchV2UI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FFCEF48D27556E1A00D376E6 /* ResearchV2UI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FFCEF49327556EEF00D376E6 /* CardiorespiratoryFitness.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFCEF49227556EEF00D376E6 /* CardiorespiratoryFitness.framework */; };
+		FFCEF49427556EEF00D376E6 /* CardiorespiratoryFitness.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FFCEF49227556EEF00D376E6 /* CardiorespiratoryFitness.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FFCEF49627556EFA00D376E6 /* CardiorespiratoryFitness.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFCEF49527556EFA00D376E6 /* CardiorespiratoryFitness.framework */; };
+		FFCEF49727556EFA00D376E6 /* CardiorespiratoryFitness.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FFCEF49527556EFA00D376E6 /* CardiorespiratoryFitness.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FFCEF49F27557F2C00D376E6 /* ActionBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCEF49E27557F2C00D376E6 /* ActionBannerView.swift */; };
+		FFCEF4A027557F3000D376E6 /* ActionBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCEF49E27557F2C00D376E6 /* ActionBannerView.swift */; };
+		FFCEF4A22755818200D376E6 /* MobileToolboxWrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFCEF4A12755818200D376E6 /* MobileToolboxWrapper.framework */; };
+		FFCEF4A32755818200D376E6 /* MobileToolboxWrapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FFCEF4A12755818200D376E6 /* MobileToolboxWrapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FFCEF4A52755818B00D376E6 /* MobileToolboxWrapper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFCEF4A42755818B00D376E6 /* MobileToolboxWrapper.framework */; };
+		FFCEF4A62755818B00D376E6 /* MobileToolboxWrapper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FFCEF4A42755818B00D376E6 /* MobileToolboxWrapper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FFCEF4B22756CAB400D376E6 /* MobileToolboxConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCEF4B12756CAB400D376E6 /* MobileToolboxConfig.swift */; };
+		FFCEF4B32756CAB400D376E6 /* MobileToolboxConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFCEF4B12756CAB400D376E6 /* MobileToolboxConfig.swift */; };
+		FFCEF4B8275834BD00D376E6 /* ResearchV2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFCEF48627556E0800D376E6 /* ResearchV2.framework */; };
+		FFCEF4B9275834BD00D376E6 /* ResearchV2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FFCEF48627556E0800D376E6 /* ResearchV2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FFCEF4BA275834BD00D376E6 /* ResearchV2UI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFCEF48727556E0800D376E6 /* ResearchV2UI.framework */; };
+		FFCEF4BB275834BD00D376E6 /* ResearchV2UI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FFCEF48727556E0800D376E6 /* ResearchV2UI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FFDFF1F12368CE460094151B /* PrivacyPolicy.html in Resources */ = {isa = PBXBuildFile; fileRef = FFDFF1F02368CE450094151B /* PrivacyPolicy.html */; };
 		FFDFF1F22368CE460094151B /* PrivacyPolicy.html in Resources */ = {isa = PBXBuildFile; fileRef = FFDFF1F02368CE450094151B /* PrivacyPolicy.html */; };
 		FFE3FCCB2370C14A00E743A2 /* StudyInformation.html in Resources */ = {isa = PBXBuildFile; fileRef = FFE3FCCA2370C14A00E743A2 /* StudyInformation.html */; };
@@ -222,20 +230,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = F8D3E7752062F1B900CD351C;
 			remoteInfo = mPower2;
-		};
-		CB73F7A626309DFA00969688 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CB73F7A126309DFA00969688 /* CardiorespiratoryFitness.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F88725D92051C0F800A4B82F;
-			remoteInfo = CardiorespiratoryFitness;
-		};
-		CB73F7A826309DFA00969688 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CB73F7A126309DFA00969688 /* CardiorespiratoryFitness.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F88725E22051C0F900A4B82F;
-			remoteInfo = CardiorespiratoryFitnessTests;
 		};
 		F84E724220E2C99900E5C6C3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -264,13 +258,14 @@
 				FF68A75B230DC6AC00C066BB /* DataTracking.framework in Embed Frameworks */,
 				F8A5C875227D08D100DD4692 /* MotorControl.framework in Embed Frameworks */,
 				F8A5C879227D08D100DD4692 /* BridgeSDK.framework in Embed Frameworks */,
+				FFCEF49427556EEF00D376E6 /* CardiorespiratoryFitness.framework in Embed Frameworks */,
+				FFCEF48F27556E1A00D376E6 /* ResearchV2.framework in Embed Frameworks */,
+				FFCEF49127556E1A00D376E6 /* ResearchV2UI.framework in Embed Frameworks */,
 				F82A4AD32297054600BEBE3C /* ResearchMotion.framework in Embed Frameworks */,
+				FFCEF4A62755818B00D376E6 /* MobileToolboxWrapper.framework in Embed Frameworks */,
 				FF68A758230DC6AC00C066BB /* BridgeAppUI.framework in Embed Frameworks */,
 				F82A4AD62297054600BEBE3C /* ResearchLocation.framework in Embed Frameworks */,
 				CB37C6152645B30B00E85452 /* Research_UnitTest.framework in Embed Frameworks */,
-				F8A5C873227D08D100DD4692 /* Research.framework in Embed Frameworks */,
-				CB5B4958263CC4F100DD9093 /* CardiorespiratoryFitness.framework in Embed Frameworks */,
-				F8A5C871227D08D100DD4692 /* ResearchUI.framework in Embed Frameworks */,
 				F82A4AD02297051200BEBE3C /* BridgeSDK_Test.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -282,16 +277,17 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				CB73F7AB26309E0600969688 /* CardiorespiratoryFitness.framework in Embed Frameworks */,
+				FFCEF49727556EFA00D376E6 /* CardiorespiratoryFitness.framework in Embed Frameworks */,
 				F8A5C864227D08BC00DD4692 /* MotorControl.framework in Embed Frameworks */,
 				F8A5C85E227D08BC00DD4692 /* BridgeSDK.framework in Embed Frameworks */,
+				FFCEF4A32755818200D376E6 /* MobileToolboxWrapper.framework in Embed Frameworks */,
 				F8A5C861227D08BC00DD4692 /* BridgeApp.framework in Embed Frameworks */,
+				FFCEF4B9275834BD00D376E6 /* ResearchV2.framework in Embed Frameworks */,
 				F82A4ADC229706BF00BEBE3C /* ResearchLocation.framework in Embed Frameworks */,
 				F82A4AD9229706BF00BEBE3C /* ResearchMotion.framework in Embed Frameworks */,
 				FF68A752230DC69E00C066BB /* BridgeAppUI.framework in Embed Frameworks */,
 				FF68A755230DC69E00C066BB /* DataTracking.framework in Embed Frameworks */,
-				F8A5C867227D08BC00DD4692 /* Research.framework in Embed Frameworks */,
-				F8A5C86A227D08BC00DD4692 /* ResearchUI.framework in Embed Frameworks */,
+				FFCEF4BB275834BD00D376E6 /* ResearchV2UI.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -339,7 +335,6 @@
 		CB1F5EDB264385E200A40870 /* HistoryV2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HistoryV2.xcdatamodel; sourceTree = "<group>"; };
 		CB5E16EE210945C700AEE6A6 /* TrackedItemsIntroductionStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TrackedItemsIntroductionStepViewController.swift; path = "View Controllers/TrackedItemsIntroductionStepViewController.swift"; sourceTree = "<group>"; };
 		CB6196512109473900F2E3EA /* TrackedItemsIntroductionStepObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TrackedItemsIntroductionStepObject.swift; path = Model/TrackedItemsIntroductionStepObject.swift; sourceTree = "<group>"; };
-		CB73F7A126309DFA00969688 /* CardiorespiratoryFitness.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CardiorespiratoryFitness.xcodeproj; path = "../Carthage/Checkouts/CardiorespiratoryFitness-iOS/CardiorespiratoryFitness/CardiorespiratoryFitness.xcodeproj"; sourceTree = "<group>"; };
 		F8078F2920ADF1DC00757F42 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F8078F4220ADFA6A00757F42 /* DataSourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSourceManager.swift; sourceTree = "<group>"; };
 		F81BE7BE20B4AB4B00EE57D3 /* AppConfig.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AppConfig.json; sourceTree = "<group>"; };
@@ -417,6 +412,16 @@
 		FF68A756230DC6AC00C066BB /* BridgeAppUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BridgeAppUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF68A759230DC6AC00C066BB /* DataTracking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DataTracking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF9EEE5822E13040007375E6 /* HistoryFeedTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryFeedTableViewController.swift; sourceTree = "<group>"; };
+		FFCEF48627556E0800D376E6 /* ResearchV2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchV2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFCEF48727556E0800D376E6 /* ResearchV2UI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchV2UI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFCEF48C27556E1A00D376E6 /* ResearchV2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchV2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFCEF48D27556E1A00D376E6 /* ResearchV2UI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ResearchV2UI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFCEF49227556EEF00D376E6 /* CardiorespiratoryFitness.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CardiorespiratoryFitness.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFCEF49527556EFA00D376E6 /* CardiorespiratoryFitness.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CardiorespiratoryFitness.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFCEF49E27557F2C00D376E6 /* ActionBannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionBannerView.swift; sourceTree = "<group>"; };
+		FFCEF4A12755818200D376E6 /* MobileToolboxWrapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MobileToolboxWrapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFCEF4A42755818B00D376E6 /* MobileToolboxWrapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MobileToolboxWrapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFCEF4B12756CAB400D376E6 /* MobileToolboxConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileToolboxConfig.swift; sourceTree = "<group>"; };
 		FFDFF1F02368CE450094151B /* PrivacyPolicy.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = PrivacyPolicy.html; sourceTree = "<group>"; };
 		FFE3FCCA2370C14A00E743A2 /* StudyInformation.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = StudyInformation.html; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -439,13 +444,14 @@
 				FF68A75A230DC6AC00C066BB /* DataTracking.framework in Frameworks */,
 				F8A5C874227D08D100DD4692 /* MotorControl.framework in Frameworks */,
 				F8A5C878227D08D100DD4692 /* BridgeSDK.framework in Frameworks */,
+				FFCEF49327556EEF00D376E6 /* CardiorespiratoryFitness.framework in Frameworks */,
+				FFCEF48E27556E1A00D376E6 /* ResearchV2.framework in Frameworks */,
+				FFCEF49027556E1A00D376E6 /* ResearchV2UI.framework in Frameworks */,
 				F82A4AD22297054600BEBE3C /* ResearchMotion.framework in Frameworks */,
+				FFCEF4A52755818B00D376E6 /* MobileToolboxWrapper.framework in Frameworks */,
 				FF68A757230DC6AC00C066BB /* BridgeAppUI.framework in Frameworks */,
 				F82A4AD52297054600BEBE3C /* ResearchLocation.framework in Frameworks */,
 				CB37C6142645B30B00E85452 /* Research_UnitTest.framework in Frameworks */,
-				F8A5C872227D08D100DD4692 /* Research.framework in Frameworks */,
-				CB5B4957263CC4F100DD9093 /* CardiorespiratoryFitness.framework in Frameworks */,
-				F8A5C870227D08D100DD4692 /* ResearchUI.framework in Frameworks */,
 				F82A4ACF2297051200BEBE3C /* BridgeSDK_Test.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -454,16 +460,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CB73F7AA26309E0600969688 /* CardiorespiratoryFitness.framework in Frameworks */,
+				FFCEF49627556EFA00D376E6 /* CardiorespiratoryFitness.framework in Frameworks */,
 				F8A5C863227D08BC00DD4692 /* MotorControl.framework in Frameworks */,
 				F8A5C85D227D08BC00DD4692 /* BridgeSDK.framework in Frameworks */,
+				FFCEF4A22755818200D376E6 /* MobileToolboxWrapper.framework in Frameworks */,
 				F8A5C860227D08BC00DD4692 /* BridgeApp.framework in Frameworks */,
+				FFCEF4B8275834BD00D376E6 /* ResearchV2.framework in Frameworks */,
 				F82A4ADB229706BF00BEBE3C /* ResearchLocation.framework in Frameworks */,
 				F82A4AD8229706BF00BEBE3C /* ResearchMotion.framework in Frameworks */,
 				FF68A751230DC69E00C066BB /* BridgeAppUI.framework in Frameworks */,
 				FF68A754230DC69E00C066BB /* DataTracking.framework in Frameworks */,
-				F8A5C866227D08BC00DD4692 /* Research.framework in Frameworks */,
-				F8A5C869227D08BC00DD4692 /* ResearchUI.framework in Frameworks */,
+				FFCEF4BA275834BD00D376E6 /* ResearchV2UI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -511,6 +518,7 @@
 			isa = PBXGroup;
 			children = (
 				60E87025212B8EFF0073C69C /* Profile */,
+				FFCEF49E27557F2C00D376E6 /* ActionBannerView.swift */,
 				0349535420981C89006A05B1 /* ProgressCircleView.swift */,
 				80F3739B20FC32D200A565E0 /* VersionLabel.swift */,
 			);
@@ -557,15 +565,6 @@
 				80E3D71D2279366A0087FCA2 /* PassiveDataPermissionStepObject.swift */,
 			);
 			name = Model;
-			sourceTree = "<group>";
-		};
-		CB73F7A226309DFA00969688 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				CB73F7A726309DFA00969688 /* CardiorespiratoryFitness.framework */,
-				CB73F7A926309DFA00969688 /* CardiorespiratoryFitnessTests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		F8078F4120ADF9A000757F42 /* Schedule Management */ = {
@@ -692,6 +691,7 @@
 				CB5E1705210946E200AEE6A6 /* Model */,
 				F8078F4120ADF9A000757F42 /* Schedule Management */,
 				0334415220995311009B97A9 /* View Controllers */,
+				FFCEF4AD2756B9DA00D376E6 /* MobileToolbox */,
 				0349535320981C25006A05B1 /* Custom Views */,
 				F8188F7B2072CF51009AC215 /* Resources */,
 				F82AE79F206315B900952D74 /* Styleguide */,
@@ -717,7 +717,14 @@
 		F8D3E7992062F23A00CD351C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				CB73F7A126309DFA00969688 /* CardiorespiratoryFitness.xcodeproj */,
+				FFCEF4A42755818B00D376E6 /* MobileToolboxWrapper.framework */,
+				FFCEF4A12755818200D376E6 /* MobileToolboxWrapper.framework */,
+				FFCEF49527556EFA00D376E6 /* CardiorespiratoryFitness.framework */,
+				FFCEF49227556EEF00D376E6 /* CardiorespiratoryFitness.framework */,
+				FFCEF48C27556E1A00D376E6 /* ResearchV2.framework */,
+				FFCEF48D27556E1A00D376E6 /* ResearchV2UI.framework */,
+				FFCEF48627556E0800D376E6 /* ResearchV2.framework */,
+				FFCEF48727556E0800D376E6 /* ResearchV2UI.framework */,
 				F82A4ADA229706BF00BEBE3C /* ResearchLocation.framework */,
 				F82A4AD7229706BF00BEBE3C /* ResearchMotion.framework */,
 				F82A4AD42297054600BEBE3C /* ResearchLocation.framework */,
@@ -762,6 +769,14 @@
 				FF50112422DFD4A50035E83C /* SBAReport+Custom.swift */,
 			);
 			name = "Core Data";
+			sourceTree = "<group>";
+		};
+		FFCEF4AD2756B9DA00D376E6 /* MobileToolbox */ = {
+			isa = PBXGroup;
+			children = (
+				FFCEF4B12756CAB400D376E6 /* MobileToolboxConfig.swift */,
+			);
+			name = MobileToolbox;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -908,12 +923,6 @@
 			mainGroup = F8D3E76D2062F1B900CD351C;
 			productRefGroup = F8D3E7772062F1B900CD351C /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = CB73F7A226309DFA00969688 /* Products */;
-					ProjectRef = CB73F7A126309DFA00969688 /* CardiorespiratoryFitness.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				F8D3E7752062F1B900CD351C /* mPower2 */,
@@ -923,23 +932,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		CB73F7A726309DFA00969688 /* CardiorespiratoryFitness.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = CardiorespiratoryFitness.framework;
-			remoteRef = CB73F7A626309DFA00969688 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		CB73F7A926309DFA00969688 /* CardiorespiratoryFitnessTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = CardiorespiratoryFitnessTests.xctest;
-			remoteRef = CB73F7A826309DFA00969688 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		F84E723B20E2C99900E5C6C3 /* Resources */ = {
@@ -1062,6 +1054,7 @@
 				60E9411F212B8FD70027432C /* ProfileTableViewCell.swift in Sources */,
 				60E94125212B8FD70027432C /* ProfileTableFooterView.swift in Sources */,
 				03D3EA9F20C07B0200F9E4F7 /* StudyBurstViewController.swift in Sources */,
+				FFCEF4B32756CAB400D376E6 /* MobileToolboxConfig.swift in Sources */,
 				60169BBB20AF445800D29532 /* SignInTaskViewController.swift in Sources */,
 				F88E8DFF20ADEE2600117A99 /* TodayViewController.swift in Sources */,
 				F88E8E0020ADEE2600117A99 /* TaskBrowserViewController.swift in Sources */,
@@ -1077,6 +1070,7 @@
 				F8CE28AC21221362007765F1 /* MP2ReminderManager.swift in Sources */,
 				60E87023212B8E940073C69C /* ProfileTableViewController.swift in Sources */,
 				F85459B6208FA77400D37243 /* UIColor+mPowerTheme.swift in Sources */,
+				FFCEF4A027557F3000D376E6 /* ActionBannerView.swift in Sources */,
 				F8078F4420AE078A00757F42 /* DataSourceManager.swift in Sources */,
 				F8C58DFC20AFA2FD001C7B7F /* ActivityManager.swift in Sources */,
 				FF50110422DEE81B0035E83C /* HistoryItem+Custom.swift in Sources */,
@@ -1146,6 +1140,7 @@
 				F82AE7B62063160B00952D74 /* UIColor+mPowerTheme.swift in Sources */,
 				FF50110322DEE81B0035E83C /* HistoryItem+Custom.swift in Sources */,
 				F8078F4320ADFA6A00757F42 /* DataSourceManager.swift in Sources */,
+				FFCEF49F27557F2C00D376E6 /* ActionBannerView.swift in Sources */,
 				FF50110022DEE7E60035E83C /* HistoryDataManager.swift in Sources */,
 				603B7BC320913B1A00794B7C /* PhoneRegistrationViewController.swift in Sources */,
 				F8502064211A4E8F0094E05F /* MP2SurveyConfiguration.swift in Sources */,
@@ -1155,6 +1150,7 @@
 				03A6E0022103E69900FC5A84 /* GreatJobViewController.swift in Sources */,
 				6076F2CB20A6680B00F6235E /* ConsentViewController.swift in Sources */,
 				603B7BAA208E90FF00794B7C /* RegistrationWaitingViewController.swift in Sources */,
+				FFCEF4B22756CAB400D376E6 /* MobileToolboxConfig.swift in Sources */,
 				F832ABE920D8D341005A9025 /* StudyBurstCompletionViewController.swift in Sources */,
 				608241F22093D9F70026E843 /* ExternalIDRegistrationViewController.swift in Sources */,
 				80015119212F5621006B3C8E /* ProfileHTMLViewController.swift in Sources */,
@@ -1302,7 +1298,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KA9Z8R6M6K;
 				INFOPLIST_FILE = mPower2TestAppUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.mPower2TestAppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1319,7 +1315,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KA9Z8R6M6K;
 				INFOPLIST_FILE = mPower2TestAppUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.mPower2TestAppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1337,10 +1333,10 @@
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 57;
 				DEVELOPMENT_TEAM = KA9Z8R6M6K;
 				INFOPLIST_FILE = mPower2TestApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 2.2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.mPower2TestApp;
@@ -1358,10 +1354,10 @@
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 57;
 				DEVELOPMENT_TEAM = KA9Z8R6M6K;
 				INFOPLIST_FILE = mPower2TestApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 2.2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.mPower2TestApp;
@@ -1404,7 +1400,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 51;
+				CURRENT_PROJECT_VERSION = 57;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -1422,7 +1418,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1465,7 +1461,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 51;
+				CURRENT_PROJECT_VERSION = 57;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1477,7 +1473,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -1493,10 +1489,10 @@
 				CODE_SIGN_ENTITLEMENTS = mPower2/mPower2.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 54;
+				CURRENT_PROJECT_VERSION = 57;
 				DEVELOPMENT_TEAM = KA9Z8R6M6K;
 				INFOPLIST_FILE = mPower2/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.mPower2;
@@ -1515,10 +1511,10 @@
 				CODE_SIGN_ENTITLEMENTS = mPower2/mPower2.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 54;
+				CURRENT_PROJECT_VERSION = 57;
 				DEVELOPMENT_TEAM = KA9Z8R6M6K;
 				INFOPLIST_FILE = mPower2/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebionetworks.mPower2;
@@ -1538,7 +1534,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KA9Z8R6M6K;
 				INFOPLIST_FILE = mPower2Tests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.mPower2Tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1556,7 +1552,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KA9Z8R6M6K;
 				INFOPLIST_FILE = mPower2Tests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.sagebase.mPower2Tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

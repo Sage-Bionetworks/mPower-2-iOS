@@ -32,7 +32,7 @@
 //
 
 import UIKit
-import Research
+import ResearchV2
 
 class ProfileTableHeaderView: UITableViewHeaderFooterView {
     static let className = String(describing: ProfileTableHeaderView.self)

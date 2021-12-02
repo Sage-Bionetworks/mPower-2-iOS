@@ -33,7 +33,7 @@
 
 import XCTest
 @testable import mPower2TestApp
-import Research
+import ResearchV2
 @testable import BridgeApp
 
 class TodayScheduleManagerTests: StudyBurstTests {

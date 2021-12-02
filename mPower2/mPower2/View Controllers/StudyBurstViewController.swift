@@ -33,7 +33,7 @@
 
 import UIKit
 import BridgeApp
-import ResearchUI
+import ResearchV2UI
 
 extension RSDIdentifier {
     static let studyBurstCompletionStep: RSDIdentifier = "studyBurstCompletion"
@@ -42,7 +42,7 @@ extension RSDIdentifier {
 }
 
 protocol StudyBurstViewControllerDelegate {
-    func studyBurstDidFinish(task: RSDTaskViewModel, reason: RSDTaskFinishReason)
+    func studyBurstDidFinish(taskIdentifier: String, reason: RSDTaskFinishReason)
 }
 
 class StudyBurstViewController: UIViewController {
@@ -66,6 +66,10 @@ class StudyBurstViewController: UIViewController {
         didSet {
             if (self.isViewLoaded) { setupView() }
         }
+    }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        .portrait
     }
     
     override func viewDidLoad() {
@@ -168,8 +172,8 @@ extension StudyBurstViewController: StudyBurstProgressExpirationLabelDelegate {
 extension StudyBurstViewController: TaskBrowserViewControllerDelegate {
     
     // MARK: TaskBrowserViewControllerDelegate
-    func taskBrowserDidFinish(task: RSDTaskViewModel, reason: RSDTaskFinishReason) {
-        delegate?.studyBurstDidFinish(task: task, reason: reason)
+    func taskBrowserDidFinish(taskIdentifier: String, reason: RSDTaskFinishReason) {
+        delegate?.studyBurstDidFinish(taskIdentifier: taskIdentifier, reason: reason)
         progressLabel.updateStudyBurstExpirationTime(studyBurstManager.expiresOn)
         progressCircleView.progress = studyBurstManager.progress
     }

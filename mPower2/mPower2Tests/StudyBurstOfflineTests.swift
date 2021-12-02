@@ -34,7 +34,7 @@
 import XCTest
 @testable import mPower2TestApp
 @testable import BridgeApp
-import Research
+import ResearchV2
 import UserNotifications
 
 class StudyBurstOfflineTests: XCTestCase {
@@ -42,6 +42,7 @@ class StudyBurstOfflineTests: XCTestCase {
     override func setUp() {
         RSDFactory.shared = MP2Factory()
         StudyBurstScheduleManager.flushDefaults()
+        MobileToolboxConfig.shared.mtbIdentifiers = []
     }
 
     override func tearDown() {

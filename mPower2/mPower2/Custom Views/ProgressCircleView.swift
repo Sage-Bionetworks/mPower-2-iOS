@@ -32,7 +32,7 @@
 //
 
 import UIKit
-import ResearchUI
+import ResearchV2UI
 
 @IBDesignable class ProgressCircleView: UIView {
     
@@ -48,8 +48,6 @@ import ResearchUI
         ring.innerColor = UIColor.white
         ring.hasShadow = false
         ring.progressColor = RSDDesignSystem.shared.colorRules.palette.primary.normal.color
-        dayLabel.textColor = RSDDesignSystem.shared.colorRules.palette.primary.veryDark.color
-        dayCountLabel.textColor = RSDDesignSystem.shared.colorRules.palette.primary.veryDark.color
         insertSubview(ring, at: 0)
         ring.rsd_alignAllToSuperview(padding: strokeWidth / 2)
         return ring
@@ -75,7 +73,7 @@ import ResearchUI
         addSubview(label)
         label.rsd_alignCenterHorizontal(padding: 0.0)
         label.rsd_alignToSuperview([.top], padding: kVerticalPad)
-        return UILabel()
+        return label
     }()
     
     lazy var dayCountLabel: UILabel = {
@@ -95,7 +93,7 @@ import ResearchUI
         imageView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(imageView)
         imageView.rsd_alignAllToSuperview(padding: 10.0)
-        return UIImageView()
+        return imageView
     }()
     
     override func prepareForInterfaceBuilder() {

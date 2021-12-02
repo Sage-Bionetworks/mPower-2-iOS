@@ -61,6 +61,14 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
         return RSDColorPalette(version: 1, primary: primary, secondary: secondary, accent: accent)
     }
     
+    override func instantiateRootViewController() -> UIViewController {
+        return MP2RootViewController(rootViewController: self.window?.rootViewController)
+    }
+    
+    override var defaultOrientationLock: UIInterfaceOrientationMask {
+        .portrait
+    }
+    
     override func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]?) -> Bool {
 
         // Set the survey config to the subclass instance
@@ -242,4 +250,10 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
         return true;
     }
     
+}
+
+class MP2RootViewController : SBARootViewController {
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        .portrait
+    }
 }

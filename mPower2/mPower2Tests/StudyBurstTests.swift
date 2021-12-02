@@ -34,13 +34,15 @@
 import XCTest
 @testable import mPower2TestApp
 @testable import BridgeApp
-import Research
+import ResearchV2
 import UserNotifications
 
 class StudyBurstManagerTests: StudyBurstTests {
     
     override func setUp() {
         super.setUp()
+        
+        MobileToolboxConfig.shared.mtbIdentifiers = []
     }
     
     override func tearDown() {

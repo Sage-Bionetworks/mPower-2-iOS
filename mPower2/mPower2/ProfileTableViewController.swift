@@ -33,7 +33,7 @@
 
 import UIKit
 import BridgeApp
-import ResearchUI
+import ResearchV2UI
 
 class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDelegate {
     
@@ -274,7 +274,7 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
             else {
                 // If the permission is restricted then there is no point in redirecting to the
                 // settings app. Just show the restricted message.
-                self.presentAlertWithOk(title: permission.title,
+                (self as ResearchV2UI.RSDAlertPresenter).presentAlertWithOk(title: permission.title,
                                         message: permission.restrictedMessage) { (_) in
                 }
             }
@@ -294,7 +294,7 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
                     // do anything futher.
                     let message = String.localizedStringWithFormat(
                         Localization.localizedString("MAILTO_FAILED_MESSAGE_%@"), mailTo.email)
-                    self.presentAlertWithOk(title: nil, message: message, actionHandler: nil)
+                    (self as ResearchV2UI.RSDAlertPresenter).presentAlertWithOk(title: nil, message: message, actionHandler: nil)
                     return
             }
             UIApplication.shared.open(mailURL, options: [:], completionHandler: nil)
@@ -392,7 +392,7 @@ class ProfileTableViewController: UITableViewController, RSDTaskViewControllerDe
         let title = Localization.localizedString("JP_SETTINGS_TITLE")
         let format = Localization.localizedString("JP_SETTINGS_MESSAGE_FORMAT")
         let message = String.localizedStringWithFormat(format, Localization.localizedAppName)
-        presentAlertWithYesNo(title: title, message: message, actionHandler: { (yes) in
+        (self as ResearchV2UI.RSDAlertPresenter).presentAlertWithYesNo(title: title, message: message, actionHandler: { (yes) in
             guard yes else { return }
             if let appSettings = URL(string: UIApplication.openSettingsURLString) {
                 UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)

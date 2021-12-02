@@ -32,16 +32,17 @@
 //
 
 import UIKit
-import Research
+import ResearchV2
 import MotorControl
 import BridgeApp
 import CardiorespiratoryFitness
+import MobileToolboxWrapper
 
 protocol TaskBrowserViewControllerDelegate {
     func taskBrowserToggleVisibility()
     func taskBrowserTabSelected()
     func taskBrowserDidLayoutSubviews()
-    func taskBrowserDidFinish(task: RSDTaskViewModel, reason: RSDTaskFinishReason)
+    func taskBrowserDidFinish(taskIdentifier: String, reason: RSDTaskFinishReason)
 }
 
 class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate, TaskBrowserTabViewDelegate {
@@ -73,10 +74,14 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
         var tasks = selectedScheduleManager?.orderedTasks ?? []
         
         // The measuring group should also include the heart snapshot at the end
-        if (selectedScheduleManager?.activityGroup?.identifier ==
-                RSDIdentifier.measuringTaskGroup.identifier &&
-                selectedScheduleManager?.shouldShowHeartSnapshot ?? false) {
-            tasks.append(ScheduledTask(taskInfo: CRFTaskInfo(CRFTaskIdentifier.heartSnapshot)))
+        if let manager = selectedScheduleManager,
+           manager.activityGroup?.identifier == RSDIdentifier.measuringTaskGroup.identifier {
+            if manager.shouldShowHeartSnapshot {
+                tasks.append(ScheduledTask(taskInfo: CRFTaskInfo(CRFTaskIdentifier.heartSnapshot)))
+            }
+            else if let taskInfo = MobileToolboxConfig.shared.nextTask() {
+                tasks.append(ScheduledTask(taskInfo: taskInfo))
+            }
         }
         
         return tasks
@@ -122,7 +127,7 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
     
     func setupView() {
         
-        let designSystem = RSDDesignSystem()
+        let _ = RSDDesignSystem()
         
         // Remove existing managed subviews from tabBar stackView
         tabButtonStackView.arrangedSubviews.forEach({ $0.removeFromSuperview() })
@@ -162,21 +167,39 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
     private var _managersLoaded = false
     
     func startTask(for taskInfo: RSDTaskInfo) {
-        let (taskViewModel, _) = selectedScheduleManager.instantiateTaskViewModel(for: taskInfo)
-        let vc = RSDTaskViewController(taskViewModel: taskViewModel)
-        vc.delegate = self
-        self.present(vc, animated: true, completion: nil)
+        if let mtbIdentifier = taskInfo as? MTBIdentifier {
+            do {
+                let vc = try MTBAssessmentViewController(identifier: mtbIdentifier)
+                vc.delegate = self
+                self.present(vc, animated: true, completion: nil)
+            }
+            catch {
+                assertionFailure("Failed to create the MTB assessment: \(error)")
+            }
+        }
+        else {
+            let (taskViewModel, _) = selectedScheduleManager.instantiateTaskViewModel(for: taskInfo)
+            let vc = RSDTaskViewController(taskViewModel: taskViewModel)
+            vc.delegate = self
+            self.present(vc, animated: true, completion: nil)
+        }
     }
     
     func skipTask(for taskInfo: RSDTaskInfo) {
-        // Instead of launching into the task, skip it and update the delegate
-        let (taskViewModel, _) = selectedScheduleManager.instantiateTaskViewModel(for: taskInfo)
+        if let mtbIdentifier = taskInfo as? MTBIdentifier {
+            // Mark finished state
+            MobileToolboxConfig.shared.finishedAssessment(mtbIdentifier, reason: .skipped)
+            
+            // Inform our delegate that we finished a task
+            self.delegate?.taskBrowserDidFinish(taskIdentifier: mtbIdentifier.identifier, reason: .completed)
+        }
+        else {
+            // Add this to the list of skipped tasks we are tracking locally
+            StudyBurstScheduleManager.shared.skipTask(task: taskInfo)
 
-        // Add this to the list of skipped tasks we are tracking locally
-        StudyBurstScheduleManager.shared.skipTask(task: taskInfo)
-
-        // Tell delegate task was finished (albeit, skipped)
-        self.delegate?.taskBrowserDidFinish(task: taskViewModel, reason: RSDTaskFinishReason.completed)
+            // Tell delegate task was finished (albeit, skipped)
+            self.delegate?.taskBrowserDidFinish(taskIdentifier: taskInfo.identifier, reason: RSDTaskFinishReason.completed)
+        }
 
         // reload collection view
         self.collectionView.reloadData()
@@ -196,7 +219,7 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
     open func taskController(_ taskController: RSDTaskController, didFinishWith reason: RSDTaskFinishReason, error: Error?) {
 
         // Inform our delegate that we finished a task
-        self.delegate?.taskBrowserDidFinish(task: taskController.taskViewModel, reason: reason)
+        self.delegate?.taskBrowserDidFinish(taskIdentifier: taskController.taskViewModel.identifier, reason: reason)
 
         // dismiss the view controller
         (taskController as? UIViewController)?.dismiss(animated: true, completion: nil)
@@ -243,6 +266,27 @@ class TaskBrowserViewController: UIViewController, RSDTaskViewControllerDelegate
                 delegate.taskBrowserTabSelected()
             }
         }
+    }
+}
+
+extension TaskBrowserViewController: MTBAssessmentViewControllerDelegate {
+    func assessmentController(_ assessmentController: MTBAssessmentViewController, didFinishWith reason: FinishedState, error: Error?) {
+        
+        // Mark finished state
+        MobileToolboxConfig.shared.finishedAssessment(assessmentController.identifier, reason: reason)
+        
+        // Inform our delegate that we finished a task
+        self.delegate?.taskBrowserDidFinish(taskIdentifier: assessmentController.identifier.identifier, reason: reason.rsdV2Reason)
+        
+        // Dismiss the view controller
+        assessmentController.dismiss(animated: true, completion: nil)
+        
+        // Reload the collection view
+        self.collectionView.reloadData()
+    }
+    
+    func assessmentController(_ assessmentController: MTBAssessmentViewController, readyToSave result: MTBAssessmentResult) {
+        MobileToolboxConfig.shared.saveAssessment(result)
     }
 }
 
@@ -521,12 +565,13 @@ class TaskCollectionViewCell: UICollectionViewCell {
     }
  }
 
-// Use this just so the corner radius show's up in Interface Builder
+// Use this just so the corner radius shows up in Interface Builder
 @IBDesignable
 class RoundedCornerView: UIView {
-    @IBInspectable var cornerRadius: CGFloat = 0.0 {
-        didSet {
-            layer.cornerRadius = cornerRadius
-        }
-    }
+    // Commented out b/c this conflicts with the extension on UIView defined in MobileToolbox framework. syoung 12/02/2021
+//    @IBInspectable var cornerRadius: CGFloat = 0.0 {
+//        didSet {
+//            layer.cornerRadius = cornerRadius
+//        }
+//    }
 }

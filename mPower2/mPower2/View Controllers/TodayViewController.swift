@@ -33,8 +33,8 @@
 
 import UIKit
 import MotorControl
-import Research
-import ResearchUI
+import ResearchV2
+import ResearchV2UI
 import BridgeApp
 
 @IBDesignable
@@ -51,7 +51,7 @@ class TodayViewController: UIViewController {
     @IBOutlet weak var headerImageView: UIImageView!
     @IBOutlet weak var headerGreetingLabel: UILabel!
     @IBOutlet weak var headerMessageLabel: UILabel!
-    @IBOutlet weak var actionBarView: UIView!
+    @IBOutlet weak var actionBarView: ActionBannerView!
     @IBOutlet weak var actionBarTitleLabel: UILabel!
     @IBOutlet weak var actionBarDetailsLabel: StudyBurstProgressExpirationLabel!
     @IBOutlet weak var progressCircleView: ProgressCircleView!
@@ -80,6 +80,10 @@ class TodayViewController: UIViewController {
     }()
     
     // MARK: View lifecycle
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        .portrait
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -245,6 +249,7 @@ class TodayViewController: UIViewController {
     
     func updateActionBar() {
         if shouldShowActionBar {
+            self.actionBarView.isActive = true
             self.actionBarArrow.isHidden = false
             if let schedule = surveyManager.scheduledActivities.first {
                 actionBarTitleLabel.text = schedule.activity.title
@@ -272,11 +277,13 @@ class TodayViewController: UIViewController {
             }
         }  else if studyBurstManager.hasStudyBurst {
             // There's an active study burst but all the activites are complete
+            self.actionBarView.isActive = false
             self.actionBarArrow.isHidden = true
             actionBarTitleLabel.text = Localization.localizedString("STUDY_BURST_ACTION_BAR_TITLE")
             actionBarDetailsLabel.text = Localization.localizedString("ALL_ACTIVITIES_COMPLETE_BURST")
         } else {
             // There is no current survey or study burst, so show the days until next study burst experience
+            self.actionBarView.isActive = false
             self.actionBarArrow.isHidden = true
             actionBarTitleLabel.text = Localization.localizedString("STUDY_BURST_ACTION_BAR_TITLE")
             if let daysUntilNextBurst = studyBurstManager.getDaysUntilNextStudyBurst() {
@@ -297,7 +304,7 @@ class TodayViewController: UIViewController {
         if self.surveyManager.hasSurvey {
             progressCircleView.isHidden = false
             progressCircleView.progress = 0.5
-            let healthIcon = UIImage(named: "activitiesTaskIcon")
+            let healthIcon = UIImage(named: "ActivitiesTaskIcon")
             progressCircleView.displayIcon(image: healthIcon)
         }
         else if self.studyBurstManager.hasActiveStudyBurst {
@@ -308,11 +315,14 @@ class TodayViewController: UIViewController {
             else if let day = studyBurstManager.dayCount {
                 progressCircleView.displayDay(count: day)
             }
+            else {
+                progressCircleView.displayEmpty()
+            }
             progressCircleView.progress = studyBurstManager.progress
         }
         else {
             progressCircleView.progress = 0
-            progressCircleView.dayCountLabel.text = ""
+            progressCircleView.displayIcon(image: UIImage(named: "BannerIcon"))
         }
     }
     
@@ -478,8 +488,8 @@ extension TodayViewController: StudyBurstProgressExpirationLabelDelegate {
 }
 
 extension TodayViewController: StudyBurstViewControllerDelegate {
-    func studyBurstDidFinish(task: RSDTaskViewModel, reason: RSDTaskFinishReason) {
-        if reason == .completed, studyBurstManager.isFinalTask(task.identifier) {
+    func studyBurstDidFinish(taskIdentifier: String, reason: RSDTaskFinishReason) {
+        if reason == .completed, studyBurstManager.isFinalTask(taskIdentifier) {
             showStudyBurstCompletionTask()
         }
     }
@@ -598,8 +608,8 @@ extension TodayViewController: TaskBrowserViewControllerDelegate {
         // nothing
     }
     
-    func taskBrowserDidFinish(task: RSDTaskViewModel, reason: RSDTaskFinishReason) {
-        if reason == .completed, studyBurstManager.isFinalTask(task.identifier) {
+    func taskBrowserDidFinish(taskIdentifier: String, reason: RSDTaskFinishReason) {
+        if reason == .completed, studyBurstManager.isFinalTask(taskIdentifier) {
             showStudyBurstCompletionTask()
         }
     }

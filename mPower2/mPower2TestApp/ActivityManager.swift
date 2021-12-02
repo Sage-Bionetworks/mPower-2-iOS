@@ -34,7 +34,7 @@
 import Foundation
 import BridgeSDK
 import BridgeApp
-import Research
+import ResearchV2
 
 public struct StudySetup {
     

@@ -32,8 +32,8 @@
 //
 
 import UIKit
-import Research
-import ResearchUI
+import ResearchV2
+import ResearchV2UI
 import BridgeSDK
 
 // https://stackoverflow.com/a/27140764
@@ -57,7 +57,7 @@ class PhoneRegistrationViewController: RSDTableStepViewController {
         super.viewDidLayoutSubviews()
         
         guard let taskController = self.stepViewModel.rootPathComponent.taskController as? SignInTaskViewController,
-              let phoneNumberCell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? ResearchUI.RSDStepTextFieldFeaturedCell else {
+              let phoneNumberCell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? ResearchV2UI.RSDStepTextFieldFeaturedCell else {
             return
         }
         
@@ -87,7 +87,7 @@ class PhoneRegistrationViewController: RSDTableStepViewController {
 
         if let _ = phoneNumber.range(of: "\\d\\d\\d55501\\d\\d$", options: .regularExpression) {
             // they said the secret word so ask if they want to be a tester
-            self.presentAlertWithYesNo(title: "Tester", message: "The phone number you entered is fictional. Do you want to sign in with a test ID?") { (tester) in
+            (self as ResearchV2UI.RSDAlertPresenter).presentAlertWithYesNo(title: "Tester", message: "The phone number you entered is fictional. Do you want to sign in with a test ID?") { (tester) in
                 if tester {
                     // boop them over to the externalID sign-in step
                     self.assignSkipToIdentifier("enterExternalId")
@@ -111,11 +111,11 @@ class PhoneRegistrationViewController: RSDTableStepViewController {
             
             // 400 is the response for an invalid phone number
             if err.code == 400 {
-                self.presentAlertWithOk(title: "Wrong Number", message: "Please enter a valid phone number.", actionHandler: { (_) in
+                (self as ResearchV2UI.RSDAlertPresenter).presentAlertWithOk(title: "Wrong Number", message: "Please enter a valid phone number.", actionHandler: { (_) in
                     restoreResponder()
                 })
             } else {
-                self.presentAlertWithOk(title: "Error", message: "The server returned an error: \(err)", actionHandler: { (_) in
+                (self as ResearchV2UI.RSDAlertPresenter).presentAlertWithOk(title: "Error", message: "The server returned an error: \(err)", actionHandler: { (_) in
                     restoreResponder()
                 })
             }
