@@ -94,7 +94,7 @@ class MTBArchiveManager : NSObject, RSDDataArchiveManager {
     }
     
     /// Finalize the upload of all the created archives.
-    public final func encryptAndUpload(taskResult: RSDTaskResult, dataArchives: [RSDDataArchive], completion:@escaping (() -> Void)) {
+    func encryptAndUpload(taskResult: RSDTaskResult, dataArchives: [RSDDataArchive], completion:@escaping (() -> Void)) {
         let archives: [SBBDataArchive] = dataArchives.compactMap {
             guard let archive = $0 as? SBBDataArchive, self.shouldUpload(archive: archive) else { return nil }
             return archive
@@ -106,12 +106,12 @@ class MTBArchiveManager : NSObject, RSDDataArchiveManager {
     /// This method is called during `encryptAndUpload()` to allow subclasses to cancel uploading an archive.
     ///
     /// - returns: Whether or not to upload. Default is to return `true` if the archive is not empty.
-    open func shouldUpload(archive: SBBDataArchive) -> Bool {
+    func shouldUpload(archive: SBBDataArchive) -> Bool {
         return !archive.isEmpty()
     }
     
     /// By default, if an archive fails, the error is printed and that's all that is done.
-    open func handleArchiveFailure(taskResult: RSDTaskResult, error: Error, completion:@escaping (() -> Void)) {
+    func handleArchiveFailure(taskResult: RSDTaskResult, error: Error, completion:@escaping (() -> Void)) {
         debugPrint("WARNING! Failed to archive \(taskResult.identifier). \(error)")
         completion()
     }
