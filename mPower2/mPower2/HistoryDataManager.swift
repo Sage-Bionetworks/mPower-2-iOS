@@ -79,7 +79,10 @@ class HistoryDataManager : SBAReportManager {
     /// changed today. It also looks at past reports if and only if it needs to add them to the
     /// local store.
     override func reportQueries() -> [ReportQuery] {
-        let tasks = Set(RSDIdentifier.dataTrackingTasks).union(RSDIdentifier.measuringTasks).union([RSDIdentifier.heartSnapshotTask])
+        let tasks = Set(RSDIdentifier.dataTrackingTasks)
+            .union(RSDIdentifier.measuringTasks)
+            .union([RSDIdentifier.heartSnapshotTask])
+            .union([RSDIdentifier.cognitionTask])
         if persistentContainer == nil {
             return tasks.map { ReportQuery(reportKey: $0, queryType: .today, dateRange: nil) }
         }
@@ -239,6 +242,12 @@ class HistoryDataManager : SBAReportManager {
             item.imageName = "TremorTaskIcon"
             return item
             
+        case .cognitionTask:
+            let item = MeasurementHistoryItem(context: context, report: report)
+            item.title = Localization.localizedString("HISTORY_ITEM_COGNITION_TITLE")
+            item.imageName = "CognitionTaskIcon"
+            return item
+            
         default:
             assertionFailure("WARNING! Unknown report identifier: \(reportIdentifier)")
             return nil
@@ -253,6 +262,12 @@ class HistoryDataManager : SBAReportManager {
             tappingItem.rightTapCount = (json[MCTHandSelection.right.rawValue] as? NSNumber)?.int16Value ?? 0
         }
         item.medicationTiming = json[kMedicationTimingKey] as? String
+        
+        // If this is a report for a cognition task, then set the title to whichever one was performed.
+        if reportIdentifier == .cognitionTask,
+            let title = json[kCognitionTaskTitle] as? String {
+            item.title = title
+        }
     }
 
     func mergeHeartSnapshotTasks(from reports: [SBAReport], in context: NSManagedObjectContext) throws {
