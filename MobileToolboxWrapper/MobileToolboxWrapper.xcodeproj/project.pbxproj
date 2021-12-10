@@ -21,12 +21,16 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		FF762ACE276037A600FA1D8F /* BridgeSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF762ACD276037A600FA1D8F /* BridgeSDK.framework */; };
+		FF762AD227603A1500FA1D8F /* MTBDataArchive.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF762AD127603A1500FA1D8F /* MTBDataArchive.swift */; };
 		FF79502F273A0252007F6269 /* MobileToolboxWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = FF79502E273A0252007F6269 /* MobileToolboxWrapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FF795038273A0342007F6269 /* MobileToolboxKit in Frameworks */ = {isa = PBXBuildFile; productRef = FF795037273A0342007F6269 /* MobileToolboxKit */; };
 		FF79503A273A03BA007F6269 /* MobileToolboxWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF795039273A03BA007F6269 /* MobileToolboxWrapper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FF762ACD276037A600FA1D8F /* BridgeSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BridgeSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF762AD127603A1500FA1D8F /* MTBDataArchive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTBDataArchive.swift; sourceTree = "<group>"; };
 		FF79502B273A0252007F6269 /* MobileToolboxWrapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MobileToolboxWrapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF79502E273A0252007F6269 /* MobileToolboxWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MobileToolboxWrapper.h; sourceTree = "<group>"; };
 		FF795039273A03BA007F6269 /* MobileToolboxWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileToolboxWrapper.swift; sourceTree = "<group>"; };
@@ -38,6 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF762ACE276037A600FA1D8F /* BridgeSDK.framework in Frameworks */,
 				FF795038273A0342007F6269 /* MobileToolboxKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -67,6 +72,7 @@
 			children = (
 				FF79502E273A0252007F6269 /* MobileToolboxWrapper.h */,
 				FF795039273A03BA007F6269 /* MobileToolboxWrapper.swift */,
+				FF762AD127603A1500FA1D8F /* MTBDataArchive.swift */,
 			);
 			path = MobileToolboxWrapper;
 			sourceTree = "<group>";
@@ -74,6 +80,7 @@
 		FF795036273A0342007F6269 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FF762ACD276037A600FA1D8F /* BridgeSDK.framework */,
 				FFCEF4A72756B01F00D376E6 /* ResearchV2.framework */,
 			);
 			name = Frameworks;
@@ -189,6 +196,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF762AD227603A1500FA1D8F /* MTBDataArchive.swift in Sources */,
 				FF79503A273A03BA007F6269 /* MobileToolboxWrapper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -35,6 +35,7 @@ import MobileToolboxKit
 import MSSMobileKit
 import Research
 import ResearchUI
+import BridgeSDK
 
 public protocol MTBAssessmentViewControllerDelegate : AnyObject {
     func assessmentController(_ assessmentController: MTBAssessmentViewController, didFinishWith reason: FinishedState, error: Error?)
@@ -52,13 +53,23 @@ public enum FinishedState : Int {
     case skipped
 }
 
-public struct MTBAssessmentResult {
-    public let identifier: String
-    public let schemaIdentifier: String?
-    public let scheduleIdentifier: String?
-    public let filename: String
-    public let timestamp: Date
-    public let json: Data
+public class MTBAssessmentResult {
+    public var identifier: String { taskState.identifier }
+    public var timestamp: Date { taskState.taskResult.endDate }
+    public var taskRunUUID: UUID? { taskState.taskRunUUID }
+    
+    internal let taskState: RSDTaskViewModel
+     
+    init(_ taskState: RSDTaskViewModel) {
+        self.taskState = taskState
+    }
+    
+    public func archiveAndUpload(schemaIdentifier: String, schemaRevision: Int?, dataGroups: Set<String>?) {
+        MTBArchiveManager.shared.archiveAndUpload(taskState: taskState,
+                                                  schemaIdentifier: schemaIdentifier,
+                                                  schemaRevision: schemaRevision,
+                                                  dataGroups: dataGroups)
+    }
 }
 
 var resourcesInitialized = false
@@ -153,25 +164,8 @@ public class MTBAssessmentViewController : UIViewController {
         }
         
         func taskController(_ taskController: RSDTaskController, readyToSave taskViewModel: RSDTaskViewModel) {
-            guard let archivable = taskViewModel.taskResult.asyncResults?.first(where: {
-                $0 is RSDArchivable }) as? RSDArchivable
-            else {
-                assertionFailure("Failed to find an archivable result in the async results.")
-                return
-            }
-            do {
-                guard let archiveData = try archivable.buildArchiveData() else { return }
-                owner.result = .init(identifier: taskViewModel.identifier,
-                                     schemaIdentifier: taskViewModel.task?.schemaInfo?.schemaIdentifier,
-                                     scheduleIdentifier: taskViewModel.scheduleIdentifier,
-                                     filename: archiveData.manifest.filename,
-                                     timestamp: archiveData.manifest.timestamp,
-                                     json: archiveData.data)
-                owner.delegate.assessmentController(owner, readyToSave: owner.result!)
-                
-            } catch {
-                assertionFailure("Failed to archive result: \(error).")
-            }
+            owner.result = .init(taskViewModel)
+            owner.delegate.assessmentController(owner, readyToSave: owner.result!)
         }
     }
 }
@@ -186,5 +180,28 @@ public enum MTBIdentifier : String, CaseIterable {
     case psm = "Picture Sequence MemoryV1"
     case spelling = "MTB Spelling Form 1"
     case vocabulary = "Vocabulary Form 1"
+    
+    public func localizedTitle() -> String {
+        switch self {
+        case .numberMatch:
+            return "Number-Symbol Match"
+        case .mfs:
+            return "Sequences"
+        case .dccs:
+            return "Shape-Color Sorting"
+        case .fnamea:
+            return "Faces & Names A"
+        case .fnameb:
+            return "Faces & Names B"
+        case .flanker:
+            return "Arrow Matching"
+        case .psm:
+            return "Arranging Pictures"
+        case .spelling:
+            return "Spelling"
+        case .vocabulary:
+            return "Word Meaning"
+        }
+    }
 }
 
