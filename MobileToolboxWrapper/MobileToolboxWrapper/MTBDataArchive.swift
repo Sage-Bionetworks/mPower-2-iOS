@@ -122,7 +122,7 @@ class MTBDataArchive: SBBDataArchive, RSDDataArchive {
     /// The identifier for this archive.
     let identifier: String
     
-    /// Store the task groups
+    /// Store the task groups.
     let dataGroups: Set<String>?
     
     /// Does not support schedules.
