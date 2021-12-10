@@ -41,7 +41,6 @@ class StudyBurstViewControllerTests: StudyBurstTests {
     override func setUp() {
         super.setUp()
         StudyBurstScheduleManager.flushDefaults()
-        MobileToolboxConfig.shared.mtbIdentifiers = []
     }
     
     override func tearDown() {
