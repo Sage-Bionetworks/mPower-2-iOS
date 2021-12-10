@@ -1133,4 +1133,28 @@ class StudyBurstScheduleManager : TaskGroupScheduleManager {
         return (Localization.localizedString(titleKey),
                 Localization.localizedString(messageKey))
     }
+    
+    // MARK: Engagement groups
+        
+    func setEngagementGroupsIfNeeded() {
+        guard let participant = SBAParticipantManager.shared.studyParticipant,
+              let engagementDataGroups = studyBurst.engagementDataGroups
+        else {
+            return
+        }
+        
+        // Look to see if the data groups have not yet been assigned.
+        var dataGroups = participant.dataGroups ?? []
+        let hasAssigned = engagementDataGroups.reduce(true) { partialResult, groups in
+            partialResult && !dataGroups.intersection(groups).isEmpty
+        }
+        guard !hasAssigned, let engagementGroups = studyBurst.randomEngagementGroups()
+        else {
+            return
+        }
+        
+        dataGroups.formUnion(engagementGroups)
+        BridgeSDK.participantManager.updateDataGroups(withGroups: dataGroups) { _, _ in
+        }
+    }
 }

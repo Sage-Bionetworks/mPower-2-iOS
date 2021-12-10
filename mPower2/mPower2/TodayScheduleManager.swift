@@ -127,6 +127,16 @@ class TodayHistoryScheduleManager : SBAScheduleManager {
         }
     }
     
+    override func didUpdateReports(with newReports: [SBAReport]) {
+        super.didUpdateReports(with: newReports)
+        offMainQueue.async {
+            let items = self.consolidateItems(self.scheduledActivities)
+            DispatchQueue.main.async {
+                self.items = items
+            }
+        }
+    }
+    
     /// Call through to super using an internal method that can be overridden by tests.
     func superDidUpdateScheduledActivities(from previousActivities: [SBBScheduledActivity]) {
         super.didUpdateScheduledActivities(from: previousActivities)
@@ -186,6 +196,11 @@ class TodayHistoryScheduleManager : SBAScheduleManager {
                         assertionFailure("Failed to decode the meds report. \(err)")
                         return 0
                     }
+                    
+                case .activities:
+                    return filteredSchedules.count + self.reports.filter {
+                        $0.identifier == RSDIdentifier.cognitionTask.identifier
+                    }.count
 
                 default:
                     return filteredSchedules.count
@@ -199,7 +214,8 @@ class TodayHistoryScheduleManager : SBAScheduleManager {
     }
     
     override open func reportQueries() -> [ReportQuery] {
-        return [ ReportQuery(reportKey: .triggersTask, queryType: .today, dateRange: nil),
+        return [ ReportQuery(reportKey: .cognitionTask, queryType: .today, dateRange: nil),
+                 ReportQuery(reportKey: .triggersTask, queryType: .today, dateRange: nil),
                  ReportQuery(reportKey: .symptomsTask, queryType: .today, dateRange: nil),
                  ReportQuery(reportKey: .medicationTask, queryType: .mostRecent, dateRange: nil)]
     }

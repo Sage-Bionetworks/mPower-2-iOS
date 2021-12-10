@@ -69,11 +69,6 @@ class ExternalIDRegistrationViewController: RSDTableStepViewController {
         if credentials.preconsent {
             dataGroups.insert("test_no_consent")
         }
-        // Assign the engagement data groups.
-        if let engagementGroups = (SBABridgeConfiguration.shared as? MP2BridgeConfiguration)?.studyBurst.randomEngagementGroups() {
-            dataGroups.formUnion(engagementGroups)
-        }
-        signUp.dataGroups = dataGroups
         
         BridgeSDK.authManager.signUpStudyParticipant(signUp, completion: { (task, result, error) in
             guard error == nil else {
@@ -83,6 +78,10 @@ class ExternalIDRegistrationViewController: RSDTableStepViewController {
             
             // we're signed up so sign in
             BridgeSDK.authManager.signIn(withExternalId: signUp.externalId!, password: signUp.password!, completion: { (task, result, error) in
+                
+                // Once we are signed in, add the data groups (if needed).
+                BridgeSDK.participantManager.add(toDataGroups: dataGroups, completion: nil)
+                
                 completion(task, result, error)
             })
         })

@@ -162,6 +162,14 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
                             if (error as NSError?)?.code == SBBErrorCode.serverPreconditionNotMet.rawValue {
                                 self.showConsentViewController(animated: true)
                             } else if error == nil {
+                                
+                                // Now that we have a user who is signed in via phone number, check the region code to
+                                // see if we need to add the heart snapshot data group.
+                                // Heart Snapshot tasks are only enabled for the Netherlands region
+                                if (regionCode == SignInTaskViewController.NETHERLANDS_REGION_CODE) {
+                                    BridgeSDK.participantManager.add(toDataGroups: ["show_heartsnapshot"], completion: nil)
+                                }
+                                
                                 self.showAppropriateViewController(animated: true)
                             } else {
                                 #if DEBUG
@@ -207,6 +215,11 @@ class AppDelegate: SBAAppDelegate, RSDTaskViewControllerDelegate {
             else {
             fatalError("Failed to instantiate initial view controller in the main storyboard.")
         }
+        
+        // Check that the engagement groups have been set before transitioning.
+        StudyBurstScheduleManager.shared.setEngagementGroupsIfNeeded()
+        
+        // Show the main view controller.
         self.transition(to: vc, state: .main, animated: true)
         
         // start the passive collectors now in case they weren't started at launch

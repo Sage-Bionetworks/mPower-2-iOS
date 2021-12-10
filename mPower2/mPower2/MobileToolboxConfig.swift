@@ -39,17 +39,34 @@ import BridgeSDK
 import BridgeApp
 import SwiftUI
 
+let kCognitionTaskTitle = "title"
+
 fileprivate let kLastMTBIdentifierKey = "LastMTBIdentifier"
 fileprivate let kLastMTBFinishedDateKey = "LastMTBFinishedDate"
 
-class MobileToolboxConfig {
+fileprivate let kMTBTaskGroup3 = "show_3_cognitive"
+fileprivate let kMTBTaskGroup8 = "show_8_cognitive"
+
+class MobileToolboxConfig : SBAReportManager {
     static let shared: MobileToolboxConfig = .init()
-    private init() {}
         
-    var mtbIdentifiers: [MTBIdentifier] = [
-        .numberMatch,
-        .mfs,
-        .dccs]
+    var mtbIdentifiers: [MTBIdentifier] {
+        guard let dataGroups = SBAParticipantManager.shared.studyParticipant?.dataGroups
+        else {
+            return []
+        }
+        if dataGroups.contains(kMTBTaskGroup3) {
+            return [.numberMatch,
+                    .mfs,
+                    .dccs]
+        }
+        else if dataGroups.contains(kMTBTaskGroup8) {
+            return MTBIdentifier.allCases
+        }
+        else {
+            return []
+        }
+    }
     
     func shouldShowTaskToday() -> Bool {
         // Exit early if we are not in a study burst.
@@ -90,25 +107,20 @@ class MobileToolboxConfig {
         }
     }
     
-    /// A serial queue used to manage data crunching.
-    let offMainQueue = DispatchQueue(label: "org.sagebionetworks.mPower.MobileToolboxConfig")
-    
     func saveAssessment(_ result: MTBAssessmentResult) {
         // Send all data from Mobile Toolbox to the same Synapse table and let researchers
         // process it. For now, leave in the commented-out implementation that directs the
         // results to a different table based on the schema identifier. syoung 12/01/2021
-        let identifier = "MobileToolbox" //result.schemaIdentifier ?? result.identifier
-        let archive = SBBDataArchive(reference: identifier, jsonValidationMapping: nil)
-        if let schemaRevision = SBABridgeConfiguration.shared.schemaInfo(for: identifier)?.schemaVersion {
-            archive.setArchiveInfoObject(NSNumber(value: schemaRevision), forKey: "schemaRevision")
-        }
-        archive.insertData(intoArchive: result.json, filename: result.filename, createdOn: result.timestamp)
-        if result.filename == "taskData" {
-            archive.insertData(intoArchive: result.json, filename: "\(result.filename).json", createdOn: result.timestamp)
-        }
-        offMainQueue.async {
-            archive.encryptAndUploadArchive()
-        }
+        let schemaIdentifer = "MobileToolbox" //result.schemaIdentifier ?? result.identifier
+        let schemaRevision = SBABridgeConfiguration.shared.schemaInfo(for: schemaIdentifer)?.schemaVersion
+        let dataGroups = SBAParticipantManager.shared.studyParticipant?.dataGroups
+        result.archiveAndUpload(schemaIdentifier: schemaIdentifer, schemaRevision: schemaRevision, dataGroups: dataGroups)
+        
+        // Add a report so that history can include this assessment.
+        var json: [String : Any] = ["taskIdentifier" : result.identifier]
+        json[SBATaskRunUUIDKey] = result.taskRunUUID?.uuidString
+        json[kCognitionTaskTitle] = MTBIdentifier(rawValue: result.identifier)?.localizedTitle()
+        self.saveReport(.init(reportKey: .cognitionTask, date: result.timestamp, clientData: json as SBBJSONValue))
     }
     
     func lastFinishedDate() -> Date? {
@@ -122,6 +134,12 @@ class MobileToolboxConfig {
     func saveLastFininshedDate(for mtbIdentifier: MTBIdentifier) {
         UserDefaults.standard.set(mtbIdentifier.rawValue, forKey: kLastMTBIdentifierKey)
         UserDefaults.standard.set(Date(), forKey: kLastMTBFinishedDateKey)
+    }
+    
+    override func reportQueries() -> [SBAReportManager.ReportQuery] {
+        let endDate = self.now()
+        let startDate = endDate.addingNumberOfDays(-20)
+        return [.init(reportKey: .cognitionTask, queryType: .mostRecent, dateRange: (startDate, endDate))]
     }
 }
 

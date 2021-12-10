@@ -123,20 +123,10 @@ class SignInTaskViewController: RSDTaskViewController, SignInDelegate {
         signUp.phone!.number = phoneNumber
         signUp.phone!.regionCode = regionCode
         
-        var dataGroups = Set<String>()
-        // Assign the engagement data groups.
-        if let engagementGroups = (SBABridgeConfiguration.shared as? MP2BridgeConfiguration)?.studyBurst.randomEngagementGroups() {
-            dataGroups = dataGroups.union(engagementGroups)
-        }
-        
-        // Heart Snapshot tasks are only enabled for the Netherlands region
-        if (self.regionCode == SignInTaskViewController.NETHERLANDS_REGION_CODE) {
-            dataGroups = dataGroups.union(["show_heartsnapshot"])
-        }
-        
-        if (!dataGroups.isEmpty) {
-            signUp.dataGroups = dataGroups
-        }
+        // WARNING: syoung 12/09/2021 This appears to break things if you assign data groups
+        // on signup so that someone who is already signed up won't get the data groups that
+        // were previously assigned. So instead wait until the user is signed in using their
+        // phone number and set the data groups there.
         
         BridgeSDK.authManager.signUpStudyParticipant(signUp, completion: { (task, result, error) in
             guard error == nil else {

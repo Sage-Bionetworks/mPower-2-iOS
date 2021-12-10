@@ -40,9 +40,7 @@ import UserNotifications
 class StudyBurstManagerTests: StudyBurstTests {
     
     override func setUp() {
-        super.setUp()
-        
-        MobileToolboxConfig.shared.mtbIdentifiers = []
+        super.setUp()        
     }
     
     override func tearDown() {
