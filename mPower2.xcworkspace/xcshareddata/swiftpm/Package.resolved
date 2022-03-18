@@ -33,8 +33,8 @@
         "repositoryURL": "https://github.com/MobileToolbox/MobileToolbox.git",
         "state": {
           "branch": null,
-          "revision": "4980b7d8be1476f119243362d0eb69ce007161e1",
-          "version": null
+          "revision": "f085c581dfe2bb00d3bc7bee7bbd6dadc222b6a0",
+          "version": "1.3.0"
         }
       },
       {
@@ -42,8 +42,8 @@
         "repositoryURL": "https://github.com/MobileToolbox/MSSEngineKit.git",
         "state": {
           "branch": null,
-          "revision": "a2824eb8a39c10cf6312d3efdce07e88f53a3b8b",
-          "version": "1.0.3"
+          "revision": "488afc1d505a342d96f7735a8d6e0a1ac318b3f1",
+          "version": "1.0.4"
         }
       },
       {
@@ -51,8 +51,8 @@
         "repositoryURL": "https://github.com/MobileToolbox/resources.git",
         "state": {
           "branch": null,
-          "revision": "13377c36d55db9e59b3a8809c9249c3eb6b9103d",
-          "version": "1.2.0"
+          "revision": "f8240335016976acb757c527a051551f0cf7d6de",
+          "version": "1.3.0"
         }
       },
       {
